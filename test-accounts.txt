@@ -1,0 +1,20 @@
+[RESIDENT ACCOUNT]
+username: syntaxboybe
+password: akosiboybe14
+
+username: anaye94
+password: boybeanaye123
+
+[ADMIN ACCOUNT]
+username: admin
+password: admin
+
+[STAFF/OFFICIAL ACCOUNT]
+username: secretary
+password: pwsec123
+
+brgypoblacion.naawan@gmail.com
+brgypobna1
+
+
+

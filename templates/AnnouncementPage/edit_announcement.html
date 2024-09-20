@@ -1,0 +1,107 @@
+{% extends "../base.html" %}
+{% load static %}
+{% block content %}
+
+<center>
+    <!-- <div class="card mb-3 border-0 shadow">
+        <div>
+            <form method="POST">
+            {% csrf_token %}
+            <div class="row g-0">
+                <div class="col-lg-5 col-md-12 col-12 my-auto d-flex justify-content-cente">
+                  {{ edit.image }}
+                  <label for="file" id="file-preview">
+                  <img src='{{prev_img.url}}' class="img-fluid rounded-start">
+                </label>
+                </div>
+                <div class="col-lg-7 col-md-12 col-12">
+                  <div class="card-body">
+                    <div class="row">
+                        <div class="col-12">
+                            <h5 class="card-title">{{ edit.title }}</h5>
+                            <p class="card-text">{{ edit.body }}</p>
+                        </div>
+                    </div>
+                  </div>
+        
+                  <br>
+                  <div class="position-absolute bottom-0 end-0 px-3">
+                    <p class="card-text"><small class="text-muted">Posted at {{ editA.post_date }}</small></p>
+                  </div>
+                </div>
+            </div>
+        </div>
+    </div> -->
+
+    <section class="section">
+      <div class="container">
+          <div class="row justify-content-center">
+              <div class="col-md-8">
+                  <div class="card">
+                      <div class="card-header">
+                          <h2 class="fw-bold">Edit Announcement</h2>
+                      </div>
+                      <div class="card-body">
+                          <form method="POST" enctype="multipart/form-data">
+                              {% csrf_token %}
+                              <div class="row">
+                                <div class="col-lg-6">
+                                    <div class="mb-3">
+                                        <label for="" class="form-label"><b>Title</b></label>
+                                        <input type="text" name="title" value="{{ edit.title }}" class="form-control">
+                                    </div>
+                                    <div class="mb-3">
+                                        <label for="" class="form-label"><b>Information</b></label>
+                                        <textarea class="form-control" name="body" rows="4" cols="50">{{ edit.body }}</textarea>
+                                    </div>
+                                    <a href="{% url 'announcementPage' %}"><div class="btn btn-danger">Cancel</div></a>
+                                    <button type="submit" class="btn btn-success">Update</button>
+                                </div>
+
+                                <div class="col-lg-6">
+                                    <div>
+                                        <p class="h6"><b>Image</b></p>
+                                        <div class="form-element-upload-2"> 
+                                          <input type="file" id="file-3" accept="image/*" name="image">
+                                            <label for="file-3" id="file-3-preview">
+                                              <img src="{{ edit.image.url }}" class="img-fluid">
+                                                <div>
+                                                    <span>+</span>
+                                                </div>
+                                            </label>
+                                        </div>
+                                    </div>
+                                </div>
+                              </div>
+                          </form>
+                      </div>
+                  </div>
+              </div>
+          </div>
+      </div>
+
+</center>
+
+<script>
+    function previewBeforeUpload(id){
+      document.querySelector("#"+id).addEventListener("change",function(e){
+          
+          if(e.target.files.length == 0){
+              return;
+          }
+  
+          let file = e.target.files[0];
+          let url = URL.createObjectURL(file);
+          
+          document.querySelector("#"+id+"-preview img").src = url;
+      });
+  }
+  
+  previewBeforeUpload("file-3");
+  
+  </script>
+{% endblock content %}
+
+
+
+

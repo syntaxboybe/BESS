@@ -1,0 +1,35 @@
+{% extends "../base.html" %}
+{% load static %}
+{% block content %}
+<style>
+    .min-size{
+        min-height: 500px;
+    }
+</style>
+<div class="container-fluid bg-white rounded min-size fade-page">
+
+    <div class="row">
+        <div class="col-12 indigency-header-bg rounded-top">
+            <h4 class="text-white py-4 px-3"><i class="las la-feather-alt fs-5"></i> Certificate of Indigency</h4>
+        </div>
+    </div>
+
+    <div class="row p-3 g-0">
+        <div class="col-lg-12">
+            <div class="fade-page" hx-trigger="load, indigencylistUpdate from:body" hx-get="{% url 'indigency_list' %}" hx-target="this">
+                <center>
+                    <div class="spinner-border" role="status">
+                        <span class="visually-hidden">Loading...</span>
+                    </div>
+                </center>
+            </div>
+        </div>
+    </div>
+
+</div>
+
+<!-- modal -->
+<div id="modal" class="modal fade">
+    <div id="dialog" class="modal-dialog" hx-target="this"></div>
+</div> 
+{% endblock content %}

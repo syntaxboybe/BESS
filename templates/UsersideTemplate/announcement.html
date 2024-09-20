@@ -1,0 +1,67 @@
+{% extends "UsersideTemplate/base.html" %}
+{% load static %}
+{% block content %}
+{% load humanize %}
+
+<style>
+  .bg { 
+  background: url("/static/img/service-bg.svg") no-repeat center center fixed; 
+  -webkit-background-size: cover;
+  -moz-background-size: cover;
+  -o-background-size: cover;
+  background-size: cover;
+}
+</style>
+
+<div class="container-fluid pt-5 bg-light bg">
+<div class="row">
+  <div class="col-lg-12 col-md-12">
+    <div class="row d-flex justify-content-center">
+      <div class="col-lg-6 col-md-7 col-12">
+        <div class="card mb-3 border-0 shadow text-center" style="background-color: #355389;">
+          <div class="card-body">
+            <h1 class="display-6 text-white" style="font-weight: 600;">BARANGAY ANNOUNCEMENTS</h1>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="col-12">
+    <div class="row d-flex justify-content-center">
+        <div class="col-lg-6 col-md-7">
+            {% for announce in announcementList %}
+            <div class="card mb-3 border-0 shadow">
+                <div>
+                    <div class="row g-0">
+                        <div class="col-lg-5 col-md-12 col-12 my-auto d-flex justify-content-cente">
+                          <img src='{{announce.image.url}}' class="img-fluid rounded-start">
+                        </div>
+                        <div class="col-lg-7 col-md-12 col-12">
+                          <div class="card-body">
+                            <h5 class="card-title">{{ announce.title }}</h5>
+                            <p class="card-text">{{ announce.body }}</p>
+                          </div>
+                
+                          <br>
+                          <div class="position-absolute bottom-0 end-0 px-3">
+                            <p class="card-text"><small class="text-muted">Posted {{ announce.post_date|naturaltime }}</small></p>
+                          </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+          
+            {% endfor %}
+        </div>
+    </div>
+</div>
+</div>
+
+<br>
+<br>
+<br>
+</div>
+
+
+{% endblock content %}

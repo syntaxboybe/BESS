@@ -1,0 +1,64 @@
+{% extends "UsersideTemplate/ServicePortalBase.html" %}
+{% load static %}
+{% block content %}
+
+
+
+<div class="container">
+    <div class="row">
+        <div class="col-lg-6 col-md-12 mx-auto py-4">
+            <div id="msg" class="col-12 px-5 fade-page">
+            {% for message in messages %}  
+            <div class="alert {{ message.tags }} alert-dismissible fade show" role="alert">
+            {{ message }}
+            </div>
+            {% endfor %}
+            </div>
+            <div class="card">
+                <div class="card-header">
+                    <h1>My Details</h1>
+                </div>
+                <div class="card-body">
+                    <table class="table table-bordered">
+                        <tbody>
+                            <tr>
+                                <th>Resident ID</th>
+                                <td>{{user.residentsinfo.res_id}}</td>
+                            </tr>
+                            <tr>
+                                <th>Username</th>
+                                <td>{{userinfo.username}}</td>
+                            </tr>
+                            <tr>
+                                <th>Fullname</th>
+                                <td>{{userinfo.residentsinfo.firstname}} {{userinfo.residentsinfo.middlename}} {{userinfo.residentsinfo.lastname}} {{userinfo.residentsinfo.suffix}}</td>
+                            </tr>
+                            <tr>
+                                <th>Email</th>
+                                <td>{{userinfo.email}}</td>
+                            </tr>
+                            <tr>
+                                <th>Join Date</th>
+                                <td>{{user.date_joined}}</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                    <a href="{% url 'password_change' %}" class="btn-theme -btn2 col-12 col-md-5">Change Password</a>
+                    <a href="{% url 'changeUsername'%}" class="btn-theme -btn2 col-12 col-md-5">Change Username</a>
+                    <br>
+                    <br>
+                    <a href="{% url 'changeEmail' %}" class="btn-theme -btn2 col-12 col-md-5">Change Email</a>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<script>
+    setTimeout(function(){
+        if ($('#msg').length > 0){
+            $('#msg').remove();
+        }
+    }, 2000)
+</script>
+
+{% endblock content %}

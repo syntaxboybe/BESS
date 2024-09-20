@@ -1,0 +1,132 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Barangay Business Permit</title>
+</head>
+<style>
+    p {
+        margin: 0;
+        padding: 0;
+    }
+    .p1 {
+        font-family: "Times New Roman", Times, serif;
+    }
+    .p2 {
+        font-family: Arial, Helvetica, sans-serif;
+    }
+
+    table {
+        line-height: normal;
+    }
+
+    .border_underline{
+        border-bottom: 1px solid rgb(0, 0, 0); 
+    }
+
+    .border_topline{
+        border-top: 1px solid rgb(0, 0, 0); 
+    }
+</style>
+
+<body>
+    <table width="100%" cellpadding="0">
+        <tr>
+            <td align="center" >
+                <img src="static/img/poblacionlogo.png" alt="" width="80">
+            </td>
+    
+            <td align="center">
+                <div class="remove_space">
+                    <p class="p1" style="font-size: 16px;"><b>Republic of the Philippines</b></p>
+                    <p class="p1" style="font-size: 14px;">Province of Misamis Oriental</p>
+                    <p class="p1" style="font-size: 14px;">Municipality of Naawan</p>
+                    <p class="p2" style="font-size: 14px;"><b>BARANGAY POBLACION</b></p>
+                    <p class="p2" style="color: red; font-size: 10px;">049-502-9459</p>
+                </div>
+            </td>
+    
+            <td align="center">
+                <img src="static/img/naawanlogo.jpg" alt="" width="80">
+            </td>
+        </tr>
+
+        <tr>
+            <td colspan="3" align="center">
+                <br><br><br><br><br>
+                <p class="p2" style="font-size: 16px;"><b><i>OFFICE OF THE PUNONG BARANGAY</i></b></p>
+                <hr width="80%" style="margin-top:0;">
+                <br>
+                <p class="p2" style="font-size: 16px;"><b><i>CERTIFICATION</i></b></p>
+                <br><br><br><br><br><br><br>
+            </td>
+            
+        </tr>
+
+        <tr>
+            <td colspan="3" style="margin-left: 70px;">
+                <p class="p2" style="font-size: 14px;"><b><i>TO WHOM IT MAY CONCERN:</i></b></p>
+                <br><br>
+            </td>
+        </tr>
+
+        <tr>
+            <td colspan="3" style="margin-left: 70px; margin-right: 70px;">
+                <p class="p2" style="font-size: 14px;">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; This is to certify that, <b><i>{{ residency_certificate.res_id }}</i></b>, of legal age, Filipino, single, and a resident of Barangay Poblacion, Naawan, Misamis Oriental.<b><i>{{ residency_certificate.res_id.years_resided }}</i></b> hanggang kasalukuyan.</p>
+                <br><br><br>
+                <p class="p2" style="font-size: 14px;">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; This certification is being issued to <b><i>{{ residency_certificate.res_id }}</i></b>
+                in order to use in: <b><i>{{ residency_certificate.purpose }}</i></b></p>
+                <br><br><br>
+                <p class="p2" style="font-size: 14px;">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Issued this <b><i>{{ residency_certificate.date_released.day }}</i></b> 
+                    ng <b><i>{{residency_certificate.date_released|date:"F"}} {{residency_certificate.date_released.year}}.</i></b> at Barangay Poblacion, Naawan, Misamis Oriental.</p>
+                </p>
+            </td>
+        </tr>
+    
+
+        <tr>
+            <td VALIGN = Top colspan="3" style="margin-left: 70px; margin-right: 70px;" >
+                <br><br><br><br><br><br>
+                <table>
+                    <tr>
+                        <td>
+                            
+                        </td>
+
+                        <td>
+                            <p class="p2" style="font-size: 14px;"><i>Confirming:</i></p>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td style="display:block; margin-left: 400px;">
+                            <img src="static/img/captain_signature.png" height="60">
+                            
+                        </td>
+
+                        <td>
+                            <br>
+                            <br>
+                            <p class="p2" style="font-size: 16px; text-decoration: underline;"><b>HON. GALIO DAMACIA</b></p>
+                            <p class="p2" style="font-size: 14px;">Barangay Chairman, Poblacion</p>
+                        </td>
+                    </tr>
+                </table>  
+            </td>
+        </tr>
+      </table>
+
+      <br><br><br><br>
+      <table width=100% align=center style="margin-left: 70px; margin-right: 70px;">
+          <tr>
+              <td colspan=3 align="right">
+                  <br>
+                      <p>Transaction ID: {{residency_certificate.transaction_id}}</p>
+                  <br>
+              </td>
+          </tr>
+      </table>
+
+</body>
+</html>

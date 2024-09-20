@@ -1,0 +1,67 @@
+{% extends "UsersideTemplate/base.html" %}
+{% load static %}
+{% block content %}
+
+<div class="video-wrapper" style="height: 300px;">
+
+    <img class="imageheader" src="{% static 'img/poblacionbg.png'%}" alt="">
+  
+    <div class="header">
+      <h1 class="display-1"><b>ABOUT BARANGAY POBLACION</b></h1>
+    </div>
+</div>
+
+<br>
+<br>
+<br>
+
+
+<div class="container pt-5">
+    <div class="row">
+        
+        <div class="col-lg-6 pt-2">
+            <img class="float-end" src="{% static 'img/brgyhall.jpg'%}" width="600">
+        </div>
+
+        <div class="col-lg-6">
+            <h2>About Barangay Poblacion Naawan</h2>
+            <p>The Municipality of Naawan is known as a fourth-class municipality located in the province of Misamis Oriental that is composed of 20,000 estimated population in the year 2020. Naawan was once called as the cleanest town in the Philippines in the year 2008 and one of the Mindanao State Universities is located in this area. It is located near the ocean and has a total area of 88.50 km2.<br>
+
+                <br>Poblacion is one of the barangays found in Naawan. It is located on the island of Mindanao at roughly 8.4327, 124.2919. At these coordinates, the elevation is calculated to be 10.0 meters or 32.8 feet above mean sea level. It is composed of 11 purok and the age group with the largest population in Poblacion, according to the 2015 Census, is 15 to 19, with 707 people. The age category with the lowest population is 80 and older, with 38 people. Poblacion's population increased by 2,990 persons over the course of 30 years, from 2,724 in 1990 to 5,714 in 2020. The most recent census data for 2020 show a 3.39% rise, or an increase of 838 individuals, over the previous population of 4,876 in 2015.
+                <br>
+                <br>It has 3 educational institutions:
+                <br>-Mindanao State University - Naawan Campus
+                <br>-MSUN-Integrated Developmental School
+                <br>-Naawan Central School
+                <br>
+                <br>Barangay Chairman:
+                <br>NAME</p>
+        </div>
+    </div>
+</div>
+
+
+<div class="container" style="padding-top: 10%;">
+    <div class="row">
+
+        <div class="col-lg-6 p-5 pt-5">
+            <div class=""><h2>Map of Poblacion Naawan</h2></div>
+            <div class="h-auto d-inline-block"><p><b>Address</b> : Poblacion, Naawan, Misamis Oriental</p></div>
+            <div class="h-auto d-inline-block"><p><b>Coordinate</b> : <a href="https://www.google.com/maps/place/8%C2%B025'52.0%22N+124%C2%B017'28.2%22E/@8.4311103,124.2911532,811m/data=!3m2!1e3!4b1!4m4!3m3!8m2!3d8.4311103!4d124.2911532?entry=ttu&g_ep=EgoyMDI0MDkxNi4wIKXMDSoASAFQAw%3D%3D">8.436163644257281, 124.28952929292097</a></p></div>
+            <br>
+            <!--<div class="h-auto d-inline-block"><p><b>Land Area</b> : 32.1 hectares</p></div>-->
+            <!--<div class="h-auto d-inline-block"><p><b>Boundaries</b> : West - Sucol, East - Los Baños, South - Sucol and South - Sucol</p></div>-->
+            <div class="h-auto d-inline-block"><p><b>Number of Sitios/Purok</b> : 11</p></div>
+            <div class="h-auto d-inline-block"><p><b>List of Sitios/Purok</b> : Purok I, Purok II, Purok III, Purok IV-A/B, Purok V, Purok VI, Purok VII-A/B, Purok VII</p></div>
+        </div>
+
+        <div class="col-lg-6 p-5 pt-5">
+            <!--Google map-->
+               <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d1041.9617279974166!2d124.28920041516452!3d8.433772339290316!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x32556974a5891a17%3A0x5cb205ab13882d52!2sPOB!5e1!3m2!1sen!2sph!4v1726767105694!5m2!1sen!2sph" width="600" height="450" style="border:0;" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
+        </div>  
+            <!--Google Maps-->            
+        </div> 
+    </div>
+</div>
+
+{% endblock content %}

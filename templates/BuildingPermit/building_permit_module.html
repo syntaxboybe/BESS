@@ -1,0 +1,34 @@
+{% extends "../base.html" %}
+{% load static %}
+{% block content %}
+<style>
+    .min-size{
+        min-height: 500px;
+    }
+</style>
+<div class="container-fluid bg-white rounded fade-page min-size">
+
+    <div class="row">
+        <div class="col-12 building-header-bg rounded-top">
+            <h4 class="text-white py-4 px-3"><i class="lar la-building fs-3"></i> Building Permit</h4>
+        </div>
+    </div>
+    <div class="row p-3 g-0">
+        <div class="col-lg-12">
+            <div class="fade-page" hx-trigger="load, BuildingPermitList from:body" hx-get="{% url 'building_permit_list' %}" hx-target="this">
+                <center>
+                    <div class="spinner-border" role="status">
+                        <span class="visually-hidden">Loading...</span>
+                    </div>
+                </center>
+            </div>
+        </div>   
+    </div>
+</div>
+
+<!-- modal -->
+<div id="modal" class="modal fade">
+    <div id="dialog" class="modal-dialog" hx-target="this"></div>
+</div> 
+
+{% endblock content %}

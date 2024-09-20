@@ -1,0 +1,51 @@
+{% extends "UsersideTemplate/ServicePortalBase.html" %}
+{% load static %}
+{% block content %}
+
+<div class="container bg-white rounded shadow p-5">
+<form action="." method="POST">
+{% csrf_token %}
+    <div class="row">
+        <div class="col-12 d-flex justify-content-center" style="color: #355389;">
+            <h3>BARANGAY CLEARANCE</h3>
+        </div>
+        <div class="col-12 d-flex justify-content-center pb-4">
+            <p>Fill-up the form and submit</p>
+        </div>
+        
+        <div class="col-lg-2 col-md-4 col-12">
+            <img src="/media/{{userinfo.residentsinfo.image}}" class="img-thumbnail" width="150">
+        </div>
+
+        <div class="col-lg-10 col-md-8 col-12">
+            <div><h5><strong>Name:</strong> {{userinfo.residentsinfo.firstname}} {{userinfo.residentsinfo.middlename|slice:"0:1"}}. {{userinfo.residentsinfo.lastname}}</h5></div>
+            <div><h5><strong>Birthdate:</strong> {{userinfo.residentsinfo.birthdate}}</h5></div>
+            <div><h5><strong>Birthplace:</strong> {{userinfo.residentsinfo.birthplace}}</h5></div>
+            <div><h5><strong>Civil Status:</strong> {{userinfo.residentsinfo.civil_status}}</h5></div>
+            <div><h5><strong>Resided in Poblacion Naawan Since:</strong> {{userinfo.residentsinfo.years_resided}}</h5></div>
+        </div>
+
+        <hr>
+
+            <div class="col-12 col-lg-2 pb-3">
+                <p class="h6">Enter your age</p>
+                {{form.age}}
+            </div>
+
+            <div class="col-12 col-lg-10">
+                <p class="h6">Purpose of getting barangay clearance</p>
+                {{form.purpose}}
+            </div>
+
+            <div class="col-12 pt-5 d-flex justify-content-end">
+                <a href="{% url 'service_portal'%}" class="btn-theme -btn1 col-12 col-md-3 text-center">Cancel</a>
+                &nbsp;&nbsp;
+                <input type="submit" name="btnLogin" class="btn-theme col-12 col-md-3 -btn2" value="Submit">
+            </div>
+    </div>
+</form>
+</div>
+<br>
+<br>
+<br>
+{% endblock content %}

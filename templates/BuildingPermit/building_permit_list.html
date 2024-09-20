@@ -1,0 +1,105 @@
+<div class="table-responsive fade-load">
+
+    <div class="py-2">
+        <div class="row g-3 align-items-center">
+            <div class="col-auto">
+              <label class="col-form-label">Select Status</label>
+            </div>
+            <div class="col-auto">
+                <div id="status"></div>
+            </div>
+          </div>
+    </div>
+
+    <table id="building" class="table table-striped-columns table-bordered align-middle mb-0 shadow-sm fade-page">
+        <thead>
+            <tr>
+                <th>Resident ID</th>
+                <th scope="col">Requestor</th>
+                <th scope="col">Proposed Construction</th>
+                <th scope="col">Total Area</th>
+                <th scope="col">Location</th>
+                <th scope="col">Owner</th>
+                <th scope="col">Status</th>
+                <th scope="col " class="text-center">Action</th>
+            </tr>
+        </thead>
+        
+        <tbody>
+            {% for building_permit in building_permit_list %}
+            <tr class="table-text">
+                <td class="text-center">{{ building_permit.res_id.res_id }}</td>
+                <td>{{ building_permit.res_id }}</td>
+                <td>{{ building_permit.proposed_construction }}</td>
+                <td>{{ building_permit.total_area}}</td>
+                <td>{{ building_permit.location}}</td>
+                <td>{{ building_permit.owner}}</td>
+                <td><span class="">{{ building_permit.status}}</span></td>
+                <td class="text-center">
+                    <a target=”_blank” type="button" class="btn btn-secondary bg-gradient" href="{% url 'generate_building_permit' building_permit.id %}">
+                        <i class="las la-file-pdf fs-4" style="vertical-align: middle;"></i>
+                        <span style="vertical-align: middle;">Generate</span>
+                    </a>
+
+                    <button class="btn btn-primary bg-gradient" hx-get="{% url 'edit_building_permit' building_permit.id %}" hx-target="#dialog">
+                        <i class="las la-pen fs-4" style="vertical-align: middle;"></i>
+                    </button>
+
+                    <button class="btn btn-danger bg-gradient" hx-get="{% url 'delete_building_permit' building_permit.id %}" hx-target="#dialog">
+                        <i class="las la-trash-alt fs-4" style="vertical-align: middle;"></i>
+                    </button>
+                </td>
+            </tr>
+            
+            {% empty %}
+            
+            <tr align="center">
+                <td colspan="8">
+                    <h6 class="text-muted p-4">CURRENTLY NO DATA AVAILABLE</h6>
+                </td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+</div>
+
+<script>
+    $(document).ready(function() {
+    var table = $('#building').DataTable({
+        stateSave: true
+        });
+
+        yadcf.init(table, [
+            {
+                column_number : 6, 
+                filter_default_label: "All",
+                filter_container_id: "status",
+                data: ["Pending", "Ready", "Released"],
+                style_class: 'form-select',
+                filter_reset_button_text: false
+            }
+        ]);
+    });
+
+    $('#building')
+    .find('span')
+        .each(function () {
+        if ($(this).html() == 'Released') {
+            $(this).addClass('released-status');
+        }
+        if ($(this).html() == 'Ready') {
+            $(this).addClass('ready-status');
+        }
+        if ($(this).html() == 'Pending') {
+            $(this).addClass('pending-status');
+        }
+    });
+</script>
+
+<style>
+    .fade-load {
+        animation: fadeInAnimation ease 0.3s;
+        animation-iteration-count: 1;
+        animation-fill-mode: forwards;
+    }
+</style>
