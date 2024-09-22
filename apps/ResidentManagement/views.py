@@ -87,7 +87,7 @@ def single(request):
 
 def adminLogout(request):
     logout(request)
-    messages.success(request, 'Succefull logout')
+    messages.success(request, 'logout successfully')
     return redirect(reverse('loginPage'))
 
 
@@ -264,7 +264,7 @@ def add_profile(request):
                 group = Group.objects.get(name='resident')
                 user.groups.add(group)
                 
-                subject = 'Welcome to Barangay Masili'
+                subject = 'Welcome to Barangay Poblacion'
                 message = f'Heres your\nUsername: {user.username}\nPassword: {random_password}'
                 email_from = settings.EMAIL_HOST_USER
                 recipient_list = [user.email]
