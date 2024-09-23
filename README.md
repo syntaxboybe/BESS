@@ -12,6 +12,7 @@ A Capstone project for the completion of the Bachelor of Science in Information 
 ## Run Project in Virtual Env
 
 - Open the project to the terminal.
+- OPTIONAL: if virtualenv is not yet downloaded (`pip install virtualenv`)
 - In new terminal run the command (`virtualenv env`)
 - change directory to the env/script and type to the terminal (`activate`)
 - rename the dlib directory according to the name of the directory in the dlib folder (dlib @ file:///C:/Users/Name/Desktop/BESS/dlib-19.22.99-cp310-cp310-win_amd64.whl
