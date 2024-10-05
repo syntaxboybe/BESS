@@ -45,7 +45,7 @@
     </div>
 
     <div class="main-container d-flex">
-        <div class="sidebar" id="side_nav">
+        <div class="sidebar" id="side_nav" style="background-color: #355389;">
             <div class="header-box px-2 pt-3 pb-4 d-flex justify-content-between">
 
                 <div class="row">
@@ -53,7 +53,7 @@
                         <div><img src="{%static 'img/poblacionlogo.png' %}" height="60"></div>
                     </div>
                     <div class="col-10 px-4 pt-1">
-                        <div class=""><h4 class="" style="color: #F98724;">BARANGAY POBLACION</h4></div>
+                        <div class=""><h5 class="" style="color: #F98724;">BARANGAY POBLACION</h5></div>
                         <div class="" style="margin-top: -9px;"><h5 class="text-white">Barangay E-Service System</h5></div>
                     </div>
                 </div>
@@ -64,11 +64,32 @@
 
             <ul class="list-unstyled px-2">
                 <li class=""><a href="{% url 'dashboard' %}" class="text-decoration-none px-3 py-2 d-block"><i class="las la-chart-area fs-5"></i> Dashboard</a></li>
+            
+            <li class=""><a href="{% url 'announcementPage' %}" class="text-decoration-none px-3 py-2 d-block"><i class="las la-bullhorn fs-5"></i> Announcements</a></li>
+                {% if request.user.groups.all.0.name == 'superadmin' %}
+
+<div class="side-sub-menu py-2">
+                    <div class="accordion-button px-3 py-2" data-bs-toggle="collapse" href="#collapseAccounts" aria-expanded="false" aria-controls="collapseAccounts">
+                        <a class="text-decoration-none d-block">
+                            <i class="las la-address-card"></i> Accounts
+                        </a>
+                    </div>
+
+                    <div class="ps-3 sub-content">
+                        <ul class="list-unstyled px-2 py-2 collapse" id="collapseAccounts">
+
+                <li class=""><a href="{% url 'add_official_account' %}" class="text-decoration-none px-3 py-2 d-block"><i class="las la-user-plus fs-5"></i> Add Account</a></li>
+                <li class=""><a href="{% url 'officialList' %}" class="text-decoration-none px-3 py-2 d-block"><i class="las la-user-circle fs-5"></i> Account List</a></li>
+                </ul>
+                    </div>
+                <hr class="h-color mx-3">
+                {% endif %}
+
 
                 <div class="side-sub-menu py-2">
                     <div class="accordion-button px-3 py-2" data-bs-toggle="collapse" href="#collapseResident" aria-expanded="false" aria-controls="collapseResident">
                         <a class="text-decoration-none d-block">
-                            <i class="las la-address-card"></i> Residents
+                            <i class="las la-address-card"></i> Profiling
                         </a>
                     </div>
 
@@ -95,19 +116,25 @@
 
                 </div>
 
-                
-                <li class=""><a href="{% url 'announcementPage' %}" class="text-decoration-none px-3 py-2 d-block"><i class="las la-bullhorn fs-5"></i> Announcements</a></li>
-                <hr class="h-color mx-3">
-                {% if request.user.groups.all.0.name == 'superadmin' %}
-                <li class=""><a href="{% url 'add_official_account' %}" class="text-decoration-none px-3 py-2 d-block"><i class="las la-user-plus fs-5"></i> Add Official Account</a></li>
-                <li class=""><a href="{% url 'officialList' %}" class="text-decoration-none px-3 py-2 d-block"><i class="las la-user-circle fs-5"></i> Official Account List</a></li>
-                <hr class="h-color mx-3">
-                {% endif %}
+<div class="side-sub-menu py-2">
+                    <div class="accordion-button px-3 py-2" data-bs-toggle="collapse" href="#collapseIssuances" aria-expanded="false" aria-controls="collapseIssuances">
+                        <a class="text-decoration-none d-block">
+                            <i class="las la-address-card"></i> Issuances
+                        </a>
+                    </div>
+
+                    <div class="ps-3 sub-content">
+                        <ul class="list-unstyled px-2 py-2 collapse" id="collapseIssuances">
+
                 <li class=""><a href="{% url 'clearance'%}" class="text-decoration-none px-3 py-2 d-block"><i class="las la-file-alt fs-5"></i> Barangay Clearance</a></li>
                 <li class=""><a href="{% url 'indigency_request' %}" class="text-decoration-none px-3 py-2 d-block"><i class="las la-feather-alt fs-5"></i> Certificate of Indigency</a></li>
                 <li class=""><a href="{% url 'business_permit_module' %}" class="text-decoration-none px-3 py-2 d-block"><i class="las la-file-contract fs-5"></i> Barangay Business Permit</a></li>
                 <li class=""><a href="{% url 'building_permit_module' %}" class="text-decoration-none px-3 py-2 d-block"><i class="lar la-building fs-5"></i> Building Permit</a></li>
                 <li class=""><a href="{% url 'residency_certificate_module' %}" class="text-decoration-none px-3 py-2 d-block"><i class="las la-certificate fs-5"></i> Certificate of Residency</a></li>
+                
+                </ul>
+                    </div>
+
                 <hr class="h-color mx-3">
                 <li class=""><a href="{% url 'adminProfile' %}" class="text-decoration-none px-3 py-2 d-block"><i class="las la-user fs-5"></i> Profile </a></li>
                 <hr class="h-color mx-3">
