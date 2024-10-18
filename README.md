@@ -59,33 +59,42 @@ Password: admin
 - excalidraw - wireframes and diagram tool
 
 ## Landing Page
-
-## Announcment Page
-
+![alt text](landingPage.png)
+## About Page
+![alt text](aboutPage.png)
+## Contact Page
+![alt text](contactPage.png)
+## Login Page
+![alt text](loginPage.png)
+## Forgot Password Page
+![alt text](forgotPassword.png)
+## Announcement Page
+![alt text](brgyAnnouncement.png)
 ## Document Requision Portal
-
+![alt text](requestDoc.png)
 ## Requested Document Status Page
-
+![alt text](requestTracker.png)
 ## Dashboard
-
+![alt text](dashboard.png)
 ## List of Resident management
-
+![alt text](resRecordManage.png)
 ## Face Recognition Page
-
+![alt text](faceRecognition.png)
 ## Resident Profile Page
-
+![alt text](residentProfile.png)
 ## Announcement Management Page
-
+![alt text](announcementManage.png)
 ## Requested Barangay Clearance Page
-
+![alt text](brgyClearance.png)
 ## Requested Certificate of Indigency
-
+![alt text](certofIndigency.png)
 ## Requested Business Permit
-
+![alt text](businesspermit.png)
 ## Requested Building Permit
-
-## Requested Certificate of Indigency
-
+![alt text](buildingPermit.png)
+## Requested Certificate of Residency
+![alt text](certofResidency.png)
 ## Requested Document Logs
-
+![alt text](requestDoclogs.png)
 ## Daily Issuance Report
+![alt text](dailyreports.png)
