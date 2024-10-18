@@ -33,6 +33,8 @@ A Capstone project for the completion of the Bachelor of Science in Information 
 - In the terminal go back to the main project directory and type to the terminal (`python manage.py runserver`)
 - click this localhost link to open the landing page http://127.0.0.1:8000/Barangay%20Poblacion/Home/
 
+### Test Account
+
 Superadmin Account
 Username : admin
 Password: admin
@@ -54,6 +56,7 @@ Password: admin
 - datatables - table plugin
 - postgresql - database
 - lazyvim - IDE
+- excalidraw - wireframes and diagram tool
 
 ## Landing Page
 
