@@ -1,103 +1,117 @@
 <div class="table-responsive fade-load">
-
-    <div class="py-2">
-        <div class="row g-3 align-items-center">
-            <div class="col-auto">
-              <label class="col-form-label">Select Status</label>
-            </div>
-            <div class="col-auto">
-                <div id="status"></div>
-            </div>
-          </div>
+  <div class="py-2">
+    <div class="row g-3 align-items-center">
+      <div class="col-auto">
+        <label class="col-form-label">Select Status</label>
+      </div>
+      <div class="col-auto">
+        <div id="status"></div>
+      </div>
     </div>
+  </div>
 
-    <table id="indigency" class="table table-striped-columns table-bordered align-middle mb-0 shadow-sm">
-        <thead>
-            <tr>
-                <th>Resident ID</th>
-                <th scope="col">Resident's Name</th>
-                <th scope="col">Date Requested</th>
-                <th scope="col">Date Released</th>
-                <th scope="col">Transaction ID</th>
-                <th scope="col">Status</th>
-                <th scope="col " class="text-center">Action</th>
-            </tr>
-        </thead>
-        
-        <tbody>
-            {% for indigency in indigency_list %}
-            <tr class="table-text">
-                <td class="text-center">{{ indigency.res_id.res_id }}</td>
-                <td>{{ indigency.res_id }}</td>
-                <td>{{ indigency.date_requested }}</td>
-                <td>{{ indigency.date_released}}</td>
-                <td>{{ indigency.transaction_id}}</td>
-                <td><span class="">{{ indigency.status}}</span></td>
-                <td class="text-center">
-                    <a target=”_blank” type="button" class="btn btn-secondary bg-gradient" href="{% url 'generate_indigency' indigency.id %}">
-                        <i class="las la-file-pdf fs-4" style="vertical-align: middle;"></i>
-                        <span style="vertical-align: middle;">Generate</span>
-                    </a>
+  <table
+    id="indigency"
+    class="table table-striped-columns table-bordered align-middle mb-0 shadow-sm"
+  >
+    <thead>
+      <tr>
+        <th>Resident ID</th>
+        <th scope="col">Resident's Name</th>
+        <th scope="col">Date Requested</th>
+        <th scope="col">Date Released</th>
+        <th scope="col">Transaction ID</th>
+        <th scope="col">Status</th>
+        <th scope="col " class="text-center">Action</th>
+      </tr>
+    </thead>
 
-                    <button class="btn btn-primary bg-gradient" hx-get="{% url 'edit_indigency' indigency.id %}" hx-target="#dialog">
-                        <i class="las la-pen fs-4" style="vertical-align: middle;"></i>
-                    </button>
+    <tbody>
+      {% for indigency in indigency_list %}
+      <tr class="table-text">
+        <td class="text-center">{{ indigency.res_id.res_id }}</td>
+        <td>{{ indigency.res_id }}</td>
+        <td>{{ indigency.date_requested }}</td>
+        <td>{{ indigency.date_released}}</td>
+        <td>{{ indigency.transaction_id}}</td>
+        <td><span class="">{{ indigency.status}}</span></td>
+        <td class="text-center">
+          <a
+            target="”_blank”"
+            type="button"
+            class="btn btn-secondary bg-gradient"
+            href="{% url 'generate_indigency' indigency.id %}"
+          >
+            <i class="las la-file-pdf fs-4" style="vertical-align: middle"></i>
+            <span style="vertical-align: middle">Preview</span>
+          </a>
 
-                    <button class="btn btn-danger bg-gradient" hx-get="{% url 'delete_indigency' indigency.id %}" hx-target="#dialog">
-                        <i class="las la-trash-alt fs-4" style="vertical-align: middle;"></i>
-                    </button>
-                    
-                </td>
-            </tr>
-            
-            {% empty %}
-            <tr align="center">
-                <td colspan="7">
-                    <h6 class="text-muted p-4">CURRENTLY NO DATA AVAILABLE</h6>
-                </td>
-            </tr>
-            {% endfor %}
-        </tbody>
-    </table>
+          <button
+            class="btn btn-primary bg-gradient"
+            hx-get="{% url 'edit_indigency' indigency.id %}"
+            hx-target="#dialog"
+          >
+            <i class="las la-pen fs-4" style="vertical-align: middle"></i>
+          </button>
+
+          <button
+            class="btn btn-danger bg-gradient"
+            hx-get="{% url 'delete_indigency' indigency.id %}"
+            hx-target="#dialog"
+          >
+            <i class="las la-sync fs-4" style="vertical-align: middle"></i>
+          </button>
+        </td>
+      </tr>
+
+      {% empty %}
+      <tr align="center">
+        <td colspan="7">
+          <h6 class="text-muted p-4">CURRENTLY NO DATA AVAILABLE</h6>
+        </td>
+      </tr>
+      {% endfor %}
+    </tbody>
+  </table>
 </div>
 
 <script>
-    $(document).ready(function() {
-        var table = $('#indigency').DataTable({
-        stateSave: true
-        });
-
-        yadcf.init(table, [
-            {
-            column_number : 5, 
-            filter_default_label: "All",
-            filter_container_id: "status",
-            data: ["Pending", "Ready", "Released"],
-            style_class: 'form-select',
-            filter_reset_button_text: false
-            }
-        ]);
+  $(document).ready(function () {
+    var table = $("#indigency").DataTable({
+      stateSave: true,
     });
 
-    $('#indigency')
-    .find('span')
-        .each(function () {
-        if ($(this).html() == 'Released') {
-            $(this).addClass('released-status');
-        }
-        if ($(this).html() == 'Ready') {
-            $(this).addClass('ready-status');
-        }
-        if ($(this).html() == 'Pending') {
-            $(this).addClass('pending-status');
-        }
+    yadcf.init(table, [
+      {
+        column_number: 5,
+        filter_default_label: "All",
+        filter_container_id: "status",
+        data: ["Pending", "Ready", "Released"],
+        style_class: "form-select",
+        filter_reset_button_text: false,
+      },
+    ]);
+  });
+
+  $("#indigency")
+    .find("span")
+    .each(function () {
+      if ($(this).html() == "Released") {
+        $(this).addClass("released-status");
+      }
+      if ($(this).html() == "Ready") {
+        $(this).addClass("ready-status");
+      }
+      if ($(this).html() == "Pending") {
+        $(this).addClass("pending-status");
+      }
     });
 </script>
-    
+
 <style>
-    .fade-load {
-        animation: fadeInAnimation ease 0.3s;
-        animation-iteration-count: 1;
-        animation-fill-mode: forwards;
-    }
+  .fade-load {
+    animation: fadeInAnimation ease 0.3s;
+    animation-iteration-count: 1;
+    animation-fill-mode: forwards;
+  }
 </style>

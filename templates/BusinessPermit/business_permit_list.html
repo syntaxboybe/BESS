@@ -1,109 +1,121 @@
 <div class="table-responsive fade-load">
-
-    <div class="py-2">
-        <div class="row g-3 align-items-center">
-            <div class="col-auto">
-              <label class="col-form-label">Select Status</label>
-            </div>
-            <div class="col-auto">
-                <div id="status"></div>
-            </div>
-          </div>
+  <div class="py-2">
+    <div class="row g-3 align-items-center">
+      <div class="col-auto">
+        <label class="col-form-label">Select Status</label>
+      </div>
+      <div class="col-auto">
+        <div id="status"></div>
+      </div>
     </div>
-    
-    <table id="business" class="table table-striped-columns table-bordered align-middle mb-0 shadow-sm">
-        <thead>
-            <tr>
-                <th>Resident ID</th>
-                <th scope="col">Resident's Name</th>
-                <th scope="col">Business Name</th>
-                <th scope="col">Business Address</th>
-                <th scope="col">Type of Business</th>
-                <th scope="col">OR NUMBER</th>
-                <th scope="col">Status</th>
-                <th scope="col " class="text-center">Action</th>
-            </tr>
-        </thead>
-        
-        <tbody>
-            {% for business_permit in business_permit_list %}
-            <tr class="table-text">
-                <td class="text-center">{{ business_permit.res_id.res_id }}</td>
-                <td>{{ business_permit.res_id }}</td>
-                <td>{{ business_permit.business_name }}</td>
-                <td>{{ business_permit.location}}</td>
-                <td>{{ business_permit.business_nature}}</td>
-                <td>{{ business_permit.previous_or}}</td>
-                <td><span class="">{{ business_permit.status}}</span></td>
-                <td class="text-center">
+  </div>
 
-                    <a target=”_blank” type="button" class="btn btn-secondary bg-gradient" href="{% url 'generate_business_permit' business_permit.id %}">
-                        <i class="las la-file-pdf fs-4" style="vertical-align: middle;"></i>
-                        <span style="vertical-align: middle;">Generate</span>
-                    </a>
+  <table
+    id="business"
+    class="table table-striped-columns table-bordered align-middle mb-0 shadow-sm"
+  >
+    <thead>
+      <tr>
+        <th>Resident ID</th>
+        <th scope="col">Resident's Name</th>
+        <th scope="col">Business Name</th>
+        <th scope="col">Business Address</th>
+        <th scope="col">Type of Business</th>
+        <th scope="col">OR NUMBER</th>
+        <th scope="col">Status</th>
+        <th scope="col " class="text-center">Action</th>
+      </tr>
+    </thead>
 
-                    <button class="btn btn-primary bg-gradient" hx-get="{% url 'edit_business_permit' business_permit.id %}" hx-target="#dialog">
-                        <i class="las la-pen fs-4" style="vertical-align: middle;"></i>
-                    </button>
+    <tbody>
+      {% for business_permit in business_permit_list %}
+      <tr class="table-text">
+        <td class="text-center">{{ business_permit.res_id.res_id }}</td>
+        <td>{{ business_permit.res_id }}</td>
+        <td>{{ business_permit.business_name }}</td>
+        <td>{{ business_permit.location}}</td>
+        <td>{{ business_permit.business_nature}}</td>
+        <td>{{ business_permit.previous_or}}</td>
+        <td><span class="">{{ business_permit.status}}</span></td>
+        <td class="text-center">
+          <a
+            target="”_blank”"
+            type="button"
+            class="btn btn-secondary bg-gradient"
+            href="{% url 'generate_business_permit' business_permit.id %}"
+          >
+            <i class="las la-file-pdf fs-4" style="vertical-align: middle"></i>
+            <span style="vertical-align: middle">Preview</span>
+          </a>
 
-                    <button class="btn btn-danger bg-gradient" hx-get="{% url 'delete_business_permit' business_permit.id %}" hx-target="#dialog">
-                        <i class="las la-trash-alt fs-4" style="vertical-align: middle;"></i>
-                    </button>
+          <button
+            class="btn btn-primary bg-gradient"
+            hx-get="{% url 'edit_business_permit' business_permit.id %}"
+            hx-target="#dialog"
+          >
+            <i class="las la-pen fs-4" style="vertical-align: middle"></i>
+          </button>
 
+          <button
+            class="btn btn-danger bg-gradient"
+            hx-get="{% url 'delete_business_permit' business_permit.id %}"
+            hx-target="#dialog"
+          >
+            <i class="las la-sync fs-4" style="vertical-align: middle"></i>
+          </button>
+        </td>
+      </tr>
 
-                </td>
-            </tr>
-            
-            {% empty %}
-            
-            <tr align="center">
-                <td colspan="8">
-                    <h6 class="text-muted p-4">CURRENTLY NO DATA AVAILABLE</h6>
-                </td>
-            </tr>
-            
-            {% endfor %}
-        </tbody>
-    </table>
+      {% empty %}
+
+      <tr align="center">
+        <td colspan="8">
+          <h6 class="text-muted p-4">CURRENTLY NO DATA AVAILABLE</h6>
+        </td>
+      </tr>
+
+      {% endfor %}
+    </tbody>
+  </table>
 </div>
 
 <script>
-    $(document).ready(function() {
-      var table = $('#business').DataTable({
-        stateSave: true
-      });
-
-      yadcf.init(table, [
-            {
-            column_number : 6, 
-            filter_default_label: "All",
-            filter_container_id: "status",
-            data: ["Pending", "Ready", "Released"],
-            style_class: 'form-select',
-            filter_reset_button_text: false
-            }
-        ]);
+  $(document).ready(function () {
+    var table = $("#business").DataTable({
+      stateSave: true,
     });
 
-    $('#business')
-    .find('span')
-        .each(function () {
-        if ($(this).html() == 'Released') {
-            $(this).addClass('released-status');
-        }
-        if ($(this).html() == 'Ready') {
-            $(this).addClass('ready-status');
-        }
-        if ($(this).html() == 'Pending') {
-            $(this).addClass('pending-status');
-        }
+    yadcf.init(table, [
+      {
+        column_number: 6,
+        filter_default_label: "All",
+        filter_container_id: "status",
+        data: ["Pending", "Ready", "Released"],
+        style_class: "form-select",
+        filter_reset_button_text: false,
+      },
+    ]);
+  });
+
+  $("#business")
+    .find("span")
+    .each(function () {
+      if ($(this).html() == "Released") {
+        $(this).addClass("released-status");
+      }
+      if ($(this).html() == "Ready") {
+        $(this).addClass("ready-status");
+      }
+      if ($(this).html() == "Pending") {
+        $(this).addClass("pending-status");
+      }
     });
 </script>
-    
+
 <style>
-    .fade-load {
-        animation: fadeInAnimation ease 0.3s;
-        animation-iteration-count: 1;
-        animation-fill-mode: forwards;
-    }
+  .fade-load {
+    animation: fadeInAnimation ease 0.3s;
+    animation-iteration-count: 1;
+    animation-fill-mode: forwards;
+  }
 </style>
