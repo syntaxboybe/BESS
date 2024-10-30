@@ -21,6 +21,7 @@
         <div class="card mb-3 border-0 shadow text-center" style="background-color: #355389;">
           <div class="card-body">
             <h1 class="display-6 text-white" style="font-weight: 600;">BARANGAY ANNOUNCEMENTS</h1>
+            <p class="text-white" id="currentDateTime" style="font-size: 1.25rem; font-weight: 400;"></p>
           </div>
         </div>
       </div>
@@ -51,7 +52,24 @@
                     </div>
                 </div>
             </div>
-          
+          <script>
+  // Function to format date and time
+  function formatDateTime() {
+    const options = { 
+      weekday: 'long', year: 'numeric', month: 'long', day: 'numeric', 
+      hour: '2-digit', minute: '2-digit', second: '2-digit' 
+    };
+    return new Date().toLocaleDateString('en-US', options);
+  }
+
+  // Set the date and time
+  document.getElementById('currentDateTime').innerText = "As of: " + formatDateTime();
+
+  // Update time every second if you want it to refresh
+  setInterval(() => {
+    document.getElementById('currentDateTime').innerText = "As of: " + formatDateTime();
+  }, 1000);
+</script>
             {% endfor %}
         </div>
     </div>
