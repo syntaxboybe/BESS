@@ -46,7 +46,7 @@
                     <img class="rounded-circle" src="/media/{{userinfo.residentsinfo.image}}" style="width: 45px; height: 45px; object-fit:cover;">
                   </div>
                   <div class="col-10 pt-2 ps-3">
-                    <div class=""><h5 class="" style="color: #F98724;"> {{userinfo.residentsinfo.firstname}} {{userinfo.residentsinfo.lastname}}</h5></div>
+                    <div class=""><h5 class="" style="color: #FFFFFF;"> {{userinfo.residentsinfo.firstname}} {{userinfo.residentsinfo.lastname}}</h5></div>
                     <div class="" style="margin-top: -10px;"><p class="text-white">Resident</p></div>
                   </div>
                 </div>
@@ -60,13 +60,7 @@
                 <li class=""><a href="{% url 'service_portal' %}" class="text-decoration-none px-3 py-2 d-block"><i class="lar la-file-alt fs-5"></i> Request Document</a></li>
                 <li class=""><a href="{% url 'document-status' %}" class="text-decoration-none px-3 py-2 d-block"><i class="las la-barcode fs-5"></i> Request Tracker</a></li>
                 <li class=""><a href="{% url 'profile' %}" class="text-decoration-none px-3 py-2 d-block"><i class="las la-user fs-5"></i> Profile</a></li>
-            </ul>
-            <hr class="h-color mx-3">
-
-            <ul class="list-unstyled px-2" >
-              <li class="" >
-                <a href="{% url 'userLogout' %}" class="text-decoration-none px-3 py-2 d-block" ><i class="las la-sign-out-alt fs-4" style="vertical-align: middle;"></i> Logout</a></li>
-              
+              <li class="" ><a href="{% url 'userLogout' %}" class="text-decoration-none px-3 py-2 d-block" ><i class="las la-sign-out-alt fs-4" style="vertical-align: middle;"></i> Logout</a></li>
             </ul>
         </div>
 

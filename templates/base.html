@@ -64,15 +64,14 @@
                 <button class="btn d-md-none d-block close-btn px-1 py-0 text-white"><i class="las la-bars fs-5"></i></button>
 
             </div>
-
             <ul class="list-unstyled px-2">
                 <li class=""><a href="{% url 'dashboard' %}" class="text-decoration-none px-3 py-2 d-block"><i class="las la-chart-area fs-5"></i> Dashboard</a></li>
             
-            <hr class="h-color mx-3">
+ {% if request.user.groups.all.0.name == 'superadmin' %}
             <li class=""><a href="{% url 'announcementPage' %}" class="text-decoration-none px-3 py-2 d-block"><i class="las la-bullhorn fs-5"></i> Announcements</a></li>
-             
-            {% if request.user.groups.all.0.name == 'superadmin' %}
-
+                {% endif %} 
+            
+                {% if request.user.groups.all.0.name == 'superadmin' %}
 <div class="side-sub-menu py-2">
                     <div class="accordion-button px-3 py-2" data-bs-toggle="collapse" href="#collapseAccounts" aria-expanded="false" aria-controls="collapseAccounts">
                         <a class="text-decoration-none d-block">
@@ -87,9 +86,9 @@
                 <li class=""><a href="{% url 'officialList' %}" class="text-decoration-none px-3 py-2 d-block"><i class="las la-user-circle fs-5"></i> Account List</a></li>
                 </ul>
                     </div>
-                {% endif %}
+                    {% endif %} 
 
-
+              {% if request.user.groups.all.0.name != 'superadmin' %}
                 <div class="side-sub-menu py-2">
                     <div class="accordion-button px-3 py-2" data-bs-toggle="collapse" href="#collapseResident" aria-expanded="false" aria-controls="collapseResident">
                         <a class="text-decoration-none d-block">
@@ -118,8 +117,9 @@
                         </ul>
                     </div>
 
-                </div>
+              {% endif %} 
 
+        {% if not request.user.groups.all.0.name == 'superadmin' %}
 <div class="side-sub-menu py-2">
                     <div class="accordion-button px-3 py-2" data-bs-toggle="collapse" href="#collapseIssuances" aria-expanded="false" aria-controls="collapseIssuances">
                         <a class="text-decoration-none d-block">
@@ -135,17 +135,19 @@
                 <li class=""><a href="{% url 'business_permit_module' %}" class="text-decoration-none px-3 py-2 d-block"><i class="las la-file-contract fs-5"></i> Barangay Business Permit</a></li>
                 <li class=""><a href="{% url 'building_permit_module' %}" class="text-decoration-none px-3 py-2 d-block"><i class="lar la-building fs-5"></i> Building Permit</a></li>
                 <li class=""><a href="{% url 'residency_certificate_module' %}" class="text-decoration-none px-3 py-2 d-block"><i class="las la-certificate fs-5"></i> Certificate of Residency</a></li>
-                
                 </ul>
-                    </div>
-
+          {% endif %}
+ 
+          {% if not request.user.groups.all.0.name != 'superadmin' %}
+          <div class="side-sub-menu py-2">
                 <!--<hr class="h-color mx-3">-->
                 <li class=""><a href="{% url 'adminProfile' %}" class="text-decoration-none px-3 py-2 d-block"><i class="las la-user fs-5"></i> Profile </a></li>
-                <hr class="h-color mx-3">
-                
-                <li class=""><a href="{% url 'requestLogs' %}" class="text-decoration-none px-3 py-2 d-block"><i class="las la-history fs-5"></i> Request Logs </a></li>
-                <div class="side-sub-menu">
-                    
+                <!--<hr class="h-color mx-3">-->
+                {% endif %}
+               </div>
+
+                {% if not request.user.groups.all.0.name == 'superadmin' %}
+          <div class="side-sub-menu py-2">
                     <div class="accordion-button px-3 py-2" data-bs-toggle="collapse" href="#collapseReports" aria-expanded="false" aria-controls="collapseReports">
                         <a class="text-decoration-none d-block">
                             <i class="las la-calendar-week fs-5"></i> Reports
@@ -181,7 +183,13 @@
                         </ul>
                     </div>
                 </div>
+                {% endif %}
                 
+              {% if not request.user.groups.all.0.name == 'superadmin' %}               
+                <li class=""><a href="{% url 'requestLogs' %}" class="text-decoration-none px-3 py-2 d-block"><i class="las la-history fs-5"></i> Request Logs </a></li>
+                <div class="side-sub-menu">
+                  {% endif %}
+
             </ul>
             
         </div>
