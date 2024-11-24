@@ -2,7 +2,7 @@
 <form hx-post="{{ request.path }}" class="modal-content" enctype="multipart/form-data">
     
     <div class="modal-header">
-      <h5 class="modal-title">Add announcement</h5>
+      <h5 class="modal-title">Announcement Form</h5>
     </div>
     
     <div class="modal-body">
@@ -22,7 +22,7 @@
           <div class="col-12 py-2 d-flex justify-content-center">
             
             <div class="form-element-upload-2">
-              <p class="h6">Select Image</p>
+              <p class="h6">Upload Image for Poster</p>
               {{ form.image }}
                 <label for="file-2" id="file-2-preview">
                   <img src="{% static 'img/announcement_preview.jpg'%}">
