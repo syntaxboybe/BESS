@@ -1,4 +1,4 @@
-from django.shortcuts import render, HttpResponse, redirect
+from django.shortcuts import render, HttpResponse, redirect, get_object_or_404
 from apps.UserPortal.models import clearance as clerance_list
 from .forms import *
 from project.utils import render_to_pdf
@@ -7,61 +7,62 @@ from django.views.decorators.cache import cache_control
 from django.contrib.auth.decorators import login_required
 from django.conf import settings
 from django.core.mail import send_mail
+
 # Create your views here.
 
 
-@cache_control(no_cache=True,must_revalidate=True,no_store=True)
+@cache_control(no_cache=True, must_revalidate=True, no_store=True)
 @login_required(login_url="loginPage")
 @admin_only
 def clearance(request):
     if request.user.is_authenticated:
-        return render(request, 'ClearanceManagement/clearance_table.html')
+        return render(request, "ClearanceManagement/clearance_table.html")
     else:
-        return redirect('loginPage')
+        return redirect("loginPage")
 
 
-@cache_control(no_cache=True,must_revalidate=True,no_store=True)
+@cache_control(no_cache=True, must_revalidate=True, no_store=True)
 @login_required(login_url="loginPage")
 @admin_only
 def clearance_list(request):
     if request.user.is_authenticated:
-        context = {'clearance_list' :  clerance_list.objects.all().order_by('id')}
-        return render(request, 'ClearanceManagement/clearance_list.html', context)
+        context = {"clearance_list": clerance_list.objects.all().order_by("id")}
+        return render(request, "ClearanceManagement/clearance_list.html", context)
     else:
-        return redirect('loginPage')
+        return redirect("loginPage")
 
 
-@cache_control(no_cache=True,must_revalidate=True,no_store=True)
+@cache_control(no_cache=True, must_revalidate=True, no_store=True)
 @login_required(login_url="loginPage")
 @admin_only
 def edit_clearance(request, id):
     if request.user.is_authenticated:
-
         clearance = clerance_list.objects.get(pk=id)
         form = cleranceForm(instance=clearance)
 
         clearance_id = clerance_list.objects.get(pk=id)
-        if request.method == 'POST':
-            form = cleranceForm(request.POST,instance=clearance)
+        if request.method == "POST":
+            form = cleranceForm(request.POST, instance=clearance)
             if form.is_valid():
                 form.save()
-                return HttpResponse(status=204, headers={'HX-Trigger': 'clearancelistUpdate'})
+                return HttpResponse(
+                    status=204, headers={"HX-Trigger": "clearancelistUpdate"}
+                )
 
-
-        context = {'form':form, 'disabledform':clearance_id}
-        return render(request, 'ClearanceManagement/clearance_form.html', context)
+        context = {"form": form, "disabledform": clearance_id}
+        return render(request, "ClearanceManagement/clearance_form.html", context)
     else:
-        return redirect('loginPage')
+        return redirect("loginPage")
 
 
-@cache_control(no_cache=True,must_revalidate=True,no_store=True)
+@cache_control(no_cache=True, must_revalidate=True, no_store=True)
 @login_required(login_url="loginPage")
 @admin_only
-def generate_clearance (request, id):
+def generate_clearance(request, id):
     if request.user.is_authenticated:
         template_name = "ClearanceManagement/clearance_pdf.html"
         clearance = clerance_list.objects.get(pk=id)
-        
+
         return render_to_pdf(
             template_name,
             {
@@ -69,30 +70,58 @@ def generate_clearance (request, id):
             },
         )
     else:
-        return redirect('loginPage')
+        return redirect("loginPage")
 
+
+@cache_control(no_cache=True, must_revalidate=True, no_store=True)
+@login_required(login_url="loginPage")
+@admin_only
+def sign_clearance(request, id):
+    """
+    Mark a clearance as signed.
+    """
+    if request.user.is_authenticated:
+        clearance = get_object_or_404(clerance_list, pk=id)
+
+        if request.method == "POST":
+            # Logic to mark clearance as signed
+            clearance.is_signed = True  # Assuming there's an `is_signed` field
+            clearance.save()
+
+            # Optionally process a confirmation message
+            confirmation_message = request.POST.get("confirmation_message", "")
+
+            # Send a response for htmx or redirect
+            return HttpResponse(
+                status=204, headers={"HX-Trigger": "clearancelistUpdate"}
+            )
+            return redirect("clearance_list")
+
+        context = {"clearance": clearance}
+        return render(request, "ClearanceManagement/sign_clearance.html", context)
+    else:
+        return redirect("loginPage")
 
 
 def delete_clearance(request, id):
     if request.user.is_authenticated:
         clearance = clerance_list.objects.get(pk=id)
-        
-        context = {'clearance':clearance}
-        if request.method == 'POST':
 
-            email_msg = request.POST.get('reason_masage')
+        context = {"clearance": clearance}
+        if request.method == "POST":
+            email_msg = request.POST.get("reason_masage")
 
-            subject = 'Reasons For Denying your Request'
+            subject = "Reasons For Denying your Request"
             message = email_msg
             email_from = settings.EMAIL_HOST_USER
             recipient_list = [clearance.res_id.user.email]
-            send_mail( subject, message, email_from, recipient_list )
+            send_mail(subject, message, email_from, recipient_list)
 
             clearance.delete()
-            return HttpResponse(status=204, headers={'HX-Trigger': 'clearancelistUpdate'})
-        return render(request, 'ClearanceManagement/delete_clearance.html', context)
+            return HttpResponse(
+                status=204, headers={"HX-Trigger": "clearancelistUpdate"}
+            )
+        return render(request, "ClearanceManagement/delete_clearance.html", context)
 
     else:
-        return redirect('loginPage')
-
-
+        return redirect("loginPage")

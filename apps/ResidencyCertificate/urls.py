@@ -6,12 +6,28 @@ from django.urls import register_converter
 register_converter(HashIdConverter, "hashid")
 
 
-
 urlpatterns = [
-    path('residency_request/',residency_certificate_module,name='residency_certificate_module'),
-    path('residency/',residency_certificate_list,name='residency_certificate_list'),
-    path('residency/<int:id>', edit_residency, name='edit_residency'),
-    path('generate_resident_certificate/<hashid:id>', generate_resident_certificate, name='generate_resident_certificate'),
-    path('delete_resident_certificate_request/<hashid:id>', delete_resident_certificate_request, name="delete_resident_certificate_request"),
-    
+    path(
+        "residency_request/",
+        residency_certificate_module,
+        name="residency_certificate_module",
+    ),
+    path("residency/", residency_certificate_list, name="residency_certificate_list"),
+    path("residency/<int:id>", edit_residency, name="edit_residency"),
+    path(
+        "generate_resident_certificate/<hashid:id>",
+        generate_resident_certificate,
+        name="generate_resident_certificate",
+    ),
+    path(
+        "delete_resident_certificate_request/<hashid:id>",
+        delete_resident_certificate_request,
+        name="delete_resident_certificate_request",
+    ),
+    path(
+        "sign_residency_cert/<hashid:id>/",
+        sign_residency_cert,
+        name="sign_residency_cert",
+    ),
 ]
+
