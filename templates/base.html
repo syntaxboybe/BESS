@@ -88,6 +88,7 @@
                     </div>
                     {% endif %} 
 
+              {% if request.user.id != 30 %}
               {% if request.user.groups.all.0.name != 'superadmin' %}
                 <div class="side-sub-menu py-2">
                     <div class="accordion-button px-3 py-2" data-bs-toggle="collapse" href="#collapseResident" aria-expanded="false" aria-controls="collapseResident" style="background-color: #F98724;">
@@ -118,6 +119,7 @@
                     </div>
 
               {% endif %} 
+              {% endif %} 
 
         {% if not request.user.groups.all.0.name == 'superadmin' %}
 <div class="side-sub-menu py-2">
@@ -145,7 +147,8 @@
                 <!--<hr class="h-color mx-3">-->
                 {% endif %}
                </div>
-
+                
+                {% if request.user.id != 30 %}
                 {% if not request.user.groups.all.0.name == 'superadmin' %}
           <div class="side-sub-menu py-2">
                     <div class="accordion-button px-3 py-2" data-bs-toggle="collapse" href="#collapseReports" aria-expanded="false" aria-controls="collapseReports" style="background-color: #F98724;">
@@ -183,12 +186,16 @@
                         </ul>
                     </div>
                 </div>
-                {% endif %}
-                
-              {% if not request.user.groups.all.0.name == 'superadmin' %}               
+                {% endif %}  
+                {% endif %} 
+              
+                {% if request.user.id != 30 %}
+                {% if not request.user.groups.all.0.name == 'superadmin' %}               
                 <li class=""><a href="{% url 'requestLogs' %}" class="text-decoration-none px-3 py-2 d-block"><i class="las la-history fs-5"></i> Request Logs </a></li>
                 <div class="side-sub-menu">
-                  {% endif %}
+                
+                {% endif %} 
+                {% endif %}
 
             </ul>
             
