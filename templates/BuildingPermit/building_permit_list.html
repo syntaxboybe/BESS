@@ -37,7 +37,9 @@
         <td>{{ building_permit.location}}</td>
         <td>{{ building_permit.owner}}</td>
         <td><span class="">{{ building_permit.status}}</span></td>
+
         <td class="text-center">
+          {% if user.id != 30 %}
           <a
             target="”_blank”"
             type="button"
@@ -54,21 +56,30 @@
             hx-target="#dialog"
           >
             <i class="fa fa-sign-in fs-4" style="vertical-align: middle"></i>
+            <span style="vertical-align: middle"> Verify</span>
           </button>
-          <button
-            class="btn btn-warning bg-gradient"
-            hx-get="{% url 'sign_building_permit' building_permit.id %}"
-            hx-target="#dialog"
-          >
-            <i class="las la-pen fs-4" style="vertical-align: middle"></i>
-          </button>
+
           <button
             class="btn btn-danger bg-gradient"
             hx-get="{% url 'delete_building_permit' building_permit.id %}"
             hx-target="#dialog"
           >
             <i class="las la-sync fs-4" style="vertical-align: middle"></i>
+            <span style="vertical-align: middle"> Revert</span>
           </button>
+          {% endif %}
+
+          <!-- Always display the 'las la-pen' button -->
+          {% if user.id != 29 %}
+          <button
+            class="btn btn-warning bg-gradient"
+            hx-get="{% url 'sign_building_permit' building_permit.id %}"
+            hx-target="#dialog"
+          >
+            <i class="las la-pen fs-4" style="vertical-align: middle"></i>
+            <span style="vertical-align: middle"> Sign</span>
+          </button>
+          {% endif %}
         </td>
       </tr>
 

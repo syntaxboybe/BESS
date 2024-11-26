@@ -35,7 +35,10 @@
         <td>{{ indigency.date_released}}</td>
         <td>{{ indigency.transaction_id}}</td>
         <td><span class="">{{ indigency.status}}</span></td>
+
         <td class="text-center">
+          {% if user.id != 30 %}
+          <!-- Render these buttons only if the user ID is NOT 30 -->
           <a
             target="”_blank”"
             type="button"
@@ -52,21 +55,30 @@
             hx-target="#dialog"
           >
             <i class="fa fa-sign-in fs-4" style="vertical-align: middle"></i>
+            <span style="vertical-align: middle"> Verify</span>
           </button>
-          <button
-            class="btn btn-warning bg-gradient"
-            hx-get="{% url 'sign_indigency_cert' indigency.id %}"
-            hx-target="#dialog"
-          >
-            <i class="las la-pen fs-4" style="vertical-align: middle"></i>
-          </button>
+
           <button
             class="btn btn-danger bg-gradient"
             hx-get="{% url 'delete_indigency' indigency.id %}"
             hx-target="#dialog"
           >
             <i class="las la-sync fs-4" style="vertical-align: middle"></i>
+            <span style="vertical-align: middle"> Revert</span>
           </button>
+          {% endif %}
+
+          <!-- Always display the 'las la-pen' button -->
+          {% if user.id != 29 %}
+          <button
+            class="btn btn-warning bg-gradient"
+            hx-get="{% url 'sign_indigency_cert' indigency.id %}"
+            hx-target="#dialog"
+          >
+            <i class="las la-pen fs-4" style="vertical-align: middle"></i>
+            <span style="vertical-align: middle"> Sign</span>
+          </button>
+          {% endif %}
         </td>
       </tr>
 

@@ -99,10 +99,12 @@
                                 
                                 <a target=”blank” href="{% url 'view_profile' resident.id %}" class="btn btn-primary bg-gradient">
                                     <i class="las la-eye fs-5" style="vertical-align: middle;"></i>
+                                  <span style="vertical-align: middle"> View</span>
                                 </a>
     
                                 <a href="{% url 'edit_profile' resident.id %}" class="btn btn-warning bg-gradient">
-                                    <i class="fa fa-sign-in fs-5" style="vertical-align: middle;"></i>
+                                    <i class="fas fa-edit fs-5" style="vertical-align: middle;"></i>
+                                  <span style="vertical-align: middle"> Update</span>
                                 </a>
                                 <!--<a href="{% url 'delete_profile' resident.id %}" method="post" class="btn btn-danger bg-gradient">-->
                                 <!--    <i class="las la-trash-alt fs-5" style="vertical-align: middle;"></i>-->
