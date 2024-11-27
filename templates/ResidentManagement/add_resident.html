@@ -8,7 +8,7 @@
 
         <div class="row">
             <div class="col-lg-12">
-                <p class="h4">Add Resident</p>
+                <p class="h4">Add Resident Profile</p>
                 <p>Save Residents Record Here</p>
             </div>
             <hr>
@@ -203,16 +203,18 @@
         <div class="row bg-white rounded p-3">
             <div class="col-lg-12">
                 <div class="float-end">
-                    <a href="{% url 'resident_list' %}" type="button" class="btn bg-danger bg-gradient mt-2">
-                        <i class="las la-times fs-4 text-white" style="vertical-align: middle;"></i>
-                        <span class="h6 text-white" style="vertical-align: middle;">Cancel</span></a>
-                    </button>
-                    &nbsp;
-                    &nbsp;
                     <button type="submit" class="btn btn-success bg-gradient mt-2">
                         <i class="las la-check fs-4" style="vertical-align: middle;"></i>
                         <span class="h6" style="vertical-align: middle;">Register</span>
                     </button>
+                    &nbsp;
+                    &nbsp;
+                    <div class="float-end">
+                    <a href="{% url 'resident_list' %}" type="button" class="btn bg-secondary bg-gradient mt-2">
+                        <i class="las la-times fs-4 text-white" style="vertical-align: middle;"></i>
+                        <span class="h6 text-white" style="vertical-align: middle;">Cancel</span></a>
+                    </button>
+
                 </div>
             </div>
         </div>

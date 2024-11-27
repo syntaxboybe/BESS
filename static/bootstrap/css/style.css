@@ -63,7 +63,7 @@ body {
 }
 
 .navtab {
-  --underline-color: #f98724;
+  --underline-color: #008000;
   --underline-size: 5px;
 
   color: inherit;
@@ -233,7 +233,7 @@ hr.h-color {
   opacity: 0.85;
 }
 .btn-theme.-btn1 {
-  background: #f98724;
+  background: #008000;
 }
 .btn-theme.-btn2 {
   background: #355389;

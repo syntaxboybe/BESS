@@ -22,13 +22,13 @@
         </div>
 
         <div class="col-lg-6 col-md-8 col-12">
-            <div class="float-end">
-                <a target="_blank" class="scan" href="{% url 'details' %}"><input type="submit" class="btn btn-outline-secondary" value="Run Scanner" /></a>
+            <div class="float-end">                
+<a target="_blank" class="scan" href="{% url 'details' %}"><button type="button" class="btn btn-outline-secondary"><i class="fa-solid fa-expand" ></i> Face Scanner</button></a>
                 &nbsp;
                 &nbsp;
-                <a type="button" class="btn bg-warning bg-gradient" href="{% url 'add_profile' %}">
-                    <i class="las la-user-plus fs-4" style="vertical-align: middle;"></i>
-                    <span class="mt-5" style="vertical-align: middle;">Add Resident</span>
+                <a type="button" class="btn bg-primary bg-gradient" href="{% url 'add_profile' %}">
+                    <i class="las la-user-plus fs-4" style="vertical-align: middle; color: white;"></i>
+                    <span class="mt-5" style="vertical-align: middle; color: white;">Add Resident</span>
                 </a>
             </div>
         </div>
@@ -97,7 +97,7 @@
                             <td class="fs-6">{{resident.email}}</td>
                             <td class="text-center">
                                 
-                                <a target=”blank” href="{% url 'view_profile' resident.id %}" class="btn btn-primary bg-gradient">
+                                <a target=”blank” href="{% url 'view_profile' resident.id %}" class="btn btn-secondary bg-gradient">
                                     <i class="las la-eye fs-5" style="vertical-align: middle;"></i>
                                   <span style="vertical-align: middle"> View</span>
                                 </a>

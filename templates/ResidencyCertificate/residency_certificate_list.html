@@ -48,7 +48,7 @@
             href="{% url 'generate_resident_certificate' residency.id %}"
           >
             <i class="las la-file-pdf fs-4" style="vertical-align: middle"></i>
-            <span style="vertical-align: middle">Preview</span>
+            <span style="vertical-align: middle"> View</span>
           </a>
           <button
             class="btn btn-primary bg-gradient"
@@ -70,6 +70,15 @@
 
           <!-- Always display the 'las la-pen' button -->
           {% if user.id != 29 %}
+          <button
+            class="btn btn-primary bg-gradient"
+            hx-get="{% url 'edit_residency' residency.id %}"
+            hx-target="#dialog"
+          >
+            <i class="las la-eye fs-4" style="vertical-align: middle"></i>
+            <span style="vertical-align: middle"> View</span>
+          </button>
+
           <button
             class="btn btn-warning bg-gradient"
             hx-get="{% url 'sign_residency_cert' residency.id %}"

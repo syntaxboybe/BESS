@@ -34,7 +34,22 @@
     <script src="{% static 'bootstrap/js/moment.min.js' %}" ></script>
     <script src="{% static 'bootstrap/js/dataTables.dateTime.min.js' %}" ></script>
 
-    <title>Barangay E-Service System</title>
+<style>
+    .dropdown-menu .dropdown-item {
+        color: white; /* Default text color */
+    }
+
+    .dropdown-menu .dropdown-item:hover, 
+    .dropdown-menu .dropdown-item:focus {
+        color: black; /* Text color when highlighted */
+    }
+
+    .dropdown-menu {
+        background-color: #008000; /* Keep the green background */
+    }
+</style>
+    
+  <title>Barangay E-Service System</title>
 </head>
 
 <body>
@@ -73,13 +88,13 @@
             
                 {% if request.user.groups.all.0.name == 'superadmin' %}
 <div class="side-sub-menu py-2">
-                    <div class="accordion-button px-3 py-2" data-bs-toggle="collapse" href="#collapseAccounts" aria-expanded="false" aria-controls="collapseAccounts" style="background-color: #F98724;">
+                    <div class="accordion-button px-3 py-2" data-bs-toggle="collapse" href="#collapseAccounts" aria-expanded="false" aria-controls="collapseAccounts" style="background-color: #008000;">
                         <a class="text-decoration-none d-block">
                             <i class="las la-address-card"></i> Accounts
                         </a>
                     </div>
 
-                    <div class="ps-3 sub-content" style="background-color: #F98724;">
+                    <div class="ps-3 sub-content" style="background-color: #008000;">
                         <ul class="list-unstyled px-2 py-2 collapse" id="collapseAccounts">
 
                 <li class=""><a href="{% url 'add_official_account' %}" class="text-decoration-none px-3 py-2 d-block"><i class="las la-user-plus fs-5"></i> Add Account</a></li>
@@ -91,13 +106,13 @@
               {% if request.user.id != 30 %}
               {% if request.user.groups.all.0.name != 'superadmin' %}
                 <div class="side-sub-menu py-2">
-                    <div class="accordion-button px-3 py-2" data-bs-toggle="collapse" href="#collapseResident" aria-expanded="false" aria-controls="collapseResident" style="background-color: #F98724;">
+                    <div class="accordion-button px-3 py-2" data-bs-toggle="collapse" href="#collapseResident" aria-expanded="false" aria-controls="collapseResident" style="background-color: #008000;">
                         <a class="text-decoration-none d-block">
                             <i class="las la-address-card"></i> Profiling
                         </a>
                     </div>
 
-                    <div class="ps-3 sub-content" style="background-color: #F98724;">
+                    <div class="ps-3 sub-content" style="background-color: #008000;">
                         <ul class="list-unstyled px-2 py-2 collapse" id="collapseResident">
                             <li class="">
                                 <a href="{% url 'resident_list' %}" class="text-decoration-none px-3 py-2 d-block">List of Residents</a>
@@ -123,19 +138,19 @@
 
         {% if not request.user.groups.all.0.name == 'superadmin' %}
 <div class="side-sub-menu py-2">
-                    <div class="accordion-button px-3 py-2" data-bs-toggle="collapse" href="#collapseIssuances" aria-expanded="false" aria-controls="collapseIssuances" style="background-color: #F98724;">
+                    <div class="accordion-button px-3 py-2" data-bs-toggle="collapse" href="#collapseIssuances" aria-expanded="false" aria-controls="collapseIssuances" style="background-color: #008000;">
                         <a class="text-decoration-none d-block">
                             <i class="las la-address-card"></i> Issuances
                         </a>
                     </div>
 
-                    <div class="ps-3 sub-content" style="background-color: #F98724;">
+                    <div class="ps-3 sub-content" style="background-color: #008000;">
                         <ul class="list-unstyled px-2 py-2 collapse" id="collapseIssuances">
 
                 <li class=""><a href="{% url 'clearance'%}" class="text-decoration-none px-3 py-2 d-block"><i class="las la-file-alt fs-5"></i> Barangay Clearance</a></li>
                 <li class=""><a href="{% url 'indigency_request' %}" class="text-decoration-none px-3 py-2 d-block"><i class="las la-feather-alt fs-5"></i> Certificate of Indigency</a></li>
                 <li class=""><a href="{% url 'business_permit_module' %}" class="text-decoration-none px-3 py-2 d-block"><i class="las la-file-contract fs-5"></i> Barangay Business Permit</a></li>
-                <li class=""><a href="{% url 'building_permit_module' %}" class="text-decoration-none px-3 py-2 d-block"><i class="lar la-building fs-5"></i> Building Permit</a></li>
+                <li class=""><a href="{% url 'building_permit_module' %}" class="text-decoration-none px-3 py-2 d-block"><i class="lar la-building fs-5"></i> Barangay Building Permit</a></li>
                 <li class=""><a href="{% url 'residency_certificate_module' %}" class="text-decoration-none px-3 py-2 d-block"><i class="las la-certificate fs-5"></i> Certificate of Residency</a></li>
                 </ul>
           {% endif %}
@@ -151,13 +166,13 @@
                 {% if request.user.id != 30 %}
                 {% if not request.user.groups.all.0.name == 'superadmin' %}
           <div class="side-sub-menu py-2">
-                    <div class="accordion-button px-3 py-2" data-bs-toggle="collapse" href="#collapseReports" aria-expanded="false" aria-controls="collapseReports" style="background-color: #F98724;">
+                    <div class="accordion-button px-3 py-2" data-bs-toggle="collapse" href="#collapseReports" aria-expanded="false" aria-controls="collapseReports" style="background-color: #008000;">
                         <a class="text-decoration-none d-block">
                             <i class="las la-calendar-week fs-5"></i> Reports
                         </a>
                     </div>
 
-                    <div class="ps-3 sub-content" style="background-color: #F98724;">
+                    <div class="ps-3 sub-content" style="background-color: #008000;">
                         <ul class="list-unstyled px-2 py-2 collapse" id="collapseReports">
                             <li class="">
                                 <li class=""><a href="{% url 'reports' %}" class="text-decoration-none px-3 py-2 d-block"><i class="las la-file-archive fs-5"></i> Issued Documents </a></li>
@@ -214,13 +229,14 @@
                     </button>
                     <div class="collapse navbar-collapse justify-content-end" id="navbarSupportedContent">
                     <ul class="navbar-nav mb-2 mb-lg-0">
-                        
-<li class="nav-item dropdown">
+            
+            {% if user.id != 1 and user.id != 30 %}                      
+            <li class="nav-item dropdown">
                     <a class="nav-link" href="#" id="notificationDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
                         <i class="fa-solid fa-bell fs-5"></i>
-                      <span class="badge" style="background-color: #F98724; color: white;">6</span>
+                      <span class="badge" style="background-color: #008000; color: white;">6</span>
                     </a>
-                    <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="notificationDropdown" style="background-color: #F98724;">
+                    <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="notificationDropdown" style="background-color: #008000; color: white;">
                         <li><a class="dropdown-item" href="{% url 'clearance' %}">Clearance</a></li>
                         <li><a class="dropdown-item" href="{% url 'indigency_request' %}">Certificate of Indigency</a></li>
                         <li><a class="dropdown-item" href="{% url 'business_permit_module' %}">Business Permit</a></li>
@@ -228,6 +244,7 @@
                         <li><a class="dropdown-item" href="{% url 'residency_certificate_module' %}">Certificate of Residency</a></li>
                     </ul>
                 </li>
+                {% endif %}
                       <li class="nav-item">
                         <a class="nav-link active" aria-current="page" href="#"><i class="fas fa-user fs-5 me-2"></i> {{ user.username }}</a>
                         </li>

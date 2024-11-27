@@ -24,8 +24,8 @@
                     {% csrf_token %}
                     <div class="row p-4">
                         <div class="col-12 mb-3">
-                            <p class="h4">Edit Resident</p>
-                            <p>Edit Residents Here</p>
+                            <p class="h4">RESIDENT PROFILE</p>
+                            <p>Update Here</p>
                         </div>
             
                         <hr>
@@ -153,16 +153,17 @@
             
                         <div class="col-lg-12 col-md-12 col-12 ">
                             <div class="float-end">
-                                <a href="{% url 'resident_list' %}" type="button" class="btn bg-danger bg-gradient mt-2">
+                              <button type="submit" class="btn btn-success bg-gradient mt-2">
+                                <i class="las la-check fs-4" style="vertical-align: middle;"></i>
+                                <span class="h6" style="vertical-align: middle;">Update</span>
+                              </button>
+                                &nbsp;
+                                &nbsp;
+                              <a href="{% url 'resident_list' %}" type="button" class="btn bg-secondary bg-gradient mt-2">
                                     <i class="las la-times fs-4 text-white" style="vertical-align: middle;"></i>
                                     <span class="h6 text-white" style="vertical-align: middle;">Cancel</span></a>
-                                </button>
-                                &nbsp;
-                                &nbsp;
-                                <button type="submit" class="btn btn-success bg-gradient mt-2">
-                                    <i class="las la-check fs-4" style="vertical-align: middle;"></i>
-                                    <span class="h6" style="vertical-align: middle;">Update a Record</span>
-                                </button>
+                              </button>
+
                             </div>
                         </div>
             
@@ -185,9 +186,10 @@
                     </div>
 
                     <div class="col-12 d-flex justify-content-end">
-                        <a href="{% url 'resident_list'%}" type="button" class="btn-theme -btn1 col-6 col-md-3 text-center">Cancel</a>
-                        &nbsp;&nbsp;
                         <button type="submit" class="btn-theme -btn2 col-12 col-md-5">Update</button>
+                        &nbsp;&nbsp;
+                        <a href="{% url 'resident_list'%}" type="button" class="btn-theme -btn1 col-6 col-md-3 text-center">Cancel</a>
+
                     </div>
                 </div>
                 </form>

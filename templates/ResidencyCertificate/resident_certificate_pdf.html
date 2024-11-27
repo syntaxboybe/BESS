@@ -79,8 +79,8 @@
                 <p class="p2" style="font-size: 14px;">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; This certification is being issued to <b><i>{{ residency_certificate.res_id }}</i></b>
                 in order to use in: <b><i>{{ residency_certificate.purpose }}</i></b></p>
                 <br><br><br>
-                <p class="p2" style="font-size: 14px;">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Issued this<b><i>{{ residency_certificate.date_released.day }}</i></b> 
-                <b><i>{{residency_certificate.date_released|date:"F"}} {{residency_certificate.date_released.year}}</i></b> at Barangay Poblacion, Naawan, Misamis Oriental.</p>
+          <p class="p2" style="font-size: 14px;">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Issued this <b><i>{{residency_certificate.date_released|date:"F"}} {{ residency_certificate.date_released.day }}
+                {{residency_certificate.date_released.year}}</i></b> at Barangay Poblacion, Naawan, Misamis Oriental.</p>
                 </p>
             </td>
         </tr>
