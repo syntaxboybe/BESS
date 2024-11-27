@@ -72,7 +72,7 @@
           <!-- Always display the 'las la-pen' button -->
           {% if user.id != 29 %}
           <button
-            class="btn btn-primary bg-gradient"
+            class="btn btn-secondary bg-gradient"
             hx-get="{% url 'edit_building_permit' building_permit.id %}"
             hx-target="#dialog"
           >
