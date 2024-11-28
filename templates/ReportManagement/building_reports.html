@@ -5,7 +5,7 @@
     <div class="row p-3 g-0">
 
         <div class="col-lg-6 col-md-4 col-12">
-            <h4 class="text-muted">Reports</h4>
+            <h4 class="text-muted">Issued Building Permit</h4>
         </div>
 
         <hr class="my-3">
@@ -64,8 +64,8 @@
                                     <td><span>{{building_list.status}}</span></td>
                                     <td class="text-center">
                                         <a target=”_blank” type="button" class="btn btn-secondary bg-gradient" href="{% url 'generate_building_permit' building_list.id %}">
-                                            <i class="las la-file-pdf fs-4" style="vertical-align: middle;"></i>
-                                            <span style="vertical-align: middle;">View</span>
+                                            <i class="fas fa-file-pdf fs-5" style="vertical-align: middle;"></i>
+                                            <span style="vertical-align: middle;"> View</span>
                                         </a>
                                     </td>
                                 </tr>

@@ -47,7 +47,7 @@
             class="btn btn-secondary bg-gradient"
             href="{% url 'generate_business_permit' business_permit.id %}"
           >
-            <i class="las la-file-pdf fs-4" style="vertical-align: middle"></i>
+            <i class="fas fa-file-pdf fs-5" style="vertical-align: middle"></i>
             <span style="vertical-align: middle"> View</span>
           </a>
 
@@ -56,7 +56,7 @@
             hx-get="{% url 'edit_business_permit' business_permit.id %}"
             hx-target="#dialog"
           >
-            <i class="fas fa-sign-in fs-4" style="vertical-align: middle"></i>
+            <i class="fas fa-sign-in fs-5" style="vertical-align: middle"></i>
             <span style="vertical-align: middle"> Verify</span>
           </button>
 
@@ -65,7 +65,7 @@
             hx-get="{% url 'delete_business_permit' business_permit.id %}"
             hx-target="#dialog"
           >
-            <i class="las la-sync fs-4" style="vertical-align: middle"></i>
+            <i class="fas fa-sync fs-5" style="vertical-align: middle"></i>
             <span style="vertical-align: middle"> Revert</span>
           </button>
           {% endif %}
@@ -77,7 +77,7 @@
             hx-get="{% url 'edit_business_permit' business_permit.id %}"
             hx-target="#dialog"
           >
-            <i class="las la-eye fs-4" style="vertical-align: middle"></i>
+            <i class="fas fa-eye fs-5" style="vertical-align: middle"></i>
             <span style="vertical-align: middle"> View</span>
           </button>
 
@@ -86,7 +86,7 @@
             hx-get="{% url 'sign_business_permit' business_permit.id %}"
             hx-target="#dialog"
           >
-            <i class="las la-pen fs-4" style="vertical-align: middle"></i>
+            <i class="fas fa-pen fs-5" style="vertical-align: middle"></i>
             <span style="vertical-align: middle"> Sign</span>
           </button>
           {% endif %}

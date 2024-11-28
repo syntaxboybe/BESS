@@ -80,25 +80,25 @@
 
             </div>
             <ul class="list-unstyled px-2">
-                <li class=""><a href="{% url 'dashboard' %}" class="text-decoration-none px-3 py-2 d-block"><i class="las la-chart-area fs-5"></i> Dashboard</a></li>
+                <li class=""><a href="{% url 'dashboard' %}" class="text-decoration-none px-3 py-2 d-block"><i class="fa fa-line-chart"></i> Dashboard</a></li>
             
  {% if request.user.groups.all.0.name == 'superadmin' %}
-            <li class=""><a href="{% url 'announcementPage' %}" class="text-decoration-none px-3 py-2 d-block"><i class="las la-bullhorn fs-5"></i> Announcements</a></li>
+            <li class=""><a href="{% url 'announcementPage' %}" class="text-decoration-none px-3 py-2 d-block"><i class="fas fa-bullhorn"></i> Announcements</a></li>
                 {% endif %} 
             
                 {% if request.user.groups.all.0.name == 'superadmin' %}
 <div class="side-sub-menu py-2">
                     <div class="accordion-button px-3 py-2" data-bs-toggle="collapse" href="#collapseAccounts" aria-expanded="false" aria-controls="collapseAccounts" style="background-color: #008000;">
                         <a class="text-decoration-none d-block">
-                            <i class="las la-address-card"></i> Accounts
+                            <i class="fas fa-address-card"></i> Accounts
                         </a>
                     </div>
 
                     <div class="ps-3 sub-content" style="background-color: #008000;">
                         <ul class="list-unstyled px-2 py-2 collapse" id="collapseAccounts">
 
-                <li class=""><a href="{% url 'add_official_account' %}" class="text-decoration-none px-3 py-2 d-block"><i class="las la-user-plus fs-5"></i> Add Account</a></li>
-                <li class=""><a href="{% url 'officialList' %}" class="text-decoration-none px-3 py-2 d-block"><i class="las la-user-circle fs-5"></i> Account List</a></li>
+                <li class=""><a href="{% url 'add_official_account' %}" class="text-decoration-none px-3 py-2 d-block"><i class="fas fa-user-plus"></i> Add Account</a></li>
+                <li class=""><a href="{% url 'officialList' %}" class="text-decoration-none px-3 py-2 d-block"><i class="fas fa-user-circle"></i> Account List</a></li>
                 </ul>
                     </div>
                     {% endif %} 
@@ -108,30 +108,38 @@
                 <div class="side-sub-menu py-2">
                     <div class="accordion-button px-3 py-2" data-bs-toggle="collapse" href="#collapseResident" aria-expanded="false" aria-controls="collapseResident" style="background-color: #008000;">
                         <a class="text-decoration-none d-block">
-                            <i class="las la-address-card"></i> Profiling
+                            <i class="fas fa-address-card"></i> Profiling
                         </a>
                     </div>
 
-                    <div class="ps-3 sub-content" style="background-color: #008000;">
-                        <ul class="list-unstyled px-2 py-2 collapse" id="collapseResident">
-                            <li class="">
-                                <a href="{% url 'resident_list' %}" class="text-decoration-none px-3 py-2 d-block">List of Residents</a>
-                            </li>
+                    
+<div class="ps-3 sub-content" style="background-color: #008000;">
+    <ul class="list-unstyled px-2 py-2 collapse" id="collapseResident">
+        <li>
+            <a href="{% url 'resident_list' %}" class="text-decoration-none px-3 py-2 d-block">
+                <i class="fas fa-users"></i> Residents
+            </a>
+        </li>
 
-                            <li class="">
-                                <a href="{% url 'pwd' %}" class="text-decoration-none px-3 py-2 d-block">PWD</a>
-                            </li>
+        <li>
+            <a href="{% url 'pwd' %}" class="text-decoration-none px-3 py-2 d-block">
+                <i class="fas fa-wheelchair"></i> PWD
+            </a>
+        </li>
 
-                            <li class="">
-                                <a href="{% url 'senior' %}" class="text-decoration-none px-3 py-2 d-block">Senior Citizen</a>
-                            </li>
+        <li>
+            <a href="{% url 'senior' %}" class="text-decoration-none px-3 py-2 d-block">
+                <i class="fas fa-user-clock"></i> Senior Citizen
+            </a>
+        </li>
 
-                            <li class="">
-                                <a href="{% url 'single' %}" class="text-decoration-none px-3 py-2 d-block">Single Parent</a>
-                            </li>
-
-                        </ul>
-                    </div>
+        <li>
+            <a href="{% url 'single' %}" class="text-decoration-none px-3 py-2 d-block">
+                <i class="fas fa-user"></i> Single Parent
+            </a>
+        </li>
+    </ul>
+</div>
 
               {% endif %} 
               {% endif %} 
@@ -140,25 +148,25 @@
 <div class="side-sub-menu py-2">
                     <div class="accordion-button px-3 py-2" data-bs-toggle="collapse" href="#collapseIssuances" aria-expanded="false" aria-controls="collapseIssuances" style="background-color: #008000;">
                         <a class="text-decoration-none d-block">
-                            <i class="las la-address-card"></i> Issuances
+                            <i class="fas fa-file-alt"></i> Issuances
                         </a>
                     </div>
 
                     <div class="ps-3 sub-content" style="background-color: #008000;">
                         <ul class="list-unstyled px-2 py-2 collapse" id="collapseIssuances">
 
-                <li class=""><a href="{% url 'clearance'%}" class="text-decoration-none px-3 py-2 d-block"><i class="las la-file-alt fs-5"></i> Barangay Clearance</a></li>
-                <li class=""><a href="{% url 'indigency_request' %}" class="text-decoration-none px-3 py-2 d-block"><i class="las la-feather-alt fs-5"></i> Certificate of Indigency</a></li>
-                <li class=""><a href="{% url 'business_permit_module' %}" class="text-decoration-none px-3 py-2 d-block"><i class="las la-file-contract fs-5"></i> Barangay Business Permit</a></li>
-                <li class=""><a href="{% url 'building_permit_module' %}" class="text-decoration-none px-3 py-2 d-block"><i class="lar la-building fs-5"></i> Barangay Building Permit</a></li>
-                <li class=""><a href="{% url 'residency_certificate_module' %}" class="text-decoration-none px-3 py-2 d-block"><i class="las la-certificate fs-5"></i> Certificate of Residency</a></li>
+                <li class=""><a href="{% url 'clearance'%}" class="text-decoration-none px-3 py-2 d-block"><i class="fas fa-file-alt "></i> Barangay Clearance</a></li>
+                <li class=""><a href="{% url 'indigency_request' %}" class="text-decoration-none px-3 py-2 d-block"><i class="fas fa-feather-alt "></i> Certificate of Indigency</a></li>
+                <li class=""><a href="{% url 'business_permit_module' %}" class="text-decoration-none px-3 py-2 d-block"><i class="fas fa-file-contract "></i> Barangay Business Permit</a></li>
+                <li class=""><a href="{% url 'building_permit_module' %}" class="text-decoration-none px-3 py-2 d-block"><i class="far fa-building "></i> Barangay Building Permit</a></li>
+                <li class=""><a href="{% url 'residency_certificate_module' %}" class="text-decoration-none px-3 py-2 d-block"><i class="fas fa-certificate "></i> Certificate of Residency</a></li>
                 </ul>
           {% endif %}
  
           {% if not request.user.groups.all.0.name != 'superadmin' %}
           <div class="side-sub-menu py-2">
                 <!--<hr class="h-color mx-3">-->
-                <li class=""><a href="{% url 'adminProfile' %}" class="text-decoration-none px-3 py-2 d-block"><i class="las la-user fs-5"></i> Profile </a></li>
+                <li class=""><a href="{% url 'adminProfile' %}" class="text-decoration-none px-3 py-2 d-block"><i class="fas fa-user"></i> Profile </a></li>
                 <!--<hr class="h-color mx-3">-->
                 {% endif %}
                </div>
@@ -168,34 +176,34 @@
           <div class="side-sub-menu py-2">
                     <div class="accordion-button px-3 py-2" data-bs-toggle="collapse" href="#collapseReports" aria-expanded="false" aria-controls="collapseReports" style="background-color: #008000;">
                         <a class="text-decoration-none d-block">
-                            <i class="las la-calendar-week fs-5"></i> Reports
+                            <i class="fas fa-calendar-week"></i> Reports
                         </a>
                     </div>
 
                     <div class="ps-3 sub-content" style="background-color: #008000;">
                         <ul class="list-unstyled px-2 py-2 collapse" id="collapseReports">
                             <li class="">
-                                <li class=""><a href="{% url 'reports' %}" class="text-decoration-none px-3 py-2 d-block"><i class="las la-file-archive fs-5"></i> Issued Documents </a></li>
+                                <li class=""><a href="{% url 'reports' %}" class="text-decoration-none px-3 py-2 d-block"><i class="fas fa-file-archive"></i> Issued Documents </a></li>
                             </li>
 
                             <li class="">
-                                <li class=""><a href="{% url 'clearance_reports' %}" class="text-decoration-none px-3 py-2 d-block"><i class="las la-file-signature fs-5"></i> Issued Clearance </a></li>
+                                <li class=""><a href="{% url 'clearance_reports' %}" class="text-decoration-none px-3 py-2 d-block"><i class="fas fa-file-signature"></i>Issued Clearance </a></li>
                             </li>
 
                             <li class="">
-                                <li class=""><a href="{% url 'indigency_reports' %}" class="text-decoration-none px-3 py-2 d-block"><i class="las la-file-invoice fs-5"></i> Issued Indigency </a></li>
+                                <li class=""><a href="{% url 'indigency_reports' %}" class="text-decoration-none px-3 py-2 d-block"><i class="fas fa-file-invoice"></i> Issued Indigency </a></li>
                             </li>
 
                             <li class="">
-                                <li class=""><a href="{% url 'business_reports' %}" class="text-decoration-none px-3 py-2 d-block"><i class="las la-file-invoice-dollar fs-5"></i> Issued Business Permit </a></li>
+                                <li class=""><a href="{% url 'business_reports' %}" class="text-decoration-none px-3 py-2 d-block"><i class="fas fa-file-invoice-dollar"></i> Issued Business Permit </a></li>
                             </li>
 
                             <li class="">
-                                <li class=""><a href="{% url 'building_reports' %}" class="text-decoration-none px-3 py-2 d-block"><i class="las la-file-image fs-5"></i> Issued Building Permit </a></li>
+                                <li class=""><a href="{% url 'building_reports' %}" class="text-decoration-none px-3 py-2 d-block"><i class="fas fa-file-image"></i> Issued Building Permit </a></li>
                             </li>
 
                             <li class="">
-                                <li class=""><a href="{% url 'residency_reports' %}" class="text-decoration-none px-3 py-2 d-block"><i class="lar la-id-badge fs-5"></i> Issued Residency </a></li>
+                                <li class=""><a href="{% url 'residency_reports' %}" class="text-decoration-none px-3 py-2 d-block"><i class="far fa-id-badge"></i> Issued Residency </a></li>
                             </li>
 
                         </ul>
@@ -206,7 +214,7 @@
               
                 {% if request.user.id != 30 %}
                 {% if not request.user.groups.all.0.name == 'superadmin' %}               
-                <li class=""><a href="{% url 'requestLogs' %}" class="text-decoration-none px-3 py-2 d-block"><i class="las la-history fs-5"></i> Request Logs </a></li>
+                <li class=""><a href="{% url 'requestLogs' %}" class="text-decoration-none px-3 py-2 d-block"><i class="fas fa-history fs-5"></i> Request Logs </a></li>
                 <div class="side-sub-menu">
                 
                 {% endif %} 
