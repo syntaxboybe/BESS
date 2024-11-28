@@ -8,6 +8,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" type="text/css" href="{% static 'bootstrap/css/bootstrap.min.css' %}">
     <link rel="stylesheet" type="text/css" href="{% static 'bootstrap/css/style.css' %}">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.1/css/all.min.css" rel="stylesheet">
     <link rel="stylesheet" type="text/css" href="{% static 'line-awesome/css/line-awesome.min.css' %}">
     <link rel="stylesheet" type="text/css" href="{% static 'bootstrap/css/bootstrap-datepicker.min.css' %}">
     <link rel="icon" href="{% static 'img/favicon-48x48.png' %}" type="image/x-icon">
@@ -26,7 +27,7 @@
 
 <style>
   body { 
-  background: url("/static/img/service-bg.svg") no-repeat center center fixed; 
+  background: url("/static/img/service-bg.png") no-repeat center center fixed; 
   -webkit-background-size: cover;
   -moz-background-size: cover;
   -o-background-size: cover;
@@ -57,10 +58,10 @@
             </div>
 
             <ul class="list-unstyled px-2">
-                <li class=""><a href="{% url 'service_portal' %}" class="text-decoration-none px-3 py-2 d-block"><i class="lar la-file-alt fs-5"></i> Request Document</a></li>
-                <li class=""><a href="{% url 'document-status' %}" class="text-decoration-none px-3 py-2 d-block"><i class="las la-barcode fs-5"></i> Request Tracker</a></li>
-                <li class=""><a href="{% url 'profile' %}" class="text-decoration-none px-3 py-2 d-block"><i class="las la-user fs-5"></i> Profile</a></li>
-              <li class="" ><a href="{% url 'userLogout' %}" class="text-decoration-none px-3 py-2 d-block" ><i class="las la-sign-out-alt fs-4" style="vertical-align: middle;"></i> Logout</a></li>
+                <li class=""><a href="{% url 'service_portal' %}" class="text-decoration-none px-3 py-2 d-block"><i class="fa-solid fa-file-import"></i> Request Document</a></li>
+                <li class=""><a href="{% url 'document-status' %}" class="text-decoration-none px-3 py-2 d-block"><i class="fa-solid fa-cart-arrow-down"></i> Request Tracker</a></li>
+                <li class=""><a href="{% url 'profile' %}" class="text-decoration-none px-3 py-2 d-block"><i class="fas fa-user fs-5"></i> Profile</a></li>
+                <li class=""><a href="{% url 'userLogout' %}" class="text-decoration-none px-3 py-2 d-block"><i class="fa-solid fa-right-from-bracket"></i> Logout</a></li>
             </ul>
         </div>
 
