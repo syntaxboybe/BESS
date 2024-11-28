@@ -16,6 +16,11 @@
       href="{% static 'bootstrap/css/style.css' %}"
     />
     <link
+      rel="stylesheet"
+      type="text/css"
+      href="{% static 'bootstrap/css/custom.css' %}"
+    />
+    <link
       rel="icon"
       href="{% static 'img/favicon-48x48.png' %}"
       type="image/x-icon"
@@ -102,79 +107,78 @@
             </div>
           </div>
 
-          <div class="col-sm-6 col-md-6 col-lg-5 my-auto">
-            <form class="needs-validation" method="POST">
-              {% csrf_token %}
-              <div class="row">
-                <div class="col-lg-8 px-5">
-                  <div>
+<div class="animated-background"></div>
+<div class="col-sm-6 col-md-6 col-lg-5 my-auto">
+    <form class="needs-validation login-card" method="POST">
+        {% csrf_token %}
+        <div class="row">
+            <div class="col-lg-12 px-5">
+              </div>  
+              <div class="text-center mb-4">
                     <p class="h2"><b>Login</b></p>
-                  </div>
-
-                  <div class="form-outline py-2">
-                    <label class="form-label"><b>Username</b></label>
-                    <input
-                      type="name"
-                      class="form-control"
-                      name="username"
-                      placeholder="Enter username"
-                      required
-                    />
-                  </div>
-
-                  <div class="form-group py-2">
-                    <label class="form-label"><b>Password</b></label>
-                    <div class="input-group">
-                      <input
-                        type="password"
-                        class="form-control"
-                        name="password"
-                        id="password"
-                        placeholder="Password"
-                        required
-                      />
-                      <div class="input-group-append">
-                        <button
-                          class="btn btn-outline-secondary"
-                          type="button"
-                          id="toggle-password"
-                        >
-                          <i class="fas fa-eye"></i>
-                        </button>
-                      </div>
-                    </div>
-                  </div>
-                  {% for message in messages %}
-                  <div class="alert {{ message.tags }}">
-                    <p>{{ message }}</p>
-                  </div>
-                  {% endfor %}
-
-                  <div class="py-3">
-                    <input
-                      type="submit"
-                      name="btnLogin"
-                      class="btn-theme -btn2 col-12"
-                      value="Log In"
-                    />
-                  </div>
-
-                  <div class="py-3 d-flex justify-content-center">
-                    <p class="h6">
-                      First time Login? Create Password or Forgot Password?
-                      <a
-                        href="{% url 'reset_password' %}"
-                        class="text-decoration-none"
-                        >Click Here</a
-                      >
-                    </p>
-                  </div>
                 </div>
 
-                <div class="col-lg-12 px-5"></div>
-              </div>
-            </form>
+                
+<div class="form-outline py-2">
+    <label class="form-label"><b>Username</b><span class="required-asterisk">*</span></label>
+    <input
+        type="name"
+        class="form-control"
+        name="username"
+        placeholder="Enter Username"
+        required
+    />
+</div>
+
+<div class="form-group py-2">
+    <label class="form-label"><b>Password</b><span class="required-asterisk">*</span></label>
+    <div class="input-group">
+        <input
+            type="password"
+            class="form-control"
+            name="password"
+            id="password"
+            placeholder="Enter Password"
+            required
+        />
+        <div class="input-group-append">
+            <button
+                class="btn btn-outline-secondary"
+                type="button"
+                id="toggle-password"
+            >
+                <i class="fas fa-eye"></i>
+            </button>
+        </div>
+    </div>
+</div>
+
+                {% for message in messages %}
+                <div class="alert {{ message.tags }}">
+                    <p>{{ message }}</p>
+                </div>
+                {% endfor %}
+
+                <div class="py-3">
+                    <input
+                        type="submit"
+                        name="btnLogin"
+                        class="btn-theme -btn2 col-12"
+                        value="Log In"
+                    />
+                </div>
+
+                
+          <div class="py-3 d-flex justify-content-center">
+              <a href="{% url 'reset_password' %}" class="text-decoration-none text-white forgot-password">Forgot Password</a>
           </div>
+
+            </div>
+
+            <div class="col-lg-12 px-5"></div>
+        </div>
+    </form>
+</div>
         </div>
       </div>
     </section>

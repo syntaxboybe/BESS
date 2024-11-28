@@ -1,0 +1,82 @@
+/* Login Page */
+/* animate-background.css */
+@keyframes gradientBackground {
+  0% {
+    background-position: 0% 50%;
+  }
+  50% {
+    background-position: 100% 50%;
+  }
+  100% {
+    background-position: 0% 50%;
+  }
+}
+
+.animated-background {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(270deg, #30cfd0 0%, #330867 100%);
+  background-size: 400% 400%;
+  animation: gradientBackground 20s ease infinite;
+  z-index: -1;
+}
+
+/* Styles for the login card */
+
+/* Styles for the login card */
+.login-card {
+  background: rgba(255, 255, 255, 0.1); /* Transparent white background */
+  backdrop-filter: blur(10px); /* Blur effect */
+  border-radius: 15px; /* Rounded corners */
+  box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1); /* Subtle shadow */
+  color: white; /* White text */
+  padding: 30px; /* Adjust padding for spacing */
+  border: 1px solid rgba(255, 255, 255, 0.3); /* Subtle border */
+  max-width: 400px; /* Maximum width of the card */
+  width: 90%; /* Responsive width */
+  margin: 0 auto; /* Center horizontally */
+}
+
+/* Center the login card in the parent container */
+.login-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh; /* Full height of the viewport */
+  width: 100%; /* Full width */
+  position: relative; /* Ensure it layers correctly over the background */
+}
+
+/* Styling for form labels */
+.login-card .form-label {
+  color: white; /* White labels */
+}
+
+/* Styling for the submit button */
+.login-card .btn-theme {
+  background-color: rgba(255, 255, 255, 0.2);
+  color: white;
+  border: none;
+  font-weight: bold;
+  padding: 10px 15px; /* Add padding for button */
+}
+
+.login-card .btn-theme:hover {
+  background-color: rgba(255, 255, 255, 0.4);
+}
+
+/* Ensure responsiveness for smaller screens */
+@media (max-width: 768px) {
+  .login-card {
+    padding: 20px; /* Reduce padding for smaller devices */
+    width: 100%; /* Expand to full width */
+  }
+}
+
+.required-asterisk {
+  color: red; /* Red color for the asterisk */
+  margin-left: 5px; /* Space between the label and asterisk */
+}
