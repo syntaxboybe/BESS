@@ -2,7 +2,48 @@
 {% load static %}
 {% block content %}
 
+<style>
 
+.title-holder {
+  top: 50%;
+  left: 40%;
+  position: absolute;
+}
+.title {
+  font-family: "Lato", sans-serif;
+  font-size: 18px;
+  color: #008000; /* Green color for text */
+  width: 0; /* Start hidden */
+  overflow: hidden; /* Hide overflowing text */
+  white-space: nowrap; /* Prevent wrapping */
+  display: block;
+  border-right: 3px solid #f9d566; /* Cursor simulation */
+  animation: typewriter 8s steps(100, end) infinite, blinking-cursor 0.3s step-end infinite;
+  animation-fill-mode: forwards; /* Ensure it stays visible at end of each loop */
+}
+
+@keyframes typewriter {
+  0% {
+    width: 0;
+  }
+  50% {
+    width: 100%; /* Fully typed out */
+  }
+  100% {
+    width: 0; /* Erase to start again */
+  }
+}
+
+@keyframes blinking-cursor {
+  from {
+    border-color: transparent;
+  }
+  to {
+    border-color: #296da0; /* Yellow cursor */
+  }
+}
+
+</style>
 
 <section>
   <div id="carouselExampleIndicators" class="carousel slide" data-bs-ride="true">
@@ -44,16 +85,20 @@
               <img src="{% static 'img/naawanlogo.jpg'%}" width="70">
             </div>
 
-            <div class="col-lg-12 d-flex justify-content-center pt-3">
-                  <figure class="text-end pt-3">
-                    <blockquote class="blockquote">
-                      <p><em><b>"An Open Defecation Free Barangay"</b></em></p>
-                    </blockquote>
-                    <figcaption class="blockquote-footer">
-                      <cite title="Source Title">LGU</cite>
-                    </figcaption>
-                  </figure>
-            </div>
+            
+
+<div class="col-lg-12 d-flex justify-content-center pt-3">
+    <figure class="text-end pt-3">
+        <blockquote class="blockquote">
+            <p class="title">
+                <em><b>"Strive for progress, not perfection"</b></em>
+            </p>
+        </blockquote>
+        <figcaption class="blockquote-footer">
+            <cite title="Source Title">syntaxboybe</cite>
+        </figcaption>
+    </figure>
+</div>
 
           </div>
         </div>

@@ -258,14 +258,31 @@ def add_profile(request):
 
                 randomNum = User.objects.make_random_password(length=2, allowed_chars="01234567889")
                 random_password = User.objects.make_random_password(length=8, allowed_chars="01234567889")
-                username = lastname+randomNum
+                username = f"{firstname.lower()}.{lastname.lower()}"
 
                 user = User.objects.create_user(email = email, username = username, password=random_password)
                 group = Group.objects.get(name='resident')
                 user.groups.add(group)
                 
-                subject = 'Welcome to Barangay Poblacion'
-                message = f'Heres your\nUsername: {user.username}\nPassword: {random_password}'
+                subject = 'Welcome to Barangay E-Service System!'
+                message = f"""
+                Dear {username},
+
+                We are excited to have you on board and look forward to helping you access and manage the services offered by our platform.
+
+                Here are your account details:
+                Username: {user.username}
+                Password: {random_password}
+
+                Please keep this information safe and secure. 
+                We recommend changing your password after logging in for the first time to enhance the security of your account.
+                If you need assistance or have any questions, feel free to reach out to us. We are here to help!
+
+                Thank you for choosing Barangay E-Service System. We look forward to serving you.
+
+                Best regards,
+                The Barangay E-Service Team
+                """    
                 email_from = settings.EMAIL_HOST_USER
                 recipient_list = [user.email]
                 send_mail( subject, message, email_from, recipient_list )

@@ -29,7 +29,7 @@
 /* Styles for the login card */
 .login-card {
   background: rgba(255, 255, 255, 0.1); /* Transparent white background */
-  backdrop-filter: blur(10px); /* Blur effect */
+  backdrop-filter: blur(30px); /* Blur effect */
   border-radius: 15px; /* Rounded corners */
   box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1); /* Subtle shadow */
   color: white; /* White text */
@@ -79,4 +79,22 @@
 .required-asterisk {
   color: red; /* Red color for the asterisk */
   margin-left: 5px; /* Space between the label and asterisk */
+}
+
+.custom-link {
+  color: white; /* Initial color is white */
+  text-decoration: none; /* Ensures no underline */
+  transition: color 0.3s ease; /* Smooth transition for color change */
+}
+
+.custom-link:hover {
+  color: blue; /* Change color to blue when hovered */
+  animation: blink 1s steps(5, start) infinite; /* Blink effect */
+}
+
+/* Keyframes for blinking effect */
+@keyframes blink {
+  50% {
+    color: transparent; /* Makes text disappear for blinking effect */
+  }
 }
