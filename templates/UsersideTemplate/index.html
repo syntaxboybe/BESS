@@ -9,6 +9,7 @@
   left: 40%;
   position: absolute;
 }
+
 .title {
   font-family: "Lato", sans-serif;
   font-size: 18px;
@@ -17,8 +18,8 @@
   overflow: hidden; /* Hide overflowing text */
   white-space: nowrap; /* Prevent wrapping */
   display: block;
-  border-right: 3px solid #f9d566; /* Cursor simulation */
-  animation: typewriter 5.5s steps(100, end) infinite, blinking-cursor 5.5s step-end infinite;
+  border-right: 3px solid #4169e1; /* Cursor simulation */
+  animation: typewriter 5.5s steps(30, end) infinite, blinking-cursor 0.5s step-end infinite;
   animation-fill-mode: forwards; /* Ensure it stays visible at end of each loop */
 }
 
@@ -27,21 +28,25 @@
     width: 0;
   }
   50% {
-    width: 100%; /* Fully typed out */
+    width: 100%; /* Fully typed */
+  }
+  75% {
+    width: 100%; /* Pause before deletion */
   }
   100% {
-    width: 0; /* Erase to start again */
+    width: 0; /* Text deleted */
   }
 }
 
 @keyframes blinking-cursor {
-  from {
+  0%, 100% {
     border-color: transparent;
   }
-  to {
-    border-color: #296da0; /* Yellow cursor */
+  50% {
+    border-color: #4169e1; /* Cursor color */
   }
 }
+
 
 </style>
 

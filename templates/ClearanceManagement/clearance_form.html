@@ -1,6 +1,6 @@
 {% load static %}
 <script src="{% static 'bootstrap/js/datepicker.js' %}" ></script>
-<form hx-post="{{ request.path }}" class="modal-content">
+<form hx-post="{{ request.path }}" class="modal-content" enctype="multipart/form-data">
     {% csrf_token %}
     <div class="modal-header">
       <h5 class="modal-title">Verify Clearance</h5>
@@ -81,7 +81,17 @@
                 </div>
             </div>
 
-
+<div class="col-12 py-2">
+                <p class="h6">Upload Signature</p>
+                <!-- Signature Image Upload -->
+                {{ form.signature.image }}
+                <input type="file" class="form-control form-control-sm" id="signatureUpload" name="signature" accept="image/*">
+                <br>
+                <!-- Preview of uploaded image -->
+                <div id="signaturePreview" class="text-center mt-2">
+                    <img id="signatureImage" src="#" alt="Signature Preview" style="display: none; max-width: 100%; max-height: 150px;"/>
+                </div>
+            </div>
 
         </div>
     </div>
@@ -91,3 +101,23 @@
     </div>
 </form>
 
+<script>
+  // JavaScript to handle image preview
+  document.getElementById("signatureUpload").addEventListener("change", function(event) {
+    const file = event.target.files[0];
+    const preview = document.getElementById("signatureImage");
+    const previewContainer = document.getElementById("signaturePreview");
+
+    if (file) {
+      const reader = new FileReader();
+      reader.onload = function(e) {
+        preview.src = e.target.result;
+        preview.style.display = "block"; // Show the image
+      };
+      reader.readAsDataURL(file);
+    } else {
+      preview.src = "#";
+      preview.style.display = "none"; // Hide the image if no file is selected
+    }
+  });
+</script>

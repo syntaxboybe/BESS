@@ -28,7 +28,7 @@
 
 /* Styles for the login card */
 .login-card {
-  background: rgba(255, 255, 255, 0.1); /* Transparent white background */
+  background: rgba(255, 255, 255, 0.3); /* Transparent white background */
   backdrop-filter: blur(30px); /* Blur effect */
   border-radius: 15px; /* Rounded corners */
   box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1); /* Subtle shadow */

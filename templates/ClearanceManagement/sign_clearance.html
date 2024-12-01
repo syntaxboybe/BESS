@@ -1,7 +1,12 @@
-<form hx-post="{{ request.path }}" class="modal-content">
+<form
+  method="POST"
+  enctype="multipart/form-data"
+  hx-post="{{ request.path }}"
+  class="modal-content"
+>
   {% csrf_token %}
   <div class="modal-header">
-    <h5 class="modal-title">Are you sure you want to sign this request?</h5>
+    <h5 class="modal-title">Sign Request</h5>
   </div>
   <div class="modal-body">
     <div class="row">
@@ -10,12 +15,26 @@
         <p><b>Date Requested:</b> {{ clearance.date_requested }}</p>
         <p><b>Transaction ID:</b> {{ clearance.transaction_id }}</p>
       </div>
+      <div class="col-12 py-3">
+        <label for="signature" class="form-label"
+          ><b>Upload Your Signature:</b></label
+        >
+        <input
+          type="file"
+          class="form-control"
+          name="signature"
+          id="signature"
+          accept="image/*"
+          required
+        />
+        <small class="text-muted">Upload a signature image (PNG, JPG).</small>
       </div>
+    </div>
+  </div>
   <div class="modal-footer">
-    <button class="btn btn-success" type="submit">Yes</button>
+    <button class="btn btn-success" type="submit">Sign</button>
     <button class="btn btn-secondary" type="button" data-bs-dismiss="modal">
       Cancel
-    
     </button>
   </div>
 </form>
