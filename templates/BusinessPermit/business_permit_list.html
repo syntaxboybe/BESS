@@ -73,22 +73,31 @@
           <!-- Always display the 'las la-pen' button -->
           {% if user.id != 29 %}
           <button
-            class="btn btn-secondary bg-gradient"
+            class="btn btn-primary bg-gradient"
             hx-get="{% url 'edit_business_permit' business_permit.id %}"
             hx-target="#dialog"
           >
-            <i class="fas fa-eye fs-5" style="vertical-align: middle"></i>
-            <span style="vertical-align: middle"> View</span>
+            <i class="fas fa-sign-in fs-5" style="vertical-align: middle"></i>
+            <span style="vertical-align: middle"> Verify</span>
           </button>
 
-          <button
-            class="btn btn-warning bg-gradient"
-            hx-get="{% url 'sign_business_permit' business_permit.id %}"
-            hx-target="#dialog"
+          <a
+            target="”_blank”"
+            type="button"
+            class="btn btn-success bg-gradient"
+            href="{% url 'generate_business_permit' business_permit.id %}"
           >
             <i class="fas fa-pen fs-5" style="vertical-align: middle"></i>
             <span style="vertical-align: middle"> Sign</span>
-          </button>
+          </a>
+          <!-- <button -->
+          <!--   class="btn btn-warning bg-gradient" -->
+          <!--   hx-get="{% url 'sign_business_permit' business_permit.id %}" -->
+          <!--   hx-target="#dialog" -->
+          <!-- > -->
+          <!--   <i class="fas fa-pen fs-5" style="vertical-align: middle"></i> -->
+          <!--   <span style="vertical-align: middle"> Sign</span> -->
+          <!-- </button> -->
           {% endif %}
         </td>
       </tr>
