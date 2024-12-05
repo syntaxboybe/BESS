@@ -1,4 +1,4 @@
-# BESS: Barangay E-Service System with Face Recognition for the Barangay Office of Poblacion Naawan, Misamis Oriental
+# BESS: Barangay E-Service System for the Barangay Office of Poblacion Naawan, Misamis Oriental
 
 A Capstone project for the completion of the Bachelor of Science in Information Technology at Mindanao State University - Naawan Campus.
 
@@ -24,14 +24,14 @@ A Capstone project for the completion of the Bachelor of Science in Information 
 
 ### Import Database
 
--From DB folder, import db_masili file in PgAdmin4. If you don't have PgAdmin 4 you can follow this link on how to install PgAdmin4 : https://www.guru99.com/download-install-postgresql.html
+-From DB folder, import db_masili file in PgAdmin4. If you don't have PgAdmin 4 you can follow this link on how to install PgAdmin4 : <https://www.guru99.com/download-install-postgresql.html>
 
 - set the password to "admin"
 
 ### Run The Project
 
 - In the terminal go back to the main project directory and type to the terminal (`python manage.py runserver`)
-- click this localhost link to open the landing page http://127.0.0.1:8000/Barangay%20Poblacion/Home/
+- click this localhost link to open the landing page <http://127.0.0.1:8000/Barangay%20Poblacion/Home/>
 
 ### Test Account
 
