@@ -97,12 +97,12 @@
                             <td class="fs-6">{{resident.email}}</td>
                             <td class="text-center">
                                 
-                                <a target=”blank” href="{% url 'view_profile' resident.id %}" class="btn btn-secondary bg-gradient">
+                                <a target=”blank” href="{% url 'view_profile' resident.id %}" class="btn btn-primary bg-gradient">
                                     <i class="fas fa-eye fs-5" style="vertical-align: middle;"></i>
                                  <span style="vertical-align: middle"> View</span>
                                 </a>
     
-                                <a href="{% url 'edit_profile' resident.id %}" class="btn btn-warning bg-gradient">
+                                <a href="{% url 'edit_profile' resident.id %}" class="btn btn-success bg-gradient">
                                     <i class="fas fa-edit fs-5" style="vertical-align: middle;"></i>
                                  <span style="vertical-align: middle"> Update</span>
                                 </a>

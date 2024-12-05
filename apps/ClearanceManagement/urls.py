@@ -2,6 +2,8 @@ from django.urls import path, include
 from .views import *
 from project.utils import HashIdConverter
 from django.urls import register_converter
+from django.conf import settings
+from django.conf.urls.static import static
 
 register_converter(HashIdConverter, "hashid")
 
@@ -15,4 +17,6 @@ urlpatterns = [
     ),
     path("delete_clearance/<hashid:id>", delete_clearance, name="delete_clearance"),
     path("sign_clearance/<hashid:id>/", sign_clearance, name="sign_clearance"),
+    path("no_sign_clearance/<hashid:id>/", no_sign_clearance, name="no_sign_clearance"),
 ]
+urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

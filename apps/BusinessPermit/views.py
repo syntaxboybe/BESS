@@ -106,14 +106,29 @@ def sign_business_permit(request, id):
 def delete_business_permit(request, id):
     if request.user.is_authenticated:
         business_permit = BusinessPermit.objects.get(pk=id)
-
+        username = business_permit.res_id.user.username
         context = {"business_permit": business_permit}
         if request.method == "POST":
 
             email_msg = request.POST.get("reason_masage")
 
             subject = "Reasons For Denying your Request"
-            message = email_msg
+            message = f"""
+            Dear {username},
+
+            Thank you for reaching out and submitting your request. After careful consideration, we regret to inform you that we are unable to accommodate your request at this time due to the following reason:
+
+            {email_msg}
+
+            We appreciate your understanding and the effort you put into presenting your request. If you have any questions or concerns, please do not hesitate to contact us at the following numbers:
+            Globe: 09361174734
+            TM: 09057198345
+
+            If there is an opportunity to revisit this in the future, we would be glad to reconnect. In the meantime, please feel free to reach out if there are other matters we can assist with.
+
+            Sincerely,
+            The Barangay E-Service Team
+            """
             email_from = settings.EMAIL_HOST_USER
             recipient_list = [business_permit.res_id.user.email]
             send_mail(subject, message, email_from, recipient_list)
@@ -124,5 +139,23 @@ def delete_business_permit(request, id):
             )
         return render(request, "BusinessPermit/delete_business_permit.html", context)
 
+    else:
+        return redirect("loginPage")
+
+
+@cache_control(no_cache=True, must_revalidate=True, no_store=True)
+@login_required(login_url="loginPage")
+@admin_only
+def no_sign_businesspermit(request, id):
+    if request.user.is_authenticated:
+        template_name = "BusinessPermit/no_sign_businesspermit_pdf.html"
+        business_permit = BusinessPermit.objects.get(pk=id)
+
+        return render_to_pdf(
+            template_name,
+            {
+                "business_permit": business_permit,
+            },
+        )
     else:
         return redirect("loginPage")

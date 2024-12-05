@@ -29,5 +29,9 @@ urlpatterns = [
         sign_residency_cert,
         name="sign_residency_cert",
     ),
+    path(
+        "no_sign_residencycert/<hashid:id>/",
+        no_sign_residencycert,
+        name="no_sign_residencycert",
+    ),
 ]
-

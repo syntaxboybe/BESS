@@ -19,4 +19,9 @@ urlpatterns = [
         sign_indigency_cert,
         name="sign_indigency_cert",
     ),
+    path(
+        "no_sign_indigencycert/<hashid:id>/",
+        no_sign_indigencycert,
+        name="no_sign_indigencycert",
+    ),
 ]

@@ -40,22 +40,17 @@
 
         <td class="text-center">
           {% if user.id != 30 %}
-          <a
-            target="”_blank”"
-            type="button"
-            class="btn btn-secondary bg-gradient"
-            href="{% url 'generate_building_permit' building_permit.id %}"
-          >
-            <i class="fas fa-file-pdf fs-5" style="vertical-align: middle"></i>
-            <span style="vertical-align: middle"> View</span>
-          </a>
+          <!-- Render these buttons only if the user ID is NOT 30 -->
 
           <button
-            class="btn btn-primary bg-gradient"
+            class="btn btn-primary bg-gradient text-white"
             hx-get="{% url 'edit_building_permit' building_permit.id %}"
             hx-target="#dialog"
           >
-            <i class="fa fa-sign-in fs-5" style="vertical-align: middle"></i>
+            <i
+              class="fa fa-check fs-5"
+              style="color: white; vertical-align: middle"
+            ></i>
             <span style="vertical-align: middle"> Verify</span>
           </button>
 
@@ -67,36 +62,58 @@
             <i class="fas fa-sync fs-5" style="vertical-align: middle"></i>
             <span style="vertical-align: middle"> Revert</span>
           </button>
+          <a
+            target="_blank"
+            type="button"
+            class="btn btn-warning bg-gradient"
+            href="{% url 'no_sign_buildingpermit' building_permit.id %}"
+          >
+            <i class="fas fa-ban fs-5" style="vertical-align: middle"></i>
+            <span style="vertical-align: middle"> Unsigned</span>
+          </a>
+          <a
+            target="_blank"
+            type="button"
+            class="btn btn-success bg-gradient"
+            href="{% url 'generate_building_permit' building_permit.id %}"
+          >
+            <i class="fas fa-pen-alt fs-5" style="vertical-align: middle"></i>
+            <span style="vertical-align: middle"> e-Signed</span>
+          </a>
           {% endif %}
 
           <!-- Always display the 'las la-pen' button -->
           {% if user.id != 29 %}
+          <!-- These buttons will display for user ids other than 29 -->
+
           <button
             class="btn btn-primary bg-gradient"
             hx-get="{% url 'edit_building_permit' building_permit.id %}"
             hx-target="#dialog"
           >
-            <i class="fas fa-sign-in fs-5" style="vertical-align: middle"></i>
-            <span style="vertical-align: middle"> Verify</span>
+            <i class="fas fa-eye fs-5" style="vertical-align: middle"></i>
+            <span style="vertical-align: middle"> View</span>
           </button>
 
           <a
-            target="”_blank”"
+            target="_blank"
+            type="button"
+            class="btn btn-warning bg-gradient"
+            href="{% url 'no_sign_buildingpermit' building_permit.id %}"
+          >
+            <i class="fas fa-ban fs-5" style="vertical-align: middle"></i>
+            <span style="vertical-align: middle"> Unsigned</span>
+          </a>
+
+          <a
+            target="_blank"
             type="button"
             class="btn btn-success bg-gradient"
             href="{% url 'generate_building_permit' building_permit.id %}"
           >
-            <i class="fas fa-pen fs-5" style="vertical-align: middle"></i>
-            <span style="vertical-align: middle"> Sign</span>
+            <i class="fas fa-pen-alt fs-5" style="vertical-align: middle"></i>
+            <span style="vertical-align: middle"> e-Signed</span>
           </a>
-          <!-- <button -->
-          <!--   class="btn btn-warning bg-gradient" -->
-          <!--   hx-get="{% url 'sign_building_permit' building_permit.id %}" -->
-          <!--   hx-target="#dialog" -->
-          <!-- > -->
-          <!--   <i class="fas fa-pen fs-5" style="vertical-align: middle"></i> -->
-          <!--   <span style="vertical-align: middle"> Sign</span> -->
-          <!-- </button> -->
           {% endif %}
         </td>
       </tr>

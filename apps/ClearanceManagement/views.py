@@ -7,6 +7,7 @@ from django.views.decorators.cache import cache_control
 from django.contrib.auth.decorators import login_required
 from django.conf import settings
 from django.core.mail import send_mail
+from django.template.loader import render_to_string
 
 # Create your views here.
 
@@ -37,19 +38,21 @@ def clearance_list(request):
 @admin_only
 def edit_clearance(request, id):
     if request.user.is_authenticated:
+
         clearance = clerance_list.objects.get(pk=id)
         form = cleranceForm(instance=clearance)
 
-        clearance_id = clerance_list.objects.get(pk=id)
         if request.method == "POST":
-            form = cleranceForm(request.POST, instance=clearance)
+            form = cleranceForm(
+                request.POST, request.FILES, instance=clearance
+            )  # Include request.FILES
             if form.is_valid():
                 form.save()
                 return HttpResponse(
                     status=204, headers={"HX-Trigger": "clearancelistUpdate"}
                 )
 
-        context = {"form": form, "disabledform": clearance_id}
+        context = {"form": form, "disabledform": clearance}
         return render(request, "ClearanceManagement/clearance_form.html", context)
     else:
         return redirect("loginPage")
@@ -61,14 +64,17 @@ def edit_clearance(request, id):
 def generate_clearance(request, id):
     if request.user.is_authenticated:
         template_name = "ClearanceManagement/clearance_pdf.html"
-        clearance = clerance_list.objects.get(pk=id)
 
-        return render_to_pdf(
-            template_name,
-            {
-                "clearance": clearance,
-            },
-        )
+        # Fetch clearance object and related data
+        clearance = get_object_or_404(clerance_list, pk=id)
+
+        # Ensure the media URL is passed to handle images
+        context = {
+            "clearance": clearance,
+            "media_url": request.build_absolute_uri(settings.MEDIA_URL),
+        }
+
+        return render_to_pdf(template_name, context)
     else:
         return redirect("loginPage")
 
@@ -106,13 +112,29 @@ def sign_clearance(request, id):
 def delete_clearance(request, id):
     if request.user.is_authenticated:
         clearance = clerance_list.objects.get(pk=id)
-
+        username = clearance.res_id.user.username
         context = {"clearance": clearance}
         if request.method == "POST":
+
             email_msg = request.POST.get("reason_masage")
 
             subject = "Reasons For Denying your Request"
-            message = email_msg
+            message = f"""
+            Dear {username},
+
+            Thank you for reaching out and submitting your request. After careful consideration, we regret to inform you that we are unable to accommodate your request at this time due to the following reason:
+
+            {email_msg}
+
+            We appreciate your understanding and the effort you put into presenting your request. If you have any questions or concerns, please do not hesitate to contact us at the following numbers:
+            Globe: 09361174734
+            TM: 09057198345
+
+            If there is an opportunity to revisit this in the future, we would be glad to reconnect. In the meantime, please feel free to reach out if there are other matters we can assist with.
+
+            Sincerely,
+            The Barangay E-Service Team
+            """
             email_from = settings.EMAIL_HOST_USER
             recipient_list = [clearance.res_id.user.email]
             send_mail(subject, message, email_from, recipient_list)
@@ -123,5 +145,26 @@ def delete_clearance(request, id):
             )
         return render(request, "ClearanceManagement/delete_clearance.html", context)
 
+    else:
+        return redirect("loginPage")
+
+
+@cache_control(no_cache=True, must_revalidate=True, no_store=True)
+@login_required(login_url="loginPage")
+@admin_only
+def no_sign_clearance(request, id):
+    if request.user.is_authenticated:
+        template_name = "ClearanceManagement/no_sign_pdf.html"
+
+        # Fetch clearance object and related data
+        clearance = get_object_or_404(clerance_list, pk=id)
+
+        # Ensure the media URL is passed to handle images
+        context = {
+            "clearance": clearance,
+            "media_url": request.build_absolute_uri(settings.MEDIA_URL),
+        }
+
+        return render_to_pdf(template_name, context)
     else:
         return redirect("loginPage")

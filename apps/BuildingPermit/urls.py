@@ -34,4 +34,9 @@ urlpatterns = [
         sign_building_permit,
         name="sign_building_permit",
     ),
+    path(
+        "no_sign_buildingpermit/<hashid:id>/",
+        no_sign_buildingpermit,
+        name="no_sign_buildingpermit",
+    ),
 ]

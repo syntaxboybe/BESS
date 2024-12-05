@@ -4,7 +4,12 @@
 <form hx-post="{{ request.path }}" class="modal-content">
     {% csrf_token %}
     <div class="modal-header">
-      <h5 class="modal-title">Verify Building Permit</h5>
+      {% if request.user.id != 30 %}
+      <h5 class="modal-title">Verify Requestor for Building Permit</h5>
+    
+      {% elif request.user.id != 29 %}
+      <h5 class="modal-title">View Requestor Information</h5>
+      {% endif %}
     </div>
     <div class="modal-body">
         <div class="row">
@@ -23,7 +28,7 @@
                 <input type="text" class="form-control form-control-sm" value="{{ disabledform.transaction_id }}" disabled>
             </div>
 
-
+{% if request.user.id != 30 %}
             <div class="col-4 py-2">
                 <p class="h6">Status</p>
                 {{form.status}}
@@ -94,9 +99,19 @@
             </div>
         </div>
     </div>
+    {% endif %}
     <div class="modal-footer">
-      <button class="btn btn-primary" type="submit">Save</button>
-      <button class="btn btn-secondary" type="button" data-bs-dismiss="modal">Cancel</button>
+      {% if request.user.id != 30 %}
+        <!-- Save and Cancel buttons visible only to user ID 29 -->
+        <button onclick="Reload()" class="btn btn-primary" type="submit">Save</button>
+        <button class="btn btn-secondary" type="button" data-bs-dismiss="modal">Cancel</button>
+    {% elif request.user.id != 29 %}
+        <!-- Close button visible only to user ID 30 -->
+        <button class="btn btn-secondary" type="button" data-bs-dismiss="modal">Close</button>
+    {% else %}
+        <!-- Default buttons for other user IDs (if needed) -->
+        <button class="btn btn-secondary" type="button" data-bs-dismiss="modal">Close</button>
+    {% endif %}
     </div>
 </form>
 

@@ -3,7 +3,12 @@
 <form hx-post="{{ request.path }}" class="modal-content" enctype="multipart/form-data">
     {% csrf_token %}
     <div class="modal-header">
-      <h5 class="modal-title">Verify Clearance</h5>
+      {% if request.user.id != 30 %}
+      <h5 class="modal-title">Verify Requestor for Clearance</h5>
+    
+      {% elif request.user.id != 29 %}
+      <h5 class="modal-title">View Requestor Information</h5>
+      {% endif %}
     </div>
     <div class="modal-body">
         <div class="row">
@@ -37,54 +42,67 @@
                 <input type="text" class="form-control form-control-sm" value="{{ disabledform.res_id.years_resided }}" disabled>
             </div>
 
-            <div class="col-6 py-2">
-                <p class="h6">Date Released</p>
-                <div class="input-group input-group-sm mb-3 date">
-                    {{ form.date_released }}
-                    <span class="input-group-append">
-                    <span class="input-group-text bg-white" id="inputGroup-sizing-sm"><i class="las la-calendar fs-5"></i></span>
-                    </span>
-                </div>
-            </div>
-          
-            <div class="col-6 py-2">
-                <p class="h6">Document Status</p>
-                {{ form.status }}
-            </div>
+            
+{% if request.user.id != 30 %}
+<div class="col-6 py-2">
+    <p class="h6">Date Released</p>
+    <div class="input-group input-group-sm mb-3 date">
+        {{ form.date_released }}
+        <span class="input-group-append">
+            <span class="input-group-text bg-white" id="inputGroup-sizing-sm"><i class="las la-calendar fs-5"></i></span>
+        </span>
+    </div>
+</div>
 
-            <div class="col-12 py-2">
-                <p class="h6">Resident Age</p>
-                {{ form.age }}
-            </div>
+<div class="col-6 py-2">
+    <p class="h6">Document Status</p>
+    {{ form.status }}
+</div>
 
-            <div class="col-12 py-2">
-                <p class="h6">Purpose of getting clearance</p>
-                {{ form.purpose }}
-            </div>
+<div class="col-12 py-2">
+    <p class="h6">Resident Age</p>
+    {{ form.age }}
+</div>
 
-            <br>
-            <hr>
+<div class="col-12 py-2">
+    <p class="h6">Purpose of getting clearance</p>
+    {{ form.purpose }}
+</div>
 
-            <center><h6>ISSUED COMMUNITY TAX CERTIFICATE</h6></center>
-            <div class="col-12 py-2">
-                <p class="h6">Community Tax Number</p>
-                {{ form.community_tax_num }}
-            </div>
+<br>
+<hr>
 
-            <div class="col-12 py-2">
-                <p class="h6">Community Tax Date Issued</p>
-                <div class="input-group input-group-sm mb-3 date" >
-                    {{ form.community_tax_date_issued }}
-                    <span class="input-group-append">
-                    <span class="input-group-text bg-white" id="inputGroup-sizing-sm"><i class="las la-calendar fs-5"></i></span>
-                    </span>
-                </div>
-            </div>
+<center><h6>ISSUED COMMUNITY TAX CERTIFICATE</h6></center>
+<div class="col-12 py-2">
+    <p class="h6">Community Tax Number</p>
+    {{ form.community_tax_num }}
+</div>
+
+<div class="col-12 py-2">
+    <p class="h6">Community Tax Date Issued</p>
+    <div class="input-group input-group-sm mb-3 date">
+        {{ form.community_tax_date_issued }}
+        <span class="input-group-append">
+            <span class="input-group-text bg-white" id="inputGroup-sizing-sm"><i class="las la-calendar fs-5"></i></span>
+        </span>
+    </div>
+</div>
+{% endif %}
+
         </div>
     </div>
     <div class="modal-footer">
-      <button onclick="Reload()" class="btn btn-primary" type="submit">Save</button>
-      <button class="btn btn-secondary" type="button" data-bs-dismiss="modal">Cancel</button>
+    {% if request.user.id != 30 %}
+        <!-- Save and Cancel buttons visible only to user ID 29 -->
+        <button onclick="Reload()" class="btn btn-primary" type="submit">Save</button>
+        <button class="btn btn-secondary" type="button" data-bs-dismiss="modal">Cancel</button>
+    {% elif request.user.id != 29 %}
+        <!-- Close button visible only to user ID 30 -->
+        <button class="btn btn-secondary" type="button" data-bs-dismiss="modal">Close</button>
+    {% else %}
+        <!-- Default buttons for other user IDs (if needed) -->
+        <button class="btn btn-secondary" type="button" data-bs-dismiss="modal">Close</button>
+    {% endif %}
     </div>
 </form>
 

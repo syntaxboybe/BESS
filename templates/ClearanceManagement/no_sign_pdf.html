@@ -1,0 +1,263 @@
+{% load static %}
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link
+      rel="stylesheet"
+      type="text/css"
+      href="{% static 'bootstrap/css/bootstrap.min.css' %}"
+    />
+    <title>Barangay Clearance</title>
+  </head>
+  <style>
+    p {
+      margin: 0;
+    }
+
+    h1 {
+      margin: 0;
+    }
+
+    table,
+    tr {
+      margin-left: 5px;
+      margin-right: 5px;
+    }
+  </style>
+  <body>
+    <table>
+      <tr>
+        <td colspan="3">
+          <table>
+            <tr>
+              <td
+                valign="Top"
+                style="width: 90px; display: block; margin-left: -30px"
+              >
+                <img src="static/img/naawanlogo.jpg" alt="" width="80" />
+              </td>
+              <td
+                valign="Top"
+                style="width: 90px; display: block; margin-left: -30px"
+              >
+                <img src="static/img/poblacionlogo.png" alt="" width="80" />
+              </td>
+
+              <td valign="Top" style="margin-left: -30px; font-size: 14px">
+                <p>Republic of the Philippines</p>
+                <p>PROVINCE OF MISAMIS ORIENTAL</p>
+                <p>MUNICIPALITY OF NAAWAN</p>
+                <h1>BARANGAY POBLACION</h1>
+              </td>
+
+              <td valign="Top">
+                <table width="100%">
+                  <tr>
+                    <td colspan="3">
+                      <br />
+                      <p style="font-size: 12px">
+                        brgypoblacion.naawan@gmail.com
+                      </p>
+                    </td>
+                    <td>
+                      <br />
+                      <img src="static/img/gmail_icon.png" alt="" width="20" />
+                    </td>
+                  </tr>
+                  <tr>
+                    <td colspan="3">
+                      <br />
+                      <p
+                        style="
+                          font-size: 12px;
+                          text-align: right;
+                          margin-right: -55px;
+                        "
+                      >
+                        09361174734/09057198345
+                      </p>
+                    </td>
+                    <td>
+                      <br />
+                      <img
+                        src="static/img/telephone_icon.jpg"
+                        alt=""
+                        width="20"
+                      />
+                    </td>
+                  </tr>
+                </table>
+              </td>
+            </tr>
+          </table>
+        </td>
+      </tr>
+
+      <tr>
+        <td align="center" colspan="3" style="font-size: 16px">
+          <br />
+          <h1>OFFICE OF THE BARANGAY CHAIRMAN</h1>
+          <h1>BARANGAY CLEARANCE</h1>
+        </td>
+      </tr>
+    </table>
+
+    <table border="1" bordercolor="black" width="100%" align="center">
+      <tr>
+        <td width="34%" colspan="2">
+          <br />
+
+          <h1><i>HON.MICHAEL S. DACOCO</i></h1>
+          <p>Barangay Chairman</p>
+          <br />
+          <h1><i>HON.HOWARD M. DADOLE</i></h1>
+          <p>Brgy. Councilor</p>
+          <br />
+          <h1><i>HON.TRES G. DACOCO</i></h1>
+          <p>Brgy. Councilor</p>
+          <br />
+          <h1><i>HON.MARK IAN R. YAP</i></h1>
+          <p>Brgy. Councilor</p>
+          <br />
+          <h1><i>HON.ROLAND H. MACARANDAN</i></h1>
+          <p>Brgy. Councilor</p>
+          <br />
+          <h1><i>HON.JOEY A. LIWAGON</i></h1>
+          <p>Brgy. Councilor</p>
+          <br />
+          <h1><i>HON.BEN JUN D. PADAYAO</i></h1>
+          <p>Brgy. Councilor</p>
+          <br />
+          <h1><i>HON.ARACELI R. BAANG</i></h1>
+          <p>Brgy. Councilor</p>
+          <br />
+          <h1><i>HON.JIO PAOLO B. SACABIN</i></h1>
+          <p>SK Chairman</p>
+          <br />
+          <h1><i>FE SALAM A. DUROG</i></h1>
+          <p>Brgy. Secretary</p>
+          <br />
+          <h1><i>LYDIA G. ROA</i></h1>
+          <p>Brgy. Treasurer</p>
+          <br />
+          <h1><i>HERNEL M. ABITONA</i></h1>
+          <p>Brgy. Record Keeper</p>
+          <br />
+          <h1><i>JULIET B. MADULA</i></h1>
+          <p>Brgy. Clerk</p>
+          <br /><br /><br /><br /><br /><br /><br /><br /><br /><br />
+        </td>
+
+        <td width="66%" valign="Top">
+          <br />
+          <p style="font-size: 12px">To whom It may Concern;</p>
+          <br />
+          <p style="font-size: 12px">
+            &nbsp; &nbsp; &nbsp; &nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &nbsp; &nbsp;
+            &nbsp;&nbsp;&nbsp;&nbsp; This is to certify that
+            <b>{{clearance.res_id}}</b>, <b>{{clearance.age}}</b> years of age,
+            born on <b>{{clearance.res_id.birthdate}}</b> at
+            <b>{{clearance.res_id.birthplace}}</b>,
+            <b>{{clearance.res_id.civil_status}}</b> and resident of
+            <b>{{clearance.res_id.purok}}</b> Barangay Poblacion, Naawan,
+            Misamis Oriental since <b>{{clearance.res_id.years_resided}}</b> has
+            never been charged of any kind of offense and has no records on file
+            before in this Barangay.
+          </p>
+          <br /><br /><br />
+          <p style="font-size: 12px">
+            &nbsp; &nbsp; &nbsp; &nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &nbsp; &nbsp;
+            &nbsp;&nbsp;&nbsp;&nbsp; This is Issued upon the request of the
+            above mentioned resident for the purpose of: &nbsp; &nbsp;<u>
+              <b style="font-size: 14px">{{clearance.purpose}}</b>
+            </u>
+          </p>
+
+          <br /><br /><br /><br />
+          <p style="font-size: 12px">
+            Issued this <b>{{clearance.date_released|date:"jS"}}</b> of
+            <b>{{clearance.date_released|date:"F"}}</b>,
+            <b>{{clearance.date_released.year}}</b> at Barangay Poblacion,
+            Naawan, Misamis Oriental
+          </p>
+          <table>
+            <tr>
+              <td valign="Top">
+                <p style="font-size: 12px"><b>Thumbmark</b></p>
+                <img src="static/img/sqaure.png" alt="" width="90" /><img
+                  src="static/img/sqaure.png"
+                  alt=""
+                  width="90"
+                />
+              </td>
+            </tr>
+          </table>
+          <br />
+          <br />
+
+          <table>
+            <tr style="margin: 0">
+              <td valign="Top">
+                <table>
+                  <tr style="margin: 0">
+                    <td style="margin-left: 270px">
+                      <br />
+                    </td>
+                    <td>
+                      <p style="font-size: 12px">Approved by:</p>
+                      <br />
+                      <h1 style="text-align: center">HON.MICHAEL S. DACOCO</h1>
+                      <p style="font-size: 12px; text-align: center">
+                        Barangay Chairman
+                      </p>
+                    </td>
+                  </tr>
+                </table>
+                <table>
+                  <tr style="margin: 0">
+                    <td>
+                      <br />
+                      <p style="font-size: 12px">
+                        <b>Community Tax</b> - {{clearance.community_tax_num}}
+                      </p>
+                      <p style="font-size: 10px">
+                        <b>Date</b> - {{clearance.community_tax_date_issued}}
+                      </p>
+                      <p style="font-size: 10px">
+                        <b>Place Issue</b> -
+                        <b>Poblacion Naawan, Misamis Oriental</b>
+                      </p>
+                    </td>
+                  </tr>
+
+                  <tr style="margin: 0">
+                    <td>
+                      <br />
+                      <br />
+                      <br />
+                      <p>Not valid w/o</p>
+                      <p>Dry Seal</p>
+                    </td>
+                  </tr>
+                </table>
+              </td>
+            </tr>
+          </table>
+        </td>
+      </tr>
+    </table>
+
+    <table width="100%" align="center">
+      <tr>
+        <td colspan="3">
+          <br />
+          <p>Transaction ID: {{clearance.transaction_id}}</p>
+          <br />
+        </td>
+      </tr>
+    </table>
+  </body>
+</html>

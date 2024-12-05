@@ -10,6 +10,11 @@
   -moz-background-size: cover;
   -o-background-size: cover;
   background-size: cover;
+
+  }
+
+.custom-color {
+  color: #50C878;
 }
 </style>
 
@@ -21,7 +26,7 @@
         <div class="card mb-3 border-0 shadow text-center" style="background-color: #355389;">
           <div class="card-body">
             <h1 class="display-6 text-white" style="font-weight: 600;">BARANGAY ANNOUNCEMENTS</h1>
-            <p class="text-white" id="currentDateTime" style="font-size: 1.25rem; font-weight: 400;"></p>
+            <p class="custom-color" id="currentDateTime" style="font-size: 1.25rem; font-weight: 650;"></p>
           </div>
         </div>
       </div>
@@ -63,11 +68,11 @@
   }
 
   // Set the date and time
-  document.getElementById('currentDateTime').innerText = "As of: " + formatDateTime();
+  document.getElementById('currentDateTime').innerText = "As of : " + formatDateTime();
 
   // Update time every second if you want it to refresh
   setInterval(() => {
-    document.getElementById('currentDateTime').innerText = "As of: " + formatDateTime();
+    document.getElementById('currentDateTime').innerText = "As of : " + formatDateTime();
   }, 1000);
 </script>
             {% endfor %}
