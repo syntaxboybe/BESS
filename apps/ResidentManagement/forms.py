@@ -36,7 +36,7 @@ class ProfileForm(forms.ModelForm):
         )
 
         singParentChoices = (
-            ("0", "-Select-"),
+            ("", "-Select-"),
             ("Yes", "Yes"),
             ("No", "No"),
         )
@@ -315,4 +315,3 @@ class ProcessResidencyCertificateForm(forms.ModelForm):
                 attrs={"class": "form-control form-control-sm", "placeholder": "Input"}
             ),
         }
-

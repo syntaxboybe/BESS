@@ -140,7 +140,14 @@
         column_number: 5,
         filter_default_label: "All",
         filter_container_id: "status",
-        data: ["Pending", "Ready", "Released"],
+        data: [
+          "Pending",
+          "Ready to Claim",
+          "Released",
+          "Reverted",
+          "Forwarded to Kapitan",
+          "For Printing",
+        ],
         style_class: "form-select",
         filter_reset_button_text: false,
       },
@@ -153,11 +160,20 @@
       if ($(this).html() == "Released") {
         $(this).addClass("released-status");
       }
-      if ($(this).html() == "Ready") {
+      if ($(this).html() == "Ready to Claim") {
         $(this).addClass("ready-status");
       }
       if ($(this).html() == "Pending") {
         $(this).addClass("pending-status");
+      }
+      if ($(this).html() == "Reverted") {
+        $(this).addClass("reverted-status");
+      }
+      if ($(this).html() == "Forwarded to Kapitan") {
+        $(this).addClass("forwadKap-status");
+      }
+      if ($(this).html() == "For Printing") {
+        $(this).addClass("forPrint-status");
       }
     });
 </script>

@@ -36,8 +36,7 @@ body {
   height: var(--underline-size, 2px);
   position: absolute;
   background-color: var(--underline-color, currentColor);
-  transition:
-    transform ease var(--animation-time, 200ms),
+  transition: transform ease var(--animation-time, 200ms),
     opacity ease 0ms 200ms;
   transform: translateX(100%);
   opacity: 0;
@@ -516,8 +515,7 @@ table.table-fit tfoot td {
   background-color: #fff;
   z-index: 100;
 }
-
-.pending-status {
+.reverted-status {
   padding: 0;
   border-radius: 4px;
   padding-left: 2px;
@@ -525,7 +523,37 @@ table.table-fit tfoot td {
   padding-left: 5px;
   padding-right: 5px;
   color: white;
-  background: #6c757d;
+  background: #bf2015;
+}
+.forwadKap-status {
+  padding: 0;
+  border-radius: 4px;
+  padding-left: 2px;
+  padding-bottom: 2px;
+  padding-left: 5px;
+  padding-right: 5px;
+  color: white;
+  background: #f08902;
+}
+.forPrint-status {
+  padding: 0;
+  border-radius: 4px;
+  padding-left: 2px;
+  padding-bottom: 2px;
+  padding-left: 5px;
+  padding-right: 5px;
+  color: white;
+  background: #501bcc;
+}
+.pending-status {
+  padding: 0;
+  border-radius: 4px;
+  padding-left: 2px;
+  padding-bottom: 2px;
+  padding-left: 5px;
+  padding-right: 5px;
+  color: black;
+  background: #ffff00;
 }
 
 .ready-status {

@@ -37,6 +37,49 @@
     p {
       margin: 0;
     }
+
+    .title-holder {
+    top: 50%;
+    left: 40%;
+    position: absolute;
+  }
+
+    .title {
+    font-family: "Lato", sans-serif;
+    font-size: 16px;
+    color: #008000; /* Green color for text */
+    width: 0; /* Start hidden */
+    overflow: hidden; /* Hide overflowing text */
+    white-space: nowrap; /* Prevent wrapping */
+    display: inline-block;
+    border-right: 2px solid #4169e1; /* Cursor simulation */
+    animation: typewriter 6.6s steps(30, end) infinite, blinking-cursor 0.5s step-end;
+    animation-fill-mode: forwards; /* Ensure it stays visible at end of each loop */
+}
+
+@keyframes typewriter {
+  0% {
+    width: 0;
+  }
+  50% {
+    width: 100%; /* Fully typed */
+  }
+  75% {
+    width: 100%; /* Pause before deletion */
+  }
+  100% {
+    width: 0; /* Text deleted */
+  }
+}
+
+@keyframes blinking-cursor {
+  0%, 100% {
+    border-color: transparent;
+  }
+  50% {
+    border-color: #4169e1; /* Cursor color */
+  }
+}
   </style>
   <body class="bg-white">
     <div
@@ -71,30 +114,27 @@
                 height: 100vh;
               "
             >
-              <div class="col-12 ps-5 pt-3">
-                <div>
-                  <img
-                    src="{% static 'img/poblacionlogo.png' %}"
-                    style="width: 85px"
-                  />
-                  <img
-                    src="{% static 'img/naawanlogo.png' %}"
-                    style="width: 85px"
-                  />
-                </div>
-                <div class="mt-5">
-                  <p class="display-6" style="font-weight: 400">WELCOME TO</p>
-                  <h1
-                    class="display-2"
-                    style="font-weight: 700; color: #355389"
-                  >
-                    BARANGAY <br />E-SERVICE SYSTEM
-                  </h1>
-                  <p class="lead" style="font-weight: 500; color: #355389">
-                    SANGGUNIANG BARANGAY NG POBLACION NAAWAN
-                  </p>
-                </div>
-              </div>
+              
+<div class="col-12 d-flex flex-column align-items-center ps-5 pt-3">
+  <div class="d-flex justify-content-center mb-4">
+    <img
+      src="{% static 'img/poblacionlogo.png' %}"
+      style="width: 100px; margin-right: 10px; margin-top: 100px;"
+      alt="Poblacion Logo"
+    />
+    <img
+      src="{% static 'img/naawanlogo.png' %}"
+      style="width: 100px; margin-left: 10px; margin-top: 100px;"
+      alt="Naawan Logo"
+    />
+  </div>
+  <div class="text-center mt-4">
+    <p class="display-6" style="font-weight: 400">WELCOME TO</p>
+    <h1 class="display-2" style="font-weight: 700; color: #355389">BARANGAY E-SERVICE SYSTEM</h1>
+    <p class="title" style="font-weight: 550;">SANGGUNIANG BARANGAY NG POBLACION NAAWAN</p>
+  </div>
+</div>
+
 
               <div class="col-lg-12 fixed-bottom">
                 <a
