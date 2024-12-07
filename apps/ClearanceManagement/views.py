@@ -8,6 +8,7 @@ from django.contrib.auth.decorators import login_required
 from django.conf import settings
 from django.core.mail import send_mail
 from django.template.loader import render_to_string
+from datetime import date
 
 # Create your views here.
 
@@ -58,20 +59,30 @@ def edit_clearance(request, id):
         return redirect("loginPage")
 
 
+def calculate_age(birthdate):
+    today = date.today()
+    return (
+        today.year
+        - birthdate.year
+        - ((today.month, today.day) < (birthdate.month, birthdate.day))
+    )
+
+
 @cache_control(no_cache=True, must_revalidate=True, no_store=True)
 @login_required(login_url="loginPage")
 @admin_only
 def generate_clearance(request, id):
     if request.user.is_authenticated:
         template_name = "ClearanceManagement/clearance_pdf.html"
-
-        # Fetch clearance object and related data
         clearance = get_object_or_404(clerance_list, pk=id)
-
+        birthdate = clearance.res_id.birthdate
+        age = calculate_age(birthdate)
+        # Fetch clearance object and related data
         # Ensure the media URL is passed to handle images
         context = {
             "clearance": clearance,
             "media_url": request.build_absolute_uri(settings.MEDIA_URL),
+            "age": age,
         }
 
         return render_to_pdf(template_name, context)
@@ -149,20 +160,30 @@ def delete_clearance(request, id):
         return redirect("loginPage")
 
 
+def calculate_age(birthdate):
+    today = date.today()
+    return (
+        today.year
+        - birthdate.year
+        - ((today.month, today.day) < (birthdate.month, birthdate.day))
+    )
+
+
 @cache_control(no_cache=True, must_revalidate=True, no_store=True)
 @login_required(login_url="loginPage")
 @admin_only
 def no_sign_clearance(request, id):
     if request.user.is_authenticated:
         template_name = "ClearanceManagement/no_sign_pdf.html"
-
-        # Fetch clearance object and related data
         clearance = get_object_or_404(clerance_list, pk=id)
-
+        birthdate = clearance.res_id.birthdate
+        age = calculate_age(birthdate)
+        # Fetch clearance object and related data
         # Ensure the media URL is passed to handle images
         context = {
             "clearance": clearance,
             "media_url": request.build_absolute_uri(settings.MEDIA_URL),
+            "age": age,
         }
 
         return render_to_pdf(template_name, context)

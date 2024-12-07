@@ -38,3 +38,4 @@ class cleranceForm(forms.ModelForm):
         self.fields["date_released"].required = False
         self.fields["community_tax_num"].required = False
         self.fields["community_tax_date_issued"].required = False
+        self.fields["age"].required = False

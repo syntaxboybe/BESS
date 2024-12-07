@@ -7,6 +7,7 @@ from django.views.decorators.cache import cache_control
 from django.contrib.auth.decorators import login_required
 from django.conf import settings
 from django.core.mail import send_mail
+from datetime import date
 
 # Create your views here.
 
@@ -57,6 +58,15 @@ def edit_indigency(request, id):
         return redirect("loginPage")
 
 
+def calculate_age(birthdate):
+    today = date.today()
+    return (
+        today.year
+        - birthdate.year
+        - ((today.month, today.day) < (birthdate.month, birthdate.day))
+    )
+
+
 @cache_control(no_cache=True, must_revalidate=True, no_store=True)
 @login_required(login_url="loginPage")
 @admin_only
@@ -64,11 +74,13 @@ def generate_indigency(request, id):
     if request.user.is_authenticated:
         template_name = "IndigencyManagement/indigency_pdf.html"
         indigency = CertificateOfIndigency.objects.get(pk=id)
-
+        birthdate = indigency.res_id.birthdate
+        age = calculate_age(birthdate)
         return render_to_pdf(
             template_name,
             {
                 "indigency": indigency,
+                "age": age,
             },
         )
     else:
@@ -145,6 +157,15 @@ def delete_indigency(request, id):
         return redirect("loginPage")
 
 
+def calculate_age(birthdate):
+    today = date.today()
+    return (
+        today.year
+        - birthdate.year
+        - ((today.month, today.day) < (birthdate.month, birthdate.day))
+    )
+
+
 @cache_control(no_cache=True, must_revalidate=True, no_store=True)
 @login_required(login_url="loginPage")
 @admin_only
@@ -152,11 +173,13 @@ def no_sign_indigencycert(request, id):
     if request.user.is_authenticated:
         template_name = "IndigencyManagement/no_sign_indigencycert_pdf.html"
         indigency = CertificateOfIndigency.objects.get(pk=id)
-
+        birthdate = indigency.res_id.birthdate
+        age = calculate_age(birthdate)
         return render_to_pdf(
             template_name,
             {
                 "indigency": indigency,
+                "age": age,
             },
         )
     else:
