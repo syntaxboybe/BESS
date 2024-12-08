@@ -76,7 +76,7 @@ def generate_business_permit(request, id):
 @cache_control(no_cache=True, must_revalidate=True, no_store=True)
 @login_required(login_url="loginPage")
 @admin_only
-def sign_business_permit(request, id):
+def unsign_business_permit(request, id):
     """
     Mark a clearance as signed.
     """
@@ -98,7 +98,7 @@ def sign_business_permit(request, id):
             return redirect("BusinessPermit")
 
         context = {"BusinessPermit": business_permit}
-        return render(request, "BusinessPermit/sign_business_permit.html", context)
+        return render(request, "BusinessPermit/unsign_business_permit.html", context)
     else:
         return redirect("loginPage")
 
@@ -157,5 +157,35 @@ def no_sign_businesspermit(request, id):
                 "business_permit": business_permit,
             },
         )
+    else:
+        return redirect("loginPage")
+
+
+@cache_control(no_cache=True, must_revalidate=True, no_store=True)
+@login_required(login_url="loginPage")
+@admin_only
+def esign_business_permit(request, id):
+    """
+    Mark a clearance as signed.
+    """
+    if request.user.is_authenticated:
+        business_permit = get_object_or_404(BusinessPermit, pk=id)
+
+        if request.method == "POST":
+            # Logic to mark clearance as signed
+            business_permit.is_signed = True  # Assuming there's an `is_signed` field
+            business_permit.save()
+
+            # Optionally process a confirmation message
+            confirmation_message = request.POST.get("confirmation_message", "")
+
+            # Send a response for htmx or redirect
+            return HttpResponse(
+                status=204, headers={"HX-Trigger": "BusinessPermitUpdate"}
+            )
+            return redirect("BusinessPermit")
+
+        context = {"BusinessPermit": business_permit}
+        return render(request, "BusinessPermit/esign_business_permit.html", context)
     else:
         return redirect("loginPage")

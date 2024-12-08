@@ -83,7 +83,7 @@ def generate_resident_certificate(request, id):
 @cache_control(no_cache=True, must_revalidate=True, no_store=True)
 @login_required(login_url="loginPage")
 @admin_only
-def sign_residency_cert(request, id):
+def unsign_residency_cert(request, id):
     """
     Mark a clearance as signed.
     """
@@ -107,7 +107,9 @@ def sign_residency_cert(request, id):
             return redirect("ResidencyCertificate")
 
         context = {"ResidencyCert": residency_certificate}
-        return render(request, "ResidencyCertificate/sign_residency_cert.html", context)
+        return render(
+            request, "ResidencyCertificate/unsign_residency_cert.html", context
+        )
     else:
         return redirect("loginPage")
 
@@ -165,6 +167,40 @@ def no_sign_residencycert(request, id):
             {
                 "residency_certificate": residency_certificate,
             },
+        )
+    else:
+        return redirect("loginPage")
+
+
+@cache_control(no_cache=True, must_revalidate=True, no_store=True)
+@login_required(login_url="loginPage")
+@admin_only
+def esign_residency_cert(request, id):
+    """
+    Mark a clearance as signed.
+    """
+    if request.user.is_authenticated:
+        residency_certificate = get_object_or_404(ResidencyCertificate, pk=id)
+
+        if request.method == "POST":
+            # Logic to mark clearance as signed
+            residency_certificate.is_signed = (
+                True  # Assuming there's an `is_signed` field
+            )
+            residency_certificate.save()
+
+            # Optionally process a confirmation message
+            confirmation_message = request.POST.get("confirmation_message", "")
+
+            # Send a response for htmx or redirect
+            return HttpResponse(
+                status=204, headers={"HX-Trigger": "ResidencyCertUpdate"}
+            )
+            return redirect("ResidencyCertificate")
+
+        context = {"ResidencyCert": residency_certificate}
+        return render(
+            request, "ResidencyCertificate/esign_residency_cert.html", context
         )
     else:
         return redirect("loginPage")

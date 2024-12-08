@@ -1,0 +1,37 @@
+<form
+  method="POST"
+  enctype="multipart/form-data"
+  hx-post="{{ request.path }}"
+  class="modal-content"
+>
+  {% csrf_token %}
+  <div class="modal-header">
+    <h5 class="modal-title">Would you like to confirm this request for e-signing?</h5>
+  </div>
+  <div class="modal-body">
+    <div class="row">
+      <div class="col-12">
+        <p><b>Requested By:</b> {{ clearance.res_id }}</p>
+        <p><b>Date Requested:</b> {{ clearance.date_requested }}</p>
+        <p><b>Purpose:</b> {{ clearance.purpose }}</p>
+        <p><b>Transaction ID:</b> {{ clearance.transaction_id }}</p>
+      </div>
+<div id="unsigned-pdf" style="display: none; margin-top: 10px;">
+    <a
+      target="_blank"
+      type="button"
+      class="btn btn-danger bg-gradient"
+      href="{% url 'no_sign_clearance' clearance.id %}"
+    >
+      <i class="fas fa-file-pdf fs-5" style="vertical-align: middle"></i>
+      <span style="vertical-align: middle"> View PDF without Signature</span>
+    </a>
+  </div>
+        </div>
+  <div class="modal-footer">
+    <button class="btn btn-success" type="submit">Yes</button>
+    <button class="btn btn-secondary" type="button" data-bs-dismiss="modal">
+      Cancel
+    </button>
+  </div>
+</form>

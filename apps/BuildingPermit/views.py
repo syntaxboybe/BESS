@@ -75,7 +75,7 @@ def generate_building_permit(request, id):
 @cache_control(no_cache=True, must_revalidate=True, no_store=True)
 @login_required(login_url="loginPage")
 @admin_only
-def sign_building_permit(request, id):
+def unsign_building_permit(request, id):
     """
     Mark a clearance as signed.
     """
@@ -97,7 +97,7 @@ def sign_building_permit(request, id):
             return redirect("BuildingPermit")
 
         context = {"BuildingPermit": building_permit}
-        return render(request, "BuildingPermit/sign_building_permit.html", context)
+        return render(request, "BuildingPermit/unsign_building_permit.html", context)
     else:
         return redirect("loginPage")
 
@@ -156,5 +156,35 @@ def no_sign_buildingpermit(request, id):
                 "building_permit": building_permit,
             },
         )
+    else:
+        return redirect("loginPage")
+
+
+@cache_control(no_cache=True, must_revalidate=True, no_store=True)
+@login_required(login_url="loginPage")
+@admin_only
+def esign_building_permit(request, id):
+    """
+    Mark a clearance as signed.
+    """
+    if request.user.is_authenticated:
+        building_permit = get_object_or_404(BuildingPermit, pk=id)
+
+        if request.method == "POST":
+            # Logic to mark clearance as signed
+            building_permit.is_signed = True  # Assuming there's an `is_signed` field
+            building_permit.save()
+
+            # Optionally process a confirmation message
+            confirmation_message = request.POST.get("confirmation_message", "")
+
+            # Send a response for htmx or redirect
+            return HttpResponse(
+                status=204, headers={"HX-Trigger": "BuildingPermitUpdate"}
+            )
+            return redirect("BuildingPermit")
+
+        context = {"BuildingPermit": building_permit}
+        return render(request, "BuildingPermit/esign_building_permit.html", context)
     else:
         return redirect("loginPage")

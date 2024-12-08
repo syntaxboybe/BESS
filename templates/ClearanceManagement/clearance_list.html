@@ -80,27 +80,27 @@
                 <i class="fas fa-sync fs-5" style="vertical-align: middle"></i>
                 <span style="vertical-align: middle"> Revert</span>
               </button>
-              <a
-                target="_blank"
-                type="button"
-                class="btn btn-warning bg-gradient"
-                href="{% url 'no_sign_clearance' clearance.id %}"
-              >
-                <i class="fas fa-ban fs-5" style="vertical-align: middle"></i>
-                <span style="vertical-align: middle"> Unsigned</span>
-              </a>
-              <a
-                target="_blank"
-                type="button"
-                class="btn btn-success bg-gradient"
-                href="{% url 'generate_clearance' clearance.id %}"
-              >
-                <i
-                  class="fas fa-pen-alt fs-5"
-                  style="vertical-align: middle"
-                ></i>
-                <span style="vertical-align: middle"> e-Signed</span>
-              </a>
+              <!-- <a -->
+              <!--   target="_blank" -->
+              <!--   type="button" -->
+              <!--   class="btn btn-warning bg-gradient" -->
+              <!--   href="{% url 'no_sign_clearance' clearance.id %}" -->
+              <!-- > -->
+              <!--   <i class="fas fa-ban fs-5" style="vertical-align: middle"></i> -->
+              <!--   <span style="vertical-align: middle"> Unsigned</span> -->
+              <!-- </a> -->
+              <!-- <a -->
+              <!--   target="_blank" -->
+              <!--   type="button" -->
+              <!--   class="btn btn-success bg-gradient" -->
+              <!--   href="{% url 'generate_clearance' clearance.id %}" -->
+              <!-- > -->
+              <!--   <i -->
+              <!--     class="fas fa-pen-alt fs-5" -->
+              <!--     style="vertical-align: middle" -->
+              <!--   ></i> -->
+              <!--   <span style="vertical-align: middle"> e-Signed</span> -->
+              <!-- </a> -->
               {% endif %}
 
               <!-- Always display the 'las la-pen' button -->
@@ -116,28 +116,27 @@
                 <span style="vertical-align: middle"> View</span>
               </button>
 
-              <a
-                target="_blank"
-                type="button"
+              <button
                 class="btn btn-warning bg-gradient"
-                href="{% url 'no_sign_clearance' clearance.id %}"
+                hx-get="{% url 'unsign_clearance' clearance.id %}"
+                hx-target="#dialog"
               >
                 <i class="fas fa-ban fs-5" style="vertical-align: middle"></i>
-                <span style="vertical-align: middle"> Unsigned</span>
-              </a>
+                <span style="vertical-align: middle"> Unsign</span>
+              </button>
 
-              <a
-                target="_blank"
-                type="button"
+              <button
                 class="btn btn-success bg-gradient"
-                href="{% url 'generate_clearance' clearance.id %}"
+                hx-get="{% url 'esign_clearance' clearance.id %}"
+                hx-target="#dialog"
               >
                 <i
                   class="fas fa-pen-alt fs-5"
                   style="vertical-align: middle"
                 ></i>
-                <span style="vertical-align: middle"> e-Signed</span>
-              </a>
+                <span style="vertical-align: middle"> E-sign</span>
+              </button>
+
               {% endif %}
             </td>
 

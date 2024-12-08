@@ -26,13 +26,18 @@ urlpatterns = [
         name="delete_business_permit",
     ),
     path(
-        "sign_business_permit/<hashid:id>/",
-        sign_business_permit,
-        name="sign_business_permit",
+        "unsign_business_permit/<hashid:id>/",
+        unsign_business_permit,
+        name="unsign_business_permit",
     ),
     path(
         "no_sign_businesspermit/<hashid:id>/",
         no_sign_businesspermit,
         name="no_sign_businesspermit",
+    ),
+    path(
+        "esign_business_permit/<hashid:id>/",
+        esign_business_permit,
+        name="esign_business_permit",
     ),
 ]

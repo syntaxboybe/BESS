@@ -1,0 +1,21 @@
+<form hx-post="{{ request.path }}" class="modal-content">
+  {% csrf_token %}
+  <div class="modal-header">
+    <h5 class="modal-title">Would you like to confirm this request for e-signing?</h5>
+  </div>
+  <div class="modal-body">
+    <div class="row">
+      <div class="col-12">
+        <p><b>Requested By:</b> {{ ResidencyCert.res_id }}</p>
+        <p><b>Date Requested:</b> {{ ResidencyCert.date_requested }}</p>
+        <p><b>Purpose:</b> {{ ResidencyCert.purpose }}</p>
+        <p><b>Transaction ID:</b> {{ ResidencyCert.transaction_id }}</p>
+      </div>
+      </div>
+  <div class="modal-footer">
+    <button class="btn btn-success" type="submit">Yes</button>
+    <button class="btn btn-secondary" type="button" data-bs-dismiss="modal">
+      Cancel
+    </button>
+  </div>
+</form>

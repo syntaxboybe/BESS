@@ -15,13 +15,18 @@ urlpatterns = [
     ),
     path("delete_indigency/<hashid:id>", delete_indigency, name="delete_indigency"),
     path(
-        "sign_indigency_cert/<hashid:id>/",
-        sign_indigency_cert,
-        name="sign_indigency_cert",
+        "unsign_indigency_cert/<hashid:id>/",
+        unsign_indigency_cert,
+        name="unsign_indigency_cert",
     ),
     path(
         "no_sign_indigencycert/<hashid:id>/",
         no_sign_indigencycert,
         name="no_sign_indigencycert",
+    ),
+    path(
+        "esign_indigency_cert/<hashid:id>/",
+        esign_indigency_cert,
+        name="esign_indigency_cert",
     ),
 ]

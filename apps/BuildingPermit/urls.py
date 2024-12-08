@@ -30,13 +30,18 @@ urlpatterns = [
         name="delete_building_permit",
     ),
     path(
-        "sign_building_permit/<hashid:id>/",
-        sign_building_permit,
-        name="sign_building_permit",
+        "unsign_building_permit/<hashid:id>/",
+        unsign_building_permit,
+        name="unsign_building_permit",
     ),
     path(
         "no_sign_buildingpermit/<hashid:id>/",
         no_sign_buildingpermit,
         name="no_sign_buildingpermit",
+    ),
+    path(
+        "esign_building_permit/<hashid:id>/",
+        esign_building_permit,
+        name="esign_building_permit",
     ),
 ]

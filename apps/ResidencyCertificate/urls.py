@@ -25,13 +25,18 @@ urlpatterns = [
         name="delete_resident_certificate_request",
     ),
     path(
-        "sign_residency_cert/<hashid:id>/",
-        sign_residency_cert,
-        name="sign_residency_cert",
+        "unsign_residency_cert/<hashid:id>/",
+        unsign_residency_cert,
+        name="unsign_residency_cert",
     ),
     path(
         "no_sign_residencycert/<hashid:id>/",
         no_sign_residencycert,
         name="no_sign_residencycert",
+    ),
+    path(
+        "esign_residency_cert/<hashid:id>/",
+        esign_residency_cert,
+        name="esign_residency_cert",
     ),
 ]

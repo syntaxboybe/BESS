@@ -93,7 +93,7 @@ def generate_clearance(request, id):
 @cache_control(no_cache=True, must_revalidate=True, no_store=True)
 @login_required(login_url="loginPage")
 @admin_only
-def sign_clearance(request, id):
+def esign_clearance(request, id):
     """
     Mark a clearance as signed.
     """
@@ -115,7 +115,7 @@ def sign_clearance(request, id):
             return redirect("clearance_list")
 
         context = {"clearance": clearance}
-        return render(request, "ClearanceManagement/sign_clearance.html", context)
+        return render(request, "ClearanceManagement/esign_clearance.html", context)
     else:
         return redirect("loginPage")
 
@@ -187,5 +187,35 @@ def no_sign_clearance(request, id):
         }
 
         return render_to_pdf(template_name, context)
+    else:
+        return redirect("loginPage")
+
+
+@cache_control(no_cache=True, must_revalidate=True, no_store=True)
+@login_required(login_url="loginPage")
+@admin_only
+def unsign_clearance(request, id):
+    """
+    Mark a clearance as signed.
+    """
+    if request.user.is_authenticated:
+        clearance = get_object_or_404(clerance_list, pk=id)
+
+        if request.method == "POST":
+            # Logic to mark clearance as signed
+            clearance.is_signed = True  # Assuming there's an `is_signed` field
+            clearance.save()
+
+            # Optionally process a confirmation message
+            confirmation_message = request.POST.get("confirmation_message", "")
+
+            # Send a response for htmx or redirect
+            return HttpResponse(
+                status=204, headers={"HX-Trigger": "clearancelistUpdate"}
+            )
+            return redirect("clearance_list")
+
+        context = {"clearance": clearance}
+        return render(request, "ClearanceManagement/unsign_clearance.html", context)
     else:
         return redirect("loginPage")

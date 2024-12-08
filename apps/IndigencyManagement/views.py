@@ -90,7 +90,7 @@ def generate_indigency(request, id):
 @cache_control(no_cache=True, must_revalidate=True, no_store=True)
 @login_required(login_url="loginPage")
 @admin_only
-def sign_indigency_cert(request, id):
+def unsign_indigency_cert(request, id):
     """
     Mark a clearance as signed.
     """
@@ -112,7 +112,9 @@ def sign_indigency_cert(request, id):
             return redirect("IndigencyManagement")
 
         context = {"IndigencyCert": indigency_cert}
-        return render(request, "IndigencyManagement/sign_indigency_cert.html", context)
+        return render(
+            request, "IndigencyManagement/unsign_indigency_cert.html", context
+        )
     else:
         return redirect("loginPage")
 
@@ -182,5 +184,35 @@ def no_sign_indigencycert(request, id):
                 "age": age,
             },
         )
+    else:
+        return redirect("loginPage")
+
+
+@cache_control(no_cache=True, must_revalidate=True, no_store=True)
+@login_required(login_url="loginPage")
+@admin_only
+def esign_indigency_cert(request, id):
+    """
+    Mark a clearance as signed.
+    """
+    if request.user.is_authenticated:
+        indigency_cert = get_object_or_404(CertificateOfIndigency, pk=id)
+
+        if request.method == "POST":
+            # Logic to mark clearance as signed
+            indigency_cert.is_signed = True  # Assuming there's an `is_signed` field
+            indigency_cert.save()
+
+            # Optionally process a confirmation message
+            confirmation_message = request.POST.get("confirmation_message", "")
+
+            # Send a response for htmx or redirect
+            return HttpResponse(
+                status=204, headers={"HX-Trigger": "IndigencyCertUpdate"}
+            )
+            return redirect("IndigencyManagement")
+
+        context = {"IndigencyCert": indigency_cert}
+        return render(request, "IndigencyManagement/esign_indigency_cert.html", context)
     else:
         return redirect("loginPage")
