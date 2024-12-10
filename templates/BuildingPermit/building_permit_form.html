@@ -4,7 +4,11 @@
 <form hx-post="{{ request.path }}" class="modal-content">
     {% csrf_token %}
     <div class="modal-header">
-      <h5 class="modal-title">Verify Requestor for Building Permit</h5>
+      {% if request.user.id != 30 %}
+      <h5 class="modal-title"><i class="fas fa-check-circle"></i><b> Verify Requestor for Building Permit</b></h5>
+ {% elif request.user.id != 29 %}
+      <h5 class="modal-title"><i class="fas fa-eye"></i><b> View Requestor Information for Building Permit</b></h5>
+      {% endif %}
     </div>
     <div class="modal-body">
         <div class="row">

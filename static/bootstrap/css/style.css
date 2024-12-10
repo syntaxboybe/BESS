@@ -36,7 +36,8 @@ body {
   height: var(--underline-size, 2px);
   position: absolute;
   background-color: var(--underline-color, currentColor);
-  transition: transform ease var(--animation-time, 200ms),
+  transition:
+    transform ease var(--animation-time, 200ms),
     opacity ease 0ms 200ms;
   transform: translateX(100%);
   opacity: 0;
@@ -74,7 +75,7 @@ body {
 /* sidebar */
 
 .nav-bottom {
-  border-bottom: 7px solid #008000;
+  border-bottom: 7px solid #355389;
 }
 #side_nav {
   background: #000;

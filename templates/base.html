@@ -80,17 +80,17 @@
 
             </div>
             <ul class="list-unstyled px-2">
-                <li class=""><a href="{% url 'dashboard' %}" class="text-decoration-none px-3 py-2 d-block"><i class="fa fa-line-chart"></i> Dashboard</a></li>
+                <li class=""><a href="{% url 'dashboard' %}" class="text-decoration-none px-3 py-2 d-block"><i class="fa fa-line-chart"></i><b> Dashboard</b></a></li>
             
  {% if request.user.groups.all.0.name == 'superadmin' %}
-            <li class=""><a href="{% url 'announcementPage' %}" class="text-decoration-none px-3 py-2 d-block"><i class="fas fa-bullhorn"></i> Announcements</a></li>
+            <li class=""><a href="{% url 'announcementPage' %}" class="text-decoration-none px-3 py-2 d-block"><i class="fas fa-bullhorn"></i><b> Announcements</b></a></li>
                 {% endif %} 
             
                 {% if request.user.groups.all.0.name == 'superadmin' %}
 <div class="side-sub-menu py-2">
                     <div class="accordion-button px-3 py-2" data-bs-toggle="collapse" href="#collapseAccounts" aria-expanded="false" aria-controls="collapseAccounts" style="background-color: #008000;">
                         <a class="text-decoration-none d-block">
-                            <i class="fas fa-address-card"></i> Accounts
+                            <i class="fas fa-address-card"></i><b> Accounts</b>
                         </a>
                     </div>
 
@@ -98,7 +98,7 @@
                         <ul class="list-unstyled px-2 py-2 collapse" id="collapseAccounts">
 
                 <li class=""><a href="{% url 'add_official_account' %}" class="text-decoration-none px-3 py-2 d-block"><i class="fas fa-user-plus"></i> Add Account</a></li>
-                <li class=""><a href="{% url 'officialList' %}" class="text-decoration-none px-3 py-2 d-block"><i class="fas fa-user-circle"></i> Account List</a></li>
+                <li class=""><a href="{% url 'officialList' %}" class="text-decoration-none px-3 py-2 d-block"><i class="fas fa-user-circle"></i> Account Record</a></li>
                 </ul>
                     </div>
                     {% endif %} 
@@ -108,7 +108,7 @@
                 <div class="side-sub-menu py-2">
                     <div class="accordion-button px-3 py-2" data-bs-toggle="collapse" href="#collapseResident" aria-expanded="false" aria-controls="collapseResident" style="background-color: #008000;">
                         <a class="text-decoration-none d-block">
-                            <i class="fas fa-address-card"></i> Profiling
+                            <i class="fas fa-address-card"></i><b> Profiling</b> 
                         </a>
                     </div>
 
@@ -148,7 +148,7 @@
 <div class="side-sub-menu py-2">
                     <div class="accordion-button px-3 py-2" data-bs-toggle="collapse" href="#collapseIssuances" aria-expanded="false" aria-controls="collapseIssuances" style="background-color: #008000;">
                         <a class="text-decoration-none d-block">
-                            <i class="fas fa-file-alt"></i> Issuances
+                            <i class="fas fa-file-alt"></i><b> Issuances</b>
                         </a>
                     </div>
 
@@ -166,7 +166,7 @@
           {% if not request.user.groups.all.0.name != 'superadmin' %}
           <div class="side-sub-menu py-2">
                 <!--<hr class="h-color mx-3">-->
-                <li class=""><a href="{% url 'adminProfile' %}" class="text-decoration-none px-3 py-2 d-block"><i class="fas fa-user"></i> Profile </a></li>
+                <li class=""><a href="{% url 'adminProfile' %}" class="text-decoration-none px-3 py-2 d-block"><i class="fas fa-user"></i><b> Profile </b></a></li>
                 <!--<hr class="h-color mx-3">-->
                 {% endif %}
                </div>
@@ -176,7 +176,7 @@
           <div class="side-sub-menu py-2">
                     <div class="accordion-button px-3 py-2" data-bs-toggle="collapse" href="#collapseReports" aria-expanded="false" aria-controls="collapseReports" style="background-color: #008000;">
                         <a class="text-decoration-none d-block">
-                            <i class="fas fa-calendar-week"></i> Reports
+                            <i class="fas fa-calendar-week"></i><b> Reports</b>
                         </a>
                     </div>
 
@@ -188,7 +188,7 @@
 
                             <li class="">
                                 <li class=""><a href="{% url 'clearance_reports' %}" class="text-decoration-none px-3 py-2 d-block"><i class="fas fa-file-signature"></i>Issued Clearance </a></li>
-                            </li>
+                            </l>
 
                             <li class="">
                                 <li class=""><a href="{% url 'indigency_reports' %}" class="text-decoration-none px-3 py-2 d-block"><i class="fas fa-file-invoice"></i> Issued Indigency </a></li>
@@ -199,7 +199,7 @@
                             </li>
 
                             <li class="">
-                                <li class=""><a href="{% url 'building_reports' %}" class="text-decoration-none px-3 py-2 d-block"><i class="fas fa-file-image"></i> Issued Building Permit </a></li>
+                                <li class=""><a href="{% url 'building_reports' %}" class="text-decoration-none px-3 py-2 d-block"><i class="far fa-building"></i> Issued Building Permit </a></li>
                             </li>
 
                             <li class="">
@@ -214,7 +214,7 @@
               
                 {% if request.user.id != 30 %}
                 {% if not request.user.groups.all.0.name == 'superadmin' %}               
-                <li class=""><a href="{% url 'requestLogs' %}" class="text-decoration-none px-3 py-2 d-block"><i class="fas fa-history fs-5"></i> Request Logs </a></li>
+                <li class=""><a href="{% url 'requestLogs' %}" class="text-decoration-none px-3 py-2 d-block"><i class="fas fa-history fs-5"></i><b> Request Logs</b></a></li>
                 <div class="side-sub-menu">
                 
                 {% endif %} 
@@ -238,20 +238,33 @@
                     <div class="collapse navbar-collapse justify-content-end" id="navbarSupportedContent">
                     <ul class="navbar-nav mb-2 mb-lg-0">
             
-            {% if user.id != 1 and user.id != 30 %}                      
-            <li class="nav-item dropdown">
-                    <a class="nav-link" href="#" id="notificationDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-                        <i class="fa-solid fa-bell fs-5"></i>
-                      <span class="badge" style="background-color: #008000; color: white;">5</span>
-                    </a>
-                    <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="notificationDropdown" style="background-color: #008000; color: white;">
-                        <li><a class="dropdown-item" href="{% url 'clearance' %}">Clearance</a></li>
-                        <li><a class="dropdown-item" href="{% url 'indigency_request' %}">Certificate of Indigency</a></li>
-                        <li><a class="dropdown-item" href="{% url 'business_permit_module' %}">Business Permit</a></li>
-                        <li><a class="dropdown-item" href="{% url 'building_permit_module' %}">Building Permit</a></li>
-                        <li><a class="dropdown-item" href="{% url 'residency_certificate_module' %}">Certificate of Residency</a></li>
-                    </ul>
-                </li>
+{% if user.id != 1 %}                      
+<li class="nav-item dropdown">
+  <a class="nav-link" href="#" id="notificationDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+    <i class="fa-solid fa-bell fs-5"></i>
+    <span class="badge" style="background-color: #008000; color: white;">5</span>
+  </a>
+  <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="notificationDropdown" style="background-color: #008000; color: white;">
+    <!-- Notification Title -->
+    <li>
+      <h6 class="dropdown-header text-white" style="background-color: #355389;">
+        <center><b>NOTIFICATIONS</b></center>
+      </h6>
+    </li>
+    <!-- New Requests Section -->
+    <li>
+      <h6 class="dropdown-header text-white" style="background-color: #006400;">New Requests</h6>
+    </li>
+    <!-- Notification Items for New Requests -->
+    <li><a class="dropdown-item" href="{% url 'clearance' %}">Barangay Clearance</a></li>
+    <li><a class="dropdown-item" href="{% url 'indigency_request' %}">Certificate of Indigency</a></li>
+    <li><a class="dropdown-item" href="{% url 'business_permit_module' %}">Business Permit</a></li>
+    <li><a class="dropdown-item" href="{% url 'building_permit_module' %}">Building Permit</a></li>
+    <li><a class="dropdown-item" href="{% url 'residency_certificate_module' %}">Certificate of Residency</a></li>
+  </ul>
+</li>
+
+
                 {% endif %}
                       <li class="nav-item">
                         <a class="nav-link active" aria-current="page" href="#"><i class="fas fa-user fs-5 me-2"></i> {{ user.username }}</a>

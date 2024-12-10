@@ -11,7 +11,7 @@
     <link rel="stylesheet" type="text/css" href="{% static 'line-awesome/css/line-awesome.min.css' %}">
     <link rel="stylesheet" type="text/css" href="{% static 'bootstrap/css/bootstrap-datepicker.min.css' %}">
     <link rel="icon" href="{% static 'img/favicon-48x48.png' %}" type="image/x-icon">
-
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
     <script src="{% static 'bootstrap/js/bootstrap.min.js' %}" ></script>
     <script src="{% static 'bootstrap/js/jquery.min.js' %}" ></script>
 
@@ -27,25 +27,37 @@
     </button>
     <div class="collapse navbar-collapse navtabs-wrapper" id="navbarNav">
       <ul class="navbar-nav ms-auto navtabs">
-        <li class="nav-item navtab py-2">
-          <a class="nav-link" href="{% url 'home' %}" style="font-weight: 600; color:black">Home</a>
-        </li>
+        
+<li class="nav-item navtab py-2">
+  <a class="nav-link" href="{% url 'home' %}" style="font-weight: 600; color:black">
+    <i class="fas fa-home"></i> Home
+  </a>
+</li>
 
-        <li class="nav-item py-2 navtab">
-          <a class="nav-link" href="{% url 'about' %}" style="font-weight: 600; color:black">About</a>
-        </li>
+<li class="nav-item py-2 navtab">
+  <a class="nav-link" href="{% url 'about' %}" style="font-weight: 600; color:black">
+    <i class="fas fa-info-circle"></i> About
+  </a>
+</li>
 
-        <li class="nav-item py-2 navtab">
-          <a class="nav-link" href="{% url 'contact' %}" style="font-weight: 600; color:black">Contact</a>
-        </li>
+<li class="nav-item py-2 navtab">
+  <a class="nav-link" href="{% url 'contact' %}" style="font-weight: 600; color:black">
+    <i class="fas fa-phone-alt"></i> Contact
+  </a>
+</li>
 
-        <li class="nav-item py-2 navtab">
-          <a class="nav-link" href="{% url 'announce' %}" style="font-weight: 600; color:black">Announcement</a>
-        </li>
+<li class="nav-item py-2 navtab">
+  <a class="nav-link" href="{% url 'announce' %}" style="font-weight: 600; color:black">
+    <i class="fas fa-bullhorn"></i> Announcement
+  </a>
+</li>
 
-        <li class="nav-item me-2 py-1 input-sm">
-          <a type="button" class="btn-theme -btn1" href="{% url 'loginPage' %}">Services Portal</a>
-        </li>
+<li class="nav-item me-2 py-1 input-sm">
+  <a type="button" class="btn-theme -btn1" href="{% url 'loginPage' %}">
+    <i class="fas fa-sign-in-alt"></i> Services Portal
+  </a>
+</li>
+
 
 
       </ul>

@@ -1,4 +1,8 @@
 {% extends "../base.html" %} {% load static %} {% block content %}
+
+
+<link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" rel="stylesheet">
+
 <style>
   .example1 {
     background-color: #355389;
@@ -53,7 +57,9 @@
                   id="resident"
                 >
                   <div class="card-header">
-                    <h5 class="card-title">Registered Residents</h5>
+                    <h5 class="card-title">
+                    <i class="fa-solid fa-users"></i> Registered Residents
+                    </h5>
                   </div>
                   <div clas="card-body">
                     <h3 class="card-title">{{cResident}}</h3>
@@ -70,7 +76,9 @@
                 id="male"
               >
                 <div class="card-header">
-                  <h5 class="card-title">Male</h5>
+                  <h5 class="card-title">
+                    <i class="fa-solid fa-mars"></i> Male
+                    </h5>
                 </div>
                 <div clas="card-body">
                   <h3 class="card-title">{{cMale}}</h3>
@@ -86,7 +94,9 @@
                 id="f"
               >
                 <div class="card-header">
-                  <h5 class="card-title">Female</h5>
+                  <h5 class="card-title">
+                    <i class="fa-solid fa-venus"></i> Female
+                    </h5>
                 </div>
                 <div clas="card-body">
                   <h3 class="card-title">{{cFemale}}</h3>
@@ -103,7 +113,9 @@
                   id="yes"
                 >
                   <div class="card-header">
-                    <h5 class="card-title">Single Parent</h5>
+                    <h5 class="card-title">
+                    <i class="fas fa-user"></i> Single Parent
+                    </h5>
                   </div>
                   <div clas="card-body">
                     <h3 class="card-title">{{cYes}}</h3>
@@ -121,7 +133,9 @@
                   id="pwd"
                 >
                   <div class="card-header">
-                    <h5 class="card-title">PWD</h5>
+                    <h5 class="card-title">
+                    <i class="fas fa-wheelchair"></i> PWD
+                    </h5>
                   </div>
                   <div clas="card-body">
                     <h3 class="card-title">{{cPwd}}</h3>
@@ -138,7 +152,9 @@
                   id="senior"
                 >
                   <div class="card-header">
-                    <h5 class="card-title">Senior</h5>
+                    <h5 class="card-title">
+                    <i class="fas fa-user-clock"></i> Senior Citizen
+                    </h5>
                   </div>
                   <div clas="card-body">
                     <h3 class="card-title">{{cSenior}}</h3>
@@ -155,7 +171,9 @@
                 id="married"
               >
                 <div class="card-header">
-                  <h5 class="card-title">Married</h5>
+                  <h5 class="card-title">
+                    <i class="fa fa-ring"></i> Married
+                    </h5>
                 </div>
                 <div clas="card-body">
                   <h3 class="card-title">{{cMarried}}</h3>
@@ -170,7 +188,9 @@
                 id="single"
               >
                 <div class="card-header">
-                  <h5 class="card-title">Single</h5>
+                  <h5 class="card-title">
+                    <i class="fa fa-user-circle"></i> Single
+                    </h5>
                 </div>
                 <div clas="card-body">
                   <h3 class="card-title">{{cSingle}}</h3>
@@ -185,7 +205,9 @@
                 id="divorced"
               >
                 <div class="card-header">
-                  <h5 class="card-title">Divorced</h5>
+                  <h5 class="card-title">
+                    <i class="fa fa-heart-broken"></i> Divorced
+                    </h5>
                 </div>
                 <div clas="card-body">
                   <h3 class="card-title">{{cDivorced}}</h3>
@@ -200,7 +222,9 @@
                 id="widowed"
               >
                 <div class="card-header">
-                  <h5 class="card-title">Widowed</h5>
+                  <h5 class="card-title">
+                    <i class="fa fa-ribbon"></i> Widowed
+                    </h5>
                 </div>
                 <div clas="card-body">
                   <h3 class="card-title">{{cWidowed}}</h3>
@@ -277,7 +301,7 @@
         <!-- Jumbotron -->
         <div class="p-4 shadow-4 rounded-3 bg-white">
           <div>
-            <h2>Barangay Poblacion</h2>
+            <h2>Barangay Map</h2>
           </div>
 
           <hr class="my-2" />

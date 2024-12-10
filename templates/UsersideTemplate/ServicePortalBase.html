@@ -58,10 +58,10 @@
             </div>
 
             <ul class="list-unstyled px-2">
-                <li class=""><a href="{% url 'service_portal' %}" class="text-decoration-none px-3 py-2 d-block"><i class="fa-solid fa-file-import"></i> Request Document</a></li>
-                <li class=""><a href="{% url 'document-status' %}" class="text-decoration-none px-3 py-2 d-block"><i class="fa-solid fa-cart-arrow-down"></i> Request Tracker</a></li>
-                <li class=""><a href="{% url 'profile' %}" class="text-decoration-none px-3 py-2 d-block"><i class="fa-solid fa-user fs-5"></i> Profile</a></li>
-                <li class=""><a href="{% url 'userLogout' %}" class="text-decoration-none px-3 py-2 d-block"><i class="fa-solid fa-right-from-bracket"></i> Logout</a></li>
+                <li class=""><a href="{% url 'service_portal' %}" class="text-decoration-none px-3 py-2 d-block"><i class="fa-solid fa-file-import"></i><b> Request Document</b></a></li>
+                <li class=""><a href="{% url 'document-status' %}" class="text-decoration-none px-3 py-2 d-block"><i class="fa-solid fa-cart-arrow-down"></i><b> Request Tracker</b></a></li>
+                <li class=""><a href="{% url 'profile' %}" class="text-decoration-none px-3 py-2 d-block"><i class="fa-solid fa-user fs-5"></i><b> Profile</b></a></li>
+                <li class=""><a href="{% url 'userLogout' %}" class="text-decoration-none px-3 py-2 d-block"><i class="fa-solid fa-right-from-bracket"></i><b> Logout</b></a></li>
             </ul>
         </div>
 
@@ -78,25 +78,35 @@
                 </button>
                 <div class="collapse navbar-collapse justify-content-end navtabs-wrapper" id="navbarSupportedContent">
                 <ul class="navbar-nav mb-2 mb-lg-0 navtabs">
-                    <li class="nav-item navtab">
-                      <a class="nav-link" href="{% url 'home' %}" style="font-weight: 600; color:black">Home</a>
-                    </li>
-            
-                    <li class="nav-item navtab">
-                      <a class="nav-link" href="{% url 'about' %}" style="font-weight: 600; color:black">About</a>
-                    </li>
-            
-                    <li class="nav-item navtab">
-                      <a class="nav-link" href="#" style="font-weight: 600; color:black">Contact</a>
-                    </li>
-            
-                    <li class="nav-item navtab">
-                      <a class="nav-link" href="{% url 'announce' %}" style="font-weight: 600; color:black">Announcement</a>
-                    </li>
-            
-                    <li class="nav-item me-2 input-sm">
-                      <a type="button" class="btn-theme -btn1" href="{% url 'service_portal' %}">Services Portal</a>
-                    </li>
+                    <li class="nav-item navtab py-2">
+  <a class="nav-link" href="{% url 'home' %}" style="font-weight: 600; color:black">
+    <i class="fas fa-home"></i> Home
+  </a>
+</li>
+
+<li class="nav-item py-2 navtab">
+  <a class="nav-link" href="{% url 'about' %}" style="font-weight: 600; color:black">
+    <i class="fas fa-info-circle"></i> About
+  </a>
+</li>
+
+<li class="nav-item py-2 navtab">
+  <a class="nav-link" href="{% url 'contact' %}" style="font-weight: 600; color:black">
+    <i class="fas fa-phone-alt"></i> Contact
+  </a>
+</li>
+
+<li class="nav-item py-2 navtab">
+  <a class="nav-link" href="{% url 'announce' %}" style="font-weight: 600; color:black">
+    <i class="fas fa-bullhorn"></i> Announcement
+  </a>
+</li>
+
+<li class="nav-item me-2 py-1 input-sm">
+  <a type="button" class="btn-theme -btn1" href="{% url 'loginPage' %}">
+    <i class="fas fa-sign-in-alt"></i> Services Portal
+  </a>
+</li>
                 </ul>
                 </div>
             </div>
