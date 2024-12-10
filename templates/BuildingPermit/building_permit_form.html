@@ -6,7 +6,7 @@
     <div class="modal-header">
       {% if request.user.id != 30 %}
       <h5 class="modal-title"><i class="fas fa-check-circle"></i><b> Verify Requestor for Building Permit</b></h5>
- {% elif request.user.id != 29 %}
+      {% elif request.user.id != 29 %}
       <h5 class="modal-title"><i class="fas fa-eye"></i><b> View Requestor Information for Building Permit</b></h5>
       {% endif %}
     </div>
