@@ -28,7 +28,7 @@ def clearance(request):
 @admin_only
 def clearance_list(request):
     if request.user.is_authenticated:
-        context = {"clearance_list": clerance_list.objects.all().order_by("id")}
+        context = {"clearance_list": clerance_list.objects.all().order_by("-id")}
         return render(request, "ClearanceManagement/clearance_list.html", context)
     else:
         return redirect("loginPage")

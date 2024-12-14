@@ -51,7 +51,7 @@
           <tr class="table-text">
             <td class="text-center">{{ clearance.res_id.res_id }}</td>
             <td>{{ clearance.res_id }}</td>
-            <td>{{ clearance.date_requested }}</td>
+            <td>{{ clearance.date_requested|date:"M d, Y h:i A" }}</td>
             <td>{{ clearance.date_released}}</td>
             <td>{{ clearance.transaction_id}}</td>
             <td><span class="">{{ clearance.status }}</span></td>
@@ -80,27 +80,24 @@
                 <i class="fas fa-sync fs-5" style="vertical-align: middle"></i>
                 <span style="vertical-align: middle"> Revert</span>
               </button>
-              <!-- <a -->
-              <!--   target="_blank" -->
-              <!--   type="button" -->
-              <!--   class="btn btn-warning bg-gradient" -->
-              <!--   href="{% url 'no_sign_clearance' clearance.id %}" -->
-              <!-- > -->
-              <!--   <i class="fas fa-ban fs-5" style="vertical-align: middle"></i> -->
-              <!--   <span style="vertical-align: middle"> Unsigned</span> -->
-              <!-- </a> -->
-              <!-- <a -->
-              <!--   target="_blank" -->
-              <!--   type="button" -->
-              <!--   class="btn btn-success bg-gradient" -->
-              <!--   href="{% url 'generate_clearance' clearance.id %}" -->
-              <!-- > -->
-              <!--   <i -->
-              <!--     class="fas fa-pen-alt fs-5" -->
-              <!--     style="vertical-align: middle" -->
-              <!--   ></i> -->
-              <!--   <span style="vertical-align: middle"> e-Signed</span> -->
-              <!-- </a> -->
+              <a
+                target="_blank"
+                type="button"
+                class="btn btn-warning bg-gradient"
+                href="{% url 'no_sign_clearance' clearance.id %}"
+              >
+                <i class="fas fa-print fs-5" style="vertical-align: middle"></i>
+                <span style="vertical-align: middle"> Print</span>
+              </a>
+              <a
+                target="_blank"
+                type="button"
+                class="btn btn-success bg-gradient"
+                href="{% url 'generate_clearance' clearance.id %}"
+              >
+                <i class="fas fa-print fs-5" style="vertical-align: middle"></i>
+                <span style="vertical-align: middle"> Print</span>
+              </a>
               {% endif %}
 
               <!-- Always display the 'las la-pen' button -->
@@ -121,8 +118,8 @@
                 hx-get="{% url 'unsign_clearance' clearance.id %}"
                 hx-target="#dialog"
               >
-                <i class="fas fa-ban fs-5" style="vertical-align: middle"></i>
-                <span style="vertical-align: middle"> Unsign</span>
+                <i class="fas fa-check fs-5" style="vertical-align: middle"></i>
+                <span style="vertical-align: middle"> Confirm</span>
               </button>
 
               <button
@@ -169,9 +166,7 @@
               "Pending",
               "Ready to Claim",
               "Released",
-              "Reverted",
               "Forwarded to Kapitan",
-              "For Printing",
             ],
             style_class: "form-select",
             filter_reset_button_text: false,
@@ -191,14 +186,8 @@
           if ($(this).html() == "Pending") {
             $(this).addClass("pending-status");
           }
-          if ($(this).html() == "Reverted") {
-            $(this).addClass("reverted-status");
-          }
           if ($(this).html() == "Forwarded to Kapitan") {
             $(this).addClass("forwadKap-status");
-          }
-          if ($(this).html() == "For Printing") {
-            $(this).addClass("forPrint-status");
           }
         });
     </script>

@@ -61,47 +61,63 @@
             <!--    {{ form.age }}-->
             <!--</div>-->
 
-            <div class="col-12 py-2">
-                <p class="h6">Purpose of getting clearance</p>
-                {{ form.purpose }}
-            </div>
+            
+{% if request.user.id != 30 %}
+    {% if request.user.id == 29 %}
+        <div class="col-12 py-2">
+            <p class="h6">Purpose of getting clearance</p>
+            {{ form.purpose }}
+        </div>
+    {% endif %}
+{% endif %}
+
 
             <br>
             <hr>
 
-            <center><h6><b>ISSUED COMMUNITY TAX CERTIFICATE</b></h6></center>
-            <div class="col-12 py-2">
-                <p class="h6">Community Tax Number</p>
-                {{ form.community_tax_num }}
-            </div>
+            
+{% if request.user.id != 30 %}
+<center><h6><b>ISSUED COMMUNITY TAX CERTIFICATE</b></h6></center>
+<div class="col-12 py-2">
+    <p class="h6">Community Tax Number</p>
+    {{ form.community_tax_num }}
+</div>
 
-            <div class="col-12 py-2">
-                <p class="h6">Community Tax Date Issued</p>
-                <div class="input-group input-group-sm mb-3 date" >
-                    {{ form.community_tax_date_issued }}
-                    <span class="input-group-append">
-                    <span class="input-group-text bg-white" id="inputGroup-sizing-sm"><i class="las la-calendar fs-5"></i></span>
-                    </span>
-               </div> 
-                    <div class="col-6 py-2">
-                <p class="h6">Date Released</p>
-                <div class="input-group input-group-sm mb-3 date">
-                    {{ form.date_released }}
-                    <span class="input-group-append">
-                    <span class="input-group-text bg-white" id="inputGroup-sizing-sm"><i class="las la-calendar fs-5"></i></span>
-                    </span>
-                </div>
-            </div>
-          
-            <div class="col-6 py-2">
-                <p class="h6">Document Status</p>
-                {{ form.status }}
-            </div>
+<div class="col-12 py-2">
+    <p class="h6">Community Tax Date Issued</p>
+    <div class="input-group input-group-sm mb-3 date">
+        {{ form.community_tax_date_issued }}
+        <span class="input-group-append">
+            <span class="input-group-text bg-white" id="inputGroup-sizing-sm"><i class="las la-calendar fs-5"></i></span>
+        </span>
+    </div>
+</div>
+
+<div class="col-6 py-2">
+    <p class="h6">Date Released</p>
+    <div class="input-group input-group-sm mb-3 date">
+        {{ form.date_released }}
+        <span class="input-group-append">
+            <span class="input-group-text bg-white" id="inputGroup-sizing-sm"><i class="las la-calendar fs-5"></i></span>
+        </span>
+    </div>
+</div>
+
+<div class="col-6 py-2">
+    <p class="h6">Document Status</p>
+    {{ form.status }}
+</div>
+{% endif %}
+
                 </div>
             </div>
     <div class="modal-footer">
-      <button onclick="Reload()" class="btn btn-success" type="submit">Save</button>
-     <button class="btn btn-secondary" type="button" data-bs-dismiss="modal">Close</button>
+     {% if request.user.id != 30 %}
+      <button onclick="Reload()" class="btn btn-success" type="submit">Forward to Kapitan </button>
+      <button class="btn btn-secondary" type="button" data-bs-dismiss="modal">Close</button>
+      {% elif request.user.id != 29 %}
+      <button class="btn btn-secondary" type="button" data-bs-dismiss="modal">Close</button>
+    {% endif %}
     </div>
 </form>
 

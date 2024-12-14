@@ -28,7 +28,7 @@ def residency_certificate_list(request):
     if request.user.is_authenticated:
         context = {
             "residency_certificate_list": ResidencyCertificate.objects.all().order_by(
-                "id"
+                "-id"
             )
         }
         return render(

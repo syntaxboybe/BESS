@@ -28,7 +28,7 @@ def indigency_module(request):
 def indigency_list(request):
     if request.user.is_authenticated:
         context = {
-            "indigency_list": CertificateOfIndigency.objects.all().order_by("id")
+            "indigency_list": CertificateOfIndigency.objects.all().order_by("-id")
         }
         return render(request, "IndigencyManagement/indigency_list.html", context)
     else:

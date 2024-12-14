@@ -26,7 +26,7 @@ def business_permit_module(request):
 @admin_only
 def business_permit_list(request):
     if request.user.is_authenticated:
-        context = {"business_permit_list": BusinessPermit.objects.all().order_by("id")}
+        context = {"business_permit_list": BusinessPermit.objects.all().order_by("-id")}
         return render(request, "BusinessPermit/business_permit_list.html", context)
     else:
         return redirect("loginPage")

@@ -31,7 +31,7 @@
       <tr class="table-text">
         <td class="text-center">{{ indigency.res_id.res_id }}</td>
         <td>{{ indigency.res_id }}</td>
-        <td>{{ indigency.date_requested }}</td>
+        <td>{{ indigency.date_requested|date:"M d, Y h:i A" }}</td>
         <td>{{ indigency.date_released}}</td>
         <td>{{ indigency.transaction_id}}</td>
         <td><span class="">{{ indigency.status}}</span></td>
@@ -60,24 +60,24 @@
             <i class="fas fa-sync fs-5" style="vertical-align: middle"></i>
             <span style="vertical-align: middle"> Revert</span>
           </button>
-          <!-- <a -->
-          <!--   target="_blank" -->
-          <!--   type="button" -->
-          <!--   class="btn btn-warning bg-gradient" -->
-          <!--   href="{% url 'no_sign_indigencycert' indigency.id %}" -->
-          <!-- > -->
-          <!--   <i class="fas fa-ban fs-5" style="vertical-align: middle"></i> -->
-          <!--   <span style="vertical-align: middle"> Unsigned</span> -->
-          <!-- </a> -->
-          <!-- <a -->
-          <!--   target="_blank" -->
-          <!--   type="button" -->
-          <!--   class="btn btn-success bg-gradient" -->
-          <!--   href="{% url 'generate_indigency' indigency.id %}" -->
-          <!-- > -->
-          <!--   <i class="fas fa-pen-alt fs-5" style="vertical-align: middle"></i> -->
-          <!--   <span style="vertical-align: middle"> e-Signed</span> -->
-          <!-- </a> -->
+          <a
+            target="_blank"
+            type="button"
+            class="btn btn-warning bg-gradient"
+            href="{% url 'no_sign_indigencycert' indigency.id %}"
+          >
+            <i class="fas fa-print fs-5" style="vertical-align: middle"></i>
+            <span style="vertical-align: middle"> Print</span>
+          </a>
+          <a
+            target="_blank"
+            type="button"
+            class="btn btn-success bg-gradient"
+            href="{% url 'generate_indigency' indigency.id %}"
+          >
+            <i class="fas fa-print fs-5" style="vertical-align: middle"></i>
+            <span style="vertical-align: middle"> Print</span>
+          </a>
           {% endif %}
 
           <!-- Always display the 'las la-pen' button -->
@@ -98,8 +98,8 @@
             hx-get="{% url 'unsign_indigency_cert' indigency.id %}"
             hx-target="#dialog"
           >
-            <i class="fas fa-ban fs-5" style="vertical-align: middle"></i>
-            <span style="vertical-align: middle"> Unsign</span>
+            <i class="fas fa-check fs-5" style="vertical-align: middle"></i>
+            <span style="vertical-align: middle"> Confirm</span>
           </button>
 
           <button
@@ -156,14 +156,7 @@
         column_number: 5,
         filter_default_label: "All",
         filter_container_id: "status",
-        data: [
-          "Pending",
-          "Ready to Claim",
-          "Released",
-          "Reverted",
-          "Forwarded to Kapitan",
-          "For Printing",
-        ],
+        data: ["Pending", "Ready to Claim", "Released", "Forwarded to Kapitan"],
         style_class: "form-select",
         filter_reset_button_text: false,
       },
@@ -182,14 +175,8 @@
       if ($(this).html() == "Pending") {
         $(this).addClass("pending-status");
       }
-      if ($(this).html() == "Reverted") {
-        $(this).addClass("reverted-status");
-      }
       if ($(this).html() == "Forwarded to Kapitan") {
         $(this).addClass("forwadKap-status");
-      }
-      if ($(this).html() == "For Printing") {
-        $(this).addClass("forPrint-status");
       }
     });
 </script>

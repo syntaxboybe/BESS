@@ -27,6 +27,7 @@
                 <input type="text" class="form-control form-control-sm" value="{{ disabledform.transaction_id }}" disabled>
             </div>
 
+            {% if request.user.id != 30 %}
             <div class="col-12 py-2">
                 <p class="h6">Business Name</p>
                 {{ form.business_name }}
@@ -137,13 +138,18 @@
                 <p class="h6">Document Status</p>
                 {{ form.status }}
             </div>
+            {% endif %}
             <br>
             <hr>
         </div>
     </div>
     <div class="modal-footer">
-      <button class="btn btn-success" type="submit">Save</button>
+     {% if request.user.id != 30 %}
+      <button onclick="Reload()" class="btn btn-success" type="submit">Forward to Kapitan </button>
       <button class="btn btn-secondary" type="button" data-bs-dismiss="modal">Close</button>
+      {% elif request.user.id != 29 %}
+      <button class="btn btn-secondary" type="button" data-bs-dismiss="modal">Close</button>
+    {% endif %}
     </div>
 </form>
 

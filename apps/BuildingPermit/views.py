@@ -26,7 +26,7 @@ def building_permit_module(request):
 @admin_only
 def building_permit_list(request):
     if request.user.is_authenticated:
-        context = {"building_permit_list": BuildingPermit.objects.all().order_by("id")}
+        context = {"building_permit_list": BuildingPermit.objects.all().order_by("-id")}
         return render(request, "BuildingPermit/building_permit_list.html", context)
     else:
         return redirect("loginPage")
