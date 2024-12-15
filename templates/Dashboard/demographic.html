@@ -239,118 +239,37 @@
   </div>
 </section>
 
-<div class="col">
+
+<div class="container">
   <div class="row px-4">
-    <!-- Chart Section -->
-    <div class="col-lg-12 col-md-12">
-      <div class="col-md">
-        <div class="card text-center text-black mb-3 border-0 shadow">
-          <div class="card-header">
-            <h5 class="card-title">
-              <i class="fa-solid fa-chart-bar"></i> Resident Demographics
-            </h5>
-          </div>
-          <div class="card-body">
-            <!-- Chart Container -->
-            <canvas id="residentChart" width="400" height="200"></canvas>
-          </div>
+    <!-- Radar Chart Section -->
+    <div class="col-lg-6 col-md-12">
+  <div class="card text-center text-black mb-3 border-0 shadow" style="color: #355389;">
+    <div class="card-header" style="background-color: #355389; color: white;">
+      <h5 class="card-title">
+        <i class="fa-solid fa-crosshairs"></i> Resident Radar Chart
+      </h5>
+        </div>
+        <div class="card-body">
+          <canvas id="radarChart" width="400" height="400"></canvas>
         </div>
       </div>
     </div>
-<!--<section>-->
-<!--  <div class="container-fluid">-->
-<!--    <div class="row px-4 py-5">-->
-<!--      <div class="col-lg-8">-->
-        <!-- Jumbotron -->
-        <!--<div class="p-4 shadow-4 rounded-3 bg-white">-->
-        <!--  <div>-->
-        <!--    <h2>List of Residents</h2>-->
-        <!--  </div>-->
-        <!--  <hr class="my-2" />-->
-        <!--  <div>-->
-        <!--    <div class="table-responsive">-->
-        <!--      <table id="dashboard-table" class="table table-borderless">-->
-        <!--        <thead>-->
-        <!--          <tr>-->
-        <!--            <th scope="col">Resident ID</th>-->
-        <!--            <th scope="col">Name</th>-->
-        <!--            <th scope="col">Sex</th>-->
-        <!--            <th scope="col">Classification</th>-->
-        <!--            <th scope="col">Purok</th>-->
-        <!--            <th scope="col">Contact No.</th>-->
-        <!--          </tr>-->
-        <!--        </thead>-->
-        <!--        <tbody>-->
-        <!--          {% for resident in resident_list|slice:":5" %}-->
-        <!--          <tr>-->
-        <!--            <td>{{resident.residentsinfo.res_id}}</td>-->
-        <!--            <td>-->
-        <!--              {{resident.residentsinfo.firstname}}-->
-        <!--              {{resident.residentsinfo.middlename|make_list|first}}.-->
-        <!--              {{resident.residentsinfo.lastname}}-->
-        <!--              {{resident.residentsinfo.suffix}}-->
-        <!--            </td>-->
-        <!--            <td><span>{{resident.residentsinfo.sex}}</span></td>-->
-        <!--            <td>{{resident.residentsinfo.status}}</td>-->
-        <!--            <td>{{resident.residentsinfo.purok}}</td>-->
-        <!--            <td>{{resident.residentsinfo.phone}}</td>-->
-        <!--          </tr>-->
-        <!--          {% endfor %}-->
-        <!--        </tbody>-->
-        <!--      </table>-->
-        <!--    </div>-->
-        <!--  </div>-->
-        <!--  <hr class="my-2" />-->
-        <!---->
-        <!--  <div class="d-flex justify-content-center">-->
-        <!--    <a-->
-        <!--      type="button"-->
-        <!--      class="btn btn-outline-secondary"-->
-        <!--      href="{% url 'resident_list' %}"-->
-        <!--    >-->
-        <!--      <i class="las la-eye fs-4" style="vertical-align: middle"></i>-->
-        <!--      <span class="mt-5" style="vertical-align: middle">View All</span>-->
-        <!--    </a>-->
-        <!--  </div>-->
-        <!--</div>-->
-        <!-- Jumbotron -->
-      <!--</div>-->
-      <!---->
-      <!--<div class="col-lg-4">-->
-        <!-- Jumbotron -->
-        <!--<div class="p-4 shadow-4 rounded-3 bg-white">-->
-        <!--  <div>-->
-        <!--    <h2>Barangay Map</h2>-->
-        <!--  </div>-->
-        <!---->
-        <!--  <hr class="my-2" />-->
-        <!---->
-        <!--  <div>-->
-            <!--Google map-->
-            <!--<div-->
-            <!--  id="map-container-google-1"-->
-            <!--  class="z-depth-1-half map-container"-->
-            <!--  style="height: 400px"-->
-            <!-- > -->
-            <!--  <iframe-->
-            <!--    src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d7009.489213957667!2d124.28572113903157!3d8.431888966429943!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x325568d495184ef5%3A0xf270e1dbf0aa636!2sPoblacion%2C%20Naawan%2C%20Misamis%20Oriental!5e1!3m2!1sen!2sph!4v1726766639466!5m2!1sen!2sph"-->
-            <!--    width="600"-->
-            <!--    height="450"-->
-            <!--    style="border: 0"-->
-            <!--    allowfullscreen=""-->
-            <!--    loading="lazy"-->
-            <!--    referrerpolicy="no-referrer-when-downgrade"-->
-            <!--  >-->
-            <!--  </iframe>-->
-            <!--</div>-->
-            <!--Google Maps-->
-        <!--  </div>-->
-        <!--</div>-->
-        <!-- Jumbotron -->
-<!--      </div>-->
-<!--    </div>-->
-<!--  </div>-->
-<!--</section>-->
+
+    <!-- Bar Chart Section -->
+    <div class="col-lg-6 col-md-12">
+      <div class="card text-center text-black mb-3 border-0 shadow" style="color: #355389;">
+    <div class="card-header" style="background-color: #355389; color: white;">
+          <h5 class="card-title">
+            <i class="fa-solid fa-chart-bar"></i> Resident Bar Chart
+          </h5>
+        </div>
+        <div class="card-body">
+          <canvas id="residentChart" width="400" height="400"></canvas>
+        </div>
+      </div>
+    </div>
+  </div>
 
 <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 <script>
@@ -366,10 +285,10 @@
   var cDivorced = {{ cDivorced }};
   var cWidowed = {{ cWidowed }};
 
-  // Create Chart.js chart
-  var ctx = document.getElementById('residentChart').getContext('2d');
-  var residentChart = new Chart(ctx, {
-    type: 'bar',  // Change to 'pie', 'line', etc.
+  // Bar Chart
+  var barCtx = document.getElementById('residentChart').getContext('2d');
+  var residentChart = new Chart(barCtx, {
+    type: 'bar',
     data: {
       labels: ['Registered Residents', 'Male', 'Female', 'Single Parent', 'PWD', 'Senior Citizen', 'Married', 'Single', 'Divorced', 'Widowed'],
       datasets: [{
@@ -388,6 +307,38 @@
       scales: {
         y: {
           beginAtZero: true
+        }
+      }
+    }
+  });
+
+  // Radar Chart
+  var radarCtx = document.getElementById('radarChart').getContext('2d');
+  var radarChart = new Chart(radarCtx, {
+    type: 'radar',
+    data: {
+      labels: ['Registered Residents', 'Male', 'Female', 'Single Parent', 'PWD', 'Senior Citizen', 'Married', 'Single', 'Divorced', 'Widowed'],
+      datasets: [{
+        label: 'Resident Count',
+        data: [cResident, cMale, cFemale, cYes, cPwd, cSenior, cMarried, cSingle, cDivorced, cWidowed],
+        backgroundColor: 'rgba(53, 83, 137, 0.5)',
+        borderColor: '#355389',
+        borderWidth: 2
+      }]
+    },
+    options: {
+      responsive: true,
+      scales: {
+        r: {
+          angleLines: {
+            color: '#ccc'
+          },
+          grid: {
+            color: '#ddd'
+          },
+          ticks: {
+            beginAtZero: true
+          }
         }
       }
     }
