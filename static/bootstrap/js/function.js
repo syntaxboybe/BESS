@@ -137,6 +137,9 @@ $(document).ready(function () {
       if ($(this).html() == "Ready to Claim") {
         $(this).addClass("ready-status");
       }
+      if ($(this).html() == "Ready to Claim(e-Signed)") {
+        $(this).addClass("ready-esigned-status");
+      }
       if ($(this).html() == "Pending") {
         $(this).addClass("pending-status");
       }
@@ -175,6 +178,7 @@ $(document).ready(function () {
       data: [
         "Pending",
         "Ready to Claim",
+        "Ready to Claim(e-Signed)",
         "Released",
         "Reverted",
         "Forwarded to Kapitan",

@@ -13,11 +13,15 @@ urlpatterns = [
     path("clearance/<int:id>", edit_clearance, name="edit_clearance"),
     path("clearance_list", clearance_list, name="clearance_list"),
     path(
-        "generate_clearance/<hashid:id>", generate_clearance, name="generate_clearance"
+        "generate_clearance/<hashid:id>/", generate_clearance, name="generate_clearance"
     ),
-    path("delete_clearance/<hashid:id>", delete_clearance, name="delete_clearance"),
-    path("esign_clearance/<hashid:id>/", esign_clearance, name="esign_clearance"),
-    path("no_sign_clearance/<hashid:id>/", no_sign_clearance, name="no_sign_clearance"),
-    path("unsign_clearance/<hashid:id>/", unsign_clearance, name="unsign_clearance"),
+    path("delete_clearance/<hashid:id>",
+         delete_clearance, name="delete_clearance"),
+    path("esign_clearance/<hashid:id>/",
+         esign_clearance, name="esign_clearance"),
+    path("no_sign_clearance/<hashid:id>/",
+         no_sign_clearance, name="no_sign_clearance"),
+    path("unsign_clearance/<hashid:id>/",
+         unsign_clearance, name="unsign_clearance"),
 ]
 urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

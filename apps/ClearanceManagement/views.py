@@ -39,11 +39,16 @@ def clearance_list(request):
 @admin_only
 def edit_clearance(request, id):
     if request.user.is_authenticated:
-
         clearance = clerance_list.objects.get(pk=id)
         form = cleranceForm(instance=clearance)
 
         if request.method == "POST":
+            if clearance.status.document_status == "Pending":
+                new_status = DocumentStatus.objects.get(
+                    document_status="Forwarded to Kapitan"
+                )
+                clearance.status = new_status
+                clearance.save()
             form = cleranceForm(
                 request.POST, request.FILES, instance=clearance
             )  # Include request.FILES
@@ -72,22 +77,29 @@ def calculate_age(birthdate):
 @login_required(login_url="loginPage")
 @admin_only
 def generate_clearance(request, id):
-    if request.user.is_authenticated:
-        template_name = "ClearanceManagement/clearance_pdf.html"
-        clearance = get_object_or_404(clerance_list, pk=id)
-        birthdate = clearance.res_id.birthdate
-        age = calculate_age(birthdate)
-        # Fetch clearance object and related data
-        # Ensure the media URL is passed to handle images
-        context = {
-            "clearance": clearance,
-            "media_url": request.build_absolute_uri(settings.MEDIA_URL),
-            "age": age,
-        }
+    # Fetch clearance object and related data
+    clearance = get_object_or_404(clerance_list, pk=id)
+    birthdate = clearance.res_id.birthdate
+    age = calculate_age(birthdate)
 
-        return render_to_pdf(template_name, context)
-    else:
-        return redirect("loginPage")
+    # Prepare the context
+    template_name = "ClearanceManagement/clearance_pdf.html"
+    context = {
+        "clearance": clearance,
+        "media_url": request.build_absolute_uri(settings.MEDIA_URL),
+        "age": age,
+    }
+
+    if request.method == "POST":
+        # Update clearance status if already released
+        if clearance.status.document_status == "Ready to Claim":
+            new_status = DocumentStatus.objects.get(document_status="Released")
+            clearance.status = new_status
+            clearance.is_signed = True  # Assuming there's an `is_signed` field
+            clearance.save()
+
+    # Render the PDF
+    return render_to_pdf(template_name, context)
 
 
 @cache_control(no_cache=True, must_revalidate=True, no_store=True)
@@ -101,9 +113,13 @@ def esign_clearance(request, id):
         clearance = get_object_or_404(clerance_list, pk=id)
 
         if request.method == "POST":
-            # Logic to mark clearance as signed
-            clearance.is_signed = True  # Assuming there's an `is_signed` field
-            clearance.save()
+            if clearance.status.document_status == "Forwarded to Kapitan":
+                new_status = DocumentStatus.objects.get(
+                    document_status="Ready to Claim(e-Signed)"
+                )
+                clearance.status = new_status
+                clearance.is_signed = True  # Assuming there's an `is_signed` field
+                clearance.save()
 
             # Optionally process a confirmation message
             confirmation_message = request.POST.get("confirmation_message", "")
@@ -126,7 +142,6 @@ def delete_clearance(request, id):
         username = clearance.res_id.user.username
         context = {"clearance": clearance}
         if request.method == "POST":
-
             email_msg = request.POST.get("reason_masage")
 
             subject = "Reasons For Denying your Request"
@@ -202,9 +217,13 @@ def unsign_clearance(request, id):
         clearance = get_object_or_404(clerance_list, pk=id)
 
         if request.method == "POST":
-            # Logic to mark clearance as signed
-            clearance.is_signed = True  # Assuming there's an `is_signed` field
-            clearance.save()
+            if clearance.status.document_status == "Forwarded to Kapitan":
+                new_status = DocumentStatus.objects.get(
+                    document_status="Ready to Claim"
+                )
+                clearance.status = new_status
+                clearance.is_signed = True  # Assuming there's an `is_signed` field
+                clearance.save()
 
             # Optionally process a confirmation message
             confirmation_message = request.POST.get("confirmation_message", "")

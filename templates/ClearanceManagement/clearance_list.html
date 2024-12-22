@@ -1,195 +1,178 @@
 <!doctype html>
 <html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Barangay E-Service System</title>
-    <!-- Include Font Awesome -->
-    <link
-      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css"
-      rel="stylesheet"
-    />
 
-    <style>
-      .fade-load {
-        animation: fadeInAnimation ease 1.3s;
-        animation-iteration-count: 1;
-        animation-fill-mode: forwards;
-      }
-    </style>
-  </head>
-  <body>
-    <div class="table-responsive fade-load">
-      <div class="py-2">
-        <div class="row g-3 align-items-center">
-          <div class="col-auto">
-            <label class="col-form-label">Select Status</label>
-          </div>
-          <div class="col-auto">
-            <div id="status"></div>
-          </div>
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Barangay E-Service System</title>
+  <!-- Include Font Awesome -->
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" rel="stylesheet" />
+
+  <style>
+    .fade-load {
+      animation: fadeInAnimation ease 1.3s;
+      animation-iteration-count: 1;
+      animation-fill-mode: forwards;
+    }
+  </style>
+</head>
+
+<body>
+  <div class="table-responsive fade-load">
+    <div class="py-2">
+      <div class="row g-3 align-items-center">
+        <div class="col-auto">
+          <label class="col-form-label">Select Status</label>
+        </div>
+        <div class="col-auto">
+          <div id="status"></div>
         </div>
       </div>
-      <table
-        id="clearance"
-        class="table table-striped-columns table-bordered align-middle mb-0 shadow-sm"
-      >
-        <thead>
-          <tr>
-            <th>Resident ID</th>
-            <th scope="col">Resident's Name</th>
-            <th scope="col">Date Requested</th>
-            <th scope="col">Date Released</th>
-            <th scope="col">Transaction ID</th>
-            <th scope="col">Status</th>
-            <th scope="col " class="text-center">Action</th>
-          </tr>
-        </thead>
-
-        <tbody>
-          {% for clearance in clearance_list %}
-          <tr class="table-text">
-            <td class="text-center">{{ clearance.res_id.res_id }}</td>
-            <td>{{ clearance.res_id }}</td>
-            <td>{{ clearance.date_requested|date:"M d, Y h:i A" }}</td>
-            <td>{{ clearance.date_released}}</td>
-            <td>{{ clearance.transaction_id}}</td>
-            <td><span class="">{{ clearance.status }}</span></td>
-
-            <td class="text-center">
-              {% if user.id != 30 %}
-              <!-- Render these buttons only if the user ID is NOT 30 -->
-
-              <button
-                class="btn btn-primary bg-gradient text-white"
-                hx-get="{% url 'edit_clearance' clearance.id %}"
-                hx-target="#dialog"
-              >
-                <i
-                  class="fas fa-check-circle fs-5"
-                  style="color: white; vertical-align: middle"
-                ></i>
-                <span style="vertical-align: middle"> Verify</span>
-              </button>
-
-              <button
-                class="btn btn-danger bg-gradient"
-                hx-get="{% url 'delete_clearance' clearance.id %}"
-                hx-target="#dialog"
-              >
-                <i class="fas fa-sync fs-5" style="vertical-align: middle"></i>
-                <span style="vertical-align: middle"> Revert</span>
-              </button>
-              <a
-                target="_blank"
-                type="button"
-                class="btn btn-warning bg-gradient"
-                href="{% url 'no_sign_clearance' clearance.id %}"
-              >
-                <i class="fas fa-print fs-5" style="vertical-align: middle"></i>
-                <span style="vertical-align: middle"> Print</span>
-              </a>
-              <a
-                target="_blank"
-                type="button"
-                class="btn btn-success bg-gradient"
-                href="{% url 'generate_clearance' clearance.id %}"
-              >
-                <i class="fas fa-print fs-5" style="vertical-align: middle"></i>
-                <span style="vertical-align: middle"> Print</span>
-              </a>
-              {% endif %}
-
-              <!-- Always display the 'las la-pen' button -->
-              {% if user.id != 29 %}
-              <!-- These buttons will display for user ids other than 29 -->
-
-              <button
-                class="btn btn-primary bg-gradient"
-                hx-get="{% url 'edit_clearance' clearance.id %}"
-                hx-target="#dialog"
-              >
-                <i class="fas fa-eye fs-5" style="vertical-align: middle"></i>
-                <span style="vertical-align: middle"> View</span>
-              </button>
-
-              <button
-                class="btn btn-warning bg-gradient"
-                hx-get="{% url 'unsign_clearance' clearance.id %}"
-                hx-target="#dialog"
-              >
-                <i class="fas fa-check fs-5" style="vertical-align: middle"></i>
-                <span style="vertical-align: middle"> Confirm</span>
-              </button>
-
-              <button
-                class="btn btn-success bg-gradient"
-                hx-get="{% url 'esign_clearance' clearance.id %}"
-                hx-target="#dialog"
-              >
-                <i
-                  class="fas fa-pen-alt fs-5"
-                  style="vertical-align: middle"
-                ></i>
-                <span style="vertical-align: middle"> E-sign</span>
-              </button>
-
-              {% endif %}
-            </td>
-
-            {% empty %}
-          </tr>
-
-          <tr align="center">
-            <td colspan="8">
-              <h6 class="text-muted p-4">CURRENTLY NO DATA AVAILABLE</h6>
-            </td>
-          </tr>
-
-          {% endfor %}
-        </tbody>
-      </table>
     </div>
+    <table id="clearance" class="table table-striped-columns table-bordered align-middle mb-0 shadow-sm">
+      <thead>
+        <tr>
+          <th>Resident ID</th>
+          <th scope="col">Resident's Name</th>
+          <th scope="col">Date Requested</th>
+          <th scope="col">Date Released</th>
+          <th scope="col">Transaction ID</th>
+          <th scope="col">Status</th>
+          <th scope="col " class="text-center">Action</th>
+        </tr>
+      </thead>
 
-    <script>
-      $(document).ready(function () {
-        var table = $("#clearance").DataTable({
-          stateSave: true,
-        });
+      <tbody>
+        {% for clearance in clearance_list %}
+        <tr class="table-text">
+          <td class="text-center">{{ clearance.res_id.res_id }}</td>
+          <td>{{ clearance.res_id }}</td>
+          <td>{{ clearance.date_requested|date:"M d, Y h:i A" }}</td>
+          <td>{{ clearance.date_released}}</td>
+          <td>{{ clearance.transaction_id}}</td>
+          <td><span class="">{{ clearance.status }}</span></td>
 
-        yadcf.init(table, [
-          {
-            column_number: 5,
-            filter_default_label: "All",
-            filter_container_id: "status",
-            data: [
-              "Pending",
-              "Ready to Claim",
-              "Released",
-              "Forwarded to Kapitan",
-            ],
-            style_class: "form-select",
-            filter_reset_button_text: false,
-          },
-        ]);
+          <td class="text-center">
+            {% if user.id != 30 %}
+            <!-- Render these buttons only if the user ID is NOT 30 -->
+            {% if clearance.status.document_status == "Pending" %}
+            <button class="btn btn-primary bg-gradient text-white" hx-get="{% url 'edit_clearance' clearance.id %}"
+              hx-target="#dialog">
+              <i class="fas fa-check-circle fs-5" style="color: white; vertical-align: middle"></i>
+              <span style="vertical-align: middle"> Verify</span>
+            </button>
+            <button class="btn btn-danger bg-gradient" hx-get="{% url 'delete_clearance' clearance.id %}"
+              hx-target="#dialog">
+              <i class="fas fa-sync fs-5" style="vertical-align: middle"></i>
+              <span style="vertical-align: middle"> Revert</span>
+            </button>
+            {% endif %}
+
+            {% if clearance.status.document_status == "Ready to Claim" %}
+            <a target="_blank" type="button" class="btn btn-warning bg-gradient"
+              href="{% url 'no_sign_clearance' clearance.id %}">
+              <i class="fas fa-print fs-5" style="vertical-align: middle"></i>
+              <span style="vertical-align: middle"> Print</span>
+            </a>
+            {% endif %}
+
+            {% if clearance.status.document_status == "Ready to Claim(e-Signed)" %}
+            <a target="_blank" type="button" class="btn btn-success bg-gradient"
+              href="{% url 'generate_clearance' clearance.id %}">
+              <i class="fas fa-print fs-5" style="vertical-align: middle"></i>
+              <span style="vertical-align: middle"> Print</span>
+            </a>
+
+            {% endif %}
+
+            {% endif %}
+
+            <!-- Always display the 'las la-pen' button -->
+            {% if user.id != 29 %}
+
+            {% if clearance.status.document_status == "Forwarded to Kapitan" %}
+            <!-- These buttons will display for user ids other than 29 -->
+
+            <button class="btn btn-primary bg-gradient" hx-get="{% url 'edit_clearance' clearance.id %}"
+              hx-target="#dialog">
+              <i class="fas fa-eye fs-5" style="vertical-align: middle"></i>
+              <span style="vertical-align: middle"> View</span>
+            </button>
+
+            <button class="btn btn-warning bg-gradient" hx-get="{% url 'unsign_clearance' clearance.id %}"
+              hx-target="#dialog">
+              <i class="fas fa-check fs-5" style="vertical-align: middle"></i>
+              <span style="vertical-align: middle"> Confirm</span>
+            </button>
+
+            <button class="btn btn-success bg-gradient" hx-get="{% url 'esign_clearance' clearance.id %}"
+              hx-target="#dialog">
+              <i class="fas fa-pen-alt fs-5" style="vertical-align: middle"></i>
+              <span style="vertical-align: middle"> E-sign</span>
+            </button>
+
+            {% endif %}
+            {% endif %}
+          </td>
+
+          {% empty %}
+        </tr>
+
+        <tr align="center">
+          <td colspan="8">
+            <h6 class="text-muted p-4">CURRENTLY NO DATA AVAILABLE</h6>
+          </td>
+        </tr>
+
+        {% endfor %}
+      </tbody>
+    </table>
+  </div>
+
+  <script>
+    $(document).ready(function () {
+      var table = $("#clearance").DataTable({
+        stateSave: true,
       });
 
-      $("#clearance")
-        .find("span")
-        .each(function () {
-          if ($(this).html() == "Released") {
-            $(this).addClass("released-status");
-          }
-          if ($(this).html() == "Ready to Claim") {
-            $(this).addClass("ready-status");
-          }
-          if ($(this).html() == "Pending") {
-            $(this).addClass("pending-status");
-          }
-          if ($(this).html() == "Forwarded to Kapitan") {
-            $(this).addClass("forwadKap-status");
-          }
-        });
-    </script>
-  </body>
+      yadcf.init(table, [
+        {
+          column_number: 5,
+          filter_default_label: "All",
+          filter_container_id: "status",
+          data: [
+            "Pending",
+            "Ready to Claim",
+            "Released",
+            "Forwarded to Kapitan",
+            "Ready to Claim(e-Signed)",
+          ],
+          style_class: "form-select",
+          filter_reset_button_text: false,
+        },
+      ]);
+    });
+
+    $("#clearance")
+      .find("span")
+      .each(function () {
+        if ($(this).html() == "Released") {
+          $(this).addClass("released-status");
+        }
+        if ($(this).html() == "Ready to Claim") {
+          $(this).addClass("ready-status");
+        }
+        if ($(this).html() == "Ready to Claim(e-Signed)") {
+          $(this).addClass("ready-esigned-status");
+        }
+        if ($(this).html() == "Pending") {
+          $(this).addClass("pending-status");
+        }
+        if ($(this).html() == "Forwarded to Kapitan") {
+          $(this).addClass("forwadKap-status");
+        }
+      });
+  </script>
+</body>
+
 </html>

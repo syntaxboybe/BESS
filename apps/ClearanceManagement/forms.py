@@ -8,7 +8,6 @@ class cleranceForm(forms.ModelForm):
         fields = (
             "age",
             "purpose",
-            "status",
             "date_released",
             "community_tax_num",
             "community_tax_date_issued",
@@ -24,7 +23,6 @@ class cleranceForm(forms.ModelForm):
             "date_released": forms.DateInput(
                 attrs={"class": "form-control form-control-sm", "placeholder": "input"}
             ),
-            "status": forms.Select(attrs={"class": "form-select form-select-sm"}),
             "community_tax_num": forms.TextInput(
                 attrs={"class": "form-control form-control-sm", "placeholder": "input"}
             ),
