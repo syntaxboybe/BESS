@@ -26,7 +26,8 @@ def building_permit_module(request):
 @admin_only
 def building_permit_list(request):
     if request.user.is_authenticated:
-        context = {"building_permit_list": BuildingPermit.objects.all().order_by("-id")}
+        context = {
+            "building_permit_list": BuildingPermit.objects.all().order_by("-id")}
         return render(request, "BuildingPermit/building_permit_list.html", context)
     else:
         return redirect("loginPage")
@@ -41,7 +42,14 @@ def edit_building_permit(request, id):
         form = BuildingPermitForm(instance=building_permit)
 
         if request.method == "POST":
-            form = BuildingPermitForm(request.POST, instance=building_permit)
+            if building_permit.status.document_status == "Pending":
+                new_status = DocumentStatus.objects.get(
+                    document_status="Forwarded to Kapitan"
+                )
+                building_permit.status = new_status
+                building_permit.save()
+                form = BuildingPermitForm(
+                    request.POST, instance=building_permit)
             if form.is_valid():
                 form.save()
                 return HttpResponse(
@@ -83,6 +91,12 @@ def unsign_building_permit(request, id):
         building_permit = get_object_or_404(BuildingPermit, pk=id)
 
         if request.method == "POST":
+            if building_permit.status.document_status == "Forwarded to Kapitan":
+                new_status = DocumentStatus.objects.get(
+                    document_status="Ready to Claim"
+                )
+                building_permit.status = new_status
+                building_permit.save()
             # Logic to mark clearance as signed
             building_permit.is_signed = True  # Assuming there's an `is_signed` field
             building_permit.save()
@@ -108,7 +122,6 @@ def delete_building_permit(request, id):
         username = building_permit.res_id.user.username
         context = {"building_permit": building_permit}
         if request.method == "POST":
-
             email_msg = request.POST.get("reason_masage")
 
             subject = "Reasons For Denying your Request"
@@ -171,6 +184,12 @@ def esign_building_permit(request, id):
         building_permit = get_object_or_404(BuildingPermit, pk=id)
 
         if request.method == "POST":
+            if building_permit.status.document_status == "Forwarded to Kapitan":
+                new_status = DocumentStatus.objects.get(
+                    document_status="Ready to Claim(e-Signed)"
+                )
+                building_permit.status = new_status
+                building_permit.save()
             # Logic to mark clearance as signed
             building_permit.is_signed = True  # Assuming there's an `is_signed` field
             building_permit.save()

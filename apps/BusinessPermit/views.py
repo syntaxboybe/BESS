@@ -26,7 +26,8 @@ def business_permit_module(request):
 @admin_only
 def business_permit_list(request):
     if request.user.is_authenticated:
-        context = {"business_permit_list": BusinessPermit.objects.all().order_by("-id")}
+        context = {
+            "business_permit_list": BusinessPermit.objects.all().order_by("-id")}
         return render(request, "BusinessPermit/business_permit_list.html", context)
     else:
         return redirect("loginPage")
@@ -42,6 +43,12 @@ def edit_business_permit(request, id):
 
         business_permit_id = BusinessPermit.objects.get(pk=id)
         if request.method == "POST":
+            if business_permit.status.document_status == "Pending":
+                new_status = DocumentStatus.objects.get(
+                    document_status="Forwarded to Kapitan"
+                )
+                business_permit.status = new_status
+                business_permit.save()
             form = BusinessPermitForm(request.POST, instance=business_permit)
             if form.is_valid():
                 form.save()
@@ -84,9 +91,12 @@ def unsign_business_permit(request, id):
         business_permit = get_object_or_404(BusinessPermit, pk=id)
 
         if request.method == "POST":
-            # Logic to mark clearance as signed
-            business_permit.is_signed = True  # Assuming there's an `is_signed` field
-            business_permit.save()
+            if business_permit.status.document_status == "Forwarded to Kapitan":
+                new_status = DocumentStatus.objects.get(
+                    document_status="Ready to Claim"
+                )
+                business_permit.status = new_status
+                business_permit.save()
 
             # Optionally process a confirmation message
             confirmation_message = request.POST.get("confirmation_message", "")
@@ -109,7 +119,6 @@ def delete_business_permit(request, id):
         username = business_permit.res_id.user.username
         context = {"business_permit": business_permit}
         if request.method == "POST":
-
             email_msg = request.POST.get("reason_masage")
 
             subject = "Reasons For Denying your Request"
@@ -172,12 +181,16 @@ def esign_business_permit(request, id):
         business_permit = get_object_or_404(BusinessPermit, pk=id)
 
         if request.method == "POST":
-            # Logic to mark clearance as signed
-            business_permit.is_signed = True  # Assuming there's an `is_signed` field
-            business_permit.save()
+            if business_permit.status.document_status == "Forwarded to Kapitan":
+                new_status = DocumentStatus.objects.get(
+                    document_status="Ready to Claim(e-Signed)"
+                )
+                business_permit.status = new_status
+                business_permit.save()
 
-            # Optionally process a confirmation message
-            confirmation_message = request.POST.get("confirmation_message", "")
+                # Optionally process a confirmation message
+                confirmation_message = request.POST.get(
+                    "confirmation_message", "")
 
             # Send a response for htmx or redirect
             return HttpResponse(

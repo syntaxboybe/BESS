@@ -30,7 +30,8 @@
             
             <br><br><br><br>
             <hr>
-{% if request.user.id != 30 %}
+            
+            {% if request.user.id != 30 %}
             <div class="col-12 py-2">
                 <p class="h6">Proposed Constrcution of</p>
                 {{ form.proposed_construction }}
@@ -88,20 +89,18 @@
                 <p class="h6">Amount Paid</p>
                 {{ form.amount_paid }}
             </div>
-
-<div class="col-4 py-2">
-                <p class="h6">Document Status</p>
-                {{form.status}}
-</div>
-{% endif %}
+ 
+          {% endif %}
+        <br>
+        <hr>
         </div>
-    </div>
-    <div class="modal-footer">
-     {% if request.user.id != 30 %}
-      <button onclick="Reload()" class="btn btn-success" type="submit">Save </button>
-      <button class="btn btn-secondary" type="button" data-bs-dismiss="modal">Close</button>
+      </div>
+      <div class="modal-footer">
+      {% if request.user.id != 30 %}
+      <button onclick="Reload()" class="btn btn-success" type="submit"><i class="fas fa-sign-in-alt"></i> Forward to Kapitan </button>
+      <button class="btn btn-secondary" type="button" data-bs-dismiss="modal"><i class="fas fa-times"></i> Close</button>
       {% elif request.user.id != 29 %}
-      <button class="btn btn-secondary" type="button" data-bs-dismiss="modal">Close</button>
+      <button class="btn btn-secondary" type="button" data-bs-dismiss="modal"><i class="fas fa-times"></i> Close</button>
     {% endif %}
     </div>
 </form>
