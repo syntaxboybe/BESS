@@ -1,0 +1,31 @@
+<form method="POST" enctype="multipart/form-data" hx-post="{{ request.path }}" class="modal-content">
+  {% csrf_token %}
+  <div class="modal-header">
+    <h5 class="modal-title">Would you like to print this request?</h5>
+  </div>
+  <div class="modal-body">
+    <div class="row">
+      <div class="col-12">
+        <p><b>Requested By:</b> {{ BuildingPermit.res_id }}</p>
+        <p><b>Date Requested:</b> {{ BuildingPermit.date_requested }}</p>
+        <p><b>Transaction ID:</b> {{ BuildingPermit.transaction_id }}</p>
+      </div>
+    </div>
+    <div class="modal-footer">
+      <div class="d-flex gap-2">
+        <a target="_blank" type="button" class="btn btn-warning bg-gradient"
+          href="{% url 'no_sign_buildingpermit' BuildingPermit.id %}">
+          <i class="fas fa-print" style="vertical-align: middle"></i>
+          <span style="vertical-align: middle"> Print</span>
+        </a>
+      </div>
+      <button class="btn btn-success" type="submit">
+        <i class="fas fa-rocket"></i> Release
+      </button>
+
+      <button class="btn btn-secondary" type="button" data-bs-dismiss="modal">
+        <i class="fas fa-times"></i> Cancel
+      </button>
+
+    </div>
+</form>

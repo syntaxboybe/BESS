@@ -13,7 +13,8 @@ urlpatterns = [
         building_permit_module,
         name="building_permit_module",
     ),
-    path("building_permit_list/", building_permit_list, name="building_permit_list"),
+    path("building_permit_list/", building_permit_list,
+         name="building_permit_list"),
     path(
         "building_permit_list/<int:id>",
         edit_building_permit,
@@ -43,5 +44,15 @@ urlpatterns = [
         "esign_building_permit/<hashid:id>/",
         esign_building_permit,
         name="esign_building_permit",
+    ),
+    path(
+        "confirm_button_bldp/<hashid:id>/",
+        confirm_button_bldp,
+        name="confirm_button_bldp",
+    ),
+    path(
+        "esign_button_bldp/<hashid:id>/",
+        esign_button_bldp,
+        name="esign_button_bldp",
     ),
 ]

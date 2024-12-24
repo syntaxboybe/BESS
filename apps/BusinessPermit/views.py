@@ -113,6 +113,38 @@ def unsign_business_permit(request, id):
         return redirect("loginPage")
 
 
+@cache_control(no_cache=True, must_revalidate=True, no_store=True)
+@login_required(login_url="loginPage")
+@admin_only
+def confirm_button_bsp(request, id):
+    """
+    Mark a clearance as signed.
+    """
+    if request.user.is_authenticated:
+        business_permit = get_object_or_404(BusinessPermit, pk=id)
+
+        if request.method == "POST":
+            if business_permit.status.document_status == "Ready to Claim":
+                new_status = DocumentStatus.objects.get(
+                    document_status="Released")
+                business_permit.status = new_status
+                business_permit.save()
+
+            # Optionally process a confirmation message
+            confirmation_message = request.POST.get("confirmation_message", "")
+
+            # Send a response for htmx or redirect
+            return HttpResponse(
+                status=204, headers={"HX-Trigger": "BusinessPermitUpdate"}
+            )
+            return redirect("BusinessPermit")
+
+        context = {"BusinessPermit": business_permit}
+        return render(request, "BusinessPermit/confirm_button_bsp.html", context)
+    else:
+        return redirect("loginPage")
+
+
 def delete_business_permit(request, id):
     if request.user.is_authenticated:
         business_permit = BusinessPermit.objects.get(pk=id)
@@ -200,5 +232,37 @@ def esign_business_permit(request, id):
 
         context = {"BusinessPermit": business_permit}
         return render(request, "BusinessPermit/esign_business_permit.html", context)
+    else:
+        return redirect("loginPage")
+
+
+@cache_control(no_cache=True, must_revalidate=True, no_store=True)
+@login_required(login_url="loginPage")
+@admin_only
+def esign_button_bsp(request, id):
+    """
+    Mark a clearance as signed.
+    """
+    if request.user.is_authenticated:
+        business_permit = get_object_or_404(BusinessPermit, pk=id)
+
+        if request.method == "POST":
+            if business_permit.status.document_status == "Ready to Claim(e-Signed)":
+                new_status = DocumentStatus.objects.get(
+                    document_status="Released")
+                business_permit.status = new_status
+                business_permit.save()
+
+            # Optionally process a confirmation message
+            confirmation_message = request.POST.get("confirmation_message", "")
+
+            # Send a response for htmx or redirect
+            return HttpResponse(
+                status=204, headers={"HX-Trigger": "BusinessPermitUpdate"}
+            )
+            return redirect("BusinessPermit")
+
+        context = {"BusinessPermit": business_permit}
+        return render(request, "BusinessPermit/esign_button_bsp.html", context)
     else:
         return redirect("loginPage")

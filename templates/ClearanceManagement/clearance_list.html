@@ -69,64 +69,64 @@
             {% endif %}
 
             {% if clearance.status.document_status == "Ready to Claim" %}
-            <a target="_blank" type="button" class="btn btn-warning bg-gradient"
-              href="{% url 'no_sign_clearance' clearance.id %}">
+            <button class="btn btn-warning bg-gradient" hx-get="{% url 'confirm_button' clearance.id %}"
+              hx-target="#dialog">
               <i class="fas fa-print fs-5" style="vertical-align: middle"></i>
-              <span style="vertical-align: middle"> Print</span>
-            </a>
+              <span style="vertical-align: middle"> For Printing</span>
+            </button>
             {% endif %}
 
             {% if clearance.status.document_status == "Ready to Claim(e-Signed)" %}
-            <a target="_blank" type="button" class="btn btn-success bg-gradient"
-              href="{% url 'generate_clearance' clearance.id %}">
+
+            <button class="btn btn-warning bg-gradient" hx-get="{% url 'esign_button' clearance.id %}"
+              hx-target="#dialog">
               <i class="fas fa-print fs-5" style="vertical-align: middle"></i>
-              <span style="vertical-align: middle"> Print</span>
-            </a>
-
-            {% endif %}
-
-            {% endif %}
-
-            <!-- Always display the 'las la-pen' button -->
-            {% if user.id != 29 %}
-
-            {% if clearance.status.document_status == "Forwarded to Kapitan" %}
-            <!-- These buttons will display for user ids other than 29 -->
-
-            <button class="btn btn-primary bg-gradient" hx-get="{% url 'edit_clearance' clearance.id %}"
-              hx-target="#dialog">
-              <i class="fas fa-eye fs-5" style="vertical-align: middle"></i>
-              <span style="vertical-align: middle"> View</span>
+              <span style="vertical-align: middle"> For Printing</span>
             </button>
+  </div>
 
-            <button class="btn btn-warning bg-gradient" hx-get="{% url 'unsign_clearance' clearance.id %}"
-              hx-target="#dialog">
-              <i class="fas fa-check fs-5" style="vertical-align: middle"></i>
-              <span style="vertical-align: middle"> Confirm</span>
-            </button>
 
-            <button class="btn btn-success bg-gradient" hx-get="{% url 'esign_clearance' clearance.id %}"
-              hx-target="#dialog">
-              <i class="fas fa-pen-alt fs-5" style="vertical-align: middle"></i>
-              <span style="vertical-align: middle"> E-sign</span>
-            </button>
+  {% endif %}
 
-            {% endif %}
-            {% endif %}
-          </td>
+  {% endif %}
 
-          {% empty %}
-        </tr>
+  <!-- Always display the 'las la-pen' button -->
+  {% if user.id != 29 %}
 
-        <tr align="center">
-          <td colspan="8">
-            <h6 class="text-muted p-4">CURRENTLY NO DATA AVAILABLE</h6>
-          </td>
-        </tr>
+  {% if clearance.status.document_status == "Forwarded to Kapitan" %}
+  <!-- These buttons will display for user ids other than 29 -->
 
-        {% endfor %}
-      </tbody>
-    </table>
+  <button class="btn btn-primary bg-gradient" hx-get="{% url 'edit_clearance' clearance.id %}" hx-target="#dialog">
+    <i class="fas fa-eye fs-5" style="vertical-align: middle"></i>
+    <span style="vertical-align: middle"> View</span>
+  </button>
+
+  <button class="btn btn-warning bg-gradient" hx-get="{% url 'unsign_clearance' clearance.id %}" hx-target="#dialog">
+    <i class="fas fa-check fs-5" style="vertical-align: middle"></i>
+    <span style="vertical-align: middle"> Confirm</span>
+  </button>
+
+  <button class="btn btn-success bg-gradient" hx-get="{% url 'esign_clearance' clearance.id %}" hx-target="#dialog">
+    <i class="fas fa-pen-alt fs-5" style="vertical-align: middle"></i>
+    <span style="vertical-align: middle"> E-sign</span>
+  </button>
+
+  {% endif %}
+  {% endif %}
+  </td>
+
+  {% empty %}
+  </tr>
+
+  <tr align="center">
+    <td colspan="8">
+      <h6 class="text-muted p-4">CURRENTLY NO DATA AVAILABLE</h6>
+    </td>
+  </tr>
+
+  {% endfor %}
+  </tbody>
+  </table>
   </div>
 
   <script>

@@ -53,19 +53,19 @@
           {% endif %}
 
           {% if building_permit.status.document_status == "Ready to Claim" %}
-          <a target="_blank" type="button" class="btn btn-warning bg-gradient"
-            href="{% url 'no_sign_buildingpermit' building_permit.id %}">
+          <button class="btn btn-warning bg-gradient" hx-get="{% url 'confirm_button_bldp' building_permit.id %}"
+            hx-target="#dialog">
             <i class="fas fa-print fs-5" style="vertical-align: middle"></i>
-            <span style="vertical-align: middle"> Print</span>
-          </a>
+            <span style="vertical-align: middle"> For Printing</span>
+          </button>
           {% endif %}
 
           {% if building_permit.status.document_status == "Ready to Claim(e-Signed)" %}
-          <a target="_blank" type="button" class="btn btn-success bg-gradient"
-            href="{% url 'generate_building_permit' building_permit.id %}">
+          <button class="btn btn-warning bg-gradient" hx-get="{% url 'esign_button_bldp' building_permit.id %}"
+            hx-target="#dialog">
             <i class="fas fa-print fs-5" style="vertical-align: middle"></i>
-            <span style="vertical-align: middle"> Print</span>
-          </a>
+            <span style="vertical-align: middle"> For Printing</span>
+          </button>
           {% endif %}
 
           {% endif %}

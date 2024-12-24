@@ -23,5 +23,7 @@ urlpatterns = [
          no_sign_clearance, name="no_sign_clearance"),
     path("unsign_clearance/<hashid:id>/",
          unsign_clearance, name="unsign_clearance"),
+    path("esign_button/<hashid:id>/", esign_button, name="esign_button"),
+    path("confirm_button/<hashid:id>/", confirm_button, name="confirm_button"),
 ]
 urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

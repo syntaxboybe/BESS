@@ -116,6 +116,41 @@ def unsign_building_permit(request, id):
         return redirect("loginPage")
 
 
+@cache_control(no_cache=True, must_revalidate=True, no_store=True)
+@login_required(login_url="loginPage")
+@admin_only
+def confirm_button_bldp(request, id):
+    """
+    Mark a clearance as signed.
+    """
+    if request.user.is_authenticated:
+        building_permit = get_object_or_404(BuildingPermit, pk=id)
+
+        if request.method == "POST":
+            if building_permit.status.document_status == "Ready to Claim":
+                new_status = DocumentStatus.objects.get(
+                    document_status="Released")
+                building_permit.status = new_status
+                building_permit.save()
+            # Logic to mark clearance as signed
+            building_permit.is_signed = True  # Assuming there's an `is_signed` field
+            building_permit.save()
+
+            # Optionally process a confirmation message
+            confirmation_message = request.POST.get("confirmation_message", "")
+
+            # Send a response for htmx or redirect
+            return HttpResponse(
+                status=204, headers={"HX-Trigger": "BuildingPermitUpdate"}
+            )
+            return redirect("BuildingPermit")
+
+        context = {"BuildingPermit": building_permit}
+        return render(request, "BuildingPermit/confirm_button_bldp.html", context)
+    else:
+        return redirect("loginPage")
+
+
 def delete_building_permit(request, id):
     if request.user.is_authenticated:
         building_permit = BuildingPermit.objects.get(pk=id)
@@ -205,5 +240,40 @@ def esign_building_permit(request, id):
 
         context = {"BuildingPermit": building_permit}
         return render(request, "BuildingPermit/esign_building_permit.html", context)
+    else:
+        return redirect("loginPage")
+
+
+@cache_control(no_cache=True, must_revalidate=True, no_store=True)
+@login_required(login_url="loginPage")
+@admin_only
+def esign_button_bldp(request, id):
+    """
+    Mark a clearance as signed.
+    """
+    if request.user.is_authenticated:
+        building_permit = get_object_or_404(BuildingPermit, pk=id)
+
+        if request.method == "POST":
+            if building_permit.status.document_status == "Ready to Claim(e-Signed)":
+                new_status = DocumentStatus.objects.get(
+                    document_status="Released")
+                building_permit.status = new_status
+                building_permit.save()
+            # Logic to mark clearance as signed
+            building_permit.is_signed = True  # Assuming there's an `is_signed` field
+            building_permit.save()
+
+            # Optionally process a confirmation message
+            confirmation_message = request.POST.get("confirmation_message", "")
+
+            # Send a response for htmx or redirect
+            return HttpResponse(
+                status=204, headers={"HX-Trigger": "BuildingPermitUpdate"}
+            )
+            return redirect("BuildingPermit")
+
+        context = {"BuildingPermit": building_permit}
+        return render(request, "BuildingPermit/esign_button_bldp.html", context)
     else:
         return redirect("loginPage")
