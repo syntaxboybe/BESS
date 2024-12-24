@@ -13,7 +13,8 @@ urlpatterns = [
     path(
         "generate_indigency/<hashid:id>", generate_indigency, name="generate_indigency"
     ),
-    path("delete_indigency/<hashid:id>", delete_indigency, name="delete_indigency"),
+    path("delete_indigency/<hashid:id>",
+         delete_indigency, name="delete_indigency"),
     path(
         "unsign_indigency_cert/<hashid:id>/",
         unsign_indigency_cert,
@@ -28,5 +29,15 @@ urlpatterns = [
         "esign_indigency_cert/<hashid:id>/",
         esign_indigency_cert,
         name="esign_indigency_cert",
+    ),
+    path(
+        "confirm_button_indigency/<hashid:id>/",
+        confirm_button_indigency,
+        name="confirm_button_indigency",
+    ),
+    path(
+        "esign_button_indigency/<hashid:id>/",
+        esign_button_indigency,
+        name="esign_button_indigency",
     ),
 ]

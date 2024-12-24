@@ -10,10 +10,7 @@
     </div>
   </div>
 
-  <table
-    id="indigency"
-    class="table table-striped-columns table-bordered align-middle mb-0 shadow-sm"
-  >
+  <table id="indigency" class="table table-striped-columns table-bordered align-middle mb-0 shadow-sm">
     <thead>
       <tr>
         <th>Resident ID</th>
@@ -39,96 +36,61 @@
         <td class="text-center">
           {% if user.id != 30 %}
           <!-- Render these buttons only if the user ID is NOT 30 -->
-
-          <button
-            class="btn btn-primary bg-gradient text-white"
-            hx-get="{% url 'edit_indigency' indigency.id %}"
-            hx-target="#dialog"
-          >
-            <i
-              class="fas fa-check-circle fs-5"
-              style="color: white; vertical-align: middle"
-            ></i>
+          {% if indigency.status.document_status == "Pending" %}
+          <button class="btn btn-primary bg-gradient text-white" hx-get="{% url 'edit_indigency' indigency.id %}"
+            hx-target="#dialog">
+            <i class="fas fa-check-circle fs-5" style="color: white; vertical-align: middle"></i>
             <span style="vertical-align: middle"> Verify</span>
           </button>
 
-          <button
-            class="btn btn-danger bg-gradient"
-            hx-get="{% url 'delete_indigency' indigency.id %}"
-            hx-target="#dialog"
-          >
+          <button class="btn btn-danger bg-gradient" hx-get="{% url 'delete_indigency' indigency.id %}"
+            hx-target="#dialog">
             <i class="fas fa-sync fs-5" style="vertical-align: middle"></i>
             <span style="vertical-align: middle"> Revert</span>
           </button>
-          <a
-            target="_blank"
-            type="button"
-            class="btn btn-warning bg-gradient"
-            href="{% url 'no_sign_indigencycert' indigency.id %}"
-          >
-            <i class="fas fa-print fs-5" style="vertical-align: middle"></i>
-            <span style="vertical-align: middle"> Print</span>
-          </a>
-          <a
-            target="_blank"
-            type="button"
-            class="btn btn-success bg-gradient"
-            href="{% url 'generate_indigency' indigency.id %}"
-          >
-            <i class="fas fa-print fs-5" style="vertical-align: middle"></i>
-            <span style="vertical-align: middle"> Print</span>
-          </a>
           {% endif %}
 
+          {% if indigency.status.document_status == "Ready to Claim" %}
+          <button class="btn btn-warning bg-gradient" hx-get="{% url 'confirm_button_indigency' indigency.id %}"
+            hx-target="#dialog">
+            <i class="fas fa-print fs-5" style="vertical-align: middle"></i>
+            <span style="vertical-align: middle"> For Printing</span>
+          </button>
+          {% endif %}
+
+          {% if indigency.status.document_status == "Ready to Claim(e-Signed)" %}
+          <button class="btn btn-warning bg-gradient" hx-get="{% url 'esign_button_indigency' indigency.id %}"
+            hx-target="#dialog">
+            <i class="fas fa-print fs-5" style="vertical-align: middle"></i>
+            <span style="vertical-align: middle"> For Printing</span>
+          </button>
+          {% endif %}
+
+          {% endif %}
           <!-- Always display the 'las la-pen' button -->
           {% if user.id != 29 %}
           <!-- These buttons will display for user ids other than 29 -->
 
-          <button
-            class="btn btn-primary bg-gradient"
-            hx-get="{% url 'edit_indigency' indigency.id %}"
-            hx-target="#dialog"
-          >
+          {% if indigency.status.document_status == "Forwarded to Kapitan" %}
+          <button class="btn btn-primary bg-gradient" hx-get="{% url 'edit_indigency' indigency.id %}"
+            hx-target="#dialog">
             <i class="fas fa-eye fs-5" style="vertical-align: middle"></i>
             <span style="vertical-align: middle"> View</span>
           </button>
 
-          <button
-            class="btn btn-warning bg-gradient"
-            hx-get="{% url 'unsign_indigency_cert' indigency.id %}"
-            hx-target="#dialog"
-          >
+          <button class="btn btn-warning bg-gradient" hx-get="{% url 'unsign_indigency_cert' indigency.id %}"
+            hx-target="#dialog">
             <i class="fas fa-check fs-5" style="vertical-align: middle"></i>
             <span style="vertical-align: middle"> Confirm</span>
           </button>
 
-          <button
-            class="btn btn-success bg-gradient"
-            hx-get="{% url 'esign_indigency_cert' indigency.id %}"
-            hx-target="#dialog"
-          >
+          <button class="btn btn-success bg-gradient" hx-get="{% url 'esign_indigency_cert' indigency.id %}"
+            hx-target="#dialog">
             <i class="fas fa-pen-alt fs-5" style="vertical-align: middle"></i>
             <span style="vertical-align: middle"> E-sign</span>
           </button>
-          <!-- <a -->
-          <!--   target="_blank" -->
-          <!--   type="button" -->
-          <!--   class="btn btn-warning bg-gradient" -->
-          <!--   href="{% url 'no_sign_indigencycert' indigency.id %}" -->
-          <!-- > -->
-          <!--   <i class="fas fa-ban fs-5" style="vertical-align: middle"></i> -->
-          <!--   <span style="vertical-align: middle"> Unsign</span> -->
-          <!-- </a> -->
-          <!---->
-          <!-- <a -->
-          <!--   target="_blank" -->
-          <!--   type="button" -->
-          <!--   class="btn btn-success bg-gradient" -->
-          <!--   href="{% url 'generate_indigency' indigency.id %}" -->
-          <!-- > -->
-          <!--   <i class="fas fa-pen-alt fs-5" style="vertical-align: middle"></i> -->
-          <!--   <span style="vertical-align: middle"> e-Sign</span> -->
-          <!-- </a> -->
+          {% endif %}
+
           {% endif %}
         </td>
 
@@ -156,7 +118,7 @@
         column_number: 5,
         filter_default_label: "All",
         filter_container_id: "status",
-        data: ["Pending", "Ready to Claim", "Released", "Forwarded to Kapitan"],
+        data: ["Pending", "Ready to Claim", "Released", "Forwarded to Kapitan", "Ready to Claim(e-Signed)"],
         style_class: "form-select",
         filter_reset_button_text: false,
       },
@@ -171,6 +133,9 @@
       }
       if ($(this).html() == "Ready to Claim") {
         $(this).addClass("ready-status");
+      }
+      if ($(this).html() == "Ready to Claim(e-Signed)") {
+        $(this).addClass("ready-esigned-status");
       }
       if ($(this).html() == "Pending") {
         $(this).addClass("pending-status");

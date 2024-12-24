@@ -43,8 +43,13 @@ def edit_indigency(request, id):
         indigency = CertificateOfIndigency.objects.get(pk=id)
         form = indigencyForm(instance=indigency)
 
-        indigency_id = CertificateOfIndigency.objects.get(pk=id)
         if request.method == "POST":
+            if indigency.status.document_status == "Pending":
+                new_status = DocumentStatus.objects.get(
+                    document_status="Forwarded to Kapitan"
+                )
+                indigency.status = new_status
+                indigency.save()
             form = indigencyForm(request.POST, instance=indigency)
             if form.is_valid():
                 form.save()
@@ -52,7 +57,7 @@ def edit_indigency(request, id):
                     status=204, headers={"HX-Trigger": "indigencylistUpdate"}
                 )
 
-        context = {"form": form, "disabledform": indigency_id}
+        context = {"form": form, "disabledform": indigency}
         return render(request, "IndigencyManagement/indigency_form.html", context)
     else:
         return redirect("loginPage")
@@ -98,12 +103,16 @@ def unsign_indigency_cert(request, id):
         indigency_cert = get_object_or_404(CertificateOfIndigency, pk=id)
 
         if request.method == "POST":
-            # Logic to mark clearance as signed
-            indigency_cert.is_signed = True  # Assuming there's an `is_signed` field
-            indigency_cert.save()
+            if indigency_cert.status.document_status == "Forwarded to Kapitan":
+                new_status = DocumentStatus.objects.get(
+                    document_status="Ready to Claim"
+                )
+                indigency_cert.status = new_status
+                indigency_cert.is_signed = True  # Assuming there's an `is_signed` field
+                indigency_cert.save()
 
-            # Optionally process a confirmation message
-            confirmation_message = request.POST.get("confirmation_message", "")
+                confirmation_message = request.POST.get(
+                    "confirmation_message", "")
 
             # Send a response for htmx or redirect
             return HttpResponse(
@@ -119,13 +128,47 @@ def unsign_indigency_cert(request, id):
         return redirect("loginPage")
 
 
+@cache_control(no_cache=True, must_revalidate=True, no_store=True)
+@login_required(login_url="loginPage")
+@admin_only
+def confirm_button_indigency(request, id):
+    """
+    Mark a clearance as signed.
+    """
+    if request.user.is_authenticated:
+        indigency_cert = get_object_or_404(CertificateOfIndigency, pk=id)
+
+        if request.method == "POST":
+            if indigency_cert.status.document_status == "Ready to Claim":
+                new_status = DocumentStatus.objects.get(
+                    document_status="Released")
+                indigency_cert.status = new_status
+                indigency_cert.is_signed = True  # Assuming there's an `is_signed` field
+                indigency_cert.save()
+
+            # Optionally process a confirmation message
+            confirmation_message = request.POST.get("confirmation_message", "")
+
+            # Send a response for htmx or redirect
+            return HttpResponse(
+                status=204, headers={"HX-Trigger": "IndigencyCertUpdate"}
+            )
+            return redirect("IndigencyManagement")
+
+        context = {"IndigencyCert": indigency_cert}
+        return render(
+            request, "IndigencyManagement/confirm_button_indigency.html", context
+        )
+    else:
+        return redirect("loginPage")
+
+
 def delete_indigency(request, id):
     if request.user.is_authenticated:
         indigency = CertificateOfIndigency.objects.get(pk=id)
         username = indigency.res_id.user.username
         context = {"indigency": indigency}
         if request.method == "POST":
-
             email_msg = request.POST.get("reason_masage")
 
             subject = "Reasons For Denying your Request"
@@ -199,9 +242,13 @@ def esign_indigency_cert(request, id):
         indigency_cert = get_object_or_404(CertificateOfIndigency, pk=id)
 
         if request.method == "POST":
-            # Logic to mark clearance as signed
-            indigency_cert.is_signed = True  # Assuming there's an `is_signed` field
-            indigency_cert.save()
+            if indigency_cert.status.document_status == "Forwarded to Kapitan":
+                new_status = DocumentStatus.objects.get(
+                    document_status="Ready to Claim(e-Signed)"
+                )
+                indigency_cert.status = new_status
+                indigency_cert.is_signed = True  # Assuming there's an `is_signed` field
+                indigency_cert.save()
 
             # Optionally process a confirmation message
             confirmation_message = request.POST.get("confirmation_message", "")
@@ -214,5 +261,40 @@ def esign_indigency_cert(request, id):
 
         context = {"IndigencyCert": indigency_cert}
         return render(request, "IndigencyManagement/esign_indigency_cert.html", context)
+    else:
+        return redirect("loginPage")
+
+
+@cache_control(no_cache=True, must_revalidate=True, no_store=True)
+@login_required(login_url="loginPage")
+@admin_only
+def esign_button_indigency(request, id):
+    """
+    Mark a clearance as signed.
+    """
+    if request.user.is_authenticated:
+        indigency_cert = get_object_or_404(CertificateOfIndigency, pk=id)
+
+        if request.method == "POST":
+            if indigency_cert.status.document_status == "Ready to Claim(e-Signed)":
+                new_status = DocumentStatus.objects.get(
+                    document_status="Released")
+                indigency_cert.status = new_status
+                indigency_cert.is_signed = True  # Assuming there's an `is_signed` field
+                indigency_cert.save()
+
+            # Optionally process a confirmation message
+            confirmation_message = request.POST.get("confirmation_message", "")
+
+            # Send a response for htmx or redirect
+            return HttpResponse(
+                status=204, headers={"HX-Trigger": "IndigencyCertUpdate"}
+            )
+            return redirect("IndigencyManagement")
+
+        context = {"IndigencyCert": indigency_cert}
+        return render(
+            request, "IndigencyManagement/esign_button_indigency.html", context
+        )
     else:
         return redirect("loginPage")

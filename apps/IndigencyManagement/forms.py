@@ -5,19 +5,21 @@ from apps.UserPortal.models import *
 class indigencyForm(forms.ModelForm):
     class Meta:
         model = clearance
-        fields = ("age", "purpose", "status", "date_released")
+        fields = ("age", "purpose", "date_released")
 
         widgets = {
             "age": forms.NumberInput(
-                attrs={"class": "form-control form-control-sm", "placeholder": "input"}
+                attrs={"class": "form-control form-control-sm",
+                       "placeholder": "input"}
             ),
             "purpose": forms.TextInput(
-                attrs={"class": "form-control form-control-sm", "placeholder": "input"}
+                attrs={"class": "form-control form-control-sm",
+                       "placeholder": "input"}
             ),
             "date_released": forms.DateInput(
-                attrs={"class": "form-control form-control-sm", "placeholder": "input"}
+                attrs={"class": "form-control form-control-sm",
+                       "placeholder": "input"}
             ),
-            "status": forms.Select(attrs={"class": "form-select form-select-sm"}),
         }
 
     def __init__(self, *args, **kwagrs):
