@@ -26,8 +26,7 @@ def building_permit_module(request):
 @admin_only
 def building_permit_list(request):
     if request.user.is_authenticated:
-        context = {
-            "building_permit_list": BuildingPermit.objects.all().order_by("-id")}
+        context = {"building_permit_list": BuildingPermit.objects.all().order_by("-id")}
         return render(request, "BuildingPermit/building_permit_list.html", context)
     else:
         return redirect("loginPage")
@@ -48,13 +47,12 @@ def edit_building_permit(request, id):
                 )
                 building_permit.status = new_status
                 building_permit.save()
-                form = BuildingPermitForm(
-                    request.POST, instance=building_permit)
+                form = BuildingPermitForm(request.POST, instance=building_permit)
             if form.is_valid():
                 form.save()
-                return HttpResponse(
-                    status=204, headers={"HX-Trigger": "BuildingPermitList"}
-                )
+            return HttpResponse(
+                status=204, headers={"HX-Trigger": "BuildingPermitList"}
+            )
 
         context = {"form": form, "disabledform": building_permit}
         return render(request, "BuildingPermit/building_permit_form.html", context)
@@ -89,7 +87,7 @@ def unsign_building_permit(request, id):
     """
     if request.user.is_authenticated:
         building_permit = get_object_or_404(BuildingPermit, pk=id)
-
+        form = BuildingPermitForm(instance=building_permit)
         if request.method == "POST":
             if building_permit.status.document_status == "Forwarded to Kapitan":
                 new_status = DocumentStatus.objects.get(
@@ -97,18 +95,12 @@ def unsign_building_permit(request, id):
                 )
                 building_permit.status = new_status
                 building_permit.save()
-            # Logic to mark clearance as signed
-            building_permit.is_signed = True  # Assuming there's an `is_signed` field
-            building_permit.save()
-
-            # Optionally process a confirmation message
-            confirmation_message = request.POST.get("confirmation_message", "")
-
-            # Send a response for htmx or redirect
+                form = BuildingPermitForm(request.POST, instance=building_permit)
+            if form.is_valid():
+                form.save()
             return HttpResponse(
-                status=204, headers={"HX-Trigger": "BuildingPermitUpdate"}
+                status=204, headers={"HX-Trigger": "BuildingPermitList"}
             )
-            return redirect("BuildingPermit")
 
         context = {"BuildingPermit": building_permit}
         return render(request, "BuildingPermit/unsign_building_permit.html", context)
@@ -125,25 +117,18 @@ def confirm_button_bldp(request, id):
     """
     if request.user.is_authenticated:
         building_permit = get_object_or_404(BuildingPermit, pk=id)
-
+        form = BuildingPermitForm(instance=building_permit)
         if request.method == "POST":
             if building_permit.status.document_status == "Ready to Claim":
-                new_status = DocumentStatus.objects.get(
-                    document_status="Released")
+                new_status = DocumentStatus.objects.get(document_status="Released")
                 building_permit.status = new_status
                 building_permit.save()
-            # Logic to mark clearance as signed
-            building_permit.is_signed = True  # Assuming there's an `is_signed` field
-            building_permit.save()
-
-            # Optionally process a confirmation message
-            confirmation_message = request.POST.get("confirmation_message", "")
-
-            # Send a response for htmx or redirect
+                form = BuildingPermitForm(request.POST, instance=building_permit)
+            if form.is_valid():
+                form.save()
             return HttpResponse(
-                status=204, headers={"HX-Trigger": "BuildingPermitUpdate"}
+                status=204, headers={"HX-Trigger": "BuildingPermitList"}
             )
-            return redirect("BuildingPermit")
 
         context = {"BuildingPermit": building_permit}
         return render(request, "BuildingPermit/confirm_button_bldp.html", context)
@@ -217,7 +202,7 @@ def esign_building_permit(request, id):
     """
     if request.user.is_authenticated:
         building_permit = get_object_or_404(BuildingPermit, pk=id)
-
+        form = BuildingPermitForm(instance=building_permit)
         if request.method == "POST":
             if building_permit.status.document_status == "Forwarded to Kapitan":
                 new_status = DocumentStatus.objects.get(
@@ -225,18 +210,12 @@ def esign_building_permit(request, id):
                 )
                 building_permit.status = new_status
                 building_permit.save()
-            # Logic to mark clearance as signed
-            building_permit.is_signed = True  # Assuming there's an `is_signed` field
-            building_permit.save()
-
-            # Optionally process a confirmation message
-            confirmation_message = request.POST.get("confirmation_message", "")
-
-            # Send a response for htmx or redirect
+                form = BuildingPermitForm(request.POST, instance=building_permit)
+            if form.is_valid():
+                form.save()
             return HttpResponse(
-                status=204, headers={"HX-Trigger": "BuildingPermitUpdate"}
+                status=204, headers={"HX-Trigger": "BuildingPermitList"}
             )
-            return redirect("BuildingPermit")
 
         context = {"BuildingPermit": building_permit}
         return render(request, "BuildingPermit/esign_building_permit.html", context)
@@ -253,25 +232,18 @@ def esign_button_bldp(request, id):
     """
     if request.user.is_authenticated:
         building_permit = get_object_or_404(BuildingPermit, pk=id)
-
+        form = BuildingPermitForm(instance=building_permit)
         if request.method == "POST":
             if building_permit.status.document_status == "Ready to Claim(e-Signed)":
-                new_status = DocumentStatus.objects.get(
-                    document_status="Released")
+                new_status = DocumentStatus.objects.get(document_status="Released")
                 building_permit.status = new_status
                 building_permit.save()
-            # Logic to mark clearance as signed
-            building_permit.is_signed = True  # Assuming there's an `is_signed` field
-            building_permit.save()
-
-            # Optionally process a confirmation message
-            confirmation_message = request.POST.get("confirmation_message", "")
-
-            # Send a response for htmx or redirect
+                form = BuildingPermitForm(request.POST, instance=building_permit)
+            if form.is_valid():
+                form.save()
             return HttpResponse(
-                status=204, headers={"HX-Trigger": "BuildingPermitUpdate"}
+                status=204, headers={"HX-Trigger": "BuildingPermitList"}
             )
-            return redirect("BuildingPermit")
 
         context = {"BuildingPermit": building_permit}
         return render(request, "BuildingPermit/esign_button_bldp.html", context)

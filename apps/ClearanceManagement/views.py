@@ -54,9 +54,9 @@ def edit_clearance(request, id):
             )  # Include request.FILES
             if form.is_valid():
                 form.save()
-                return HttpResponse(
-                    status=204, headers={"HX-Trigger": "clearancelistUpdate"}
-                )
+            return HttpResponse(
+                status=204, headers={"HX-Trigger": "clearancelistUpdate"}
+            )
 
         context = {"form": form, "disabledform": clearance}
         return render(request, "ClearanceManagement/clearance_form.html", context)
@@ -77,28 +77,15 @@ def calculate_age(birthdate):
 @login_required(login_url="loginPage")
 @admin_only
 def generate_clearance(request, id):
-    # Fetch clearance object and related data
     clearance = get_object_or_404(clerance_list, pk=id)
     birthdate = clearance.res_id.birthdate
     age = calculate_age(birthdate)
-
-    # Prepare the context
     template_name = "ClearanceManagement/clearance_pdf.html"
     context = {
         "clearance": clearance,
         "media_url": request.build_absolute_uri(settings.MEDIA_URL),
         "age": age,
     }
-
-    if request.method == "POST":
-        # Update clearance status if already released
-        if clearance.status.document_status == "Ready to Claim":
-            new_status = DocumentStatus.objects.get(document_status="Released")
-            clearance.status = new_status
-            clearance.is_signed = True  # Assuming there's an `is_signed` field
-            clearance.save()
-
-    # Render the PDF
     return render_to_pdf(template_name, context)
 
 
@@ -111,6 +98,7 @@ def esign_clearance(request, id):
     """
     if request.user.is_authenticated:
         clearance = get_object_or_404(clerance_list, pk=id)
+        form = cleranceForm(instance=clearance)
 
         if request.method == "POST":
             if clearance.status.document_status == "Forwarded to Kapitan":
@@ -118,17 +106,15 @@ def esign_clearance(request, id):
                     document_status="Ready to Claim(e-Signed)"
                 )
                 clearance.status = new_status
-                clearance.is_signed = True  # Assuming there's an `is_signed` field
                 clearance.save()
-
-            # Optionally process a confirmation message
-            confirmation_message = request.POST.get("confirmation_message", "")
-
-            # Send a response for htmx or redirect
+            form = cleranceForm(
+                request.POST, request.FILES, instance=clearance
+            )  # Include request.FILES
+            if form.is_valid():
+                form.save()
             return HttpResponse(
                 status=204, headers={"HX-Trigger": "clearancelistUpdate"}
             )
-            return redirect("clearance_list")
 
         context = {"clearance": clearance}
         return render(request, "ClearanceManagement/esign_clearance.html", context)
@@ -145,23 +131,21 @@ def esign_button(request, id):
     """
     if request.user.is_authenticated:
         clearance = get_object_or_404(clerance_list, pk=id)
+        form = cleranceForm(instance=clearance)
 
         if request.method == "POST":
             if clearance.status.document_status == "Ready to Claim(e-Signed)":
-                new_status = DocumentStatus.objects.get(
-                    document_status="Released")
+                new_status = DocumentStatus.objects.get(document_status="Released")
                 clearance.status = new_status
-                clearance.is_signed = True  # Assuming there's an `is_signed` field
                 clearance.save()
-
-            # Optionally process a confirmation message
-            confirmation_message = request.POST.get("confirmation_message", "")
-
-            # Send a response for htmx or redirect
+            form = cleranceForm(
+                request.POST, request.FILES, instance=clearance
+            )  # Include request.FILES
+            if form.is_valid():
+                form.save()
             return HttpResponse(
                 status=204, headers={"HX-Trigger": "clearancelistUpdate"}
             )
-            return redirect("clearance_list")
 
         context = {"clearance": clearance}
         return render(request, "ClearanceManagement/esign_button.html", context)
@@ -248,6 +232,7 @@ def unsign_clearance(request, id):
     """
     if request.user.is_authenticated:
         clearance = get_object_or_404(clerance_list, pk=id)
+        form = cleranceForm(instance=clearance)
 
         if request.method == "POST":
             if clearance.status.document_status == "Forwarded to Kapitan":
@@ -255,17 +240,15 @@ def unsign_clearance(request, id):
                     document_status="Ready to Claim"
                 )
                 clearance.status = new_status
-                clearance.is_signed = True  # Assuming there's an `is_signed` field
                 clearance.save()
-
-            # Optionally process a confirmation message
-            confirmation_message = request.POST.get("confirmation_message", "")
-
-            # Send a response for htmx or redirect
+            form = cleranceForm(
+                request.POST, request.FILES, instance=clearance
+            )  # Include request.FILES
+            if form.is_valid():
+                form.save()
             return HttpResponse(
                 status=204, headers={"HX-Trigger": "clearancelistUpdate"}
             )
-            return redirect("clearance_list")
 
         context = {"clearance": clearance}
         return render(request, "ClearanceManagement/unsign_clearance.html", context)
@@ -282,23 +265,21 @@ def confirm_button(request, id):
     """
     if request.user.is_authenticated:
         clearance = get_object_or_404(clerance_list, pk=id)
+        form = cleranceForm(instance=clearance)
 
         if request.method == "POST":
             if clearance.status.document_status == "Ready to Claim":
-                new_status = DocumentStatus.objects.get(
-                    document_status="Released")
+                new_status = DocumentStatus.objects.get(document_status="Released")
                 clearance.status = new_status
-                clearance.is_signed = True  # Assuming there's an `is_signed` field
                 clearance.save()
-
-            # Optionally process a confirmation message
-            confirmation_message = request.POST.get("confirmation_message", "")
-
-            # Send a response for htmx or redirect
+            form = cleranceForm(
+                request.POST, request.FILES, instance=clearance
+            )  # Include request.FILES
+            if form.is_valid():
+                form.save()
             return HttpResponse(
                 status=204, headers={"HX-Trigger": "clearancelistUpdate"}
             )
-            return redirect("clearance_list")
 
         context = {"clearance": clearance}
         return render(request, "ClearanceManagement/confirm_button.html", context)

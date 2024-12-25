@@ -7,6 +7,7 @@ from django.views.decorators.cache import cache_control
 from django.contrib.auth.decorators import login_required
 from django.conf import settings
 from django.core.mail import send_mail
+from datetime import date
 
 # Create your views here.
 
@@ -47,11 +48,16 @@ def edit_residency(request, id):
         form = ResidencyCertificateForm(instance=residency_certificate)
 
         if request.method == "POST":
-            form = ResidencyCertificateForm(
-                request.POST, instance=residency_certificate
-            )
-            if form.is_valid():
-                form.save()
+            if residency_certificate.status.document_status == "Pending":
+                new_status = DocumentStatus.objects.get(
+                    document_status="Forwarded to Kapitan"
+                )
+                residency_certificate.status = new_status
+                residency_certificate.save()
+                form = ResidencyCertificateForm(
+                    request.POST, instance=residency_certificate)
+                if form.is_valid():
+                    form.save()
                 return HttpResponse(status=204, headers={"HX-Trigger": "ResidencyList"})
 
         context = {"form": form, "disabledform": residency_certificate}
@@ -62,6 +68,15 @@ def edit_residency(request, id):
         return redirect("loginPage")
 
 
+def calculate_age(birthdate):
+    today = date.today()
+    return (
+        today.year
+        - birthdate.year
+        - ((today.month, today.day) < (birthdate.month, birthdate.day))
+    )
+
+
 @cache_control(no_cache=True, must_revalidate=True, no_store=True)
 @login_required(login_url="loginPage")
 @admin_only
@@ -69,11 +84,13 @@ def generate_resident_certificate(request, id):
     if request.user.is_authenticated:
         template_name = "ResidencyCertificate/resident_certificate_pdf.html"
         residency_certificate = ResidencyCertificate.objects.get(pk=id)
-
+        birthdate = residency_certificate.res_id.birthdate
+        age = calculate_age(birthdate)
         return render_to_pdf(
             template_name,
             {
                 "residency_certificate": residency_certificate,
+                "age": age,
             },
         )
     else:
@@ -89,26 +106,64 @@ def unsign_residency_cert(request, id):
     """
     if request.user.is_authenticated:
         residency_certificate = get_object_or_404(ResidencyCertificate, pk=id)
-
+        form = ResidencyCertificateForm(instance=residency_certificate)
+        
         if request.method == "POST":
-            # Logic to mark clearance as signed
-            residency_certificate.is_signed = (
-                True  # Assuming there's an `is_signed` field
-            )
-            residency_certificate.save()
+            if residency_certificate.status.document_status == "Forwarded to Kapitan":
+                new_status = DocumentStatus.objects.get(
+                    document_status="Ready to Claim"
+                )
+                residency_certificate.status = new_status
+                residency_certificate.is_signed = (
+                    True  # Assuming there's an `is_signed` field
+                )
+                residency_certificate.save()
 
-            # Optionally process a confirmation message
-            confirmation_message = request.POST.get("confirmation_message", "")
-
-            # Send a response for htmx or redirect
-            return HttpResponse(
-                status=204, headers={"HX-Trigger": "ResidencyCertUpdate"}
-            )
-            return redirect("ResidencyCertificate")
+                form = ResidencyCertificateForm(
+                    request.POST, instance=residency_certificate
+                )
+                if form.is_valid():
+                    form.save()
+                return HttpResponse(status=204, headers={"HX-Trigger": "ResidencyList"})
 
         context = {"ResidencyCert": residency_certificate}
         return render(
             request, "ResidencyCertificate/unsign_residency_cert.html", context
+        )
+    else:
+        return redirect("loginPage")
+
+
+@cache_control(no_cache=True, must_revalidate=True, no_store=True)
+@login_required(login_url="loginPage")
+@admin_only
+def confirm_button_residency(request, id):
+    """
+    Mark a clearance as signed.
+    """
+    if request.user.is_authenticated:
+        residency_certificate = get_object_or_404(ResidencyCertificate, pk=id)
+        form = ResidencyCertificateForm(instance=residency_certificate)
+        if request.method == "POST":
+            if residency_certificate.status.document_status == "Ready to Claim":
+                new_status = DocumentStatus.objects.get(
+                    document_status="Released")
+                residency_certificate.status = new_status
+                residency_certificate.is_signed = (
+                    True  # Assuming there's an `is_signed` field
+                )
+                residency_certificate.save()
+
+                form = ResidencyCertificateForm(
+                    request.POST, instance=residency_certificate
+                )
+                if form.is_valid():
+                    form.save()
+                return HttpResponse(status=204, headers={"HX-Trigger": "ResidencyList"})
+
+        context = {"ResidencyCert": residency_certificate}
+        return render(
+            request, "ResidencyCertificate/confirm_button_residency.html", context
         )
     else:
         return redirect("loginPage")
@@ -120,7 +175,6 @@ def delete_resident_certificate_request(request, id):
         username = residency_certificate.res_id.user.username
         context = {"residency_certificate": residency_certificate}
         if request.method == "POST":
-
             email_msg = request.POST.get("reason_masage")
 
             subject = "Reasons For Denying your Request"
@@ -154,6 +208,15 @@ def delete_resident_certificate_request(request, id):
         return redirect("loginPage")
 
 
+def calculate_age(birthdate):
+    today = date.today()
+    return (
+        today.year
+        - birthdate.year
+        - ((today.month, today.day) < (birthdate.month, birthdate.day))
+    )
+
+
 @cache_control(no_cache=True, must_revalidate=True, no_store=True)
 @login_required(login_url="loginPage")
 @admin_only
@@ -161,11 +224,13 @@ def no_sign_residencycert(request, id):
     if request.user.is_authenticated:
         template_name = "ResidencyCertificate/no_sign_residencycert_pdf.html"
         residency_certificate = ResidencyCertificate.objects.get(pk=id)
-
+        birthdate = residency_certificate.res_id.birthdate
+        age = calculate_age(birthdate)
         return render_to_pdf(
             template_name,
             {
                 "residency_certificate": residency_certificate,
+                "age": age,
             },
         )
     else:
@@ -181,26 +246,68 @@ def esign_residency_cert(request, id):
     """
     if request.user.is_authenticated:
         residency_certificate = get_object_or_404(ResidencyCertificate, pk=id)
+        form = ResidencyCertificateForm(instance=residency_certificate)
 
         if request.method == "POST":
-            # Logic to mark clearance as signed
-            residency_certificate.is_signed = (
-                True  # Assuming there's an `is_signed` field
-            )
-            residency_certificate.save()
+            if residency_certificate.status.document_status == "Forwarded to Kapitan":
+                new_status = DocumentStatus.objects.get(
+                    document_status="Ready to Claim(e-Signed)"
+                )
+                residency_certificate.status = new_status
+                residency_certificate.is_signed = (
+                    True  # Assuming there's an `is_signed` field
+                )
+                residency_certificate.save()
 
-            # Optionally process a confirmation message
-            confirmation_message = request.POST.get("confirmation_message", "")
-
-            # Send a response for htmx or redirect
-            return HttpResponse(
-                status=204, headers={"HX-Trigger": "ResidencyCertUpdate"}
-            )
-            return redirect("ResidencyCertificate")
+                form = ResidencyCertificateForm(
+                    request.POST, instance=residency_certificate
+                )
+                if form.is_valid():
+                    form.save()
+                return HttpResponse(status=204, headers={"HX-Trigger": "ResidencyList"})
 
         context = {"ResidencyCert": residency_certificate}
         return render(
             request, "ResidencyCertificate/esign_residency_cert.html", context
+        )
+    else:
+        return redirect("loginPage")
+
+
+@cache_control(no_cache=True, must_revalidate=True, no_store=True)
+@login_required(login_url="loginPage")
+@admin_only
+def esign_button_residency(request, id):
+    """
+    Mark a clearance as signed.
+    """
+    if request.user.is_authenticated:
+        residency_certificate = get_object_or_404(ResidencyCertificate, pk=id)
+        form = ResidencyCertificateForm(instance=residency_certificate)
+        if request.method == "POST":
+            if (
+                residency_certificate.status.document_status
+                == "Ready to Claim(e-Signed)"
+            ):
+                new_status = DocumentStatus.objects.get(
+                    document_status="Released")
+                residency_certificate.status = new_status
+                residency_certificate.is_signed = (
+                    True  # Assuming there's an `is_signed` field
+                )
+                residency_certificate.save()
+
+                form = ResidencyCertificateForm(
+                    request.POST, instance=residency_certificate
+                )
+                if form.is_valid():
+                    form.save()
+                return HttpResponse(status=204, headers={"HX-Trigger": "ResidencyList"})
+
+        # Render the page if the request method is GET
+        context = {"ResidencyCert": residency_certificate}
+        return render(
+            request, "ResidencyCertificate/esign_button_residency.html", context
         )
     else:
         return redirect("loginPage")

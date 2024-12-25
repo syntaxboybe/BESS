@@ -1,4 +1,6 @@
 from django.urls import path
+
+from apps.IndigencyManagement.views import confirm_button_indigency
 from .views import *
 from project.utils import HashIdConverter
 from django.urls import register_converter
@@ -12,7 +14,8 @@ urlpatterns = [
         residency_certificate_module,
         name="residency_certificate_module",
     ),
-    path("residency/", residency_certificate_list, name="residency_certificate_list"),
+    path("residency/", residency_certificate_list,
+         name="residency_certificate_list"),
     path("residency/<int:id>", edit_residency, name="edit_residency"),
     path(
         "generate_resident_certificate/<hashid:id>",
@@ -38,5 +41,15 @@ urlpatterns = [
         "esign_residency_cert/<hashid:id>/",
         esign_residency_cert,
         name="esign_residency_cert",
+    ),
+    path(
+        "confirm_button_residency/<hashid:id>/",
+        confirm_button_residency,
+        name="confirm_button_residency",
+    ),
+    path(
+        "esign_button_residency/<hashid:id>/",
+        esign_button_residency,
+        name="esign_button_residency",
     ),
 ]

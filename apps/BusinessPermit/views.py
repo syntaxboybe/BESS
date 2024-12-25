@@ -26,8 +26,7 @@ def business_permit_module(request):
 @admin_only
 def business_permit_list(request):
     if request.user.is_authenticated:
-        context = {
-            "business_permit_list": BusinessPermit.objects.all().order_by("-id")}
+        context = {"business_permit_list": BusinessPermit.objects.all().order_by("-id")}
         return render(request, "BusinessPermit/business_permit_list.html", context)
     else:
         return redirect("loginPage")
@@ -52,9 +51,9 @@ def edit_business_permit(request, id):
             form = BusinessPermitForm(request.POST, instance=business_permit)
             if form.is_valid():
                 form.save()
-                return HttpResponse(
-                    status=204, headers={"HX-Trigger": "BusinessPermitlistUpdate"}
-                )
+            return HttpResponse(
+                status=204, headers={"HX-Trigger": "BusinessPermitlistUpdate"}
+            )
 
         context = {"form": form, "disabledform": business_permit_id}
         return render(request, "BusinessPermit/business_permit_form.html", context)
@@ -89,6 +88,7 @@ def unsign_business_permit(request, id):
     """
     if request.user.is_authenticated:
         business_permit = get_object_or_404(BusinessPermit, pk=id)
+        form = BusinessPermitForm(instance=business_permit)
 
         if request.method == "POST":
             if business_permit.status.document_status == "Forwarded to Kapitan":
@@ -97,15 +97,12 @@ def unsign_business_permit(request, id):
                 )
                 business_permit.status = new_status
                 business_permit.save()
-
-            # Optionally process a confirmation message
-            confirmation_message = request.POST.get("confirmation_message", "")
-
-            # Send a response for htmx or redirect
+            form = BusinessPermitForm(request.POST, instance=business_permit)
+            if form.is_valid():
+                form.save()
             return HttpResponse(
-                status=204, headers={"HX-Trigger": "BusinessPermitUpdate"}
+                status=204, headers={"HX-Trigger": "BusinessPermitlistUpdate"}
             )
-            return redirect("BusinessPermit")
 
         context = {"BusinessPermit": business_permit}
         return render(request, "BusinessPermit/unsign_business_permit.html", context)
@@ -122,22 +119,19 @@ def confirm_button_bsp(request, id):
     """
     if request.user.is_authenticated:
         business_permit = get_object_or_404(BusinessPermit, pk=id)
+        form = BusinessPermitForm(instance=business_permit)
 
         if request.method == "POST":
             if business_permit.status.document_status == "Ready to Claim":
-                new_status = DocumentStatus.objects.get(
-                    document_status="Released")
+                new_status = DocumentStatus.objects.get(document_status="Released")
                 business_permit.status = new_status
                 business_permit.save()
-
-            # Optionally process a confirmation message
-            confirmation_message = request.POST.get("confirmation_message", "")
-
-            # Send a response for htmx or redirect
+            form = BusinessPermitForm(request.POST, instance=business_permit)
+            if form.is_valid():
+                form.save()
             return HttpResponse(
-                status=204, headers={"HX-Trigger": "BusinessPermitUpdate"}
+                status=204, headers={"HX-Trigger": "BusinessPermitlistUpdate"}
             )
-            return redirect("BusinessPermit")
 
         context = {"BusinessPermit": business_permit}
         return render(request, "BusinessPermit/confirm_button_bsp.html", context)
@@ -211,6 +205,7 @@ def esign_business_permit(request, id):
     """
     if request.user.is_authenticated:
         business_permit = get_object_or_404(BusinessPermit, pk=id)
+        form = BusinessPermitForm(instance=business_permit)
 
         if request.method == "POST":
             if business_permit.status.document_status == "Forwarded to Kapitan":
@@ -219,16 +214,12 @@ def esign_business_permit(request, id):
                 )
                 business_permit.status = new_status
                 business_permit.save()
-
-                # Optionally process a confirmation message
-                confirmation_message = request.POST.get(
-                    "confirmation_message", "")
-
-            # Send a response for htmx or redirect
+            form = BusinessPermitForm(request.POST, instance=business_permit)
+            if form.is_valid():
+                form.save()
             return HttpResponse(
-                status=204, headers={"HX-Trigger": "BusinessPermitUpdate"}
+                status=204, headers={"HX-Trigger": "BusinessPermitlistUpdate"}
             )
-            return redirect("BusinessPermit")
 
         context = {"BusinessPermit": business_permit}
         return render(request, "BusinessPermit/esign_business_permit.html", context)
@@ -245,22 +236,19 @@ def esign_button_bsp(request, id):
     """
     if request.user.is_authenticated:
         business_permit = get_object_or_404(BusinessPermit, pk=id)
+        form = BusinessPermitForm(instance=business_permit)
 
         if request.method == "POST":
             if business_permit.status.document_status == "Ready to Claim(e-Signed)":
-                new_status = DocumentStatus.objects.get(
-                    document_status="Released")
+                new_status = DocumentStatus.objects.get(document_status="Released")
                 business_permit.status = new_status
                 business_permit.save()
-
-            # Optionally process a confirmation message
-            confirmation_message = request.POST.get("confirmation_message", "")
-
-            # Send a response for htmx or redirect
+            form = BusinessPermitForm(request.POST, instance=business_permit)
+            if form.is_valid():
+                form.save()
             return HttpResponse(
-                status=204, headers={"HX-Trigger": "BusinessPermitUpdate"}
+                status=204, headers={"HX-Trigger": "BusinessPermitlistUpdate"}
             )
-            return redirect("BusinessPermit")
 
         context = {"BusinessPermit": business_permit}
         return render(request, "BusinessPermit/esign_button_bsp.html", context)

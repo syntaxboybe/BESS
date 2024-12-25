@@ -50,9 +50,10 @@ def edit_indigency(request, id):
                 )
                 indigency.status = new_status
                 indigency.save()
-            form = indigencyForm(request.POST, instance=indigency)
-            if form.is_valid():
-                form.save()
+                form = indigencyForm(request.POST, instance=indigency)
+
+                if form.is_valid():
+                    form.save()
                 return HttpResponse(
                     status=204, headers={"HX-Trigger": "indigencylistUpdate"}
                 )
@@ -101,7 +102,7 @@ def unsign_indigency_cert(request, id):
     """
     if request.user.is_authenticated:
         indigency_cert = get_object_or_404(CertificateOfIndigency, pk=id)
-
+        form = indigencyForm(instance=indigency_cert)
         if request.method == "POST":
             if indigency_cert.status.document_status == "Forwarded to Kapitan":
                 new_status = DocumentStatus.objects.get(
@@ -111,14 +112,13 @@ def unsign_indigency_cert(request, id):
                 indigency_cert.is_signed = True  # Assuming there's an `is_signed` field
                 indigency_cert.save()
 
-                confirmation_message = request.POST.get(
-                    "confirmation_message", "")
+                form = indigencyForm(request.POST, instance=indigency_cert)
 
-            # Send a response for htmx or redirect
-            return HttpResponse(
-                status=204, headers={"HX-Trigger": "IndigencyCertUpdate"}
-            )
-            return redirect("IndigencyManagement")
+                if form.is_valid():
+                    form.save()
+                return HttpResponse(
+                    status=204, headers={"HX-Trigger": "indigencylistUpdate"}
+                )
 
         context = {"IndigencyCert": indigency_cert}
         return render(
@@ -137,23 +137,21 @@ def confirm_button_indigency(request, id):
     """
     if request.user.is_authenticated:
         indigency_cert = get_object_or_404(CertificateOfIndigency, pk=id)
+        form = indigencyForm(instance=indigency_cert)
 
         if request.method == "POST":
             if indigency_cert.status.document_status == "Ready to Claim":
-                new_status = DocumentStatus.objects.get(
-                    document_status="Released")
+                new_status = DocumentStatus.objects.get(document_status="Released")
                 indigency_cert.status = new_status
                 indigency_cert.is_signed = True  # Assuming there's an `is_signed` field
                 indigency_cert.save()
+                form = indigencyForm(request.POST, instance=indigency_cert)
 
-            # Optionally process a confirmation message
-            confirmation_message = request.POST.get("confirmation_message", "")
-
-            # Send a response for htmx or redirect
-            return HttpResponse(
-                status=204, headers={"HX-Trigger": "IndigencyCertUpdate"}
-            )
-            return redirect("IndigencyManagement")
+                if form.is_valid():
+                    form.save()
+                return HttpResponse(
+                    status=204, headers={"HX-Trigger": "indigencylistUpdate"}
+                )
 
         context = {"IndigencyCert": indigency_cert}
         return render(
@@ -240,6 +238,7 @@ def esign_indigency_cert(request, id):
     """
     if request.user.is_authenticated:
         indigency_cert = get_object_or_404(CertificateOfIndigency, pk=id)
+        form = indigencyForm(instance=indigency_cert)
 
         if request.method == "POST":
             if indigency_cert.status.document_status == "Forwarded to Kapitan":
@@ -249,15 +248,13 @@ def esign_indigency_cert(request, id):
                 indigency_cert.status = new_status
                 indigency_cert.is_signed = True  # Assuming there's an `is_signed` field
                 indigency_cert.save()
+                form = indigencyForm(request.POST, instance=indigency_cert)
 
-            # Optionally process a confirmation message
-            confirmation_message = request.POST.get("confirmation_message", "")
-
-            # Send a response for htmx or redirect
-            return HttpResponse(
-                status=204, headers={"HX-Trigger": "IndigencyCertUpdate"}
-            )
-            return redirect("IndigencyManagement")
+                if form.is_valid():
+                    form.save()
+                return HttpResponse(
+                    status=204, headers={"HX-Trigger": "indigencylistUpdate"}
+                )
 
         context = {"IndigencyCert": indigency_cert}
         return render(request, "IndigencyManagement/esign_indigency_cert.html", context)
@@ -274,23 +271,21 @@ def esign_button_indigency(request, id):
     """
     if request.user.is_authenticated:
         indigency_cert = get_object_or_404(CertificateOfIndigency, pk=id)
+        form = indigencyForm(instance=indigency_cert)
 
         if request.method == "POST":
             if indigency_cert.status.document_status == "Ready to Claim(e-Signed)":
-                new_status = DocumentStatus.objects.get(
-                    document_status="Released")
+                new_status = DocumentStatus.objects.get(document_status="Released")
                 indigency_cert.status = new_status
                 indigency_cert.is_signed = True  # Assuming there's an `is_signed` field
                 indigency_cert.save()
+                form = indigencyForm(request.POST, instance=indigency_cert)
 
-            # Optionally process a confirmation message
-            confirmation_message = request.POST.get("confirmation_message", "")
-
-            # Send a response for htmx or redirect
-            return HttpResponse(
-                status=204, headers={"HX-Trigger": "IndigencyCertUpdate"}
-            )
-            return redirect("IndigencyManagement")
+                if form.is_valid():
+                    form.save()
+                return HttpResponse(
+                    status=204, headers={"HX-Trigger": "indigencylistUpdate"}
+                )
 
         context = {"IndigencyCert": indigency_cert}
         return render(
