@@ -37,9 +37,9 @@
                                 <td>{{ Residency.date_released}}</td>
                                 <td>{{ Residency.status}}</td>
                                 <td class="text-center">
-                                    <a target=”_blank” type="button" class="btn btn-secondary bg-gradient" href="{% url 'generate_resident_certificate' Residency.id %}">
-                                        <i class="las la-file-pdf fs-4" style="vertical-align: middle;"></i>
-                                        <span style="vertical-align: middle;">Generate</span>
+                                    <a target=”_blank” type="button" class="btn btn-warning bg-gradient" href="{% url 'generate_resident_certificate' Residency.id %}">
+                                        <i class="fas fa-eye fs-4" style="vertical-align: middle;"></i>
+                                        <span style="vertical-align: middle;">View PDF</span>
                                     </a>
                                     
                                 </td>

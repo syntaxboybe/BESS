@@ -6,25 +6,7 @@
   <td>{{ clearance.date_released}}</td>
   <td>{{ clearance.transaction_id}}</td>
   <td>{{ clearance.status}}</td>
-  <td class="text-center">
-    <button
-      class="btn btn-primary bg-gradient"
-      hx-get="{% url 'edit_clearance' clearance.id %}"
-      hx-target="#dialog"
-    >
-      <i class="las la-pen fs-4" style="vertical-align: middle"></i>
-    </button>
 
-    <a
-      target="”_blank”"
-      type="button"
-      class="btn btn-secondary bg-gradient"
-      href="{% url 'generate_clearance' clearance.id %}"
-    >
-      <i class="las la-file-pdf fs-4" style="vertical-align: middle"></i>
-      <span style="vertical-align: middle">Preview</span>
-    </a>
-  </td>
 </tr>
 
 {% empty %}

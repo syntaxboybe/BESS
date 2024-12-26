@@ -62,7 +62,7 @@
                 <table id="residents" class="table table-striped table-bordered align-middle mb-0 shadow-sm fade-page">
                     <thead>
                         <tr>
-                            <th>#</th>
+                            <th></th>
                             <th>Resident ID</th>
                             <th>Name</th>
                             <th>Gender</th>
@@ -86,7 +86,10 @@
                                         class="rounded-circle"/>
     
                                         <div class="ms-3 align-items-center">
-                                            <p class="fs-6 mb-1">{{resident.residentsinfo.firstname}} {{resident.residentsinfo.middlename|make_list|first}}. {{resident.residentsinfo.lastname}} {{resident.residentsinfo.suffix}}</p>
+                                            <p class="fs-6 mb-1">{{resident.residentsinfo.lastname}}, 
+                {{resident.residentsinfo.firstname}} 
+                {{resident.residentsinfo.middlename|make_list|first}}.
+                {{resident.residentsinfo.suffix}}</p>
                                         </div>
                                 </div>
                             </td>

@@ -1,170 +1,160 @@
 <!doctype html>
 <html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Certificate of Indigency</title>
-  </head>
-  <style>
-    p {
-      margin: 0;
-      padding: 0;
-    }
-    .p1 {
-      font-family: "Times New Roman", Times, serif;
-    }
-    .p2 {
-      font-family: Arial, Helvetica, sans-serif;
-    }
-    .remove_space p {
-      margin: -4px;
-    }
-  </style>
 
-  <body>
-    <table width="100%" cellpadding="0">
-      <tr>
-        <td align="center">
-          <img src="static/img/poblacionlogo.png" alt="" width="80" />
-        </td>
+<head>
+  <meta charset="UTF-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Certificate of Indigency</title>
+</head>
+<style>
+  p {
+    margin: 0;
+    padding: 0;
+  }
 
-        <td align="center">
-          <div class="remove_space">
-            <p class="p1" style="font-size: 16px">
-              <b>Republic of the Philippines</b>
-            </p>
-            <p class="p1" style="font-size: 14px">
-              Province of Misamis Oriental
-            </p>
-            <p class="p1" style="font-size: 14px">Municipality of Naawan</p>
-            <p class="p2" style="font-size: 14px"><b>BARANGAY POBLACION</b></p>
-            <p class="p2" style="color: black; font-size: 10px">-o0o-</p>
-          </div>
-        </td>
+  .p1 {
+    font-family: "Times New Roman", Times, serif;
+  }
 
-        <td align="center">
-          <img src="static/img/naawanlogo.jpg" alt="" width="80" />
-        </td>
-      </tr>
+  .p2 {
+    font-family: Arial, Helvetica, sans-serif;
+  }
 
-      <tr>
-        <td colspan="3" align="center">
-          <br /><br />
-          <p class="p2" style="font-size: 16px">
-            <b><i>OFFICE OF THE BARANGAY CHAIRMAN</i></b>
+  .remove_space p {
+    margin: -4px;
+  }
+</style>
+
+<body>
+  <table width="100%" cellpadding="0">
+    <tr>
+      <td align="center">
+        <img src="static/img/poblacionlogo.png" alt="" width="80" />
+      </td>
+
+      <td align="center">
+        <div class="remove_space">
+          <p class="p1" style="font-size: 16px">
+            <b>Republic of the Philippines</b>
           </p>
-          <hr width="80%" style="margin-top: 0" />
-          <p
-            class="p2"
-            style="font-size: 16px; letter-spacing: 4px; margin-left: -55px"
-          >
-            <b><i>CERTIFICATE OF INDIGENCY</i></b>
+          <p class="p1" style="font-size: 14px">
+            Province of Misamis Oriental
           </p>
-      </tr>
+          <p class="p1" style="font-size: 14px">Municipality of Naawan</p>
+          <p class="p2" style="font-size: 14px"><b>BARANGAY POBLACION</b></p>
+          <p class="p2" style="color: black; font-size: 10px">-o0o-</p>
+        </div>
+      </td>
 
-      <tr>
-        <td
-          valign="Top"
-          colspan="3"
-          style="margin-left: 70px; margin-right: 70px"
-        >
-          <br /><br /><br /><br />
-          <p class="p2" style="font-size: 16px">
-            <b><i>TO WHOM IT MAY CONCERN</i></b>
-          </p>
-          <br />
-          <p class="p2" style="font-size: 14px; text-align: justify">
-            <i>
-              &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Bearer of this
-              letter <b>{{indigency.res_id}}</b>, <b>{{ age }}</b> years
-              old, <b>{{indigency.res_id.civil_status}}</b>, and a resident of
-              <b>{{indigency.res_id.purok}}</b> Barangay Poblacion, Naawan,
-              Misamis Oriental.
-            </i>
-          </p>
-          <br /><br />
-          <p class="p2" style="font-size: 14px; text-align: justify">
-            <i>
-              &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; It is also
-              further certifying that is not gainfully employed at present and
-              belongs to Indigent families in our community.
-            </i>
-          </p>
+      <td align="center">
+        <img src="static/img/naawanlogo.jpg" alt="" width="80" />
+      </td>
+    </tr>
 
-          <br /><br />
-          <p class="p2" style="font-size: 14px; text-align: justify">
-            <i>
-              &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; This
-              certification is being issued upon the request of
-              <b>{{indigency.res_id}}</b>, in connection for the application for
-              <b>{{indigency.purpose}}</b>.
-            </i>
-          </p>
+    <tr>
+      <td colspan="3" align="center">
+        <br /><br />
+        <p class="p2" style="font-size: 16px">
+          <b><i>OFFICE OF THE BARANGAY CHAIRMAN</i></b>
+        </p>
+        <hr width="80%" style="margin-top: 0" />
+        <p class="p2" style="font-size: 16px; letter-spacing: 4px; margin-left: -55px">
+          <b><i>CERTIFICATE OF INDIGENCY</i></b>
+        </p>
+    </tr>
 
-          <br /><br />
-          <p class="p2" style="font-size: 14px; text-align: justify">
-            <i>
-              &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Issued this
-              <b>{{indigency.date_released|date:"F"}}</b>, day of
-              <b
-                >{{indigency.date_released|date:"jS"}}
-                {{indigency.date_released.year}}</b
-              >, at the office of the Barangay Chairman, Barangay Poblacion,
-              Naawan, Misamis Oriental.
-            </i>
-          </p>
-        </td>
-      </tr>
+    <tr>
+      <td valign="Top" colspan="3" style="margin-left: 70px; margin-right: 70px">
+        <br /><br /><br /><br />
+        <p class="p2" style="font-size: 16px">
+          <b><i>TO WHOM IT MAY CONCERN</i></b>
+        </p>
+        <br />
+        <p class="p2" style="font-size: 14px; text-align: justify">
+          <i>
+            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Bearer of this
+            letter <b>{{indigency.res_id}}</b>, <b>{{age}}</b> years
+            old, <b>{{indigency.res_id.civil_status}}</b>, and a resident of
+            <b>{{indigency.res_id.purok}}</b> Barangay Poblacion, Naawan,
+            Misamis Oriental.
+          </i>
+        </p>
+        <br /><br />
+        <p class="p2" style="font-size: 14px; text-align: justify">
+          <i>
+            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; It is also
+            further certifying that is not gainfully employed at present and
+            belongs to Indigent families in our community.
+          </i>
+        </p>
 
-      <tr>
-        <td
-          valign="Top"
-          colspan="3"
-          style="margin-left: 70px; margin-right: 70px"
-        >
-          <br /><br /><br /><br /><br /><br />
-          <table>
-            <tr>
-              <td></td>
+        <br /><br />
+        <p class="p2" style="font-size: 14px; text-align: justify">
+          <i>
+            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; This
+            certification is being issued upon the request of
+            <b>{{indigency.res_id}}</b>, in connection for the application for
+            <b>{{indigency.purpose}}</b>.
+          </i>
+        </p>
 
-              <td>
-                <p class="p2" style="font-size: 14px"><i>Certified by:</i></p>
-              </td>
-            </tr>
-            <tr>
-              <td style="display: block; margin-left: 400px">
-                <img src="static/img/captain_signature.png" height="60" />
-              </td>
+        <br /><br />
+        <p class="p2" style="font-size: 14px; text-align: justify">
+          <i>
+            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Issued this
+            <b>{{indigency.date_released|date:"F"}}</b>, day of
+            <b>
+              {{indigency.date_released|date:"jS"}}</b>, <b>
+              {{indigency.date_released.year}}</b>
+            , at the office of the Barangay Chairman, Barangay Poblacion,
+            Naawan, Misamis Oriental.
+          </i>
+        </p>
+      </td>
+    </tr>
 
-              <td>
-                <br />
-                <br />
-                <p
-                  class="p2"
-                  style="font-size: 16px; text-decoration: underline"
-                >
-                  <b>HON.MICHAEL S. DACOCO</b>
-                </p>
-                <p class="p2" style="font-size: 14px">
-                  Barangay Chairman, Poblacion
-                </p>
-              </td>
-            </tr>
-          </table>
-        </td>
-      </tr>
-    </table>
+    <tr>
+      <td valign="Top" colspan="3" style="margin-left: 70px; margin-right: 70px">
+        <br /><br /><br /><br /><br /><br />
+        <table>
+          <tr>
+            <td></td>
 
-    <br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br     
-    <table width="100%" align="center">
-      <tr>
-        <td colspan="3">
-          <br />
-          <p>Transaction ID: {{indigency.transaction_id}}</p>
-          <br />
-        </td>
-      </tr>
-    </table>
-  </body>
+            <td>
+              <p class="p2" style="font-size: 14px"><i>Certified by:</i></p>
+            </td>
+          </tr>
+          <tr>
+            <td style="display: block; margin-left: 400px">
+              <img src="static/img/captain_signature.png" height="60" />
+            </td>
+
+            <td>
+              <br />
+              <br />
+              <p class="p2" style="font-size: 16px; text-decoration: underline">
+                <b>HON.MICHAEL S. DACOCO</b>
+              </p>
+              <p class="p2" style="font-size: 14px">
+                Barangay Chairman, Poblacion
+              </p>
+            </td>
+          </tr>
+        </table>
+      </td>
+    </tr>
+  </table>
+
+  <br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br <table width="100%" align="center">
+  <tr>
+    <td colspan="3">
+      <br />
+      <p>Transaction ID: {{indigency.transaction_id}}</p>
+      <br />
+    </td>
+  </tr>
+  </table>
+</body>
+
 </html>

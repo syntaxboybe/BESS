@@ -40,9 +40,9 @@
                                 <td>{{ BuildingPermit.owner}}</td>
                                 <td><span class="">{{ BuildingPermit.status}}</span></td>
                                 <td class="text-center">
-                                    <a target=”_blank” type="button" class="btn btn-secondary bg-gradient" href="{% url 'generate_building_permit' BuildingPermit.id %}">
-                                        <i class="las la-file-pdf fs-4" style="vertical-align: middle;"></i>
-                                        <span style="vertical-align: middle;">Generate</span>
+                                    <a target=”_blank” type="button" class="btn btn-warning bg-gradient" href="{% url 'generate_building_permit' BuildingPermit.id %}">
+                                        <i class="fas fa-eye fs-4" style="vertical-align: middle;"></i>
+                                        <span style="vertical-align: middle;">View PDF</span>
                                     </a>
                                 </td>
                             </tr>

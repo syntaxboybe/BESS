@@ -111,4 +111,3 @@ class BusinessPermitForm(forms.ModelForm):
         self.fields["paid_or_date_issued"].required = False
         self.fields["paid_or_issued_at"].required = False
         self.fields["amount_colledted"].required = False
-

@@ -43,7 +43,8 @@ class ProfileForm(forms.ModelForm):
 
         widgets = {
             "image": forms.FileInput(
-                attrs={"class": "form-control", "id": "file", "accept": "image/*"}
+                attrs={"class": "form-control",
+                       "id": "file", "accept": "image/*"}
             ),
             "firstname": forms.TextInput(
                 attrs={
@@ -64,11 +65,13 @@ class ProfileForm(forms.ModelForm):
                 }
             ),
             "suffix": forms.TextInput(
-                attrs={"class": "form-control form-control-sm", "placeholder": "Suffix"}
+                attrs={"class": "form-control form-control-sm",
+                       "placeholder": "Suffix"}
             ),
             "sex": forms.Select(attrs={"class": "form-select form-select-sm"}),
             "phone": forms.NumberInput(
-                attrs={"class": "form-control form-control-sm", "placeholder": "+63"}
+                attrs={"class": "form-control form-control-sm",
+                       "placeholder": "+63"}
             ),
             "birthdate": forms.DateInput(
                 attrs={
@@ -106,7 +109,8 @@ class ProfileForm(forms.ModelForm):
                 attrs={"class": "form-select form-select-sm"}
             ),
             "single_parent": forms.Select(
-                choices=singParentChoices, attrs={"class": "form-select form-select-sm"}
+                choices=singParentChoices, attrs={
+                    "class": "form-select form-select-sm"}
             ),
             "status": forms.Select(attrs={"class": "form-select form-select-sm"}),
             "years_resided": forms.DateInput(
@@ -141,20 +145,25 @@ class EditUserAccountForm(forms.ModelForm):
 class ProcessClearanceForm(forms.ModelForm):
     class Meta:
         model = clearance
-        fields = ("age", "purpose", "community_tax_num", "community_tax_date_issued")
+        fields = ("age", "purpose", "community_tax_num",
+                  "community_tax_date_issued")
 
         widgets = {
             "age": forms.NumberInput(
-                attrs={"class": "form-control form-control-sm", "placeholder": "input"}
+                attrs={"class": "form-control form-control-sm",
+                       "placeholder": "input"}
             ),
             "purpose": forms.TextInput(
-                attrs={"class": "form-control form-control-sm", "placeholder": "input"}
+                attrs={"class": "form-control form-control-sm",
+                       "placeholder": "input"}
             ),
             "community_tax_num": forms.TextInput(
-                attrs={"class": "form-control form-control-sm", "placeholder": "input"}
+                attrs={"class": "form-control form-control-sm",
+                       "placeholder": "input"}
             ),
             "community_tax_date_issued": forms.DateInput(
-                attrs={"class": "form-control form-control-sm", "placeholder": "input"}
+                attrs={"class": "form-control form-control-sm",
+                       "placeholder": "input"}
             ),
         }
 
@@ -170,7 +179,8 @@ class ProcessIndigencyForm(forms.ModelForm):
 
         widgets = {
             "age": forms.NumberInput(
-                attrs={"class": "form-control form-control-sm", "placeholder": "Age"}
+                attrs={"class": "form-control form-control-sm",
+                       "placeholder": "Age"}
             ),
             "purpose": forms.TextInput(
                 attrs={
@@ -209,52 +219,68 @@ class ProcessBusinessPermitForm(forms.ModelForm):
 
         widgets = {
             "business_name": forms.TextInput(
-                attrs={"class": "form-control form-control-sm", "placeholder": "Input"}
+                attrs={"class": "form-control form-control-sm",
+                       "placeholder": "Input"}
             ),
             "location": forms.TextInput(
-                attrs={"class": "form-control form-control-sm", "placeholder": "Input"}
+                attrs={"class": "form-control form-control-sm",
+                       "placeholder": "Input"}
             ),
             "business_nature": forms.TextInput(
-                attrs={"class": "form-control form-control-sm", "placeholder": "Input"}
+                attrs={"class": "form-control form-control-sm",
+                       "placeholder": "Input"}
             ),
             "capital_investment": forms.TextInput(
-                attrs={"class": "form-control form-control-sm", "placeholder": "Input"}
+                attrs={"class": "form-control form-control-sm",
+                       "placeholder": "Input"}
             ),
             "gross_sales": forms.TextInput(
-                attrs={"class": "form-control form-control-sm", "placeholder": "Input"}
+                attrs={"class": "form-control form-control-sm",
+                       "placeholder": "Input"}
             ),
             "residece_certificate_no": forms.TextInput(
-                attrs={"class": "form-control form-control-sm", "placeholder": "Input"}
+                attrs={"class": "form-control form-control-sm",
+                       "placeholder": "Input"}
             ),
             "date_released": forms.DateInput(
-                attrs={"class": "form-control form-control-sm", "placeholder": "input"}
+                attrs={"class": "form-control form-control-sm",
+                       "placeholder": "input"}
             ),
             "issued_at": forms.TextInput(
-                attrs={"class": "form-control form-control-sm", "placeholder": "Input"}
+                attrs={"class": "form-control form-control-sm",
+                       "placeholder": "Input"}
             ),
             "previous_or": forms.TextInput(
-                attrs={"class": "form-control form-control-sm", "placeholder": "Input"}
+                attrs={"class": "form-control form-control-sm",
+                       "placeholder": "Input"}
             ),
             "date_issued": forms.DateInput(
-                attrs={"class": "form-control form-control-sm", "placeholder": "input"}
+                attrs={"class": "form-control form-control-sm",
+                       "placeholder": "input"}
             ),
             "previous_or_issued_at": forms.TextInput(
-                attrs={"class": "form-control form-control-sm", "placeholder": "Input"}
+                attrs={"class": "form-control form-control-sm",
+                       "placeholder": "Input"}
             ),
             "amount_collect": forms.TextInput(
-                attrs={"class": "form-control form-control-sm", "placeholder": "Input"}
+                attrs={"class": "form-control form-control-sm",
+                       "placeholder": "Input"}
             ),
             "paid_or": forms.TextInput(
-                attrs={"class": "form-control form-control-sm", "placeholder": "Input"}
+                attrs={"class": "form-control form-control-sm",
+                       "placeholder": "Input"}
             ),
             "paid_or_date_issued": forms.DateInput(
-                attrs={"class": "form-control form-control-sm", "placeholder": "input"}
+                attrs={"class": "form-control form-control-sm",
+                       "placeholder": "input"}
             ),
             "paid_or_issued_at": forms.TextInput(
-                attrs={"class": "form-control form-control-sm", "placeholder": "Input"}
+                attrs={"class": "form-control form-control-sm",
+                       "placeholder": "Input"}
             ),
             "amount_colledted": forms.TextInput(
-                attrs={"class": "form-control form-control-sm", "placeholder": "Input"}
+                attrs={"class": "form-control form-control-sm",
+                       "placeholder": "Input"}
             ),
         }
 
@@ -276,31 +302,40 @@ class ProcessBuildingPermitForm(forms.ModelForm):
 
         widgets = {
             "proposed_construction": forms.TextInput(
-                attrs={"class": "form-control form-control-sm", "placeholder": "Input"}
+                attrs={"class": "form-control form-control-sm",
+                       "placeholder": "Input"}
             ),
             "total_area": forms.TextInput(
-                attrs={"class": "form-control form-control-sm", "placeholder": "Input"}
+                attrs={"class": "form-control form-control-sm",
+                       "placeholder": "Input"}
             ),
             "estimated_cost": forms.TextInput(
-                attrs={"class": "form-control form-control-sm", "placeholder": "Input"}
+                attrs={"class": "form-control form-control-sm",
+                       "placeholder": "Input"}
             ),
             "location": forms.TextInput(
-                attrs={"class": "form-control form-control-sm", "placeholder": "Input"}
+                attrs={"class": "form-control form-control-sm",
+                       "placeholder": "Input"}
             ),
             "contractor": forms.TextInput(
-                attrs={"class": "form-control form-control-sm", "placeholder": "Input"}
+                attrs={"class": "form-control form-control-sm",
+                       "placeholder": "Input"}
             ),
             "prepared_by": forms.TextInput(
-                attrs={"class": "form-control form-control-sm", "placeholder": "Input"}
+                attrs={"class": "form-control form-control-sm",
+                       "placeholder": "Input"}
             ),
             "paid_under_or": forms.TextInput(
-                attrs={"class": "form-control form-control-sm", "placeholder": "Input"}
+                attrs={"class": "form-control form-control-sm",
+                       "placeholder": "Input"}
             ),
             "date_released": forms.DateInput(
-                attrs={"class": "form-control form-control-sm", "placeholder": "input"}
+                attrs={"class": "form-control form-control-sm",
+                       "placeholder": "input"}
             ),
             "amount_paid": forms.TextInput(
-                attrs={"class": "form-control form-control-sm", "placeholder": "Input"}
+                attrs={"class": "form-control form-control-sm",
+                       "placeholder": "Input"}
             ),
         }
 
@@ -312,6 +347,7 @@ class ProcessResidencyCertificateForm(forms.ModelForm):
 
         widgets = {
             "purpose": forms.TextInput(
-                attrs={"class": "form-control form-control-sm", "placeholder": "Input"}
+                attrs={"class": "form-control form-control-sm",
+                       "placeholder": "Input"}
             ),
         }

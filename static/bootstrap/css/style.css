@@ -557,7 +557,7 @@ table.table-fit tfoot td {
   background: #f08902;
 }
 
-.forPrint-status {
+.printed-status {
   padding: 0;
   border-radius: 4px;
   padding-left: 2px;

@@ -71,7 +71,7 @@
         >
           <thead>
             <tr>
-              <th>#</th>
+              <th></th>
               <th>Resident ID</th>
               <th>Name</th>
               <th>Gender</th>
@@ -97,10 +97,12 @@
 
                   <div class="ms-3 align-items-center">
                     <p class="fs-6 mb-1">
-                      {{resident.residentsinfo.firstname}}
-                      {{resident.residentsinfo.middlename|make_list|first}}.
-                      {{resident.residentsinfo.lastname}}
-                      {{resident.residentsinfo.suffix}}
+                      
+                {{resident.residentsinfo.lastname}}, 
+                {{resident.residentsinfo.firstname}} 
+                {{resident.residentsinfo.middlename|make_list|first}}.
+                {{resident.residentsinfo.suffix}}
+
                     </p>
                   </div>
                 </div>

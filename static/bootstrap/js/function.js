@@ -149,8 +149,8 @@ $(document).ready(function () {
       if ($(this).html() == "Forwarded to Kapitan") {
         $(this).addClass("forwadKap-status");
       }
-      if ($(this).html() == "For Printing") {
-        $(this).addClass("forPrint-status");
+      if ($(this).html() == "Printed") {
+        $(this).addClass("printed-status");
       }
     });
 
@@ -182,7 +182,7 @@ $(document).ready(function () {
         "Released",
         "Reverted",
         "Forwarded to Kapitan",
-        "For Printing",
+        "Printed",
       ],
       style_class: "form-select",
       filter_reset_button_text: false,

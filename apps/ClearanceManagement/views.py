@@ -135,7 +135,8 @@ def esign_button(request, id):
 
         if request.method == "POST":
             if clearance.status.document_status == "Ready to Claim(e-Signed)":
-                new_status = DocumentStatus.objects.get(document_status="Released")
+                new_status = DocumentStatus.objects.get(
+                    document_status="Released")
                 clearance.status = new_status
                 clearance.save()
             form = cleranceForm(
@@ -269,7 +270,8 @@ def confirm_button(request, id):
 
         if request.method == "POST":
             if clearance.status.document_status == "Ready to Claim":
-                new_status = DocumentStatus.objects.get(document_status="Released")
+                new_status = DocumentStatus.objects.get(
+                    document_status="Released")
                 clearance.status = new_status
                 clearance.save()
             form = cleranceForm(
