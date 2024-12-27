@@ -141,12 +141,18 @@ def confirm_button_bsp(request, id):
 
 def delete_business_permit(request, id):
     if request.user.is_authenticated:
-        business_permit = BusinessPermit.objects.get(pk=id)
+        try:
+            business_permit = BusinessPermit.objects.get(pk=id)
+        except BusinessPermit.DoesNotExist:
+            return HttpResponse("Business Permit not found.", status=404)
+
         username = business_permit.res_id.user.username
         context = {"business_permit": business_permit}
+
         if request.method == "POST":
             email_msg = request.POST.get("reason_masage")
 
+            # Prepare email content
             subject = "Reasons For Denying your Request"
             message = f"""
             Dear {username},
@@ -166,12 +172,27 @@ def delete_business_permit(request, id):
             """
             email_from = settings.EMAIL_HOST_USER
             recipient_list = [business_permit.res_id.user.email]
-            send_mail(subject, message, email_from, recipient_list)
 
-            business_permit.delete()
+            # Send email
+            try:
+                send_mail(subject, message, email_from, recipient_list)
+            except Exception as e:
+                return HttpResponse(f"Failed to send email: {e}", status=500)
+
+            # Update status to "Reverted"
+            try:
+                new_status = DocumentStatus.objects.get(document_status="Reverted")
+                business_permit.status = (
+                    new_status  # Assign the DocumentStatus instance
+                )
+                business_permit.save()
+            except DocumentStatus.DoesNotExist:
+                return HttpResponse("DocumentStatus 'Reverted' not found.", status=500)
+
             return HttpResponse(
                 status=204, headers={"HX-Trigger": "BusinessPermitlistUpdate"}
             )
+
         return render(request, "BusinessPermit/delete_business_permit.html", context)
 
     else:

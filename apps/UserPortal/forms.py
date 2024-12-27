@@ -65,22 +65,22 @@ class BuildingPermitForm(forms.ModelForm):
 
         widgets = {
             "proposed_construction": forms.TextInput(
-                attrs={"class": "form-control form-control-sm", "placeholder": "Input"}
+                attrs={"class": "form-control form-control-sm", "placeholder": ""}
             ),
             "total_area": forms.TextInput(
-                attrs={"class": "form-control form-control-sm", "placeholder": "Input"}
+                attrs={"class": "form-control form-control-sm", "placeholder": ""}
             ),
             "estimated_cost": forms.TextInput(
-                attrs={"class": "form-control form-control-sm", "placeholder": "Input"}
+                attrs={"class": "form-control form-control-sm", "placeholder": ""}
             ),
             "location": forms.TextInput(
-                attrs={"class": "form-control form-control-sm", "placeholder": "Input"}
+                attrs={"class": "form-control form-control-sm", "placeholder": ""}
             ),
             "owner": forms.TextInput(
-                attrs={"class": "form-control form-control-sm", "placeholder": "Input"}
+                attrs={"class": "form-control form-control-sm", "placeholder": ""}
             ),
             "contractor": forms.TextInput(
-                attrs={"class": "form-control form-control-sm", "placeholder": "Input"}
+                attrs={"class": "form-control form-control-sm", "placeholder": ""}
             ),
         }
 
@@ -100,25 +100,25 @@ class BusinessPermitForm(forms.ModelForm):
 
         widgets = {
             "business_name": forms.TextInput(
-                attrs={"class": "form-control form-control-sm", "placeholder": "Input"}
+                attrs={"class": "form-control form-control-sm", "placeholder": ""}
             ),
             "location": forms.TextInput(
-                attrs={"class": "form-control form-control-sm", "placeholder": "Input"}
+                attrs={"class": "form-control form-control-sm", "placeholder": ""}
             ),
             "business_nature": forms.TextInput(
-                attrs={"class": "form-control form-control-sm", "placeholder": "Input"}
+                attrs={"class": "form-control form-control-sm", "placeholder": ""}
             ),
             "owner": forms.TextInput(
-                attrs={"class": "form-control form-control-sm", "placeholder": "Input"}
+                attrs={"class": "form-control form-control-sm", "placeholder": ""}
             ),
             "residece_certificate_no": forms.TextInput(
-                attrs={"class": "form-control form-control-sm", "placeholder": "Input"}
+                attrs={"class": "form-control form-control-sm", "placeholder": ""}
             ),
             "capital_investment": forms.TextInput(
-                attrs={"class": "form-control form-control-sm", "placeholder": "Input"}
+                attrs={"class": "form-control form-control-sm", "placeholder": ""}
             ),
             "gross_sales": forms.TextInput(
-                attrs={"class": "form-control form-control-sm", "placeholder": "Input"}
+                attrs={"class": "form-control form-control-sm", "placeholder": ""}
             ),
         }
 
@@ -130,7 +130,7 @@ class ResidencyCertificateForm(forms.ModelForm):
 
         widgets = {
             "purpose": forms.TextInput(
-                attrs={"class": "form-control form-control-sm", "placeholder": "Input"}
+                attrs={"class": "form-control form-control-sm", "placeholder": ""}
             ),
         }
 
@@ -145,7 +145,6 @@ class CaptchaPasswordChangeForm(PasswordChangeForm):
 
 
 class UpdateUsernameForm(forms.ModelForm):
-
     # captcha = ReCaptchaField(widget=ReCaptchaV2Checkbox())
     captcha = ReCaptchaField()
 
@@ -164,4 +163,3 @@ class UpdateEmailForm(forms.ModelForm):
     class Meta:
         model = User
         fields = ("email",)
-

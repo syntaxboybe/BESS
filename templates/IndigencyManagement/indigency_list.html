@@ -118,7 +118,7 @@
         column_number: 5,
         filter_default_label: "All",
         filter_container_id: "status",
-        data: ["Pending", "Ready to Claim", "Released", "Forwarded to Kapitan", "Ready to Claim(e-Signed)"],
+        data: ["Pending", "Ready to Claim", "Released", "Forwarded to Kapitan", "Ready to Claim(e-Signed)", "Reverted"],
         style_class: "form-select",
         filter_reset_button_text: false,
       },
@@ -142,6 +142,9 @@
       }
       if ($(this).html() == "Forwarded to Kapitan") {
         $(this).addClass("forwadKap-status");
+      }
+      if ($(this).html() == "Reverted") {
+        $(this).addClass("reverted-status");
       }
     });
 </script>

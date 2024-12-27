@@ -55,7 +55,8 @@ def edit_residency(request, id):
                 residency_certificate.status = new_status
                 residency_certificate.save()
                 form = ResidencyCertificateForm(
-                    request.POST, instance=residency_certificate)
+                    request.POST, instance=residency_certificate
+                )
                 if form.is_valid():
                     form.save()
                 return HttpResponse(status=204, headers={"HX-Trigger": "ResidencyList"})
@@ -107,7 +108,7 @@ def unsign_residency_cert(request, id):
     if request.user.is_authenticated:
         residency_certificate = get_object_or_404(ResidencyCertificate, pk=id)
         form = ResidencyCertificateForm(instance=residency_certificate)
-        
+
         if request.method == "POST":
             if residency_certificate.status.document_status == "Forwarded to Kapitan":
                 new_status = DocumentStatus.objects.get(
@@ -146,8 +147,7 @@ def confirm_button_residency(request, id):
         form = ResidencyCertificateForm(instance=residency_certificate)
         if request.method == "POST":
             if residency_certificate.status.document_status == "Ready to Claim":
-                new_status = DocumentStatus.objects.get(
-                    document_status="Released")
+                new_status = DocumentStatus.objects.get(document_status="Released")
                 residency_certificate.status = new_status
                 residency_certificate.is_signed = (
                     True  # Assuming there's an `is_signed` field
@@ -171,12 +171,18 @@ def confirm_button_residency(request, id):
 
 def delete_resident_certificate_request(request, id):
     if request.user.is_authenticated:
-        residency_certificate = ResidencyCertificate.objects.get(pk=id)
+        try:
+            residency_certificate = ResidencyCertificate.objects.get(pk=id)
+        except ResidencyCertificate.DoesNotExist:
+            return HttpResponse("Residency not found.", status=404)
+
         username = residency_certificate.res_id.user.username
         context = {"residency_certificate": residency_certificate}
+
         if request.method == "POST":
             email_msg = request.POST.get("reason_masage")
 
+            # Prepare email content
             subject = "Reasons For Denying your Request"
             message = f"""
             Dear {username},
@@ -196,12 +202,29 @@ def delete_resident_certificate_request(request, id):
             """
             email_from = settings.EMAIL_HOST_USER
             recipient_list = [residency_certificate.res_id.user.email]
-            send_mail(subject, message, email_from, recipient_list)
 
-            residency_certificate.delete()
+            # Send email
+            try:
+                send_mail(subject, message, email_from, recipient_list)
+            except Exception as e:
+                return HttpResponse(f"Failed to send email: {e}", status=500)
+
+            # Update status to "Reverted"
+            try:
+                new_status = DocumentStatus.objects.get(document_status="Reverted")
+                residency_certificate.status = (
+                    new_status  # Assign the DocumentStatus instance
+                )
+                residency_certificate.save()
+            except DocumentStatus.DoesNotExist:
+                return HttpResponse("DocumentStatus 'Reverted' not found.", status=500)
+
             return HttpResponse(status=204, headers={"HX-Trigger": "ResidencyList"})
+
         return render(
-            request, "ResidencyCertificate/delete_resident_certificate.html", context
+            request,
+            "ResidencyCertificate/delete_resident_certificate.html",
+            context,
         )
 
     else:
@@ -289,8 +312,7 @@ def esign_button_residency(request, id):
                 residency_certificate.status.document_status
                 == "Ready to Claim(e-Signed)"
             ):
-                new_status = DocumentStatus.objects.get(
-                    document_status="Released")
+                new_status = DocumentStatus.objects.get(document_status="Released")
                 residency_certificate.status = new_status
                 residency_certificate.is_signed = (
                     True  # Assuming there's an `is_signed` field

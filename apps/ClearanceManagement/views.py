@@ -135,8 +135,7 @@ def esign_button(request, id):
 
         if request.method == "POST":
             if clearance.status.document_status == "Ready to Claim(e-Signed)":
-                new_status = DocumentStatus.objects.get(
-                    document_status="Released")
+                new_status = DocumentStatus.objects.get(document_status="Released")
                 clearance.status = new_status
                 clearance.save()
             form = cleranceForm(
@@ -156,12 +155,18 @@ def esign_button(request, id):
 
 def delete_clearance(request, id):
     if request.user.is_authenticated:
-        clearance = clerance_list.objects.get(pk=id)
+        try:
+            clearance = clerance_list.objects.get(pk=id)
+        except clerance_list.DoesNotExist:
+            return HttpResponse("Clearance not found.", status=404)
+
         username = clearance.res_id.user.username
         context = {"clearance": clearance}
+
         if request.method == "POST":
             email_msg = request.POST.get("reason_masage")
 
+            # Prepare email content
             subject = "Reasons For Denying your Request"
             message = f"""
             Dear {username},
@@ -181,12 +186,25 @@ def delete_clearance(request, id):
             """
             email_from = settings.EMAIL_HOST_USER
             recipient_list = [clearance.res_id.user.email]
-            send_mail(subject, message, email_from, recipient_list)
 
-            clearance.delete()
+            # Send email
+            try:
+                send_mail(subject, message, email_from, recipient_list)
+            except Exception as e:
+                return HttpResponse(f"Failed to send email: {e}", status=500)
+
+            # Update status to "Reverted"
+            try:
+                new_status = DocumentStatus.objects.get(document_status="Reverted")
+                clearance.status = new_status  # Assign the DocumentStatus instance
+                clearance.save()
+            except DocumentStatus.DoesNotExist:
+                return HttpResponse("DocumentStatus 'Reverted' not found.", status=500)
+
             return HttpResponse(
                 status=204, headers={"HX-Trigger": "clearancelistUpdate"}
             )
+
         return render(request, "ClearanceManagement/delete_clearance.html", context)
 
     else:
@@ -270,8 +288,7 @@ def confirm_button(request, id):
 
         if request.method == "POST":
             if clearance.status.document_status == "Ready to Claim":
-                new_status = DocumentStatus.objects.get(
-                    document_status="Released")
+                new_status = DocumentStatus.objects.get(document_status="Released")
                 clearance.status = new_status
                 clearance.save()
             form = cleranceForm(

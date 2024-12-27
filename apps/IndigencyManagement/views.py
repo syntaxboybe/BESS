@@ -163,12 +163,18 @@ def confirm_button_indigency(request, id):
 
 def delete_indigency(request, id):
     if request.user.is_authenticated:
-        indigency = CertificateOfIndigency.objects.get(pk=id)
+        try:
+            indigency = CertificateOfIndigency.objects.get(pk=id)
+        except CertificateOfIndigency.DoesNotExist:
+            return HttpResponse("Indigency not found.", status=404)
+
         username = indigency.res_id.user.username
         context = {"indigency": indigency}
+
         if request.method == "POST":
             email_msg = request.POST.get("reason_masage")
 
+            # Prepare email content
             subject = "Reasons For Denying your Request"
             message = f"""
             Dear {username},
@@ -188,12 +194,25 @@ def delete_indigency(request, id):
             """
             email_from = settings.EMAIL_HOST_USER
             recipient_list = [indigency.res_id.user.email]
-            send_mail(subject, message, email_from, recipient_list)
 
-            indigency.delete()
+            # Send email
+            try:
+                send_mail(subject, message, email_from, recipient_list)
+            except Exception as e:
+                return HttpResponse(f"Failed to send email: {e}", status=500)
+
+            # Update status to "Reverted"
+            try:
+                new_status = DocumentStatus.objects.get(document_status="Reverted")
+                indigency.status = new_status  # Assign the DocumentStatus instance
+                indigency.save()
+            except DocumentStatus.DoesNotExist:
+                return HttpResponse("DocumentStatus 'Reverted' not found.", status=500)
+
             return HttpResponse(
                 status=204, headers={"HX-Trigger": "indigencylistUpdate"}
             )
+
         return render(request, "IndigencyManagement/delete_indigency.html", context)
 
     else:
