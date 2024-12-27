@@ -12,12 +12,10 @@ class ResidencyCertificateForm(forms.ModelForm):
 
         widgets = {
             "purpose": forms.TextInput(
-                attrs={"class": "form-control form-control-sm",
-                       "placeholder": "Input"}
+                attrs={"class": "form-control form-control-sm", "placeholder": ""}
             ),
             "date_released": forms.DateInput(
-                attrs={"class": "form-control form-control-sm",
-                       "placeholder": "input"}
+                attrs={"class": "form-control form-control-sm", "placeholder": ""}
             ),
         }
 

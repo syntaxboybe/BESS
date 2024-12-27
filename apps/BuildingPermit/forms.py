@@ -20,44 +20,34 @@ class BuildingPermitForm(forms.ModelForm):
 
         widgets = {
             "proposed_construction": forms.TextInput(
-                attrs={"class": "form-control form-control-sm",
-                       "placeholder": "Input"}
+                attrs={"class": "form-control form-control-sm", "placeholder": ""}
             ),
             "total_area": forms.TextInput(
-                attrs={"class": "form-control form-control-sm",
-                       "placeholder": "Input"}
+                attrs={"class": "form-control form-control-sm", "placeholder": ""}
             ),
             "estimated_cost": forms.TextInput(
-                attrs={"class": "form-control form-control-sm",
-                       "placeholder": "Input"}
+                attrs={"class": "form-control form-control-sm", "placeholder": ""}
             ),
             "location": forms.TextInput(
-                attrs={"class": "form-control form-control-sm",
-                       "placeholder": "Input"}
+                attrs={"class": "form-control form-control-sm", "placeholder": ""}
             ),
             "owner": forms.TextInput(
-                attrs={"class": "form-control form-control-sm",
-                       "placeholder": "Input"}
+                attrs={"class": "form-control form-control-sm", "placeholder": ""}
             ),
             "contractor": forms.TextInput(
-                attrs={"class": "form-control form-control-sm",
-                       "placeholder": "Input"}
+                attrs={"class": "form-control form-control-sm", "placeholder": ""}
             ),
             "prepared_by": forms.TextInput(
-                attrs={"class": "form-control form-control-sm",
-                       "placeholder": "Input"}
+                attrs={"class": "form-control form-control-sm", "placeholder": ""}
             ),
             "paid_under_or": forms.TextInput(
-                attrs={"class": "form-control form-control-sm",
-                       "placeholder": "Input"}
+                attrs={"class": "form-control form-control-sm", "placeholder": ""}
             ),
             "date_released": forms.DateInput(
-                attrs={"class": "form-control form-control-sm",
-                       "placeholder": "input"}
+                attrs={"class": "form-control form-control-sm", "placeholder": ""}
             ),
             "amount_paid": forms.TextInput(
-                attrs={"class": "form-control form-control-sm",
-                       "placeholder": "Input"}
+                attrs={"class": "form-control form-control-sm", "placeholder": ""}
             ),
         }
 
@@ -67,4 +57,3 @@ class BuildingPermitForm(forms.ModelForm):
         self.fields["paid_under_or"].required = False
         self.fields["date_released"].required = False
         self.fields["amount_paid"].required = False
-

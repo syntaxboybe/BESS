@@ -9,16 +9,13 @@ class indigencyForm(forms.ModelForm):
 
         widgets = {
             "age": forms.NumberInput(
-                attrs={"class": "form-control form-control-sm",
-                       "placeholder": "input"}
+                attrs={"class": "form-control form-control-sm", "placeholder": ""}
             ),
             "purpose": forms.TextInput(
-                attrs={"class": "form-control form-control-sm",
-                       "placeholder": "input"}
+                attrs={"class": "form-control form-control-sm", "placeholder": ""}
             ),
             "date_released": forms.DateInput(
-                attrs={"class": "form-control form-control-sm",
-                       "placeholder": "input"}
+                attrs={"class": "form-control form-control-sm", "placeholder": ""}
             ),
         }
 
