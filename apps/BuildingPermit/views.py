@@ -26,7 +26,8 @@ def building_permit_module(request):
 @admin_only
 def building_permit_list(request):
     if request.user.is_authenticated:
-        context = {"building_permit_list": BuildingPermit.objects.all().order_by("-id")}
+        context = {
+            "building_permit_list": BuildingPermit.objects.all().order_by("-id")}
         return render(request, "BuildingPermit/building_permit_list.html", context)
     else:
         return redirect("loginPage")
@@ -40,14 +41,38 @@ def edit_building_permit(request, id):
         building_permit = BuildingPermit.objects.get(pk=id)
         form = BuildingPermitForm(instance=building_permit)
 
+        username = building_permit.res_id.user.username
         if request.method == "POST":
+            email_msg = request.POST.get("reason_masage")
+
+            # Prepare email content
+            subject = "Good news! Your Request has been on process"
+            message = f"""
+            Dear {username},
+
+            We are pleased to inform you that your request has been received and is currently forwarded to kapitan. We will notify you once your request has been approved and is ready for pick-up. If you have any questions or concerns, please do not hesitate to contact us at the following numbers:            
+            Globe: 09361174734
+            TM: 09057198345
+            
+            Sincerely,
+            The Barangay E-Service Team
+            """
+            email_from = settings.EMAIL_HOST_USER
+            recipient_list = [building_permit.res_id.user.email]
+
+            # Send email
+            try:
+                send_mail(subject, message, email_from, recipient_list)
+            except Exception as e:
+                return HttpResponse(f"Failed to send email: {e}", status=500)
             if building_permit.status.document_status == "Pending":
                 new_status = DocumentStatus.objects.get(
                     document_status="Forwarded to Kapitan"
                 )
                 building_permit.status = new_status
                 building_permit.save()
-                form = BuildingPermitForm(request.POST, instance=building_permit)
+                form = BuildingPermitForm(
+                    request.POST, instance=building_permit)
             if form.is_valid():
                 form.save()
             return HttpResponse(
@@ -88,14 +113,39 @@ def unsign_building_permit(request, id):
     if request.user.is_authenticated:
         building_permit = get_object_or_404(BuildingPermit, pk=id)
         form = BuildingPermitForm(instance=building_permit)
+        username = building_permit.res_id.user.username
         if request.method == "POST":
+            email_msg = request.POST.get("reason_masage")
+
+            # Prepare email content
+            subject = "Good news! Your Request are ready to claim"
+            message = f"""
+            Dear {username},
+
+            We are pleased to inform you that your request has been approved and is ready for pick-up. Kindy prepare the necessary documents for claiming. 
+            If you have any questions or concerns, please do not hesitate to contact us at the following numbers:            
+            Globe: 09361174734
+            TM: 09057198345
+            
+            Sincerely,
+            The Barangay E-Service Team
+            """
+            email_from = settings.EMAIL_HOST_USER
+            recipient_list = [building_permit.res_id.user.email]
+
+            # Send email
+            try:
+                send_mail(subject, message, email_from, recipient_list)
+            except Exception as e:
+                return HttpResponse(f"Failed to send email: {e}", status=500)
             if building_permit.status.document_status == "Forwarded to Kapitan":
                 new_status = DocumentStatus.objects.get(
                     document_status="Ready to Claim"
                 )
                 building_permit.status = new_status
                 building_permit.save()
-                form = BuildingPermitForm(request.POST, instance=building_permit)
+                form = BuildingPermitForm(
+                    request.POST, instance=building_permit)
             if form.is_valid():
                 form.save()
             return HttpResponse(
@@ -118,12 +168,40 @@ def confirm_button_bldp(request, id):
     if request.user.is_authenticated:
         building_permit = get_object_or_404(BuildingPermit, pk=id)
         form = BuildingPermitForm(instance=building_permit)
+
+        username = building_permit.res_id.user.username
         if request.method == "POST":
+            email_msg = request.POST.get("reason_masage")
+
+            # Prepare email content
+            subject = "Good news! Your Request has been officially released"
+            message = f"""
+            Dear {username},
+
+            We are pleased to inform you that your request has been officially released. Thank you for your using our service!
+            If you have any questions or concerns, please do not hesitate to contact us at the following numbers:            
+            Globe: 09361174734
+            TM: 09057198345
+            
+            Sincerely,
+            The Barangay E-Service Team
+            """
+            email_from = settings.EMAIL_HOST_USER
+            recipient_list = [building_permit.res_id.user.email]
+
+            # Send email
+            try:
+                send_mail(subject, message, email_from, recipient_list)
+            except Exception as e:
+                return HttpResponse(f"Failed to send email: {e}", status=500)
+
             if building_permit.status.document_status == "Ready to Claim":
-                new_status = DocumentStatus.objects.get(document_status="Released")
+                new_status = DocumentStatus.objects.get(
+                    document_status="Released")
                 building_permit.status = new_status
                 building_permit.save()
-                form = BuildingPermitForm(request.POST, instance=building_permit)
+                form = BuildingPermitForm(
+                    request.POST, instance=building_permit)
             if form.is_valid():
                 form.save()
             return HttpResponse(
@@ -178,7 +256,8 @@ def delete_building_permit(request, id):
 
             # Update status to "Reverted"
             try:
-                new_status = DocumentStatus.objects.get(document_status="Reverted")
+                new_status = DocumentStatus.objects.get(
+                    document_status="Reverted")
                 building_permit.status = (
                     new_status  # Assign the DocumentStatus instance
                 )
@@ -224,14 +303,39 @@ def esign_building_permit(request, id):
     if request.user.is_authenticated:
         building_permit = get_object_or_404(BuildingPermit, pk=id)
         form = BuildingPermitForm(instance=building_permit)
+        username = building_permit.res_id.user.username
         if request.method == "POST":
+            email_msg = request.POST.get("reason_masage")
+
+            # Prepare email content
+            subject = "Good news! Your Request are ready to claim"
+            message = f"""
+            Dear {username},
+
+            We are pleased to inform you that your request has been approved and is ready for pick-up. Kindy prepare the necessary documents for claiming. 
+            If you have any questions or concerns, please do not hesitate to contact us at the following numbers:            
+            Globe: 09361174734
+            TM: 09057198345
+            
+            Sincerely,
+            The Barangay E-Service Team
+            """
+            email_from = settings.EMAIL_HOST_USER
+            recipient_list = [building_permit.res_id.user.email]
+
+            # Send email
+            try:
+                send_mail(subject, message, email_from, recipient_list)
+            except Exception as e:
+                return HttpResponse(f"Failed to send email: {e}", status=500)
             if building_permit.status.document_status == "Forwarded to Kapitan":
                 new_status = DocumentStatus.objects.get(
                     document_status="Ready to Claim(e-Signed)"
                 )
                 building_permit.status = new_status
                 building_permit.save()
-                form = BuildingPermitForm(request.POST, instance=building_permit)
+                form = BuildingPermitForm(
+                    request.POST, instance=building_permit)
             if form.is_valid():
                 form.save()
             return HttpResponse(
@@ -254,12 +358,38 @@ def esign_button_bldp(request, id):
     if request.user.is_authenticated:
         building_permit = get_object_or_404(BuildingPermit, pk=id)
         form = BuildingPermitForm(instance=building_permit)
+        username = building_permit.res_id.user.username
         if request.method == "POST":
+            email_msg = request.POST.get("reason_masage")
+
+            # Prepare email content
+            subject = "Good news! Your Request has been officially released"
+            message = f"""
+            Dear {username},
+
+            We are pleased to inform you that your request has been officially released. Thank you for your using our service!
+            If you have any questions or concerns, please do not hesitate to contact us at the following numbers:            
+            Globe: 09361174734
+            TM: 09057198345
+            
+            Sincerely,
+            The Barangay E-Service Team
+            """
+            email_from = settings.EMAIL_HOST_USER
+            recipient_list = [building_permit.res_id.user.email]
+
+            # Send email
+            try:
+                send_mail(subject, message, email_from, recipient_list)
+            except Exception as e:
+                return HttpResponse(f"Failed to send email: {e}", status=500)
             if building_permit.status.document_status == "Ready to Claim(e-Signed)":
-                new_status = DocumentStatus.objects.get(document_status="Released")
+                new_status = DocumentStatus.objects.get(
+                    document_status="Released")
                 building_permit.status = new_status
                 building_permit.save()
-                form = BuildingPermitForm(request.POST, instance=building_permit)
+                form = BuildingPermitForm(
+                    request.POST, instance=building_permit)
             if form.is_valid():
                 form.save()
             return HttpResponse(

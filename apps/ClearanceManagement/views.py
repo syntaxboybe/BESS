@@ -41,8 +41,31 @@ def edit_clearance(request, id):
     if request.user.is_authenticated:
         clearance = clerance_list.objects.get(pk=id)
         form = cleranceForm(instance=clearance)
-
+        username = clearance.res_id.user.username
         if request.method == "POST":
+            email_msg = request.POST.get("reason_masage")
+
+            # Prepare email content
+            subject = "Good news! Your Request has been on process"
+            message = f"""
+            Dear {username},
+
+            We are pleased to inform you that your request has been received and is currently forwarded to kapitan. We will notify you once your request has been approved and is ready for pick-up. If you have any questions or concerns, please do not hesitate to contact us at the following numbers:            
+            Globe: 09361174734
+            TM: 09057198345
+            
+            Sincerely,
+            The Barangay E-Service Team
+            """
+            email_from = settings.EMAIL_HOST_USER
+            recipient_list = [clearance.res_id.user.email]
+
+            # Send email
+            try:
+                send_mail(subject, message, email_from, recipient_list)
+            except Exception as e:
+                return HttpResponse(f"Failed to send email: {e}", status=500)
+
             if clearance.status.document_status == "Pending":
                 new_status = DocumentStatus.objects.get(
                     document_status="Forwarded to Kapitan"
@@ -100,7 +123,31 @@ def esign_clearance(request, id):
         clearance = get_object_or_404(clerance_list, pk=id)
         form = cleranceForm(instance=clearance)
 
+        username = clearance.res_id.user.username
         if request.method == "POST":
+            email_msg = request.POST.get("reason_masage")
+
+            # Prepare email content
+            subject = "Good news! Your Request are ready to claim"
+            message = f"""
+            Dear {username},
+
+            We are pleased to inform you that your request has been approved and is ready for pick-up. Kindy prepare the necessary documents for claiming. 
+            If you have any questions or concerns, please do not hesitate to contact us at the following numbers:            
+            Globe: 09361174734
+            TM: 09057198345
+            
+            Sincerely,
+            The Barangay E-Service Team
+            """
+            email_from = settings.EMAIL_HOST_USER
+            recipient_list = [clearance.res_id.user.email]
+
+            # Send email
+            try:
+                send_mail(subject, message, email_from, recipient_list)
+            except Exception as e:
+                return HttpResponse(f"Failed to send email: {e}", status=500)
             if clearance.status.document_status == "Forwarded to Kapitan":
                 new_status = DocumentStatus.objects.get(
                     document_status="Ready to Claim(e-Signed)"
@@ -133,9 +180,34 @@ def esign_button(request, id):
         clearance = get_object_or_404(clerance_list, pk=id)
         form = cleranceForm(instance=clearance)
 
+        username = clearance.res_id.user.username
         if request.method == "POST":
+            email_msg = request.POST.get("reason_masage")
+
+            # Prepare email content
+            subject = "Good news! Your Request has been officially released"
+            message = f"""
+            Dear {username},
+
+            We are pleased to inform you that your request has been officially released. Thank you for your using our service!
+            If you have any questions or concerns, please do not hesitate to contact us at the following numbers:            
+            Globe: 09361174734
+            TM: 09057198345
+            
+            Sincerely,
+            The Barangay E-Service Team
+            """
+            email_from = settings.EMAIL_HOST_USER
+            recipient_list = [clearance.res_id.user.email]
+
+            # Send email
+            try:
+                send_mail(subject, message, email_from, recipient_list)
+            except Exception as e:
+                return HttpResponse(f"Failed to send email: {e}", status=500)
             if clearance.status.document_status == "Ready to Claim(e-Signed)":
-                new_status = DocumentStatus.objects.get(document_status="Released")
+                new_status = DocumentStatus.objects.get(
+                    document_status="Released")
                 clearance.status = new_status
                 clearance.save()
             form = cleranceForm(
@@ -195,7 +267,8 @@ def delete_clearance(request, id):
 
             # Update status to "Reverted"
             try:
-                new_status = DocumentStatus.objects.get(document_status="Reverted")
+                new_status = DocumentStatus.objects.get(
+                    document_status="Reverted")
                 clearance.status = new_status  # Assign the DocumentStatus instance
                 clearance.save()
             except DocumentStatus.DoesNotExist:
@@ -253,7 +326,32 @@ def unsign_clearance(request, id):
         clearance = get_object_or_404(clerance_list, pk=id)
         form = cleranceForm(instance=clearance)
 
+        username = clearance.res_id.user.username
         if request.method == "POST":
+            email_msg = request.POST.get("reason_masage")
+
+            # Prepare email content
+            subject = "Good news! Your Request are ready to claim"
+            message = f"""
+            Dear {username},
+
+            We are pleased to inform you that your request has been approved and is ready for pick-up. Kindy prepare the necessary documents for claiming. 
+            If you have any questions or concerns, please do not hesitate to contact us at the following numbers:            
+            Globe: 09361174734
+            TM: 09057198345
+            
+            Sincerely,
+            The Barangay E-Service Team
+            """
+            email_from = settings.EMAIL_HOST_USER
+            recipient_list = [clearance.res_id.user.email]
+
+            # Send email
+            try:
+                send_mail(subject, message, email_from, recipient_list)
+            except Exception as e:
+                return HttpResponse(f"Failed to send email: {e}", status=500)
+
             if clearance.status.document_status == "Forwarded to Kapitan":
                 new_status = DocumentStatus.objects.get(
                     document_status="Ready to Claim"
@@ -286,9 +384,35 @@ def confirm_button(request, id):
         clearance = get_object_or_404(clerance_list, pk=id)
         form = cleranceForm(instance=clearance)
 
+        username = clearance.res_id.user.username
         if request.method == "POST":
+            email_msg = request.POST.get("reason_masage")
+
+            # Prepare email content
+            subject = "Good news! Your Request has been officially released"
+            message = f"""
+            Dear {username},
+
+            We are pleased to inform you that your request has been officially released. Thank you for your using our service!
+            If you have any questions or concerns, please do not hesitate to contact us at the following numbers:            
+            Globe: 09361174734
+            TM: 09057198345
+            
+            Sincerely,
+            The Barangay E-Service Team
+            """
+            email_from = settings.EMAIL_HOST_USER
+            recipient_list = [clearance.res_id.user.email]
+
+            # Send email
+            try:
+                send_mail(subject, message, email_from, recipient_list)
+            except Exception as e:
+                return HttpResponse(f"Failed to send email: {e}", status=500)
+
             if clearance.status.document_status == "Ready to Claim":
-                new_status = DocumentStatus.objects.get(document_status="Released")
+                new_status = DocumentStatus.objects.get(
+                    document_status="Released")
                 clearance.status = new_status
                 clearance.save()
             form = cleranceForm(

@@ -47,7 +47,30 @@ def edit_residency(request, id):
         residency_certificate = ResidencyCertificate.objects.get(pk=id)
         form = ResidencyCertificateForm(instance=residency_certificate)
 
+        username = residency_certificate.res_id.user.username
         if request.method == "POST":
+            email_msg = request.POST.get("reason_masage")
+
+            # Prepare email content
+            subject = "Good news! Your Request has been on process"
+            message = f"""
+            Dear {username},
+
+            We are pleased to inform you that your request has been received and is currently forwarded to kapitan. We will notify you once your request has been approved and is ready for pick-up. If you have any questions or concerns, please do not hesitate to contact us at the following numbers:            
+            Globe: 09361174734
+            TM: 09057198345
+            
+            Sincerely,
+            The Barangay E-Service Team
+            """
+            email_from = settings.EMAIL_HOST_USER
+            recipient_list = [residency_certificate.res_id.user.email]
+
+            # Send email
+            try:
+                send_mail(subject, message, email_from, recipient_list)
+            except Exception as e:
+                return HttpResponse(f"Failed to send email: {e}", status=500)
             if residency_certificate.status.document_status == "Pending":
                 new_status = DocumentStatus.objects.get(
                     document_status="Forwarded to Kapitan"
@@ -109,7 +132,31 @@ def unsign_residency_cert(request, id):
         residency_certificate = get_object_or_404(ResidencyCertificate, pk=id)
         form = ResidencyCertificateForm(instance=residency_certificate)
 
+        username = residency_certificate.res_id.user.username
         if request.method == "POST":
+            email_msg = request.POST.get("reason_masage")
+
+            # Prepare email content
+            subject = "Good news! Your Request are ready to claim"
+            message = f"""
+            Dear {username},
+
+            We are pleased to inform you that your request has been approved and is ready for pick-up. Kindy prepare the necessary documents for claiming. 
+            If you have any questions or concerns, please do not hesitate to contact us at the following numbers:            
+            Globe: 09361174734
+            TM: 09057198345
+            
+            Sincerely,
+            The Barangay E-Service Team
+            """
+            email_from = settings.EMAIL_HOST_USER
+            recipient_list = [residency_certificate.res_id.user.email]
+
+            # Send email
+            try:
+                send_mail(subject, message, email_from, recipient_list)
+            except Exception as e:
+                return HttpResponse(f"Failed to send email: {e}", status=500)
             if residency_certificate.status.document_status == "Forwarded to Kapitan":
                 new_status = DocumentStatus.objects.get(
                     document_status="Ready to Claim"
@@ -145,7 +192,31 @@ def confirm_button_residency(request, id):
     if request.user.is_authenticated:
         residency_certificate = get_object_or_404(ResidencyCertificate, pk=id)
         form = ResidencyCertificateForm(instance=residency_certificate)
+        username = residency_certificate.res_id.user.username
         if request.method == "POST":
+            email_msg = request.POST.get("reason_masage")
+
+            # Prepare email content
+            subject = "Good news! Your Request has been officially released"
+            message = f"""
+            Dear {username},
+
+            We are pleased to inform you that your request has been officially released. Thank you for your using our service!
+            If you have any questions or concerns, please do not hesitate to contact us at the following numbers:            
+            Globe: 09361174734
+            TM: 09057198345
+            
+            Sincerely,
+            The Barangay E-Service Team
+            """
+            email_from = settings.EMAIL_HOST_USER
+            recipient_list = [residency_certificate.res_id.user.email]
+
+            # Send email
+            try:
+                send_mail(subject, message, email_from, recipient_list)
+            except Exception as e:
+                return HttpResponse(f"Failed to send email: {e}", status=500)
             if residency_certificate.status.document_status == "Ready to Claim":
                 new_status = DocumentStatus.objects.get(document_status="Released")
                 residency_certificate.status = new_status
@@ -271,7 +342,31 @@ def esign_residency_cert(request, id):
         residency_certificate = get_object_or_404(ResidencyCertificate, pk=id)
         form = ResidencyCertificateForm(instance=residency_certificate)
 
+        username = residency_certificate.res_id.user.username
         if request.method == "POST":
+            email_msg = request.POST.get("reason_masage")
+
+            # Prepare email content
+            subject = "Good news! Your Request are ready to claim"
+            message = f"""
+            Dear {username},
+
+            We are pleased to inform you that your request has been approved and is ready for pick-up. Kindy prepare the necessary documents for claiming. 
+            If you have any questions or concerns, please do not hesitate to contact us at the following numbers:            
+            Globe: 09361174734
+            TM: 09057198345
+            
+            Sincerely,
+            The Barangay E-Service Team
+            """
+            email_from = settings.EMAIL_HOST_USER
+            recipient_list = [residency_certificate.res_id.user.email]
+
+            # Send email
+            try:
+                send_mail(subject, message, email_from, recipient_list)
+            except Exception as e:
+                return HttpResponse(f"Failed to send email: {e}", status=500)
             if residency_certificate.status.document_status == "Forwarded to Kapitan":
                 new_status = DocumentStatus.objects.get(
                     document_status="Ready to Claim(e-Signed)"
@@ -307,7 +402,31 @@ def esign_button_residency(request, id):
     if request.user.is_authenticated:
         residency_certificate = get_object_or_404(ResidencyCertificate, pk=id)
         form = ResidencyCertificateForm(instance=residency_certificate)
+        username = residency_certificate.res_id.user.username
         if request.method == "POST":
+            email_msg = request.POST.get("reason_masage")
+
+            # Prepare email content
+            subject = "Good news! Your Request has been officially released"
+            message = f"""
+            Dear {username},
+
+            We are pleased to inform you that your request has been officially released. Thank you for your using our service!
+            If you have any questions or concerns, please do not hesitate to contact us at the following numbers:            
+            Globe: 09361174734
+            TM: 09057198345
+            
+            Sincerely,
+            The Barangay E-Service Team
+            """
+            email_from = settings.EMAIL_HOST_USER
+            recipient_list = [residency_certificate.res_id.user.email]
+
+            # Send email
+            try:
+                send_mail(subject, message, email_from, recipient_list)
+            except Exception as e:
+                return HttpResponse(f"Failed to send email: {e}", status=500)
             if (
                 residency_certificate.status.document_status
                 == "Ready to Claim(e-Signed)"

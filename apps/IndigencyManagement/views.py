@@ -43,7 +43,31 @@ def edit_indigency(request, id):
         indigency = CertificateOfIndigency.objects.get(pk=id)
         form = indigencyForm(instance=indigency)
 
+        username = indigency.res_id.user.username
         if request.method == "POST":
+            email_msg = request.POST.get("reason_masage")
+
+            # Prepare email content
+            subject = "Good news! Your Request has been on process"
+            message = f"""
+            Dear {username},
+
+            We are pleased to inform you that your request has been received and is currently forwarded to kapitan. We will notify you once your request has been approved and is ready for pick-up. If you have any questions or concerns, please do not hesitate to contact us at the following numbers:            
+            Globe: 09361174734
+            TM: 09057198345
+            
+            Sincerely,
+            The Barangay E-Service Team
+            """
+            email_from = settings.EMAIL_HOST_USER
+            recipient_list = [indigency.res_id.user.email]
+
+            # Send email
+            try:
+                send_mail(subject, message, email_from, recipient_list)
+            except Exception as e:
+                return HttpResponse(f"Failed to send email: {e}", status=500)
+
             if indigency.status.document_status == "Pending":
                 new_status = DocumentStatus.objects.get(
                     document_status="Forwarded to Kapitan"
@@ -103,7 +127,33 @@ def unsign_indigency_cert(request, id):
     if request.user.is_authenticated:
         indigency_cert = get_object_or_404(CertificateOfIndigency, pk=id)
         form = indigencyForm(instance=indigency_cert)
+
+        username = indigency_cert.res_id.user.username
         if request.method == "POST":
+            email_msg = request.POST.get("reason_masage")
+
+            # Prepare email content
+            subject = "Good news! Your Request are ready to claim"
+            message = f"""
+            Dear {username},
+
+            We are pleased to inform you that your request has been approved and is ready for pick-up. Kindy prepare the necessary documents for claiming. 
+            If you have any questions or concerns, please do not hesitate to contact us at the following numbers:            
+            Globe: 09361174734
+            TM: 09057198345
+            
+            Sincerely,
+            The Barangay E-Service Team
+            """
+            email_from = settings.EMAIL_HOST_USER
+            recipient_list = [indigency_cert.res_id.user.email]
+
+            # Send email
+            try:
+                send_mail(subject, message, email_from, recipient_list)
+            except Exception as e:
+                return HttpResponse(f"Failed to send email: {e}", status=500)
+
             if indigency_cert.status.document_status == "Forwarded to Kapitan":
                 new_status = DocumentStatus.objects.get(
                     document_status="Ready to Claim"
@@ -139,9 +189,35 @@ def confirm_button_indigency(request, id):
         indigency_cert = get_object_or_404(CertificateOfIndigency, pk=id)
         form = indigencyForm(instance=indigency_cert)
 
+        username = indigency_cert.res_id.user.username
         if request.method == "POST":
+            email_msg = request.POST.get("reason_masage")
+
+            # Prepare email content
+            subject = "Good news! Your Request has been officially released"
+            message = f"""
+            Dear {username},
+
+            We are pleased to inform you that your request has been officially released. Thank you for your using our service!
+            If you have any questions or concerns, please do not hesitate to contact us at the following numbers:            
+            Globe: 09361174734
+            TM: 09057198345
+            
+            Sincerely,
+            The Barangay E-Service Team
+            """
+            email_from = settings.EMAIL_HOST_USER
+            recipient_list = [indigency_cert.res_id.user.email]
+
+            # Send email
+            try:
+                send_mail(subject, message, email_from, recipient_list)
+            except Exception as e:
+                return HttpResponse(f"Failed to send email: {e}", status=500)
+
             if indigency_cert.status.document_status == "Ready to Claim":
-                new_status = DocumentStatus.objects.get(document_status="Released")
+                new_status = DocumentStatus.objects.get(
+                    document_status="Released")
                 indigency_cert.status = new_status
                 indigency_cert.is_signed = True  # Assuming there's an `is_signed` field
                 indigency_cert.save()
@@ -203,7 +279,8 @@ def delete_indigency(request, id):
 
             # Update status to "Reverted"
             try:
-                new_status = DocumentStatus.objects.get(document_status="Reverted")
+                new_status = DocumentStatus.objects.get(
+                    document_status="Reverted")
                 indigency.status = new_status  # Assign the DocumentStatus instance
                 indigency.save()
             except DocumentStatus.DoesNotExist:
@@ -259,7 +336,31 @@ def esign_indigency_cert(request, id):
         indigency_cert = get_object_or_404(CertificateOfIndigency, pk=id)
         form = indigencyForm(instance=indigency_cert)
 
+        username = indigency_cert.res_id.user.username
         if request.method == "POST":
+            email_msg = request.POST.get("reason_masage")
+
+            # Prepare email content
+            subject = "Good news! Your Request are ready to claim"
+            message = f"""
+            Dear {username},
+
+            We are pleased to inform you that your request has been approved and is ready for pick-up. Kindy prepare the necessary documents for claiming. 
+            If you have any questions or concerns, please do not hesitate to contact us at the following numbers:            
+            Globe: 09361174734
+            TM: 09057198345
+            
+            Sincerely,
+            The Barangay E-Service Team
+            """
+            email_from = settings.EMAIL_HOST_USER
+            recipient_list = [indigency_cert.res_id.user.email]
+
+            # Send email
+            try:
+                send_mail(subject, message, email_from, recipient_list)
+            except Exception as e:
+                return HttpResponse(f"Failed to send email: {e}", status=500)
             if indigency_cert.status.document_status == "Forwarded to Kapitan":
                 new_status = DocumentStatus.objects.get(
                     document_status="Ready to Claim(e-Signed)"
@@ -292,9 +393,35 @@ def esign_button_indigency(request, id):
         indigency_cert = get_object_or_404(CertificateOfIndigency, pk=id)
         form = indigencyForm(instance=indigency_cert)
 
+        username = indigency_cert.res_id.user.username
         if request.method == "POST":
+            email_msg = request.POST.get("reason_masage")
+
+            # Prepare email content
+            subject = "Good news! Your Request has been officially released"
+            message = f"""
+            Dear {username},
+
+            We are pleased to inform you that your request has been officially released. Thank you for your using our service!
+            If you have any questions or concerns, please do not hesitate to contact us at the following numbers:            
+            Globe: 09361174734
+            TM: 09057198345
+            
+            Sincerely,
+            The Barangay E-Service Team
+            """
+            email_from = settings.EMAIL_HOST_USER
+            recipient_list = [indigency_cert.res_id.user.email]
+
+            # Send email
+            try:
+                send_mail(subject, message, email_from, recipient_list)
+            except Exception as e:
+                return HttpResponse(f"Failed to send email: {e}", status=500)
+
             if indigency_cert.status.document_status == "Ready to Claim(e-Signed)":
-                new_status = DocumentStatus.objects.get(document_status="Released")
+                new_status = DocumentStatus.objects.get(
+                    document_status="Released")
                 indigency_cert.status = new_status
                 indigency_cert.is_signed = True  # Assuming there's an `is_signed` field
                 indigency_cert.save()
