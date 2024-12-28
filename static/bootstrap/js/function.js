@@ -12,6 +12,23 @@ function openRequest(evt, documentType) {
   evt.currentTarget.className += " active";
 }
 
+// Get current date and time using JavaScript
+const now = new Date();
+const formattedDate = now.toLocaleDateString("en-US", {
+  month: "long",
+  day: "numeric",
+  year: "numeric",
+});
+const formattedTime = now.toLocaleTimeString("en-US", {
+  hour: "numeric",
+  minute: "numeric",
+  hour12: true,
+});
+
+// Function to update the title dynamically
+function getDynamicTitle() {
+  return `List of Residents as of ${formattedDate} at ${formattedTime}`;
+}
 // Resident Table List
 var buttonConfigResident = [];
 var exportTitle = "ExportTableData";
@@ -21,7 +38,7 @@ buttonConfigResident.push({
     '<i class="lar la-copy fs-3" style="vertical-align: middle;"></i>' +
     '<span style="vertical-align: middle;">Copy<span>',
   exportOptions: { columns: [0, 1, 2, 3, 4, 5, 6], rows: ":visible" },
-  title: "Registered Resident",
+  title: getDynamicTitle(),
 });
 
 buttonConfigResident.push({
@@ -31,7 +48,7 @@ buttonConfigResident.push({
     '<span style="vertical-align: middle;">Excel<span>',
   className: "btn-success",
   exportOptions: { columns: [0, 1, 2, 3, 4, 5, 6], rows: ":visible" },
-  title: "Registered Resident",
+  title: getDynamicTitle(),
 });
 
 buttonConfigResident.push({
@@ -41,7 +58,7 @@ buttonConfigResident.push({
     '<span style="vertical-align: middle;">CSV<span>',
   className: "btn btn-dark",
   exportOptions: { columns: [0, 1, 2, 3, 4, 5, 6], rows: ":visible" },
-  title: "Registered Resident",
+  title: getDynamicTitle(),
 });
 
 buttonConfigResident.push({
@@ -51,7 +68,7 @@ buttonConfigResident.push({
     '<span style="vertical-align: middle;">PDF<span>',
   className: "btn btn-danger",
   exportOptions: { columns: [0, 1, 2, 3, 4, 5, 6], rows: ":visible" },
-  title: "Registered Resident",
+  title: getDynamicTitle(),
 });
 
 buttonConfigResident.push({
@@ -61,7 +78,7 @@ buttonConfigResident.push({
     '<span style="vertical-align: middle;">Print<span>',
   className: "btn-warning",
   exportOptions: { columns: [0, 1, 2, 3, 4, 5, 6], rows: ":visible" },
-  title: "Registered Resident",
+  title: getDynamicTitle(),
 });
 
 $(document).ready(function () {
@@ -90,9 +107,15 @@ $(document).ready(function () {
         "Purok I",
         "Purok II",
         "Purok III",
-        "Purok IV",
+        "Purok IV - A",
+        "Purok IV - B",
         "Purok V",
         "Purok VI",
+        "Purok VII - A",
+        "Purok VII - B",
+        "Purok VIII",
+        "Purok XI",
+        "Purok X",
       ],
       style_class: "form-select",
       filter_reset_button_text: false,
@@ -106,8 +129,8 @@ $("span").each(function () {
       .html()
       .replace(
         /(?<!-)(\Male\b)(?!([^<]+)?>)(?!-)/,
-        '<span class="male-style"><i class="las la-male"></i>Male</span>',
-      ),
+        '<span class="male-style"><i class="las la-male"></i>Male</span>'
+      )
   );
 });
 
@@ -117,8 +140,8 @@ $("span").each(function () {
       .html()
       .replace(
         /(?<!-)(\Female\b)(?!([^<]+)?>)(?!-)/,
-        '<span class="female-style"><i class="las la-female"></i>Female</span>',
-      ),
+        '<span class="female-style"><i class="las la-female"></i>Female</span>'
+      )
   );
 });
 // End Resident Table List
