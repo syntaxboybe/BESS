@@ -19,7 +19,7 @@ class CleranceForm(forms.ModelForm):
             "purpose": forms.TextInput(
                 attrs={
                     "class": "form-control form-control-sm",
-                    "placeholder": "purpose",
+                    "placeholder": "",
                 }
             ),
         }
@@ -41,7 +41,7 @@ class IndigencyForm(forms.ModelForm):
             "purpose": forms.TextInput(
                 attrs={
                     "class": "form-control form-control-sm",
-                    "placeholder": "purpose",
+                    "placeholder": "",
                 }
             ),
         }
