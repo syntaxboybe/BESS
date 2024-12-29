@@ -52,4 +52,14 @@ urlpatterns = [
         esign_button_residency,
         name="esign_button_residency",
     ),
+    path(
+        "release_esigned_residency/<hashid:id>/",
+        release_esigned_residency,
+        name="release_esigned_residency",
+    ),
+    path(
+        "release_unsign_residency/<hashid:id>/",
+        release_unsign_residency,
+        name="release_unsign_residency",
+    ),
 ]

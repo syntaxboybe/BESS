@@ -48,7 +48,7 @@
                                     <th scope="col">Date Released</th>
                                     <th scope="col">Transaction ID</th>
                                     <th scope="col">Status</th>
-                                    <th scope="col" class="text-center">Action</th>
+                                    <!--<th scope="col" class="text-center">Action</th>-->
                                 </tr>
                             </thead>                           
                                 <!-- business permit -->
@@ -61,12 +61,12 @@
                                     <td>{{business_list.paid_or_date_issued|date:"Y-m-d"}}</td>
                                     <td>{{business_list.transaction_id}}</td>
                                     <td><span>{{business_list.status}}</span></td>
-                                    <td class="text-center">
-                                        <a target=”_blank” type="button" class="btn btn-primary bg-gradient" href="{% url 'generate_business_permit' business_list.id %}">
-                                            <i class="fas fa-eye fs-5" style="vertical-align: middle;"></i>
-                                            <span style="vertical-align: middle;"> View PDF</span>
-                                        </a>
-                                    </td>
+                                    <!--<td class="text-center">-->
+                                    <!--    <a target=”_blank” type="button" class="btn btn-primary bg-gradient" href="{% url 'generate_business_permit' business_list.id %}">-->
+                                    <!--        <i class="fas fa-eye fs-5" style="vertical-align: middle;"></i>-->
+                                    <!--        <span style="vertical-align: middle;"> View PDF</span>-->
+                                    <!--    </a>-->
+                                    <!--</td>-->
                                 </tr>
                                 {% endfor %}
                             </tbody>

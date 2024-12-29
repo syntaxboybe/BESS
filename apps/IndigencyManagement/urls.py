@@ -40,4 +40,14 @@ urlpatterns = [
         esign_button_indigency,
         name="esign_button_indigency",
     ),
+    path(
+        "release_esigned_indigency/<hashid:id>/",
+        release_esigned_indigency,
+        name="release_esigned_indigency",
+    ),
+    path(
+        "release_unsign_indigency/<hashid:id>/",
+        release_unsign_indigency,
+        name="release_unsign_indigency",
+    ),
 ]

@@ -218,7 +218,8 @@ def confirm_button_residency(request, id):
             except Exception as e:
                 return HttpResponse(f"Failed to send email: {e}", status=500)
             if residency_certificate.status.document_status == "Ready to Claim":
-                new_status = DocumentStatus.objects.get(document_status="Released")
+                new_status = DocumentStatus.objects.get(
+                    document_status="Released")
                 residency_certificate.status = new_status
                 residency_certificate.is_signed = (
                     True  # Assuming there's an `is_signed` field
@@ -282,7 +283,8 @@ def delete_resident_certificate_request(request, id):
 
             # Update status to "Reverted"
             try:
-                new_status = DocumentStatus.objects.get(document_status="Reverted")
+                new_status = DocumentStatus.objects.get(
+                    document_status="Reverted")
                 residency_certificate.status = (
                     new_status  # Assign the DocumentStatus instance
                 )
@@ -431,7 +433,8 @@ def esign_button_residency(request, id):
                 residency_certificate.status.document_status
                 == "Ready to Claim(e-Signed)"
             ):
-                new_status = DocumentStatus.objects.get(document_status="Released")
+                new_status = DocumentStatus.objects.get(
+                    document_status="Released")
                 residency_certificate.status = new_status
                 residency_certificate.is_signed = (
                     True  # Assuming there's an `is_signed` field
@@ -449,6 +452,129 @@ def esign_button_residency(request, id):
         context = {"ResidencyCert": residency_certificate}
         return render(
             request, "ResidencyCertificate/esign_button_residency.html", context
+        )
+    else:
+        return redirect("loginPage")
+
+
+@cache_control(no_cache=True, must_revalidate=True, no_store=True)
+@login_required(login_url="loginPage")
+@admin_only
+def release_esigned_residency(request, id):
+    """
+    Mark a clearance as signed.
+    """
+    if request.user.is_authenticated:
+        residency_certificate = get_object_or_404(ResidencyCertificate, pk=id)
+        form = ResidencyCertificateForm(instance=residency_certificate)
+        username = residency_certificate.res_id.user.username
+        if request.method == "POST":
+            email_msg = request.POST.get("reason_masage")
+
+            # Prepare email content
+            subject = "Good news! Your Request has been officially released"
+            message = f"""
+            Dear {username},
+
+            We are pleased to inform you that your request has been officially released. Thank you for your using our service!
+            If you have any questions or concerns, please do not hesitate to contact us at the following numbers:            
+            Globe: 09361174734
+            TM: 09057198345
+            
+            Sincerely,
+            The Barangay E-Service Team
+            """
+            email_from = settings.EMAIL_HOST_USER
+            recipient_list = [residency_certificate.res_id.user.email]
+
+            # Send email
+            try:
+                send_mail(subject, message, email_from, recipient_list)
+            except Exception as e:
+                return HttpResponse(f"Failed to send email: {e}", status=500)
+            if (
+                residency_certificate.status.document_status
+                == "Ready to Claim(e-Signed)"
+            ):
+                new_status = DocumentStatus.objects.get(
+                    document_status="Released(e-Signed)"
+                )
+                residency_certificate.status = new_status
+                residency_certificate.is_signed = (
+                    True  # Assuming there's an `is_signed` field
+                )
+                residency_certificate.save()
+
+                form = ResidencyCertificateForm(
+                    request.POST, instance=residency_certificate
+                )
+                if form.is_valid():
+                    form.save()
+                return HttpResponse(status=204, headers={"HX-Trigger": "ResidencyList"})
+
+        # Render the page if the request method is GET
+        context = {"ResidencyCert": residency_certificate}
+        return render(
+            request, "ResidencyCertificate/release_esigned_residency.html", context
+        )
+    else:
+        return redirect("loginPage")
+
+
+@cache_control(no_cache=True, must_revalidate=True, no_store=True)
+@login_required(login_url="loginPage")
+@admin_only
+def release_unsign_residency(request, id):
+    """
+    Mark a clearance as signed.
+    """
+    if request.user.is_authenticated:
+        residency_certificate = get_object_or_404(ResidencyCertificate, pk=id)
+        form = ResidencyCertificateForm(instance=residency_certificate)
+        username = residency_certificate.res_id.user.username
+        if request.method == "POST":
+            email_msg = request.POST.get("reason_masage")
+
+            # Prepare email content
+            subject = "Good news! Your Request has been officially released"
+            message = f"""
+            Dear {username},
+
+            We are pleased to inform you that your request has been officially released. Thank you for your using our service!
+            If you have any questions or concerns, please do not hesitate to contact us at the following numbers:            
+            Globe: 09361174734
+            TM: 09057198345
+            
+            Sincerely,
+            The Barangay E-Service Team
+            """
+            email_from = settings.EMAIL_HOST_USER
+            recipient_list = [residency_certificate.res_id.user.email]
+
+            # Send email
+            try:
+                send_mail(subject, message, email_from, recipient_list)
+            except Exception as e:
+                return HttpResponse(f"Failed to send email: {e}", status=500)
+            if residency_certificate.status.document_status == "Ready to Claim":
+                new_status = DocumentStatus.objects.get(
+                    document_status="Released")
+                residency_certificate.status = new_status
+                residency_certificate.is_signed = (
+                    True  # Assuming there's an `is_signed` field
+                )
+                residency_certificate.save()
+
+                form = ResidencyCertificateForm(
+                    request.POST, instance=residency_certificate
+                )
+                if form.is_valid():
+                    form.save()
+                return HttpResponse(status=204, headers={"HX-Trigger": "ResidencyList"})
+
+        context = {"ResidencyCert": residency_certificate}
+        return render(
+            request, "ResidencyCertificate/release_unsign_residency.html", context
         )
     else:
         return redirect("loginPage")

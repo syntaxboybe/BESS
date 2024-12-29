@@ -119,7 +119,10 @@ $(document).ready(function () {
 $('#report_table')
 .find('span')
     .each(function () {
-    if ($(this).html() == 'Released') {
-        $(this).addClass('released-status');
+    if ($(this).html() == "Released") {
+        $(this).addClass("released-status");
+    }
+    if ($(this).html() == "Released(e-Signed)") {
+        $(this).addClass("released-esigned-status");
     }
 });

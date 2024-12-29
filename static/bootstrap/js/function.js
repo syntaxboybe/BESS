@@ -157,6 +157,9 @@ $(document).ready(function () {
       if ($(this).html() == "Released") {
         $(this).addClass("released-status");
       }
+      if ($(this).html() == "Released(e-Signed)") {
+        $(this).addClass("released-esigned-status");
+      }
       if ($(this).html() == "Ready to Claim") {
         $(this).addClass("ready-status");
       }
@@ -206,6 +209,7 @@ $(document).ready(function () {
         "Reverted",
         "Forwarded to Kapitan",
         "Printed",
+        "Released(e-Signed)"
       ],
       style_class: "form-select",
       filter_reset_button_text: false,

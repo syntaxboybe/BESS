@@ -439,3 +439,122 @@ def esign_button_indigency(request, id):
         )
     else:
         return redirect("loginPage")
+
+
+@cache_control(no_cache=True, must_revalidate=True, no_store=True)
+@login_required(login_url="loginPage")
+@admin_only
+def release_esigned_indigency(request, id):
+    """
+    Mark a clearance as signed.
+    """
+    if request.user.is_authenticated:
+        indigency_cert = get_object_or_404(CertificateOfIndigency, pk=id)
+        form = indigencyForm(instance=indigency_cert)
+
+        username = indigency_cert.res_id.user.username
+        if request.method == "POST":
+            email_msg = request.POST.get("reason_masage")
+
+            # Prepare email content
+            subject = "Good news! Your Request has been officially released"
+            message = f"""
+            Dear {username},
+
+            We are pleased to inform you that your request has been officially released. Thank you for your using our service!
+            If you have any questions or concerns, please do not hesitate to contact us at the following numbers:            
+            Globe: 09361174734
+            TM: 09057198345
+            
+            Sincerely,
+            The Barangay E-Service Team
+            """
+            email_from = settings.EMAIL_HOST_USER
+            recipient_list = [indigency_cert.res_id.user.email]
+
+            # Send email
+            try:
+                send_mail(subject, message, email_from, recipient_list)
+            except Exception as e:
+                return HttpResponse(f"Failed to send email: {e}", status=500)
+
+            if indigency_cert.status.document_status == "Ready to Claim(e-Signed)":
+                new_status = DocumentStatus.objects.get(
+                    document_status="Released(e-Signed)"
+                )
+                indigency_cert.status = new_status
+                indigency_cert.is_signed = True  # Assuming there's an `is_signed` field
+                indigency_cert.save()
+                form = indigencyForm(request.POST, instance=indigency_cert)
+
+                if form.is_valid():
+                    form.save()
+                return HttpResponse(
+                    status=204, headers={"HX-Trigger": "indigencylistUpdate"}
+                )
+
+        context = {"IndigencyCert": indigency_cert}
+        return render(
+            request, "IndigencyManagement/release_esigned_indigency.html", context
+        )
+    else:
+        return redirect("loginPage")
+
+
+@cache_control(no_cache=True, must_revalidate=True, no_store=True)
+@login_required(login_url="loginPage")
+@admin_only
+def release_unsign_indigency(request, id):
+    """
+    Mark a clearance as signed.
+    """
+    if request.user.is_authenticated:
+        indigency_cert = get_object_or_404(CertificateOfIndigency, pk=id)
+        form = indigencyForm(instance=indigency_cert)
+
+        username = indigency_cert.res_id.user.username
+        if request.method == "POST":
+            email_msg = request.POST.get("reason_masage")
+
+            # Prepare email content
+            subject = "Good news! Your Request has been officially released"
+            message = f"""
+            Dear {username},
+
+            We are pleased to inform you that your request has been officially released. Thank you for your using our service!
+            If you have any questions or concerns, please do not hesitate to contact us at the following numbers:            
+            Globe: 09361174734
+            TM: 09057198345
+            
+            Sincerely,
+            The Barangay E-Service Team
+            """
+            email_from = settings.EMAIL_HOST_USER
+            recipient_list = [indigency_cert.res_id.user.email]
+
+            # Send email
+            try:
+                send_mail(subject, message, email_from, recipient_list)
+            except Exception as e:
+                return HttpResponse(f"Failed to send email: {e}", status=500)
+
+            if indigency_cert.status.document_status == "Ready to Claim":
+                new_status = DocumentStatus.objects.get(
+                    document_status="Released")
+                indigency_cert.status = new_status
+                indigency_cert.is_signed = True  # Assuming there's an `is_signed` field
+                indigency_cert.save()
+                form = indigencyForm(request.POST, instance=indigency_cert)
+
+                if form.is_valid():
+                    form.save()
+                return HttpResponse(
+                    status=204, headers={"HX-Trigger": "indigencylistUpdate"}
+                )
+
+        context = {"IndigencyCert": indigency_cert}
+        return render(
+            request, "IndigencyManagement/release_unsign_indigency.html", context
+        )
+    else:
+        return redirect("loginPage")

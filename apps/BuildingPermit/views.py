@@ -400,3 +400,114 @@ def esign_button_bldp(request, id):
         return render(request, "BuildingPermit/esign_button_bldp.html", context)
     else:
         return redirect("loginPage")
+
+
+@cache_control(no_cache=True, must_revalidate=True, no_store=True)
+@login_required(login_url="loginPage")
+@admin_only
+def release_unsign_bldp(request, id):
+    """
+    Mark a clearance as signed.
+    """
+    if request.user.is_authenticated:
+        building_permit = get_object_or_404(BuildingPermit, pk=id)
+        form = BuildingPermitForm(instance=building_permit)
+
+        username = building_permit.res_id.user.username
+        if request.method == "POST":
+            email_msg = request.POST.get("reason_masage")
+
+            # Prepare email content
+            subject = "Good news! Your Request has been officially released"
+            message = f"""
+            Dear {username},
+
+            We are pleased to inform you that your request has been officially released. Thank you for your using our service!
+            If you have any questions or concerns, please do not hesitate to contact us at the following numbers:            
+            Globe: 09361174734
+            TM: 09057198345
+            
+            Sincerely,
+            The Barangay E-Service Team
+            """
+            email_from = settings.EMAIL_HOST_USER
+            recipient_list = [building_permit.res_id.user.email]
+
+            # Send email
+            try:
+                send_mail(subject, message, email_from, recipient_list)
+            except Exception as e:
+                return HttpResponse(f"Failed to send email: {e}", status=500)
+
+            if building_permit.status.document_status == "Ready to Claim":
+                new_status = DocumentStatus.objects.get(
+                    document_status="Released")
+                building_permit.status = new_status
+                building_permit.save()
+                form = BuildingPermitForm(
+                    request.POST, instance=building_permit)
+            if form.is_valid():
+                form.save()
+            return HttpResponse(
+                status=204, headers={"HX-Trigger": "BuildingPermitList"}
+            )
+
+        context = {"BuildingPermit": building_permit}
+        return render(request, "BuildingPermit/release_unsign_bldp.html", context)
+    else:
+        return redirect("loginPage")
+
+
+@cache_control(no_cache=True, must_revalidate=True, no_store=True)
+@login_required(login_url="loginPage")
+@admin_only
+def release_esigned_bldp(request, id):
+    """
+    Mark a clearance as signed.
+    """
+    if request.user.is_authenticated:
+        building_permit = get_object_or_404(BuildingPermit, pk=id)
+        form = BuildingPermitForm(instance=building_permit)
+        username = building_permit.res_id.user.username
+        if request.method == "POST":
+            email_msg = request.POST.get("reason_masage")
+
+            # Prepare email content
+            subject = "Good news! Your Request has been officially released"
+            message = f"""
+            Dear {username},
+
+            We are pleased to inform you that your request has been officially released. Thank you for your using our service!
+            If you have any questions or concerns, please do not hesitate to contact us at the following numbers:            
+            Globe: 09361174734
+            TM: 09057198345
+            
+            Sincerely,
+            The Barangay E-Service Team
+            """
+            email_from = settings.EMAIL_HOST_USER
+            recipient_list = [building_permit.res_id.user.email]
+
+            # Send email
+            try:
+                send_mail(subject, message, email_from, recipient_list)
+            except Exception as e:
+                return HttpResponse(f"Failed to send email: {e}", status=500)
+            if building_permit.status.document_status == "Ready to Claim(e-Signed)":
+                new_status = DocumentStatus.objects.get(
+                    document_status="Released(e-Signed)"
+                )
+                building_permit.status = new_status
+                building_permit.save()
+                form = BuildingPermitForm(
+                    request.POST, instance=building_permit)
+            if form.is_valid():
+                form.save()
+            return HttpResponse(
+                status=204, headers={"HX-Trigger": "BuildingPermitList"}
+            )
+
+        context = {"BuildingPermit": building_permit}
+        return render(request, "BuildingPermit/release_esigned_bldp.html", context)
+    else:
+        return redirect("loginPage")

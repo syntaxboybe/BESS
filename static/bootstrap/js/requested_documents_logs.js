@@ -146,4 +146,7 @@ $("#requested_logs_table")
     if ($(this).html() == "Ready to Claim(e-Signed)") {
       $(this).addClass("ready-esigned-status");
     }
+    if ($(this).html() == "Released(e-Signed)") {
+      $(this).addClass("released-esigned-status");
+    }
   });

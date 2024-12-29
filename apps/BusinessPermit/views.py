@@ -26,7 +26,8 @@ def business_permit_module(request):
 @admin_only
 def business_permit_list(request):
     if request.user.is_authenticated:
-        context = {"business_permit_list": BusinessPermit.objects.all().order_by("-id")}
+        context = {
+            "business_permit_list": BusinessPermit.objects.all().order_by("-id")}
         return render(request, "BusinessPermit/business_permit_list.html", context)
     else:
         return redirect("loginPage")
@@ -194,7 +195,8 @@ def confirm_button_bsp(request, id):
             except Exception as e:
                 return HttpResponse(f"Failed to send email: {e}", status=500)
             if business_permit.status.document_status == "Ready to Claim":
-                new_status = DocumentStatus.objects.get(document_status="Released")
+                new_status = DocumentStatus.objects.get(
+                    document_status="Released")
                 business_permit.status = new_status
                 business_permit.save()
             form = BusinessPermitForm(request.POST, instance=business_permit)
@@ -252,7 +254,8 @@ def delete_business_permit(request, id):
 
             # Update status to "Reverted"
             try:
-                new_status = DocumentStatus.objects.get(document_status="Reverted")
+                new_status = DocumentStatus.objects.get(
+                    document_status="Reverted")
                 business_permit.status = (
                     new_status  # Assign the DocumentStatus instance
                 )
@@ -381,7 +384,8 @@ def esign_button_bsp(request, id):
                 return HttpResponse(f"Failed to send email: {e}", status=500)
 
             if business_permit.status.document_status == "Ready to Claim(e-Signed)":
-                new_status = DocumentStatus.objects.get(document_status="Released")
+                new_status = DocumentStatus.objects.get(
+                    document_status="Released")
                 business_permit.status = new_status
                 business_permit.save()
             form = BusinessPermitForm(request.POST, instance=business_permit)
@@ -393,5 +397,116 @@ def esign_button_bsp(request, id):
 
         context = {"BusinessPermit": business_permit}
         return render(request, "BusinessPermit/esign_button_bsp.html", context)
+    else:
+        return redirect("loginPage")
+
+
+@cache_control(no_cache=True, must_revalidate=True, no_store=True)
+@login_required(login_url="loginPage")
+@admin_only
+def release_unsign_bsp(request, id):
+    """
+    Mark a clearance as signed.
+    """
+    if request.user.is_authenticated:
+        business_permit = get_object_or_404(BusinessPermit, pk=id)
+        form = BusinessPermitForm(instance=business_permit)
+
+        username = business_permit.res_id.user.username
+        if request.method == "POST":
+            email_msg = request.POST.get("reason_masage")
+
+            # Prepare email content
+            subject = "Good news! Your Request has been officially released"
+            message = f"""
+            Dear {username},
+
+            We are pleased to inform you that your request has been officially released. Thank you for your using our service!
+            If you have any questions or concerns, please do not hesitate to contact us at the following numbers:            
+            Globe: 09361174734
+            TM: 09057198345
+            
+            Sincerely,
+            The Barangay E-Service Team
+            """
+            email_from = settings.EMAIL_HOST_USER
+            recipient_list = [business_permit.res_id.user.email]
+
+            # Send email
+            try:
+                send_mail(subject, message, email_from, recipient_list)
+            except Exception as e:
+                return HttpResponse(f"Failed to send email: {e}", status=500)
+
+            if business_permit.status.document_status == "Ready to Claim":
+                new_status = DocumentStatus.objects.get(
+                    document_status="Released")
+                business_permit.status = new_status
+                business_permit.save()
+            form = BusinessPermitForm(request.POST, instance=business_permit)
+            if form.is_valid():
+                form.save()
+            return HttpResponse(
+                status=204, headers={"HX-Trigger": "BusinessPermitlistUpdate"}
+            )
+
+        context = {"BusinessPermit": business_permit}
+        return render(request, "BusinessPermit/release_unsign_bsp.html", context)
+    else:
+        return redirect("loginPage")
+
+
+@cache_control(no_cache=True, must_revalidate=True, no_store=True)
+@login_required(login_url="loginPage")
+@admin_only
+def release_esigned_bsp(request, id):
+    """
+    Mark a clearance as signed.
+    """
+    if request.user.is_authenticated:
+        business_permit = get_object_or_404(BusinessPermit, pk=id)
+        form = BusinessPermitForm(instance=business_permit)
+
+        username = business_permit.res_id.user.username
+        if request.method == "POST":
+            email_msg = request.POST.get("reason_masage")
+
+            # Prepare email content
+            subject = "Good news! Your Request has been officially released"
+            message = f"""
+            Dear {username},
+
+            We are pleased to inform you that your request has been officially released. Thank you for your using our service!
+            If you have any questions or concerns, please do not hesitate to contact us at the following numbers:            
+            Globe: 09361174734
+            TM: 09057198345
+            
+            Sincerely,
+            The Barangay E-Service Team
+            """
+            email_from = settings.EMAIL_HOST_USER
+            recipient_list = [business_permit.res_id.user.email]
+
+            # Send email
+            try:
+                send_mail(subject, message, email_from, recipient_list)
+            except Exception as e:
+                return HttpResponse(f"Failed to send email: {e}", status=500)
+
+            if business_permit.status.document_status == "Ready to Claim(e-Signed)":
+                new_status = DocumentStatus.objects.get(
+                    document_status="Released(e-Signed)"
+                )
+                business_permit.status = new_status
+                business_permit.save()
+            form = BusinessPermitForm(request.POST, instance=business_permit)
+            if form.is_valid():
+                form.save()
+            return HttpResponse(
+                status=204, headers={"HX-Trigger": "BusinessPermitlistUpdate"}
+            )
+
+        context = {"BusinessPermit": business_permit}
+        return render(request, "BusinessPermit/release_esigned_bsp.html", context)
     else:
         return redirect("loginPage")

@@ -52,4 +52,14 @@ urlpatterns = [
         esign_button_bsp,
         name="esign_button_bsp",
     ),
+    path(
+        "release_esigned_bsp/<hashid:id>/",
+        release_esigned_bsp,
+        name="release_esigned_bsp",
+    ),
+    path(
+        "release_unsign_bsp/<hashid:id>/",
+        release_unsign_bsp,
+        name="release_unsign_bsp",
+    ),
 ]

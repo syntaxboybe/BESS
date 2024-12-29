@@ -49,7 +49,7 @@
                                     <th scope="col">Date Released</th>
                                     <th scope="col">Transaction ID</th>
                                     <th scope="col">Status</th>
-                                    <th scope="col" class="text-center">Action</th>
+                                    <!--<th scope="col" class="text-center">Action</th>-->
                                 </tr>
                             </thead>                           
                             <tbody>
@@ -63,12 +63,12 @@
                                     <td>{{clearance.date_released|date:"Y-m-d"}}</td>
                                     <td>{{clearance.transaction_id}}</td>
                                     <td><span>{{clearance.status}}</span></td>
-                                    <td class="text-center">
-                                        <a target=”_blank” type="button" class="btn btn-primary bg-gradient" href="{% url 'generate_clearance' clearance.id %}">
-                                            <i class="fas fa-eye fs-5" style="vertical-align: middle;"></i>
-                                            <span style="vertical-align: middle;"> View PDF</span>
-                                        </a>
-                                    </td>
+                                    <!--<td class="text-center">-->
+                                    <!--    <a target=”_blank” type="button" class="btn btn-primary bg-gradient" href="{% url 'generate_clearance' clearance.id %}">-->
+                                    <!--        <i class="fas fa-eye fs-5" style="vertical-align: middle;"></i>-->
+                                    <!--        <span style="vertical-align: middle;"> View PDF</span>-->
+                                    <!--    </a>-->
+                                    <!--</td>-->
                                 </tr>
                                 {% endfor %}
                             </tbody>
@@ -85,9 +85,12 @@
 $('#report_table')
   .find('td')
     .each(function () {
-        if ($(this).html() == 'Released') {
+      if ($(this).html() == 'Released') {
             $(this).addClass('text-success');
-        }
+      }
+      if ($(this).html() == 'Released(e-Signed)') {
+            $(this).addClass('text-success');
+      }
 });
 </script>
 {% endblock content %}

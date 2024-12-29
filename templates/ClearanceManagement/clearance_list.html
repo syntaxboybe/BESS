@@ -74,17 +74,43 @@
               <i class="fas fa-print fs-5" style="vertical-align: middle"></i>
               <span style="vertical-align: middle"> For Printing</span>
             </button>
+
+            <button class="btn btn-success bg-gradient" hx-get="{% url 'release_unsign_button' clearance.id %}"
+              hx-target="#dialog">
+              <i class="fas fa-rocket fs-5" style="vertical-align: middle"></i>
+              <span style="vertical-align: middle"> Release</span>
+            </button>
+            {% endif %}
+
+            {% if clearance.status.document_status == "Released" %}
+            <button class="btn btn-primary bg-gradient" hx-get="{% url 'confirm_button' clearance.id %}"
+              hx-target="#dialog">
+              <i class="fas fa-eye fs-5" style="vertical-align: middle"></i>
+              <span style="vertical-align: middle"> View PDF</span>
+            </button>
             {% endif %}
 
             {% if clearance.status.document_status == "Ready to Claim(e-Signed)" %}
-
             <button class="btn btn-warning bg-gradient" hx-get="{% url 'esign_button' clearance.id %}"
               hx-target="#dialog">
               <i class="fas fa-print fs-5" style="vertical-align: middle"></i>
               <span style="vertical-align: middle"> For Printing</span>
             </button>
-  </div>
 
+            <button class="btn btn-success bg-gradient" hx-get="{% url 'release_esigned_button' clearance.id %}"
+              hx-target="#dialog">
+              <i class="fas fa-rocket fs-5" style="vertical-align: middle"></i>
+              <span style="vertical-align: middle"> Release</span>
+            </button>
+            {% endif %}
+
+            {% if clearance.status.document_status == "Released(e-Signed)" %}
+            <button class="btn btn-primary bg-gradient" hx-get="{% url 'esign_button' clearance.id %}"
+              hx-target="#dialog">
+              <i class="fas fa-eye fs-5" style="vertical-align: middle"></i>
+              <span style="vertical-align: middle"> View PDF</span>
+            </button>
+  </div>
 
   {% endif %}
 
@@ -146,7 +172,8 @@
             "Released",
             "Forwarded to Kapitan",
             "Ready to Claim(e-Signed)",
-            "Reverted"
+            "Reverted",
+            "Released(e-Signed)"
           ],
           style_class: "form-select",
           filter_reset_button_text: false,
@@ -159,6 +186,9 @@
       .each(function () {
         if ($(this).html() == "Released") {
           $(this).addClass("released-status");
+        }
+        if ($(this).html() == "Released(e-Signed)") {
+          $(this).addClass("released-esigned-status");
         }
         if ($(this).html() == "Ready to Claim") {
           $(this).addClass("ready-status");
