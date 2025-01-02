@@ -295,8 +295,10 @@ def add_profile(request):
 
                 Please keep this information safe and secure. 
                 We recommend changing your password after logging in for the first time to enhance the security of your account.
-                If you need assistance or have any questions, feel free to reach out to us. We are here to help!
-
+                If you have any questions or concerns, please do not hesitate to contact us at the following numbers:            
+                Globe: 09361174734
+                TM: 09057198345
+                
                 Thank you for choosing Barangay E-Service System. We look forward to serving you.
 
                 Best regards,
