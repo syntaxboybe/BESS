@@ -87,7 +87,7 @@
         </p>
         <br><br><br>
         <p class="p2" style="font-size: 14px;">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; This
-          certification is being issued to <b><i>{{ residency_certificate.res_id }}</i></b>
+          certification is being issued to above-named person
           in order to use in: <b><i>{{ residency_certificate.purpose }}</i></b></p>
         <br><br><br>
         <p class="p2" style="font-size: 14px;">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Issued
@@ -112,15 +112,15 @@
             </td>
           </tr>
           <tr>
-            <td style="display:block; margin-left: 400px;">
-              <img src="static/img/captain_signature.png" height="60">
+            <td style="display:block; margin-left: 360px;">
+              <img src="static/img/captain_signature.png" height="100">
 
             </td>
 
             <td>
               <br>
               <br>
-              <p class="p2" style="font-size: 16px; text-decoration: underline;"><b>HON.MICHAEL S. DACOCO</b></p>
+              <p class="p2" style="font-size: 16px; text-decoration: underline;"><b>HON. MICHAEL S. DACOCO</b></p>
               <p class="p2" style="font-size: 14px;">Barangay Chairman, Poblacion</p>
             </td>
           </tr>
@@ -128,18 +128,27 @@
       </td>
     </tr>
   </table>
+  <tr style="margin: 0;">
+    <td>
+      <br>
+      <br>
+      <br>
+      <p>Not valid without official seal</p>
 
+    </td>
+  </tr>
   <br><br><br><br>
   <table width=100% align=center style="margin-left: 70px; margin-right: 70px;">
     <tr>
       <td colspan=3 align="right">
         <br>
         <p>Transaction ID: {{residency_certificate.transaction_id}}</p>
+        <br />
+        <p>Valid until: 6 months</p>
         <br>
       </td>
     </tr>
   </table>
-
 </body>
 
 </html>
