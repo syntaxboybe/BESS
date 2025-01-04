@@ -1,7 +1,7 @@
 {% load static %}
 <script src="{% static 'bootstrap/js/datepicker.js' %}" ></script>
 
-<form hx-post="{{ request.path }}" class="modal-content">
+<form hx-post="{{ request.path }}" class="modal-content" onsubmit="showSpinner(event)">
     {% csrf_token %}
     <div class="modal-header">
       {% if request.user.id != 30 %}
@@ -97,7 +97,10 @@
       </div>
       <div class="modal-footer">
       {% if request.user.id != 30 %}
-      <button onclick="Reload()" class="btn btn-success" type="submit"><i class="fas fa-sign-in-alt"></i> Forward to Kapitan </button>
+      <button id="forwardButton" class="btn btn-success" type="submit">
+            <span id="spinner" class="spinner-border spinner-border-sm me-2" role="status" style="display: none;"></span>
+            <i class="fas fa-sign-in-alt"></i> Forward to Kapitan
+        </button>
       <button class="btn btn-secondary" type="button" data-bs-dismiss="modal"><i class="fas fa-times"></i> Close</button>
       {% elif request.user.id != 29 %}
       <button class="btn btn-secondary" type="button" data-bs-dismiss="modal"><i class="fas fa-times"></i> Close</button>
@@ -105,3 +108,23 @@
     </div>
 </form>
 
+<script>
+function showSpinner(event) {
+    // Prevent default form submission
+    event.preventDefault();
+
+    // Get the button and spinner elements
+    const forwardButton = document.getElementById("forwardButton");
+    const spinner = document.getElementById("spinner");
+
+    // Disable the button and show the spinner
+    forwardButton.disabled = true;
+    spinner.style.display = "inline-block";
+
+    // Simulate form submission (remove this in production)
+    setTimeout(() => {
+      // Here you would typically submit the form via AJAX or allow the form submission to continue
+      event.target.submit();
+    }, 4000); // Adjust the timeout as needed
+  }
+</script>

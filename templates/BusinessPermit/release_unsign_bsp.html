@@ -19,9 +19,13 @@
         <!--     <span style="vertical-align: middle"> Print</span> -->
         <!--   </a> -->
         <!-- </div> -->
-        <button class="btn btn-success" type="submit">
+
+        <button id="yesButton" class="btn btn-success" type="submit" onclick="showLoadingSpinner(event)">
+          <span id="spinnerYes" class="spinner-border spinner-border-sm me-2" role="status"
+            style="display: none;"></span>
           <i class="fas fa-check"></i> Yes
         </button>
+
 
         <button class="btn btn-secondary" type="button" data-bs-dismiss="modal">
           <i class="fas fa-times"></i> Cancel
@@ -29,3 +33,15 @@
 
       </div>
 </form>
+
+<script>
+  function showLoadingSpinner(event) {
+    // Prevent duplicate form submissions
+    const yesButton = document.getElementById("yesButton");
+    const spinnerYes = document.getElementById("spinnerYes");
+
+    // Show the spinner and disable the button
+    yesButton.disabled = false;
+    spinnerYes.style.display = "inline-block";
+  }
+</script>

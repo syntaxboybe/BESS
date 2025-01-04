@@ -203,10 +203,11 @@
         <div class="row bg-white rounded p-3">
             <div class="col-lg-12">
                 <div class="float-end">
-                    <button type="submit" class="btn btn-success bg-gradient mt-2">
-                        <i class="las la-check fs-4" style="vertical-align: middle;"></i>
-                        <span class="h6" style="vertical-align: middle;">Register</span>
-                    </button>
+    <button id="registerButton" type="submit" class="btn btn-success bg-gradient mt-2" onclick="showRegisterSpinner(event)">
+        <span id="registerSpinner" class="spinner-border spinner-border-sm me-2" role="status" style="display: none;"></span>
+        <i class="las la-check fs-4" style="vertical-align: middle;"></i>
+        <span class="h6" style="vertical-align: middle;">Register</span>
+    </button>
                     &nbsp;
                     &nbsp;
                     <div class="float-end">
@@ -233,6 +234,19 @@
       dateOption.value = currentYear;        
       dateDropdown.add(dateOption);      
       currentYear -= 1;    
+    }
+
+ function showRegisterSpinner(event) {
+        event.preventDefault(); // Prevent duplicate form submissions
+        const registerButton = document.getElementById("registerButton");
+        const registerSpinner = document.getElementById("registerSpinner");
+
+        // Show the spinner and disable the button
+        registerSpinner.style.display = "inline-block";
+        registerButton.disabled = true;
+
+        // Submit the form after showing the spinner
+        registerButton.closest('form').submit();
     }
 </script>
 {% endblock content %} 
