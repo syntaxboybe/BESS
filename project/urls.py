@@ -7,7 +7,7 @@ urlpatterns = [
     path("admin/", admin.site.urls),
     path("BESS/", include("apps.Dashboard.urls")),
     path("BESS/", include("apps.AdminProfile.urls")),
-    path("BESS/", include("apps.ResidentManagement.urls")),
+    path("Poblacion/", include("apps.ResidentManagement.urls")),
     path("BESS/", include("apps.ClearanceManagement.urls")),
     path("BESS/", include("apps.IndigencyManagement.urls")),
     path("BESS/", include("apps.BusinessPermit.urls")),
