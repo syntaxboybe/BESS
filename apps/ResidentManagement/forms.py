@@ -130,6 +130,10 @@ class ProfileForm(forms.ModelForm):
         self.fields["educ_attainment"].empty_label = "Select"
         self.fields["status"].empty_label = "Select"
         self.fields["suffix"].required = False
+        self.fields["occupation"].required = False
+        self.fields["years_resided"].required = False
+        self.fields["phone"].required = False
+        self.fields["single_parent"].required = False
 
 
 class EditUserAccountForm(forms.ModelForm):
