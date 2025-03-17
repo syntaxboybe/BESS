@@ -1,0 +1,1614 @@
+/* Fix for white backgrounds in specific elements with inline styles */
+body.dark-mode [style*="background"][style*="rgb(248"] {
+  background-color: #0d1a2f !important;
+}
+
+/* Fixed navbar in dark mode */
+body.dark-mode .nav-bottom {
+  background-color: #0d1a2f !important;
+  border-bottom: 7px solid #1e3f76;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.3);
+  left: 300px; /* Start from the sidebar width */
+  width: calc(100% - 300px); /* Adjust width to account for sidebar */
+}
+
+/* Ensure fixed navbar stays visible in dark mode */
+body.dark-mode.fixed-navbar-layout .navbar {
+  background-color: #0d1a2f !important;
+}
+
+/* Ensure sidebar is properly styled with fixed navbar */
+body.dark-mode.fixed-navbar-layout #side_nav {
+  background: #1e3f76;
+  height: 100vh;
+  top: 0;
+}
+
+/* Fix for dark mode toggle in fixed navbar */
+.theme-switch-wrapper {
+  display: flex;
+  align-items: center;
+  margin-right: 10px;
+}
+
+/* Modern Toggle Switch */
+.theme-switch {
+  display: inline-block;
+  height: 24px;
+  position: relative;
+  width: 50px;
+}
+
+.theme-switch input {
+  display: none;
+}
+
+.slider {
+  background-color: #ccc;
+  bottom: 0;
+  cursor: pointer;
+  left: 0;
+  position: absolute;
+  right: 0;
+  top: 0;
+  transition: .4s;
+}
+
+.slider:before {
+  background-color: white;
+  bottom: 4px;
+  content: "";
+  height: 16px;
+  left: 4px;
+  position: absolute;
+  transition: .4s;
+  width: 16px;
+}
+
+input:checked + .slider {
+  background-color: #1e3f76;
+}
+
+input:checked + .slider:before {
+  transform: translateX(26px);
+}
+
+.slider.round {
+  border-radius: 34px;
+}
+
+.slider.round:before {
+  border-radius: 50%;
+}
+
+/* Icons inside the toggle */
+.slider .fas {
+  color: white;
+  font-size: 10px;
+  position: absolute;
+  top: 6px;
+}
+
+.slider .fa-sun {
+  left: 8px;
+  opacity: 1;
+  transition: .4s;
+}
+
+.slider .fa-moon {
+  right: 8px;
+  opacity: 0;
+  transition: .4s;
+}
+
+input:checked + .slider .fa-sun {
+  opacity: 0;
+}
+
+input:checked + .slider .fa-moon {
+  opacity: 1;
+}
+
+/* Theme transition for smooth color changes */
+.theme-transition {
+  transition: background-color 0.5s ease, color 0.5s ease, border-color 0.5s ease, box-shadow 0.5s ease;
+}
+
+/* Mobile adjustments for dark mode */
+@media(max-width: 767px) {
+  body.dark-mode .nav-bottom {
+    left: 0;
+    width: 100%;
+  }
+}
+
+/* Dark Mode Styles */
+body.dark-mode {
+    background-color: #0d1a2f;
+    color: #ffffff;
+}
+
+/* Navbar in dark mode */
+body.dark-mode .nav-bottom {
+    background-color: #0d1a2f !important;
+    border-bottom: 7px solid #1e3f76 !important;
+    color: #ffffff;
+}
+
+body.dark-mode .navbar {
+    background-color: #0d1a2f !important;
+}
+
+body.dark-mode .navbar-light .navbar-nav .nav-link {
+    color: #ffffff;
+}
+
+body.dark-mode .navbar-light .navbar-nav .nav-link:hover {
+    color: #ffffff;
+}
+
+body.dark-mode .navbar-light .navbar-toggler-icon {
+    filter: invert(1);
+}
+
+/* Sidebar in dark mode */
+body.dark-mode #side_nav {
+    background-color: #1e3f76 !important;
+}
+
+body.dark-mode .sidebar a {
+    color: #ffffff;
+}
+
+body.dark-mode .sidebar a:hover {
+    color: #ffffff;
+    background-color: #2c5cb5;
+}
+
+body.dark-mode .sidebar .active > a {
+    background-color: #2c5cb5;
+    color: #ffffff;
+}
+
+body.dark-mode .side-sub-menu .accordion-button {
+    background-color: #006400 !important;
+    color: #ffffff;
+}
+
+body.dark-mode .side-sub-menu .sub-content {
+    background-color: #006400 !important;
+}
+
+/* Content area in dark mode */
+body.dark-mode .content {
+    background-color: #0d1a2f;
+}
+
+body.dark-mode .dashboard-content {
+    background-color: #0d1a2f;
+}
+
+/* Cards in dark mode */
+body.dark-mode .card {
+    background-color: #152238;
+    border-color: #1e3f76;
+}
+
+body.dark-mode .card-header {
+    background-color: #1e3f76;
+    border-bottom-color: #1e3f76;
+    color: #ffffff;
+}
+
+/* Tables in dark mode - enhanced text visibility */
+body.dark-mode .table {
+    color: #ffffff;
+    border-color: #1e3f76;
+}
+
+body.dark-mode .table-striped tbody tr:nth-of-type(odd) {
+    background-color: rgba(30, 63, 118, 0.1);
+}
+
+body.dark-mode .table-striped tbody tr:nth-of-type(even) {
+    background-color: #152238;
+}
+
+body.dark-mode .table thead th {
+    background-color: #1e3f76;
+    border-color: #1e3f76;
+    color: #ffffff;
+    font-weight: 600;
+}
+
+body.dark-mode .table td,
+body.dark-mode .table th {
+    border-color: #1e3f76;
+    color: #ffffff;
+}
+
+/* Ensure all text elements inside tables are white */
+body.dark-mode .table a,
+body.dark-mode .table span,
+body.dark-mode .table p,
+body.dark-mode .table small,
+body.dark-mode .table strong,
+body.dark-mode .table b,
+body.dark-mode .table i,
+body.dark-mode .table label,
+body.dark-mode .table div {
+    color: #ffffff !important;
+}
+
+/* Ensure links in tables are still distinguishable */
+body.dark-mode .table a {
+    color: #8bb5ff !important;
+    text-decoration: underline;
+}
+
+body.dark-mode .table a:hover {
+    color: #a8c7ff !important;
+}
+
+/* DataTables specific styling for better visibility */
+body.dark-mode table.dataTable tbody tr {
+    background-color: #152238 !important;
+}
+
+body.dark-mode table.dataTable tbody tr:nth-of-type(odd) {
+    background-color: rgba(30, 63, 118, 0.2) !important;
+}
+
+body.dark-mode table.dataTable.stripe tbody tr.odd,
+body.dark-mode table.dataTable.display tbody tr.odd {
+    background-color: rgba(30, 63, 118, 0.1);
+}
+
+body.dark-mode table.dataTable.hover tbody tr:hover,
+body.dark-mode table.dataTable.display tbody tr:hover {
+    background-color: rgba(30, 63, 118, 0.3);
+}
+
+/* Fix for any inline styles in table cells */
+body.dark-mode .table td[style*="color"],
+body.dark-mode .table th[style*="color"],
+body.dark-mode .table span[style*="color"],
+body.dark-mode .table div[style*="color"] {
+    color: #ffffff !important;
+}
+
+/* Status labels in tables */
+body.dark-mode .table .status-label {
+    color: #ffffff !important;
+    font-weight: 600;
+    padding: 3px 8px;
+    border-radius: 4px;
+    display: inline-block;
+}
+
+/* DataTables in dark mode */
+body.dark-mode .dataTables_wrapper .dataTables_length,
+body.dark-mode .dataTables_wrapper .dataTables_filter,
+body.dark-mode .dataTables_wrapper .dataTables_info,
+body.dark-mode .dataTables_wrapper .dataTables_processing,
+body.dark-mode .dataTables_wrapper .dataTables_paginate {
+    color: #ffffff;
+}
+
+body.dark-mode .dataTables_wrapper .dataTables_paginate .paginate_button {
+    color: #ffffff !important;
+}
+
+body.dark-mode .dataTables_wrapper .dataTables_paginate .paginate_button.current,
+body.dark-mode .dataTables_wrapper .dataTables_paginate .paginate_button.current:hover {
+    color: #ffffff !important;
+    background: #1e3f76;
+    border-color: #1e3f76;
+}
+
+body.dark-mode .dataTables_wrapper .dataTables_paginate .paginate_button:hover {
+    color: #ffffff !important;
+    background: #2c5cb5;
+    border-color: #2c5cb5;
+}
+
+/* Forms in dark mode */
+body.dark-mode .form-control,
+body.dark-mode .form-select {
+    background-color: #152238;
+    border-color: #1e3f76;
+    color: #ffffff;
+}
+
+body.dark-mode .form-control:focus,
+body.dark-mode .form-select:focus {
+    background-color: #152238;
+    border-color: #2c5cb5;
+    color: #ffffff;
+}
+
+body.dark-mode .form-control::placeholder {
+    color: #cccccc;
+}
+
+body.dark-mode .form-label {
+    color: #ffffff;
+}
+
+/* Enhanced button styling in dark mode */
+body.dark-mode .btn {
+    background-color: #1e3f76 !important;
+    border-color: #1e3f76 !important;
+    color: #ffffff !important;
+    transition: all 0.3s ease;
+}
+
+body.dark-mode .btn:hover {
+    background-color: #2c5cb5 !important;
+    border-color: #2c5cb5 !important;
+    box-shadow: 0 0 8px rgba(44, 92, 181, 0.5) !important;
+}
+
+body.dark-mode .btn:active {
+    background-color: #0d1a2f !important;
+    border-color: #1e3f76 !important;
+}
+
+/* Specific button types */
+body.dark-mode .btn-primary {
+    background-color: #1e3f76 !important;
+    border-color: #1e3f76 !important;
+}
+
+body.dark-mode .btn-primary:hover {
+    background-color: #2c5cb5 !important;
+    border-color: #2c5cb5 !important;
+}
+
+body.dark-mode .btn-success {
+    background-color: #155724 !important;
+    border-color: #155724 !important;
+}
+
+body.dark-mode .btn-success:hover {
+    background-color: #1e7e34 !important;
+    border-color: #1e7e34 !important;
+}
+
+body.dark-mode .btn-danger {
+    background-color: #721c24 !important;
+    border-color: #721c24 !important;
+}
+
+body.dark-mode .btn-danger:hover {
+    background-color: #a71d2a !important;
+    border-color: #a71d2a !important;
+}
+
+body.dark-mode .btn-warning {
+    background-color: #856404 !important;
+    border-color: #856404 !important;
+    color: #ffffff !important;
+}
+
+body.dark-mode .btn-warning:hover {
+    background-color: #b18904 !important;
+    border-color: #b18904 !important;
+}
+
+body.dark-mode .btn-info {
+    background-color: #0c5460 !important;
+    border-color: #0c5460 !important;
+}
+
+body.dark-mode .btn-info:hover {
+    background-color: #138496 !important;
+    border-color: #138496 !important;
+}
+
+body.dark-mode .btn-secondary {
+    background-color: #383d41 !important;
+    border-color: #383d41 !important;
+}
+
+body.dark-mode .btn-secondary:hover {
+    background-color: #5a6268 !important;
+    border-color: #5a6268 !important;
+}
+
+body.dark-mode .btn-light {
+    background-color: #152238 !important;
+    border-color: #1e3f76 !important;
+    color: #ffffff !important;
+}
+
+body.dark-mode .btn-light:hover {
+    background-color: #1e3f76 !important;
+}
+
+body.dark-mode .btn-dark {
+    background-color: #0d1a2f !important;
+    border-color: #0d1a2f !important;
+}
+
+body.dark-mode .btn-dark:hover {
+    background-color: #152238 !important;
+    border-color: #152238 !important;
+}
+
+/* Outline buttons */
+body.dark-mode .btn-outline-primary {
+    color: #6ca0ff !important;
+    border-color: #1e3f76 !important;
+    background-color: transparent !important;
+}
+
+body.dark-mode .btn-outline-primary:hover {
+    color: #ffffff !important;
+    background-color: #1e3f76 !important;
+}
+
+body.dark-mode .btn-outline-success {
+    color: #75c987 !important;
+    border-color: #155724 !important;
+    background-color: transparent !important;
+}
+
+body.dark-mode .btn-outline-success:hover {
+    color: #ffffff !important;
+    background-color: #155724 !important;
+}
+
+body.dark-mode .btn-outline-danger {
+    color: #f5a9a9 !important;
+    border-color: #721c24 !important;
+    background-color: transparent !important;
+}
+
+body.dark-mode .btn-outline-danger:hover {
+    color: #ffffff !important;
+    background-color: #721c24 !important;
+}
+
+/* Specific button for "Verify Resident Identity" */
+body.dark-mode a[href*="verify"],
+body.dark-mode button[onclick*="verify"],
+body.dark-mode .btn[onclick*="verify"] {
+    background-color: #1e3f76 !important;
+    border-color: #1e3f76 !important;
+    color: #ffffff !important;
+    transition: all 0.3s ease;
+}
+
+body.dark-mode a[href*="verify"]:hover,
+body.dark-mode button[onclick*="verify"]:hover,
+body.dark-mode .btn[onclick*="verify"]:hover {
+    background-color: #2c5cb5 !important;
+    border-color: #2c5cb5 !important;
+    box-shadow: 0 0 8px rgba(44, 92, 181, 0.5) !important;
+}
+
+/* Status labels in dark mode */
+body.dark-mode .status-label {
+    color: #ffffff;
+}
+
+body.dark-mode .status-pending {
+    background-color: #856404;
+}
+
+body.dark-mode .status-approved {
+    background-color: #155724;
+}
+
+body.dark-mode .status-rejected {
+    background-color: #721c24;
+}
+
+body.dark-mode .status-completed {
+    background-color: #004085;
+}
+
+/* Pagination controls in dark mode */
+body.dark-mode .page-link {
+    background-color: #152238;
+    border-color: #1e3f76;
+    color: #ffffff;
+}
+
+body.dark-mode .page-link:hover {
+    background-color: #1e3f76;
+    border-color: #2c5cb5;
+    color: #ffffff;
+}
+
+body.dark-mode .page-item.active .page-link {
+    background-color: #1e3f76;
+    border-color: #1e3f76;
+}
+
+body.dark-mode .page-item.disabled .page-link {
+    background-color: #0d1a2f;
+    border-color: #1e3f76;
+    color: #aaaaaa;
+}
+
+/* Fixed navbar layout in dark mode */
+body.dark-mode.fixed-navbar-layout {
+    background-color: #0d1a2f;
+}
+
+body.dark-mode .fixed-navbar-layout .nav-bottom {
+    background-color: #0d1a2f !important;
+    border-bottom: 7px solid #1e3f76 !important;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.5);
+}
+
+/* Ensure proper contrast for text in dark mode */
+body.dark-mode h1,
+body.dark-mode h2,
+body.dark-mode h3,
+body.dark-mode h4,
+body.dark-mode h5,
+body.dark-mode h6 {
+    color: #ffffff;
+}
+
+body.dark-mode a {
+    color: #6ca0ff;
+}
+
+body.dark-mode a:hover {
+    color: #8bb5ff;
+}
+
+/* Modal dialogs in dark mode */
+body.dark-mode .modal-content {
+    background-color: #152238;
+    border-color: #1e3f76;
+}
+
+body.dark-mode .modal-header {
+    border-bottom-color: #1e3f76;
+    color: #ffffff;
+}
+
+body.dark-mode .modal-footer {
+    border-top-color: #1e3f76;
+}
+
+body.dark-mode .close {
+    color: #ffffff;
+}
+
+/* Dropdown menus in dark mode */
+body.dark-mode .dropdown-menu {
+    background-color: #152238;
+    border-color: #1e3f76;
+}
+
+body.dark-mode .dropdown-item {
+    color: #ffffff;
+}
+
+body.dark-mode .dropdown-item:hover,
+body.dark-mode .dropdown-item:focus {
+    background-color: #1e3f76;
+    color: #ffffff;
+}
+
+body.dark-mode .dropdown-divider {
+    border-top-color: #1e3f76;
+}
+
+/* Preserve green background for specific dropdowns */
+body.dark-mode .dropdown-menu[style*="background-color: #008000"] {
+    background-color: #006400 !important;
+}
+
+body.dark-mode .dropdown-header[style*="background-color: #355389"] {
+    background-color: #1e3f76 !important;
+}
+
+body.dark-mode .dropdown-header[style*="background-color: #006400"] {
+    background-color: #005000 !important;
+}
+
+/* Container styles in dark mode */
+body.dark-mode .container,
+body.dark-mode .container-fluid,
+body.dark-mode .container-sm,
+body.dark-mode .container-md,
+body.dark-mode .container-lg,
+body.dark-mode .container-xl,
+body.dark-mode .container-xxl {
+    background-color: #0d1a2f;
+    color: #ffffff;
+}
+
+/* Custom container backgrounds */
+body.dark-mode [class*="bg-light"],
+body.dark-mode .bg-white,
+body.dark-mode [style*="background-color: #fff"],
+body.dark-mode [style*="background-color: white"],
+body.dark-mode [style*="background-color: rgb(255, 255, 255)"],
+body.dark-mode [style*="background: #fff"],
+body.dark-mode [style*="background: white"] {
+    background-color: #152238 !important;
+    color: #ffffff !important;
+}
+
+/* Jumbotron and other container elements */
+body.dark-mode .jumbotron {
+    background-color: #152238;
+    color: #ffffff;
+}
+
+/* List groups in dark mode */
+body.dark-mode .list-group-item {
+    background-color: #152238;
+    border-color: #1e3f76;
+    color: #ffffff;
+}
+
+body.dark-mode .list-group-item.active {
+    background-color: #1e3f76;
+    border-color: #1e3f76;
+}
+
+body.dark-mode .list-group-item-action:hover,
+body.dark-mode .list-group-item-action:focus {
+    background-color: #1e3f76;
+    color: #ffffff;
+}
+
+/* Accordion containers */
+body.dark-mode .accordion-item {
+    background-color: #152238;
+    border-color: #1e3f76;
+}
+
+body.dark-mode .accordion-button {
+    background-color: #152238;
+    color: #ffffff;
+}
+
+body.dark-mode .accordion-button:not(.collapsed) {
+    background-color: #1e3f76;
+    color: #ffffff;
+}
+
+body.dark-mode .accordion-body {
+    background-color: #152238;
+    color: #ffffff;
+}
+
+/* Tabs and pills */
+body.dark-mode .nav-tabs,
+body.dark-mode .nav-pills {
+    border-color: #1e3f76;
+}
+
+body.dark-mode .nav-tabs .nav-link.active,
+body.dark-mode .nav-pills .nav-link.active {
+    background-color: #1e3f76;
+    color: #ffffff;
+    border-color: #1e3f76;
+}
+
+body.dark-mode .nav-tabs .nav-link:hover,
+body.dark-mode .nav-pills .nav-link:hover {
+    border-color: #2c5cb5;
+}
+
+/* Alerts in dark mode */
+body.dark-mode .alert {
+    background-color: #152238;
+    border-color: #1e3f76;
+    color: #ffffff;
+}
+
+body.dark-mode .alert-primary {
+    background-color: rgba(30, 63, 118, 0.2);
+    border-color: #1e3f76;
+    color: #ffffff;
+}
+
+body.dark-mode .alert-success {
+    background-color: rgba(0, 100, 0, 0.2);
+    border-color: #006400;
+    color: #ffffff;
+}
+
+body.dark-mode .alert-danger {
+    background-color: rgba(114, 28, 36, 0.2);
+    border-color: #721c24;
+    color: #ffffff;
+}
+
+body.dark-mode .alert-warning {
+    background-color: rgba(133, 100, 4, 0.2);
+    border-color: #856404;
+    color: #ffffff;
+}
+
+body.dark-mode .alert-info {
+    background-color: rgba(0, 64, 133, 0.2);
+    border-color: #004085;
+    color: #ffffff;
+}
+
+/* Badges in dark mode */
+body.dark-mode .badge {
+    color: #ffffff;
+}
+
+body.dark-mode .badge-primary {
+    background-color: #1e3f76;
+}
+
+body.dark-mode .badge-success {
+    background-color: #006400;
+}
+
+body.dark-mode .badge-danger {
+    background-color: #721c24;
+}
+
+body.dark-mode .badge-warning {
+    background-color: #856404;
+}
+
+body.dark-mode .badge-info {
+    background-color: #004085;
+}
+
+/* Progress bars in dark mode */
+body.dark-mode .progress {
+    background-color: #152238;
+}
+
+body.dark-mode .progress-bar {
+    background-color: #1e3f76;
+}
+
+/* Ensure all background colors are properly set */
+body.dark-mode [class*="bg-light"] {
+    background-color: #152238 !important;
+}
+
+body.dark-mode [class*="bg-white"] {
+    background-color: #152238 !important;
+}
+
+body.dark-mode [class*="bg-transparent"] {
+    background-color: transparent !important;
+}
+
+body.dark-mode [class*="bg-primary"] {
+    background-color: #1e3f76 !important;
+}
+
+body.dark-mode [class*="bg-success"] {
+    background-color: #006400 !important;
+}
+
+body.dark-mode [class*="bg-danger"] {
+    background-color: #721c24 !important;
+}
+
+body.dark-mode [class*="bg-warning"] {
+    background-color: #856404 !important;
+}
+
+body.dark-mode [class*="bg-info"] {
+    background-color: #004085 !important;
+}
+
+/* Fix for any remaining light backgrounds */
+body.dark-mode [style*="background-color"] {
+    background-color: #152238 !important;
+    color: #ffffff !important;
+}
+
+/* Form elements inside tables */
+body.dark-mode .table input[type="text"],
+body.dark-mode .table input[type="email"],
+body.dark-mode .table input[type="password"],
+body.dark-mode .table input[type="number"],
+body.dark-mode .table input[type="date"],
+body.dark-mode .table input[type="search"],
+body.dark-mode .table select,
+body.dark-mode .table textarea {
+    background-color: #0d1a2f;
+    border-color: #1e3f76;
+    color: #ffffff;
+}
+
+body.dark-mode .table input[type="text"]:focus,
+body.dark-mode .table input[type="email"]:focus,
+body.dark-mode .table input[type="password"]:focus,
+body.dark-mode .table input[type="number"]:focus,
+body.dark-mode .table input[type="date"]:focus,
+body.dark-mode .table input[type="search"]:focus,
+body.dark-mode .table select:focus,
+body.dark-mode .table textarea:focus {
+    background-color: #0d1a2f;
+    border-color: #2c5cb5;
+    color: #ffffff;
+    box-shadow: 0 0 0 0.25rem rgba(44, 92, 181, 0.25);
+}
+
+/* Buttons inside tables */
+body.dark-mode .table .btn {
+    color: #ffffff;
+}
+
+/* Fix for DataTables search and filter inputs */
+body.dark-mode .dataTables_wrapper .dataTables_filter input {
+    background-color: #0d1a2f;
+    border-color: #1e3f76;
+    color: #ffffff;
+    padding: 0.375rem 0.75rem;
+}
+
+body.dark-mode .dataTables_wrapper .dataTables_length select {
+    background-color: #0d1a2f;
+    border-color: #1e3f76;
+    color: #ffffff;
+    padding: 0.375rem 0.75rem;
+}
+
+/* Fix for DataTables pagination */
+body.dark-mode .dataTables_wrapper .dataTables_paginate .paginate_button {
+    background-color: #152238;
+    border-color: #1e3f76;
+}
+
+body.dark-mode .dataTables_wrapper .dataTables_paginate .paginate_button.current {
+    background-color: #1e3f76;
+    border-color: #1e3f76;
+    color: #ffffff !important;
+}
+
+body.dark-mode .dataTables_wrapper .dataTables_paginate .paginate_button:hover {
+    background-color: #2c5cb5;
+    border-color: #2c5cb5;
+}
+
+/* Fix for table sorting icons */
+body.dark-mode table.dataTable thead .sorting:after,
+body.dark-mode table.dataTable thead .sorting_asc:after,
+body.dark-mode table.dataTable thead .sorting_desc:after,
+body.dark-mode table.dataTable thead .sorting_asc_disabled:after,
+body.dark-mode table.dataTable thead .sorting_desc_disabled:after {
+    color: rgba(255, 255, 255, 0.5);
+}
+
+body.dark-mode table.dataTable thead .sorting:before,
+body.dark-mode table.dataTable thead .sorting_asc:before,
+body.dark-mode table.dataTable thead .sorting_desc:before,
+body.dark-mode table.dataTable thead .sorting_asc_disabled:before,
+body.dark-mode table.dataTable thead .sorting_desc_disabled:before {
+    color: rgba(255, 255, 255, 0.5);
+}
+
+/* Fix for tables with white backgrounds, especially in issuances section */
+body.dark-mode table,
+body.dark-mode .table,
+body.dark-mode table.dataTable,
+body.dark-mode .dataTables_wrapper table {
+    background-color: #0d1a2f !important;
+    color: #ffffff !important;
+}
+
+body.dark-mode table thead,
+body.dark-mode table thead tr,
+body.dark-mode table thead th {
+    background-color: #1e3f76 !important;
+    color: #ffffff !important;
+}
+
+body.dark-mode table tbody tr {
+    background-color: #152238 !important;
+}
+
+body.dark-mode table tbody tr:nth-child(odd) {
+    background-color: rgba(30, 63, 118, 0.2) !important;
+}
+
+body.dark-mode table tbody tr:hover {
+    background-color: rgba(30, 63, 118, 0.4) !important;
+}
+
+/* Specific fix for issuances tables */
+body.dark-mode [id*="issuance"] table,
+body.dark-mode [id*="permit"] table,
+body.dark-mode [id*="clearance"] table,
+body.dark-mode [id*="indigency"] table,
+body.dark-mode [id*="residency"] table,
+body.dark-mode [id*="business"] table,
+body.dark-mode [id*="building"] table {
+    background-color: #0d1a2f !important;
+}
+
+/* Fix for any tables with inline styles */
+body.dark-mode table[style*="background"],
+body.dark-mode table[style*="background-color"],
+body.dark-mode tr[style*="background"],
+body.dark-mode tr[style*="background-color"],
+body.dark-mode td[style*="background"],
+body.dark-mode td[style*="background-color"],
+body.dark-mode th[style*="background"],
+body.dark-mode th[style*="background-color"] {
+    background-color: #0d1a2f !important;
+    color: #ffffff !important;
+}
+
+/* Fix for status labels in tables */
+body.dark-mode table .status-label,
+body.dark-mode .table .status-label {
+    color: #ffffff !important;
+    font-weight: 600;
+}
+
+body.dark-mode table .Reverted,
+body.dark-mode .table .Reverted {
+    background-color: #721c24 !important;
+    color: #ffffff !important;
+    padding: 3px 8px;
+    border-radius: 4px;
+}
+
+body.dark-mode table .Released,
+body.dark-mode .table .Released {
+    background-color: #155724 !important;
+    color: #ffffff !important;
+    padding: 3px 8px;
+    border-radius: 4px;
+}
+
+body.dark-mode table .Released\(e-Signed\),
+body.dark-mode .table .Released\(e-Signed\) {
+    background-color: #004085 !important;
+    color: #ffffff !important;
+    padding: 3px 8px;
+    border-radius: 4px;
+}
+
+/* Fix for View PDF buttons */
+body.dark-mode table .btn,
+body.dark-mode .table .btn {
+    background-color: #1e3f76 !important;
+    border-color: #1e3f76 !important;
+    color: #ffffff !important;
+}
+
+body.dark-mode table .btn:hover,
+body.dark-mode .table .btn:hover {
+    background-color: #2c5cb5 !important;
+    border-color: #2c5cb5 !important;
+}
+
+/* Fix for colored header sections in issuances pages */
+body.dark-mode [style*="background-color: rgb(255, 99, 71)"],
+body.dark-mode [style*="background-color: #ff6347"],
+body.dark-mode [style*="background-color: coral"] {
+    background-color: #e74c3c !important;
+    color: #ffffff !important;
+}
+
+body.dark-mode [style*="background-color: rgb(65, 105, 225)"],
+body.dark-mode [style*="background-color: #4169e1"],
+body.dark-mode [style*="background-color: royalblue"] {
+    background-color: #3a539b !important;
+    color: #ffffff !important;
+}
+
+body.dark-mode [style*="background-color: rgb(255, 165, 0)"],
+body.dark-mode [style*="background-color: #ffa500"],
+body.dark-mode [style*="background-color: orange"] {
+    background-color: #f39c12 !important;
+    color: #ffffff !important;
+}
+
+body.dark-mode [style*="background-color: rgb(128, 0, 128)"],
+body.dark-mode [style*="background-color: #800080"],
+body.dark-mode [style*="background-color: purple"] {
+    background-color: #8e44ad !important;
+    color: #ffffff !important;
+}
+
+/* Target specific table cells with white backgrounds */
+body.dark-mode table td,
+body.dark-mode .table td,
+body.dark-mode table th,
+body.dark-mode .table th {
+    background-color: transparent !important;
+    color: #ffffff !important;
+}
+
+/* Target specific tables in issuances sections */
+body.dark-mode div[id*="building_permit"] table,
+body.dark-mode div[id*="business_permit"] table,
+body.dark-mode div[id*="clearance"] table,
+body.dark-mode div[id*="indigency"] table,
+body.dark-mode div[id*="residency"] table {
+    background-color: #0d1a2f !important;
+    color: #ffffff !important;
+}
+
+/* Target DataTables specifically */
+body.dark-mode .dataTables_wrapper .dataTable {
+    background-color: #0d1a2f !important;
+    color: #ffffff !important;
+}
+
+/* Target white cells in DataTables */
+body.dark-mode .dataTables_wrapper .dataTable td,
+body.dark-mode .dataTables_wrapper .dataTable th {
+    background-color: transparent !important;
+    color: #ffffff !important;
+}
+
+/* Target even/odd rows in DataTables */
+body.dark-mode .dataTables_wrapper .dataTable tr.odd {
+    background-color: rgba(30, 63, 118, 0.2) !important;
+}
+
+body.dark-mode .dataTables_wrapper .dataTable tr.even {
+    background-color: #152238 !important;
+}
+
+/* Target the specific tables shown in screenshots */
+body.dark-mode table.dataTable.no-footer {
+    border-color: #1e3f76 !important;
+}
+
+/* Fix for white cells in tables */
+body.dark-mode table.dataTable tbody td {
+    background-color: transparent !important;
+}
+
+/* Fix for status labels */
+body.dark-mode .Reverted,
+body.dark-mode .table .Reverted,
+body.dark-mode span.Reverted,
+body.dark-mode td .Reverted {
+    background-color: #721c24 !important;
+    color: #ffffff !important;
+    padding: 3px 8px;
+    border-radius: 4px;
+    display: inline-block;
+}
+
+body.dark-mode .Released,
+body.dark-mode .table .Released,
+body.dark-mode span.Released,
+body.dark-mode td .Released {
+    background-color: #155724 !important;
+    color: #ffffff !important;
+    padding: 3px 8px;
+    border-radius: 4px;
+    display: inline-block;
+}
+
+body.dark-mode .Released\(e-Signed\),
+body.dark-mode .table .Released\(e-Signed\),
+body.dark-mode span.Released\(e-Signed\),
+body.dark-mode td .Released\(e-Signed\) {
+    background-color: #004085 !important;
+    color: #ffffff !important;
+    padding: 3px 8px;
+    border-radius: 4px;
+    display: inline-block;
+}
+
+/* Additional fixes for white backgrounds in tables */
+body.dark-mode table.dataTable tbody tr {
+    background-color: #152238 !important;
+}
+
+body.dark-mode table.dataTable tbody tr:nth-of-type(odd) {
+    background-color: rgba(30, 63, 118, 0.2) !important;
+}
+
+/* Target the white cells in the tables shown in screenshots */
+body.dark-mode table.dataTable tbody tr td {
+    background-color: transparent !important;
+}
+
+/* Target the header sections in issuances pages */
+body.dark-mode div[class*="container"] > div[style*="background-color"] {
+    color: #ffffff !important;
+}
+
+/* Target the specific colored headers in the screenshots */
+body.dark-mode div[style*="background-color: rgb(255, 99, 71)"] h1,
+body.dark-mode div[style*="background-color: rgb(65, 105, 225)"] h1,
+body.dark-mode div[style*="background-color: rgb(255, 165, 0)"] h1,
+body.dark-mode div[style*="background-color: rgb(128, 0, 128)"] h1 {
+    color: #ffffff !important;
+}
+
+/* Target the specific tables in the screenshots */
+body.dark-mode #building_permit_table,
+body.dark-mode #business_permit_table,
+body.dark-mode #clearance_table,
+body.dark-mode #indigency_table,
+body.dark-mode #residency_table {
+    background-color: #0d1a2f !important;
+    color: #ffffff !important;
+}
+
+/* Target any remaining white backgrounds */
+body.dark-mode tr[style*="background-color: white"],
+body.dark-mode tr[style*="background-color: #fff"],
+body.dark-mode tr[style*="background-color: rgb(255, 255, 255)"],
+body.dark-mode td[style*="background-color: white"],
+body.dark-mode td[style*="background-color: #fff"],
+body.dark-mode td[style*="background-color: rgb(255, 255, 255)"] {
+    background-color: transparent !important;
+}
+
+/* Ensure all table rows have the correct background */
+body.dark-mode table tr,
+body.dark-mode .table tr {
+    background-color: #152238 !important;
+}
+
+body.dark-mode table tr:nth-child(odd),
+body.dark-mode .table tr:nth-child(odd) {
+    background-color: rgba(30, 63, 118, 0.2) !important;
+}
+
+/* Fix for any remaining white text on dark backgrounds */
+body.dark-mode table td *,
+body.dark-mode .table td * {
+    color: #ffffff !important;
+}
+
+/* Dark mode scrollbar styles */
+body.dark-mode::-webkit-scrollbar {
+    width: 8px;
+    height: 8px;
+}
+
+body.dark-mode::-webkit-scrollbar-track {
+    background: #0d1a2f;
+    border-radius: 10px;
+}
+
+body.dark-mode::-webkit-scrollbar-thumb {
+    background: #1e3f76;
+    border-radius: 10px;
+}
+
+body.dark-mode::-webkit-scrollbar-thumb:hover {
+    background: #2c5cb5;
+}
+
+/* For Firefox */
+body.dark-mode * {
+    scrollbar-width: thin;
+    scrollbar-color: #1e3f76 #0d1a2f;
+}
+
+/* For elements with overflow that need scrollbars */
+body.dark-mode .dataTables_wrapper .dataTables_scroll,
+body.dark-mode .table-responsive,
+body.dark-mode .modal-body,
+body.dark-mode .overflow-auto,
+body.dark-mode [style*="overflow"] {
+    scrollbar-width: thin;
+    scrollbar-color: #1e3f76 #0d1a2f;
+}
+
+body.dark-mode .dataTables_wrapper .dataTables_scroll::-webkit-scrollbar,
+body.dark-mode .table-responsive::-webkit-scrollbar,
+body.dark-mode .modal-body::-webkit-scrollbar,
+body.dark-mode .overflow-auto::-webkit-scrollbar,
+body.dark-mode [style*="overflow"]::-webkit-scrollbar {
+    width: 8px;
+    height: 8px;
+}
+
+body.dark-mode .dataTables_wrapper .dataTables_scroll::-webkit-scrollbar-track,
+body.dark-mode .table-responsive::-webkit-scrollbar-track,
+body.dark-mode .modal-body::-webkit-scrollbar-track,
+body.dark-mode .overflow-auto::-webkit-scrollbar-track,
+body.dark-mode [style*="overflow"]::-webkit-scrollbar-track {
+    background: #0d1a2f;
+    border-radius: 10px;
+}
+
+body.dark-mode .dataTables_wrapper .dataTables_scroll::-webkit-scrollbar-thumb,
+body.dark-mode .table-responsive::-webkit-scrollbar-thumb,
+body.dark-mode .modal-body::-webkit-scrollbar-thumb,
+body.dark-mode .overflow-auto::-webkit-scrollbar-thumb,
+body.dark-mode [style*="overflow"]::-webkit-scrollbar-thumb {
+    background: #1e3f76;
+    border-radius: 10px;
+}
+
+body.dark-mode .dataTables_wrapper .dataTables_scroll::-webkit-scrollbar-thumb:hover,
+body.dark-mode .table-responsive::-webkit-scrollbar-thumb:hover,
+body.dark-mode .modal-body::-webkit-scrollbar-thumb:hover,
+body.dark-mode .overflow-auto::-webkit-scrollbar-thumb:hover,
+body.dark-mode [style*="overflow"]::-webkit-scrollbar-thumb:hover {
+    background: #2c5cb5;
+}
+
+/* Dropdown filters in dark mode - updated to fix multiple arrows */
+body.dark-mode select,
+body.dark-mode .form-select,
+body.dark-mode .custom-select,
+body.dark-mode .dataTables_length select,
+body.dark-mode .dataTables_filter select,
+body.dark-mode select[name*="table_length"],
+body.dark-mode select[name*="filter"],
+body.dark-mode .doc_track_filterSelect select {
+    background-color: #152238 !important;
+    border-color: #1e3f76 !important;
+    color: #ffffff !important;
+    background-image: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16'%3e%3cpath fill='none' stroke='%23ffffff' stroke-linecap='round' stroke-linejoin='round' stroke-width='2' d='M2 5l6 6 6-6'/%3e%3c/svg%3e") !important;
+    background-repeat: no-repeat !important;
+    background-position: right 0.75rem center !important;
+    background-size: 16px 12px !important;
+    -webkit-appearance: none !important;
+    -moz-appearance: none !important;
+    appearance: none !important;
+    padding-right: 2.5rem !important; /* Ensure enough space for the arrow */
+}
+
+body.dark-mode select:focus,
+body.dark-mode .form-select:focus,
+body.dark-mode .custom-select:focus,
+body.dark-mode .dataTables_length select:focus,
+body.dark-mode .dataTables_filter select:focus {
+    border-color: #2c5cb5 !important;
+    box-shadow: 0 0 0 0.25rem rgba(44, 92, 181, 0.25) !important;
+}
+
+/* Filter dropdown options */
+body.dark-mode select option,
+body.dark-mode .form-select option,
+body.dark-mode .custom-select option,
+body.dark-mode .dataTables_length select option,
+body.dark-mode .dataTables_filter select option {
+    background-color: #152238 !important;
+    color: #ffffff !important;
+}
+
+/* Status filter dropdowns */
+body.dark-mode select[name="status_filter"],
+body.dark-mode select[id*="status"],
+body.dark-mode select[aria-label*="Status"] {
+    background-color: #152238 !important;
+    border-color: #1e3f76 !important;
+    color: #ffffff !important;
+}
+
+/* Search inputs in tables */
+body.dark-mode .dataTables_filter input[type="search"],
+body.dark-mode input[type="search"] {
+    background-color: #152238 !important;
+    border-color: #1e3f76 !important;
+    color: #ffffff !important;
+    padding: 0.375rem 0.75rem;
+}
+
+/* Fix for select2 dropdowns if used */
+body.dark-mode .select2-container--default .select2-selection--single,
+body.dark-mode .select2-container--default .select2-selection--multiple {
+    background-color: #152238 !important;
+    border-color: #1e3f76 !important;
+    color: #ffffff !important;
+}
+
+body.dark-mode .select2-container--default .select2-selection__rendered {
+    color: #ffffff !important;
+}
+
+body.dark-mode .select2-dropdown {
+    background-color: #152238 !important;
+    border-color: #1e3f76 !important;
+}
+
+body.dark-mode .select2-search__field {
+    background-color: #0d1a2f !important;
+    border-color: #1e3f76 !important;
+    color: #ffffff !important;
+}
+
+body.dark-mode .select2-results__option {
+    color: #ffffff !important;
+}
+
+body.dark-mode .select2-container--default .select2-results__option--highlighted[aria-selected] {
+    background-color: #1e3f76 !important;
+}
+
+/* Specific styles for the "Show entries" dropdown */
+body.dark-mode .dataTables_length label,
+body.dark-mode label[for*="table_length"] {
+    color: #ffffff !important;
+}
+
+/* Fix for any custom filter dropdowns */
+body.dark-mode div[class*="filter"] select,
+body.dark-mode div[id*="filter"] select,
+body.dark-mode .filter-select,
+body.dark-mode .filter-dropdown {
+    background-color: #152238 !important;
+    border-color: #1e3f76 !important;
+    color: #ffffff !important;
+}
+
+/* Fix for the "Select Status" dropdown shown in screenshots */
+body.dark-mode select[aria-label="Select Status"] {
+    background-color: #152238 !important;
+    border-color: #1e3f76 !important;
+    color: #ffffff !important;
+}
+
+/* Fix for multiple dropdown arrows in select elements */
+body.dark-mode select,
+body.dark-mode .form-select,
+body.dark-mode .custom-select {
+    background-image: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16'%3e%3cpath fill='none' stroke='%23ffffff' stroke-linecap='round' stroke-linejoin='round' stroke-width='2' d='M2 5l6 6 6-6'/%3e%3c/svg%3e") !important;
+    background-repeat: no-repeat !important;
+    background-position: right 0.75rem center !important;
+    background-size: 16px 12px !important;
+    -webkit-appearance: none !important;
+    -moz-appearance: none !important;
+    appearance: none !important;
+}
+
+/* Fix for Firefox */
+body.dark-mode select::-ms-expand,
+body.dark-mode .form-select::-ms-expand,
+body.dark-mode .custom-select::-ms-expand {
+    display: none !important;
+}
+
+/* Fix for the "Filter Document" dropdown shown in screenshot */
+body.dark-mode select[aria-label="Barangay Clearance"],
+body.dark-mode select[aria-label="Filter Document"] {
+    background-color: #152238 !important;
+    border-color: #1e3f76 !important;
+    color: #ffffff !important;
+    background-image: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16'%3e%3cpath fill='none' stroke='%23ffffff' stroke-linecap='round' stroke-linejoin='round' stroke-width='2' d='M2 5l6 6 6-6'/%3e%3c/svg%3e") !important;
+    background-repeat: no-repeat !important;
+    background-position: right 0.75rem center !important;
+    background-size: 16px 12px !important;
+    -webkit-appearance: none !important;
+    -moz-appearance: none !important;
+    appearance: none !important;
+}
+
+/* Date picker calendar styles for dark mode */
+body.dark-mode .datepicker,
+body.dark-mode .ui-datepicker,
+body.dark-mode .daterangepicker,
+body.dark-mode .bootstrap-datepicker,
+body.dark-mode .datepicker-dropdown {
+    background-color: #152238 !important;
+    border-color: #1e3f76 !important;
+    color: #ffffff !important;
+    box-shadow: 0 5px 10px rgba(0, 0, 0, 0.3) !important;
+}
+
+/* Calendar header */
+body.dark-mode .datepicker-header,
+body.dark-mode .ui-datepicker-header,
+body.dark-mode .daterangepicker .calendar-header,
+body.dark-mode .datepicker-days thead,
+body.dark-mode .datepicker-months thead,
+body.dark-mode .datepicker-years thead,
+body.dark-mode .datepicker-decades thead,
+body.dark-mode .datepicker-centuries thead {
+    background-color: #1e3f76 !important;
+    color: #ffffff !important;
+    border-color: #1e3f76 !important;
+}
+
+/* Calendar navigation buttons */
+body.dark-mode .datepicker-prev,
+body.dark-mode .datepicker-next,
+body.dark-mode .ui-datepicker-prev,
+body.dark-mode .ui-datepicker-next,
+body.dark-mode .daterangepicker .prev,
+body.dark-mode .daterangepicker .next {
+    color: #ffffff !important;
+}
+
+/* Day names (Mon, Tue, etc.) */
+body.dark-mode .datepicker-days th,
+body.dark-mode .ui-datepicker-calendar th,
+body.dark-mode .daterangepicker th {
+    background-color: #1e3f76 !important;
+    color: #ffffff !important;
+    border-color: #1e3f76 !important;
+}
+
+/* Calendar days */
+body.dark-mode .datepicker-days td,
+body.dark-mode .ui-datepicker-calendar td,
+body.dark-mode .daterangepicker td {
+    background-color: #152238 !important;
+    color: #ffffff !important;
+    border-color: #1e3f76 !important;
+}
+
+/* Hover state for days */
+body.dark-mode .datepicker-days td:hover,
+body.dark-mode .ui-datepicker-calendar td:hover,
+body.dark-mode .daterangepicker td:hover {
+    background-color: #2c5cb5 !important;
+    color: #ffffff !important;
+}
+
+/* Selected day */
+body.dark-mode .datepicker-days td.active,
+body.dark-mode .datepicker-days td.selected,
+body.dark-mode .ui-datepicker-calendar td.ui-datepicker-current-day,
+body.dark-mode .daterangepicker td.active,
+body.dark-mode .daterangepicker td.selected {
+    background-color: #1e3f76 !important;
+    color: #ffffff !important;
+    font-weight: bold;
+}
+
+/* Today's date */
+body.dark-mode .datepicker-days td.today,
+body.dark-mode .ui-datepicker-calendar td.ui-datepicker-today,
+body.dark-mode .daterangepicker td.today {
+    background-color: rgba(30, 63, 118, 0.5) !important;
+    color: #ffffff !important;
+    font-weight: bold;
+}
+
+/* Disabled days */
+body.dark-mode .datepicker-days td.disabled,
+body.dark-mode .ui-datepicker-calendar td.ui-datepicker-unselectable,
+body.dark-mode .daterangepicker td.disabled {
+    background-color: rgba(21, 34, 56, 0.5) !important;
+    color: #aaaaaa !important;
+}
+
+/* Month/year selection */
+body.dark-mode .datepicker-months .month,
+body.dark-mode .datepicker-years .year,
+body.dark-mode .ui-datepicker-month,
+body.dark-mode .ui-datepicker-year {
+    color: #ffffff !important;
+}
+
+body.dark-mode .datepicker-months .month:hover,
+body.dark-mode .datepicker-years .year:hover {
+    background-color: #2c5cb5 !important;
+}
+
+body.dark-mode .datepicker-months .month.active,
+body.dark-mode .datepicker-years .year.active {
+    background-color: #1e3f76 !important;
+    color: #ffffff !important;
+}
+
+/* Date range inputs */
+body.dark-mode input.datepicker,
+body.dark-mode input.daterangepicker,
+body.dark-mode input[type="date"] {
+    background-color: #152238 !important;
+    border-color: #1e3f76 !important;
+    color: #ffffff !important;
+}
+
+/* Specific fix for the date picker shown in screenshots */
+body.dark-mode table.table-condensed {
+    background-color: #152238 !important;
+    color: #ffffff !important;
+}
+
+body.dark-mode .table-condensed th,
+body.dark-mode .table-condensed td {
+    color: #ffffff !important;
+}
+
+/* Fix for datepicker arrows */
+body.dark-mode .datepicker-switch,
+body.dark-mode .prev,
+body.dark-mode .next {
+    color: #ffffff !important;
+}
+
+/* Fix for day names row */
+body.dark-mode .dow {
+    color: #ffffff !important;
+    background-color: #1e3f76 !important;
+}
+
+/* Fix for specific datepicker shown in screenshots */
+body.dark-mode .datepicker-dropdown {
+    border: 1px solid #1e3f76 !important;
+}
+
+body.dark-mode .datepicker table tr td,
+body.dark-mode .datepicker table tr th {
+    border: none !important;
+    background-color: transparent !important;
+}
+
+body.dark-mode .datepicker table tr td.day:hover,
+body.dark-mode .datepicker table tr td.focused {
+    background-color: #2c5cb5 !important;
+    color: #ffffff !important;
+}
+
+body.dark-mode .datepicker table tr td.active,
+body.dark-mode .datepicker table tr td.active:hover,
+body.dark-mode .datepicker table tr td.active.disabled,
+body.dark-mode .datepicker table tr td.active.disabled:hover {
+    background-color: #1e3f76 !important;
+    color: #ffffff !important;
+}
+
+/* Fixed navbar for public pages in dark mode */
+body.dark-mode.public-page .navbar-wrapper {
+    background-color: #0d1a2f !important;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.3) !important;
+}
+
+body.dark-mode.public-page .navbar {
+    background-color: #0d1a2f !important;
+}
+
+body.dark-mode.public-page .navbar-light .navbar-nav .nav-link {
+    color: #ffffff !important;
+}
+
+body.dark-mode.public-page .navbar-light .navbar-toggler-icon {
+    filter: invert(1);
+}
+
+body.dark-mode.public-page .btn-theme {
+    background-color: #1e3f76 !important;
+    color: #ffffff !important;
+    border-color: #1e3f76 !important;
+}
+
+body.dark-mode.public-page .btn-theme:hover {
+    background-color: #2c5cb5 !important;
+    border-color: #2c5cb5 !important;
+}
+
+/* Fixed navbar for resident userside portal in dark mode */
+body.dark-mode .content .navbar {
+    background-color: #0d1a2f !important;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.3) !important;
+}
+
+body.dark-mode .content .navbar .navbar-brand,
+body.dark-mode .content .navbar .nav-link {
+    color: #ffffff !important;
+}
+
+body.dark-mode .content .navbar .navbar-toggler-icon {
+    filter: invert(1);
+}
+
+/* Fixed navbar in dark mode */
+body.dark-mode .fixed-navbar {
+    background-color: #0d1a2f !important;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.3) !important;
+}
+
+body.dark-mode .fixed-navbar .navbar-brand,
+body.dark-mode .fixed-navbar .nav-link {
+    color: #ffffff !important;
+}
+
+body.dark-mode .fixed-navbar .navbar-toggler-icon {
+    filter: invert(1);
+}

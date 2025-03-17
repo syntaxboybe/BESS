@@ -1,0 +1,40 @@
+/* Fixed navbar styles for public pages (home, about, contact, announcement) */
+.public-page .navbar-wrapper {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    width: 100%;
+    z-index: 1030;
+    background-color: #fff;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+}
+
+/* Add padding to the body to prevent content from being hidden under fixed navbar */
+.public-page {
+    padding-top: 140px; /* Adjusted for the 120px height logo */
+}
+
+/* Ensure the navbar stays visible in dark mode */
+body.dark-mode .public-page .navbar-wrapper {
+    background-color: #0d1a2f;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.3);
+}
+
+/* Responsive adjustments */
+@media (max-width: 767px) {
+    .public-page {
+        padding-top: 80px; /* Smaller padding for mobile */
+    }
+
+    .public-page .navbar-brand img {
+        height: 80px; /* Smaller logo for mobile */
+    }
+}
+
+/* Ensure the footer stays at the bottom */
+.public-page .footer {
+    position: relative;
+    bottom: 0;
+    width: 100%;
+}

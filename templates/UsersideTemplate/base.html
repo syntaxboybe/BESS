@@ -8,6 +8,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" type="text/css" href="{% static 'bootstrap/css/bootstrap.min.css' %}">
     <link rel="stylesheet" type="text/css" href="{% static 'bootstrap/css/style.css' %}">
+    <link rel="stylesheet" type="text/css" href="{% static 'bootstrap/css/fixed-navbar.css' %}">
     <link rel="stylesheet" type="text/css" href="{% static 'line-awesome/css/line-awesome.min.css' %}">
     <link rel="stylesheet" type="text/css" href="{% static 'bootstrap/css/bootstrap-datepicker.min.css' %}">
     <link rel="icon" href="{% static 'img/favicon-48x48.png' %}" type="image/x-icon">
@@ -18,54 +19,56 @@
     <title>Brgy.Poblacion Naawan, Misamis, Oriental</title>
 </head>
 
-<nav class="navbar navbar-expand-lg navbar-light bg-white fade-page">
-  <div class="container">
-    <a class="navbar-brand" href="#"><img src="{%static 'img/nav_poblacionlogo1.png' %}" height="120"></a>   
-    
-    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
-      <span class="navbar-toggler-icon"></span>
-    </button>
-    <div class="collapse navbar-collapse navtabs-wrapper" id="navbarNav">
-      <ul class="navbar-nav ms-auto navtabs">
-        
-<li class="nav-item navtab py-2">
-  <a class="nav-link" href="{% url 'home' %}" style="font-weight: 600; color:black">
-    <i class="fas fa-home"></i> Home
-  </a>
-</li>
+<div class="navbar-wrapper">
+  <nav class="navbar navbar-expand-lg navbar-light bg-white fade-page">
+    <div class="container">
+      <a class="navbar-brand" href="#"><img src="{%static 'img/nav_poblacionlogo1.png' %}" height="120"></a>
 
-<li class="nav-item py-2 navtab">
-  <a class="nav-link" href="{% url 'about' %}" style="font-weight: 600; color:black">
-    <i class="fas fa-info-circle"></i> About
-  </a>
-</li>
+      <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+      <div class="collapse navbar-collapse navtabs-wrapper" id="navbarNav">
+        <ul class="navbar-nav ms-auto navtabs">
 
-<li class="nav-item py-2 navtab">
-  <a class="nav-link" href="{% url 'contact' %}" style="font-weight: 600; color:black">
-    <i class="fas fa-phone-alt"></i> Contact
-  </a>
-</li>
+  <li class="nav-item navtab py-2">
+    <a class="nav-link" href="{% url 'home' %}" style="font-weight: 600; color:black">
+      <i class="fas fa-home"></i> Home
+    </a>
+  </li>
 
-<li class="nav-item py-2 navtab">
-  <a class="nav-link" href="{% url 'announce' %}" style="font-weight: 600; color:black">
-    <i class="fas fa-bullhorn"></i> Announcement
-  </a>
-</li>
+  <li class="nav-item py-2 navtab">
+    <a class="nav-link" href="{% url 'about' %}" style="font-weight: 600; color:black">
+      <i class="fas fa-info-circle"></i> About
+    </a>
+  </li>
 
-<li class="nav-item me-2 py-1 input-sm">
-  <a type="button" class="btn-theme -btn1" href="{% url 'loginPage' %}">
-    <i class="fas fa-sign-in-alt"></i> Services Portal
-  </a>
-</li>
+  <li class="nav-item py-2 navtab">
+    <a class="nav-link" href="{% url 'contact' %}" style="font-weight: 600; color:black">
+      <i class="fas fa-phone-alt"></i> Contact
+    </a>
+  </li>
+
+  <li class="nav-item py-2 navtab">
+    <a class="nav-link" href="{% url 'announce' %}" style="font-weight: 600; color:black">
+      <i class="fas fa-bullhorn"></i> Announcement
+    </a>
+  </li>
+
+  <li class="nav-item me-2 py-1 input-sm">
+    <a type="button" class="btn-theme -btn1" href="{% url 'loginPage' %}">
+      <i class="fas fa-sign-in-alt"></i> Services Portal
+    </a>
+  </li>
 
 
 
-      </ul>
+        </ul>
+      </div>
     </div>
-  </div>
-</nav>
+  </nav>
+</div>
 
-<body class="bg-white fade-page">
+<body class="bg-white fade-page public-page">
 
       <div id="loading">
         <div class="spinner-border" role="status">
@@ -75,11 +78,11 @@
 
         {% block content %}
         {% endblock content %}
-        
+
 
 <section class="fade-page">
           <!-- Footer -->
-        <footer class="bg-dark text-center text-white">
+        <footer class="bg-dark text-center text-white footer">
           <!-- Grid container -->
           <div class="container p-4">
             <!-- Section: Social media -->
@@ -99,7 +102,7 @@
                 <!--Grid column-->
                 <div class="col-lg-6 col-md-6 mb-4 mb-md-0">
                   <h5 class="text-uppercase">Government Website</h5>
-        
+
                   <ul class="list-unstyled mb-0">
                     <li>
                       <a target="_blank" href="https://www.misamisoriental.gov.ph/" class="text-white">The Official Website of Provincial Government of Misamis Oriental.</a>
@@ -110,7 +113,7 @@
                   </ul>
                 </div>
                 <!--Grid column-->
-        
+
                 <!--Grid column-->
                 <div class="col-lg-6 col-md-6 mb-4 mb-md-0">
                   <div id="google_translate_element"></div>
@@ -120,7 +123,7 @@
                     new google.translate.TranslateElement({pageLanguage: 'en'}, 'google_translate_element');
                   }
                   </script>
-                  
+
                   <script type="text/javascript" src="//translate.google.com/translate_a/element.js?cb=googleTranslateElementInit"></script>
                 </div>
                 <!--Grid column-->
@@ -130,7 +133,7 @@
             <!-- Section: Links -->
           </div>
           <!-- Grid container -->
-        
+
           <!-- Copyright -->
           <div class="text-center p-3" style="background-color: rgba(0, 0, 0, 0.2);">
            Copyright © 2024-2025 Barangay E-Service System
@@ -147,7 +150,7 @@
           $(function(){
               $('.navbar ul li a').filter(function(){return this.href==location.href}).parent().addClass('is-active').siblings().removeClass('is-active');
               $('.navbar ul li a').click(function(){
-                  $(this).parent().addClass('is-active').siblings().removeClass('is-active')    
+                  $(this).parent().addClass('is-active').siblings().removeClass('is-active')
           })
           });
       </script>

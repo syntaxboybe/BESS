@@ -216,3 +216,42 @@ $(document).ready(function () {
     },
   ]);
 });
+
+// Handle fixed navbar positioning when sidebar is toggled
+$(document).ready(function() {
+    // When sidebar toggle buttons are clicked
+    $('.open-btn').on('click', function() {
+        $('.sidebar').addClass('active');
+        adjustNavbar();
+    });
+
+    $('.close-btn').on('click', function() {
+        $('.sidebar').removeClass('active');
+        adjustNavbar();
+    });
+
+    // Function to adjust navbar position based on sidebar state
+    function adjustNavbar() {
+        if ($(window).width() <= 767) {
+            if ($('.sidebar').hasClass('active')) {
+                $('.fixed-navbar').css({
+                    'left': '250px',
+                    'width': 'calc(100% - 250px)'
+                });
+            } else {
+                $('.fixed-navbar').css({
+                    'left': '0',
+                    'width': '100%'
+                });
+            }
+        }
+    }
+
+    // Initial adjustment
+    adjustNavbar();
+
+    // Adjust on window resize
+    $(window).resize(function() {
+        adjustNavbar();
+    });
+});

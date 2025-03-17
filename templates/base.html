@@ -19,8 +19,10 @@
     <link rel="stylesheet" type="text/css" href="{% static 'bootstrap/css/dataTables.bootstrap5.min.css' %}">
     <link rel="stylesheet" type="text/css" href="{% static 'bootstrap/css/jquery.dataTables.yadcf.css' %}">
     <link rel="stylesheet" type="text/css" href="{% static 'bootstrap/css/dataTables.dateTime.min.css' %}">
-   
-    
+    <!-- Dark Mode CSS -->
+    <link rel="stylesheet" type="text/css" href="{% static 'bootstrap/css/dark-mode.css' %}">
+
+
     <script src="{% static 'bootstrap/js/jquery.min.js' %}" ></script>
     <script src="{% static 'bootstrap/js/jquery.dataTables.js' %}" ></script>
     <script src="{% static 'bootstrap/js/dataTables.bootstrap5.min.js' %}" ></script>
@@ -33,13 +35,15 @@
     <script src="{% static 'bootstrap/js/jquery.dataTables.yadcf.js' %}" ></script>
     <script src="{% static 'bootstrap/js/moment.min.js' %}" ></script>
     <script src="{% static 'bootstrap/js/dataTables.dateTime.min.js' %}" ></script>
+    <!-- Dark Mode JS -->
+    <script src="{% static 'bootstrap/js/dark-mode.js' %}" ></script>
 
 <style>
     .dropdown-menu .dropdown-item {
         color: white; /* Default text color */
     }
 
-    .dropdown-menu .dropdown-item:hover, 
+    .dropdown-menu .dropdown-item:hover,
     .dropdown-menu .dropdown-item:focus {
         color: black; /* Text color when highlighted */
     }
@@ -48,11 +52,11 @@
         background-color: #008000; /* Keep the green background */
     }
 </style>
-    
+
   <title>Barangay E-Service System</title>
 </head>
 
-<body>
+<body class="fixed-navbar-layout">
 
     <div id="loading">
         <div class="spinner-border" role="status">
@@ -81,11 +85,11 @@
             </div>
             <ul class="list-unstyled px-2">
                 <li class=""><a href="{% url 'dashboard' %}" class="text-decoration-none px-3 py-2 d-block"><i class="fa fa-line-chart"></i><b> Dashboard</b></a></li>
-            
+
  {% if request.user.groups.all.0.name == 'superadmin' %}
             <li class=""><a href="{% url 'announcementPage' %}" class="text-decoration-none px-3 py-2 d-block"><i class="fas fa-bullhorn"></i><b> Announcements</b></a></li>
-                {% endif %} 
-            
+                {% endif %}
+
                 {% if request.user.groups.all.0.name == 'superadmin' %}
 <div class="side-sub-menu py-2">
                     <div class="accordion-button px-3 py-2" data-bs-toggle="collapse" href="#collapseAccounts" aria-expanded="false" aria-controls="collapseAccounts" style="background-color: #008000;">
@@ -101,18 +105,18 @@
                 <li class=""><a href="{% url 'officialList' %}" class="text-decoration-none px-3 py-2 d-block"><i class="fas fa-user-circle"></i> Account Record</a></li>
                 </ul>
                     </div>
-                    {% endif %} 
+                    {% endif %}
 
               {% if request.user.id != 30 %}
               {% if request.user.groups.all.0.name != 'superadmin' %}
                 <div class="side-sub-menu py-2">
                     <div class="accordion-button px-3 py-2" data-bs-toggle="collapse" href="#collapseResident" aria-expanded="false" aria-controls="collapseResident" style="background-color: #008000;">
                         <a class="text-decoration-none d-block">
-                            <i class="fas fa-address-card"></i><b> Profiling</b> 
+                            <i class="fas fa-address-card"></i><b> Profiling</b>
                         </a>
                     </div>
 
-                    
+
 <div class="ps-3 sub-content" style="background-color: #008000;">
     <ul class="list-unstyled px-2 py-2 collapse" id="collapseResident">
         <li>
@@ -141,8 +145,8 @@
     </ul>
 </div>
 
-              {% endif %} 
-              {% endif %} 
+              {% endif %}
+              {% endif %}
 
         {% if not request.user.groups.all.0.name == 'superadmin' %}
 <div class="side-sub-menu py-2">
@@ -162,7 +166,7 @@
                 <li class=""><a href="{% url 'residency_certificate_module' %}" class="text-decoration-none px-3 py-2 d-block"><i class="fas fa-certificate "></i> Certificate of Residency</a></li>
                 </ul>
           {% endif %}
- 
+
           {% if not request.user.groups.all.0.name != 'superadmin' %}
           <div class="side-sub-menu py-2">
                 <!--<hr class="h-color mx-3">-->
@@ -170,7 +174,7 @@
                 <!--<hr class="h-color mx-3">-->
                 {% endif %}
                </div>
-                
+
                 {% if request.user.id != 30 %}
                 {% if not request.user.groups.all.0.name == 'superadmin' %}
           <div class="side-sub-menu py-2">
@@ -209,19 +213,19 @@
                         </ul>
                     </div>
                 </div>
-                {% endif %}  
-                {% endif %} 
-              
+                {% endif %}
+                {% endif %}
+
                 {% if request.user.id != 30 %}
-                {% if not request.user.groups.all.0.name == 'superadmin' %}               
+                {% if not request.user.groups.all.0.name == 'superadmin' %}
                 <li class=""><a href="{% url 'requestLogs' %}" class="text-decoration-none px-3 py-2 d-block"><i class="fas fa-history fs-5"></i><b> Request Logs</b></a></li>
                 <div class="side-sub-menu">
-                
-                {% endif %} 
+
+                {% endif %}
                 {% endif %}
 
             </ul>
-            
+
         </div>
 
         <div class="content">
@@ -230,15 +234,17 @@
                     <div class="d-flex justify-content-between d-md-none d-block">
                         <button class="btn px-1 py-0 open-btn me-2"><i class="las la-bars fs-5"></i></button>
                         <a class="navbar-brand fd-4" href="#"><img src="{%static 'img/poblacionlogo.png' %}" height="40"><span class="px-2 py-0 h4">Barangay Poblacion</span></a>
-                        
+                    </div>
+                    <div class="d-none d-md-block">
+                        <!-- Empty div to balance the navbar on desktop -->
                     </div>
                     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
                     <span class="navbar-toggler-icon"></span>
                     </button>
                     <div class="collapse navbar-collapse justify-content-end" id="navbarSupportedContent">
                     <ul class="navbar-nav mb-2 mb-lg-0">
-            
-{% if user.id != 1 %}                      
+
+{% if user.id != 1 %}
 <li class="nav-item dropdown">
   <a class="nav-link" href="#" id="notificationDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
     <i class="fa-solid fa-bell fs-5"></i>
@@ -263,13 +269,23 @@
     <li><a class="dropdown-item" href="{% url 'residency_certificate_module' %}">Certificate of Residency</a></li>
   </ul>
 </li>
+{% endif %}
 
+                      <!-- Dark Mode Toggle Switch -->
+                      <li class="nav-item theme-switch-wrapper">
+                        <label class="theme-switch" for="checkbox" title="Toggle dark/light mode">
+                          <input type="checkbox" id="checkbox" />
+                          <div class="slider round">
+                            <i class="fas fa-sun"></i>
+                            <i class="fas fa-moon"></i>
+                          </div>
+                        </label>
+                      </li>
 
-                {% endif %}
                       <li class="nav-item">
                         <a class="nav-link active" aria-current="page" href="#"><i class="fas fa-user fs-5 me-2"></i> {{ user.username }}</a>
                         </li>
-                        
+
                         <li class="nav-item">
                         <a class="nav-link active" aria-current="page" href="{% url 'adminLogout' %}"><i class="fas fa-sign-out-alt fs-5"></i> Logout</a>
                         </li>
@@ -294,7 +310,7 @@
 <script src="{% static 'bootstrap/js/htmx.min.js' %}" ></script>
 <script src="{% static 'bootstrap/js/dialog.js' %}" ></script>
 
-<script src="{% static 'bootstrap/js/function.js' %}" ></script> 
+<script src="{% static 'bootstrap/js/function.js' %}" ></script>
 <script src="{% static 'bootstrap/js/issued_document_datatable.js' %}" ></script>
 <script src="{% static 'bootstrap/js/requested_documents_logs.js' %}" ></script>
 
@@ -302,7 +318,7 @@
     $(function(){
         $('.sidebar ul li a').filter(function(){return this.href==location.href}).parent().addClass('active').siblings().removeClass('active');
         $('.sidebar ul li a').click(function(){
-            $(this).parent().addClass('active').siblings().removeClass('active')    
+            $(this).parent().addClass('active').siblings().removeClass('active')
         })
     });
 
@@ -325,7 +341,7 @@
             localStorage.removeItem("coll_" + this.id);
             console.log('HIDE' + this.id);
         });
-        
+
         $(".collapse").each(function () {
             console.log('EACH ' + this.id);
             if (localStorage.getItem("coll_" + this.id) === "true") {
@@ -337,8 +353,8 @@
         });
     });
 
-    
-</script> 
+
+</script>
 
 <script>
 

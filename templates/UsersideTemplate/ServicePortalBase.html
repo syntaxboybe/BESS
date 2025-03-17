@@ -26,8 +26,8 @@
 </head>
 
 <style>
-  body { 
-  background: url("/static/img/service-bg.png") no-repeat center center fixed; 
+  body {
+  background: url("/static/img/service-bg.png") no-repeat center center fixed;
   -webkit-background-size: cover;
   -moz-background-size: cover;
   -o-background-size: cover;
@@ -37,7 +37,7 @@
 <body>
     <div class="main-container d-flex" >
         <div class="sidebar" id="side_nav" style="background-color: #355389;">
-          
+
             <div class="header-box px-2 pt-3 pb-4 d-flex justify-content-between">
 
 
@@ -66,12 +66,12 @@
         </div>
 
         <div class="content">
-          <nav class="navbar navbar-expand-md navbar-light bg-white p-4 px-5">
+          <nav class="navbar navbar-expand-md navbar-light bg-white p-4 px-5 fixed-navbar">
             <div class="container">
                 <div class="d-flex justify-content-between d-md-none d-block">
                     <button class="btn px-1 py-0 open-btn me-2"><i class="las la-bars fs-5"></i></button>
                     <a class="navbar-brand fd-4" href="#"><img src="{%static 'img/poblogo.svg' %}" height="40"><span class="px-2 py-0 h4">Barangay Poblacion</span></a>
-                    
+
                 </div>
                 <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
                 <span class="navbar-toggler-icon"></span>
@@ -117,12 +117,12 @@
             </div>
         </div>
     </div>
-        
+
 
 <section>
           <!-- Footer -->
         <footer class="bg-dark text-center text-white">
-        
+
           <!-- Copyright -->
           <div class="text-center p-3" style="background-color: rgba(0, 0, 0, 0.2);">
           Copyright © 2024-2025 Barangay E-Service System
@@ -141,17 +141,11 @@
     $(function(){
         $('.sidebar ul li a').filter(function(){return this.href==location.href}).parent().addClass('active').siblings().removeClass('active');
         $('.sidebar ul li a').click(function(){
-            $(this).parent().addClass('active').siblings().removeClass('active')    
-    })
+            $(this).parent().addClass('active').siblings().removeClass('active')
+        });
     });
 
-    $('.open-btn').on('click' , function(){
-        $('.sidebar').addClass('active');
-    });
-
-    $('.close-btn').on('click' , function(){
-        $('.sidebar').removeClass('active');
-    });
+    // Sidebar toggle functionality is now handled in function.js
 </script>
 </body>
 </html>

@@ -74,22 +74,67 @@ body {
   line-height: 1;
 }
 
-/* sidebar */
-
-.nav-bottom {
-  border-bottom: 7px solid #355389;
+/* Fixed navbar layout */
+.fixed-navbar-layout {
+  padding-top: 0;
+  overflow-x: hidden;
 }
 
+.fixed-navbar-layout .sidebar {
+  padding-top: 0;
+}
+
+/* navbar */
+.nav-bottom {
+  border-bottom: 7px solid #355389;
+  position: fixed;
+  top: 0;
+  left: 300px; /* Start from the sidebar width */
+  right: 0;
+  width: calc(100% - 300px); /* Adjust width to account for sidebar */
+  z-index: 1030;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+  background-color: #f8f9fa; /* Ensure background color is set */
+}
+
+/* Adjust content to prevent overlap with fixed navbar */
+.content {
+  min-height: 100vh;
+  width: calc(100% - 300px); /* Adjust width to account for sidebar */
+  padding-top: 60px; /* Adjust based on navbar height */
+  margin-left: 300px; /* Width of sidebar */
+  transition: all 0.3s;
+  position: relative;
+}
+
+/* Ensure sidebar is above other content but below navbar */
 #side_nav {
   background: #000;
   min-width: 300px;
   max-width: 300px;
   transition: all 0.3s;
+  z-index: 1025; /* Adjusted z-index to be between content and navbar */
+  position: fixed;
+  height: 100vh; /* Full height */
+  top: 0; /* Start from the top of the page */
+  left: 0;
+  overflow-y: auto; /* Allow scrolling in sidebar if content is too long */
 }
 
-.content {
-  min-height: 100vh;
+/* Adjust main container for fixed navbar and sidebar */
+.main-container {
+  position: relative;
+  display: flex;
   width: 100%;
+  min-height: 100vh;
+}
+
+/* Adjust dashboard content for fixed navbar */
+.dashboard-content {
+  width: 100%;
+  padding: 15px;
+  padding-top: 20px; /* Add extra padding at the top */
+  transition: all 0.3s;
 }
 
 hr.h-color {
@@ -148,16 +193,39 @@ hr.h-color {
   border-bottom-right-radius: 8px;
 }
 
-@media (max-width: 767px) {
+/* Sidebar header adjustments */
+.header-box {
+  position: relative;
+  z-index: 1026; /* Above sidebar content */
+}
+
+/* Responsive adjustments */
+@media(max-width: 767px) {
+  .nav-bottom {
+    left: 0;
+    width: 100%;
+  }
+
   #side_nav {
     margin-left: -300px;
     position: fixed;
     min-height: 100vh;
-    z-index: 1;
+    z-index: 1040;
+    top: 0;
   }
 
   #side_nav.active {
     margin-left: 0;
+  }
+
+  .content {
+    margin-left: 0;
+    width: 100%;
+  }
+
+  .dashboard-content {
+    margin-left: 0;
+    width: 100%;
   }
 }
 
@@ -632,4 +700,120 @@ table.table-fit tfoot td {
   padding-right: 5px;
   color: white;
   background: #d63960;
+}
+
+/* Modern scrollbar styles */
+/* For Webkit browsers (Chrome, Safari, Edge) */
+::-webkit-scrollbar {
+    width: 8px;
+    height: 8px;
+}
+
+::-webkit-scrollbar-track {
+    background: #f1f1f1;
+    border-radius: 10px;
+}
+
+::-webkit-scrollbar-thumb {
+    background: #888;
+    border-radius: 10px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+    background: #555;
+}
+
+/* For Firefox */
+* {
+    scrollbar-width: thin;
+    scrollbar-color: #888 #f1f1f1;
+}
+
+/* Sidebar scrollbar styles */
+#side_nav::-webkit-scrollbar {
+    width: 6px;
+    height: 6px;
+}
+
+#side_nav::-webkit-scrollbar-track {
+    background: transparent;
+}
+
+#side_nav::-webkit-scrollbar-thumb {
+    background: rgba(255, 255, 255, 0.3);
+    border-radius: 10px;
+}
+
+#side_nav::-webkit-scrollbar-thumb:hover {
+    background: rgba(255, 255, 255, 0.5);
+}
+
+/* For Firefox */
+#side_nav {
+    scrollbar-width: thin;
+    scrollbar-color: rgba(255, 255, 255, 0.3) transparent;
+}
+
+/* Fixed navbar for resident userside portal */
+.content .navbar {
+    position: fixed;
+    top: 0;
+    right: 0;
+    left: 300px; /* Adjust based on sidebar width */
+    z-index: 1030;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+    width: calc(100% - 300px);
+}
+
+/* Add padding to the content to prevent it from being hidden under the fixed navbar */
+.content .dashboard-content {
+    padding-top: 100px; /* Adjust based on navbar height */
+}
+
+/* Responsive adjustments for mobile */
+@media (max-width: 767px) {
+    .content .navbar {
+        left: 0;
+        width: 100%;
+    }
+
+    .sidebar.active + .content .navbar {
+        left: 250px;
+        width: calc(100% - 250px);
+    }
+}
+
+/* Ensure the navbar transition is smooth when sidebar is toggled */
+.content .navbar {
+    transition: all 0.3s ease;
+}
+
+/* Ensure the sidebar is above the navbar */
+.sidebar {
+    z-index: 1031;
+}
+
+/* Fixed navbar styles */
+.fixed-navbar {
+    position: fixed !important;
+    top: 0;
+    right: 0;
+    left: 300px !important; /* Align with sidebar width */
+    z-index: 1030;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+    width: calc(100% - 300px) !important;
+    transition: all 0.3s ease;
+}
+
+/* Responsive adjustments for the fixed navbar */
+@media (max-width: 767px) {
+    .fixed-navbar {
+        left: 0 !important;
+        width: 100% !important;
+    }
+
+    .sidebar.active ~ .content .fixed-navbar {
+        left: 250px !important;
+        width: calc(100% - 250px) !important;
+    }
 }
