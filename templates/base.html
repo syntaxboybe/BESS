@@ -248,25 +248,115 @@
 <li class="nav-item dropdown">
   <a class="nav-link" href="#" id="notificationDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
     <i class="fa-solid fa-bell fs-5"></i>
-    <span class="badge" style="background-color: #008000; color: white;">5</span>
+    {% if notifications.pending_counts.total > 0 %}
+    <span class="badge" style="background-color: #008000; color: white;">{{ notifications.pending_counts.total }}</span>
+    {% endif %}
   </a>
-  <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="notificationDropdown" style="background-color: #008000; color: white;">
+  <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="notificationDropdown" style="background-color: #008000; color: white; max-height: 500px; overflow-y: auto;">
     <!-- Notification Title -->
     <li>
-      <h6 class="dropdown-header text-white" style="background-color: #355389;">
+      <h6 class="dropdown-header text-white" style="background-color: #355389; position: sticky; top: 0; z-index: 1000;">
         <center><b>NOTIFICATIONS</b></center>
       </h6>
     </li>
-    <!-- New Requests Section -->
-    <li>
-      <h6 class="dropdown-header text-white" style="background-color: #006400;">New Requests</h6>
-    </li>
-    <!-- Notification Items for New Requests -->
-    <li><a class="dropdown-item" href="{% url 'clearance' %}">Barangay Clearance</a></li>
-    <li><a class="dropdown-item" href="{% url 'indigency_request' %}">Certificate of Indigency</a></li>
-    <li><a class="dropdown-item" href="{% url 'business_permit_module' %}">Business Permit</a></li>
-    <li><a class="dropdown-item" href="{% url 'building_permit_module' %}">Building Permit</a></li>
-    <li><a class="dropdown-item" href="{% url 'residency_certificate_module' %}">Certificate of Residency</a></li>
+
+    {% if notifications.pending_counts.total > 0 %}
+      <!-- New Requests Section -->
+      <li>
+        <h6 class="dropdown-header text-white" style="background-color: #006400;">New Requests</h6>
+      </li>
+
+      {% if notifications.latest_requests.clearance %}
+        {% for request in notifications.latest_requests.clearance %}
+        <li>
+          <a class="dropdown-item d-flex justify-content-between align-items-center" href="{% url 'clearance' %}">
+            <div>
+              <i class="fas fa-file-alt me-2"></i> Barangay Clearance
+              <small class="d-block text-white-50">{{ request.res_id.firstname }} {{ request.res_id.lastname }}</small>
+              <small class="d-block text-white-50">{{ request.date_requested|date:"M d, Y h:i A" }}</small>
+            </div>
+            <span class="badge rounded-pill bg-danger">New</span>
+          </a>
+        </li>
+        {% endfor %}
+      {% endif %}
+
+      {% if notifications.latest_requests.indigency %}
+        {% for request in notifications.latest_requests.indigency %}
+        <li>
+          <a class="dropdown-item d-flex justify-content-between align-items-center" href="{% url 'indigency_request' %}">
+            <div>
+              <i class="fas fa-feather-alt me-2"></i> Certificate of Indigency
+              <small class="d-block text-white-50">{{ request.res_id.firstname }} {{ request.res_id.lastname }}</small>
+              <small class="d-block text-white-50">{{ request.date_requested|date:"M d, Y h:i A" }}</small>
+            </div>
+            <span class="badge rounded-pill bg-danger">New</span>
+          </a>
+        </li>
+        {% endfor %}
+      {% endif %}
+
+      {% if notifications.latest_requests.business %}
+        {% for request in notifications.latest_requests.business %}
+        <li>
+          <a class="dropdown-item d-flex justify-content-between align-items-center" href="{% url 'business_permit_module' %}">
+            <div>
+              <i class="fas fa-file-contract me-2"></i> Business Permit
+              <small class="d-block text-white-50">{{ request.res_id.firstname }} {{ request.res_id.lastname }}</small>
+              <small class="d-block text-white-50">{{ request.date_requested|date:"M d, Y h:i A" }}</small>
+            </div>
+            <span class="badge rounded-pill bg-danger">New</span>
+          </a>
+        </li>
+        {% endfor %}
+      {% endif %}
+
+      {% if notifications.latest_requests.building %}
+        {% for request in notifications.latest_requests.building %}
+        <li>
+          <a class="dropdown-item d-flex justify-content-between align-items-center" href="{% url 'building_permit_module' %}">
+            <div>
+              <i class="far fa-building me-2"></i> Building Permit
+              <small class="d-block text-white-50">{{ request.res_id.firstname }} {{ request.res_id.lastname }}</small>
+              <small class="d-block text-white-50">{{ request.date_requested|date:"M d, Y h:i A" }}</small>
+            </div>
+            <span class="badge rounded-pill bg-danger">New</span>
+          </a>
+        </li>
+        {% endfor %}
+      {% endif %}
+
+      {% if notifications.latest_requests.residency %}
+        {% for request in notifications.latest_requests.residency %}
+        <li>
+          <a class="dropdown-item d-flex justify-content-between align-items-center" href="{% url 'residency_certificate_module' %}">
+            <div>
+              <i class="fas fa-certificate me-2"></i> Certificate of Residency
+              <small class="d-block text-white-50">{{ request.res_id.firstname }} {{ request.res_id.lastname }}</small>
+              <small class="d-block text-white-50">{{ request.date_requested|date:"M d, Y h:i A" }}</small>
+            </div>
+            <span class="badge rounded-pill bg-danger">New</span>
+          </a>
+        </li>
+        {% endfor %}
+      {% endif %}
+
+      <!-- View All Requests -->
+      <li><hr class="dropdown-divider bg-white opacity-25"></li>
+      <li>
+        <div class="dropdown-header text-center">
+          <a href="#" class="text-white" style="text-decoration: none;" onclick="markAllAsRead(); return false;">
+            <i class="fas fa-check-double me-1"></i> Mark all as read
+          </a>
+        </div>
+      </li>
+    {% else %}
+      <li>
+        <div class="dropdown-item text-center text-white-50">
+          No new notifications
+        </div>
+      </li>
+    {% endif %}
   </ul>
 </li>
 {% endif %}
@@ -313,6 +403,9 @@
 <script src="{% static 'bootstrap/js/function.js' %}" ></script>
 <script src="{% static 'bootstrap/js/issued_document_datatable.js' %}" ></script>
 <script src="{% static 'bootstrap/js/requested_documents_logs.js' %}" ></script>
+{% if user.id != 1 and not user.groups.all.0.name == 'superadmin' %}
+<script src="{% static 'js/notifications.js' %}" ></script>
+{% endif %}
 
 <script>
     $(function(){

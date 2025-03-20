@@ -6,10 +6,13 @@ from django.contrib import messages
 from .decorators import user_superAdmin
 from django.views.decorators.cache import cache_control
 from django.contrib.auth.decorators import login_required
+from django.http import JsonResponse
+from django.views.decorators.http import require_POST
 
 from apps.AnnouncementManagement.models import Announcement
 from .forms import *
 from .models import clearance as clr,CertificateOfIndigency as coi,BuildingPermit as buildingpermit, BusinessPermit as businesspermit, ResidencyCertificate as rescert
+from .notification_utils import count_pending_requests, mark_as_read, create_notification
 
 
 
@@ -63,11 +66,15 @@ def barangay_clearance(request):
                     instance = form.save(commit=False)
                     instance.res_id = userid
                     instance.save()
+
+                    # Create notification for the new clearance request
+                    create_notification('clearance', instance)
+
                     messages.success(request, 'Your request has been submitted. You can see your request status at Document Status')
                     return redirect('service_portal')
 
-        context={'form':form} 
-        return render(request, "UsersideTemplate/barangay_clearance.html", context)
+        context={'form':form}
+        return render(request, 'UsersideTemplate/barangay_clearance.html', context)
     else:
         return redirect('loginPage')
 
@@ -89,9 +96,13 @@ def indigency(request):
                     instance = form.save(commit=False)
                     instance.res_id = userid
                     instance.save()
+
+                    # Create notification for the new indigency request
+                    create_notification('indigency', instance)
+
                     messages.success(request, 'Your request has been submitted. You can see your request status at Document Status')
                     return redirect('service_portal')
-        context={'form':form} 
+        context={'form':form}
         return render(request, "UsersideTemplate/indigency.html", context)
     else:
         return redirect('loginPage')
@@ -114,13 +125,17 @@ def BuildingPermit(request):
                     instance = form.save(commit=False)
                     instance.res_id = userid
                     instance.save()
+
+                    # Create notification for the new building permit request
+                    create_notification('building', instance)
+
                     messages.success(request, 'Your request has been submitted. You can see your request status at Document Status')
                     return redirect('service_portal')
 
         context={'form':form}
         return render(request, "UsersideTemplate/building_permit.html", context)
     else:
-        return redirect('loginPage')    
+        return redirect('loginPage')
 
 @cache_control(no_cache=True,must_revalidate=True,no_store=True)
 @login_required(login_url="loginPage")
@@ -140,12 +155,16 @@ def BusinessPermit(request):
                     instance = form.save(commit=False)
                     instance.res_id = userid
                     instance.save()
+
+                    # Create notification for the new business permit request
+                    create_notification('business', instance)
+
                     messages.success(request, 'Your request has been submitted. You can see your request status at Document Status')
                     return redirect('service_portal')
         context={'form':form}
         return render(request, "UsersideTemplate/business_permit.html", context)
     else:
-        return redirect('loginPage') 
+        return redirect('loginPage')
 
 @cache_control(no_cache=True,must_revalidate=True,no_store=True)
 @login_required(login_url="loginPage")
@@ -165,12 +184,16 @@ def ResidencyCertificate(request):
                     instance = form.save(commit=False)
                     instance.res_id = userid
                     instance.save()
+
+                    # Create notification for the new residency certificate request
+                    create_notification('residency', instance)
+
                     messages.success(request, 'Your request has been submitted. You can see your request status at Document Status')
                     return redirect('service_portal')
         context={'form':form}
         return render(request, 'UsersideTemplate/residency_certificate.html', context)
     else:
-        return redirect('loginPage') 
+        return redirect('loginPage')
 
 
 @cache_control(no_cache=True,must_revalidate=True,no_store=True)
@@ -198,8 +221,8 @@ def changeEmail(request):
                     if key == 'captcha' and error[0] == 'This field is required.':
                         messages.error(request, "You must pass the reCAPTCHA test")
                         continue
-                
-                    messages.error(request, error) 
+
+                    messages.error(request, error)
 
         form = UpdateEmailForm(instance=request.user)
         context = {'form': form}
@@ -224,8 +247,8 @@ def changeUsername(request):
                     if key == 'captcha' and error[0] == 'This field is required.':
                         messages.error(request, "You must pass the reCAPTCHA test")
                         continue
-                
-                    messages.error(request, error) 
+
+                    messages.error(request, error)
 
         form = UpdateUsernameForm(instance=request.user)
         context = {'form': form}
@@ -242,7 +265,7 @@ def announce(request):
 
 
 def document_status(request):
-    
+
 
     user_id = request.user.residentsinfo.id
     clearance_status = clr.objects.filter(res_id=user_id)
@@ -251,14 +274,14 @@ def document_status(request):
     building_status = buildingpermit.objects.filter(res_id=user_id)
     residency_status = rescert.objects.filter(res_id=user_id)
     context = {
-        'clearance_list': clearance_status, 
+        'clearance_list': clearance_status,
         'indigency_list': indigency_status,
         'business_list' : business_status,
         'building_list' : building_status,
         'residency_list': residency_status
     }
     return render(request, 'UsersideTemplate/doc_status.html', context)
-    
+
 
 @cache_control(no_cache=True,must_revalidate=True,no_store=True)
 @login_required(login_url="loginPage")
@@ -267,3 +290,109 @@ def privacy(request):
         return render(request, 'UsersideTemplate/privacy.html')
     else:
         return redirect('loginPage')
+
+@login_required(login_url="loginPage")
+def notification_count_api(request):
+    """API endpoint to get notification counts and detailed request information"""
+    # Only allow non-superadmin users to access this endpoint
+    if hasattr(request.user, 'groups') and request.user.groups.exists():
+        if request.user.groups.all()[0].name == 'superadmin' or request.user.id == 1:
+            return JsonResponse({'error': 'Unauthorized'}, status=403)
+
+    # Get basic counts
+    counts = count_pending_requests()
+
+    # Get latest requests with detailed information
+    pending_status = DocumentStatus.objects.get(id=1)
+
+    # Format clearance requests
+    clearance_requests = []
+    for req in clr.objects.filter(status=pending_status).order_by('-date_requested')[:5]:
+        clearance_requests.append({
+            'id': req.id,
+            'resident_name': f"{req.res_id.firstname} {req.res_id.lastname}",
+            'date_requested': req.date_requested.strftime("%b %d, %Y %I:%M %p"),
+            'purpose': req.purpose
+        })
+
+    # Format indigency requests
+    indigency_requests = []
+    for req in coi.objects.filter(status=pending_status).order_by('-date_requested')[:5]:
+        indigency_requests.append({
+            'id': req.id,
+            'resident_name': f"{req.res_id.firstname} {req.res_id.lastname}",
+            'date_requested': req.date_requested.strftime("%b %d, %Y %I:%M %p"),
+            'purpose': req.purpose
+        })
+
+    # Format business permit requests
+    business_requests = []
+    for req in businesspermit.objects.filter(status=pending_status).order_by('-date_requested')[:5]:
+        business_requests.append({
+            'id': req.id,
+            'resident_name': f"{req.res_id.firstname} {req.res_id.lastname}",
+            'date_requested': req.date_requested.strftime("%b %d, %Y %I:%M %p"),
+            'business_name': req.business_name
+        })
+
+    # Format building permit requests
+    building_requests = []
+    for req in buildingpermit.objects.filter(status=pending_status).order_by('-date_requested')[:5]:
+        building_requests.append({
+            'id': req.id,
+            'resident_name': f"{req.res_id.firstname} {req.res_id.lastname}",
+            'date_requested': req.date_requested.strftime("%b %d, %Y %I:%M %p"),
+            'location': req.location
+        })
+
+    # Format residency certificate requests
+    residency_requests = []
+    for req in rescert.objects.filter(status=pending_status).order_by('-date_requested')[:5]:
+        residency_requests.append({
+            'id': req.id,
+            'resident_name': f"{req.res_id.firstname} {req.res_id.lastname}",
+            'date_requested': req.date_requested.strftime("%b %d, %Y %I:%M %p"),
+            'purpose': req.purpose
+        })
+
+    # Combine counts with detailed requests
+    response_data = counts
+    response_data.update({
+        'clearanceRequests': clearance_requests,
+        'indigencyRequests': indigency_requests,
+        'businessRequests': business_requests,
+        'buildingRequests': building_requests,
+        'residencyRequests': residency_requests
+    })
+
+    return JsonResponse(response_data)
+
+@login_required(login_url="loginPage")
+@require_POST
+def mark_notification_read(request, notification_id):
+    """API endpoint to mark a notification as read"""
+    # Only allow non-superadmin users to access this endpoint
+    if hasattr(request.user, 'groups') and request.user.groups.exists():
+        if request.user.groups.all()[0].name == 'superadmin' or request.user.id == 1:
+            return JsonResponse({'error': 'Unauthorized'}, status=403)
+
+    success = mark_as_read(notification_id)
+    if success:
+        return JsonResponse({'status': 'success'})
+    else:
+        return JsonResponse({'error': 'Notification not found'}, status=404)
+
+@login_required(login_url="loginPage")
+@require_POST
+def mark_all_notifications_read(request):
+    """API endpoint to mark all notifications as read"""
+    # Only allow non-superadmin users to access this endpoint
+    if hasattr(request.user, 'groups') and request.user.groups.exists():
+        if request.user.groups.all()[0].name == 'superadmin' or request.user.id == 1:
+            return JsonResponse({'error': 'Unauthorized'}, status=403)
+
+    # Mark all notifications as read
+    from .models import Notification
+    Notification.objects.filter(is_read=False).update(is_read=True)
+
+    return JsonResponse({'status': 'success', 'message': 'All notifications marked as read'})

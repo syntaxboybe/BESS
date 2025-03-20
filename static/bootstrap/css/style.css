@@ -715,18 +715,18 @@ table.table-fit tfoot td {
 }
 
 ::-webkit-scrollbar-thumb {
-    background: #888;
+    background: #355389;
     border-radius: 10px;
 }
 
 ::-webkit-scrollbar-thumb:hover {
-    background: #555;
+    background: #2c5cb5;
 }
 
 /* For Firefox */
 * {
     scrollbar-width: thin;
-    scrollbar-color: #888 #f1f1f1;
+    scrollbar-color: #355389 #f1f1f1;
 }
 
 /* Sidebar scrollbar styles */
@@ -740,18 +740,18 @@ table.table-fit tfoot td {
 }
 
 #side_nav::-webkit-scrollbar-thumb {
-    background: rgba(255, 255, 255, 0.3);
+    background: rgba(53, 83, 137, 0.7);
     border-radius: 10px;
 }
 
 #side_nav::-webkit-scrollbar-thumb:hover {
-    background: rgba(255, 255, 255, 0.5);
+    background: rgba(53, 83, 137, 0.9);
 }
 
 /* For Firefox */
 #side_nav {
     scrollbar-width: thin;
-    scrollbar-color: rgba(255, 255, 255, 0.3) transparent;
+    scrollbar-color: rgba(53, 83, 137, 0.7) transparent;
 }
 
 /* Fixed navbar for resident userside portal */
@@ -816,4 +816,103 @@ table.table-fit tfoot td {
         left: 250px !important;
         width: calc(100% - 250px) !important;
     }
+}
+
+/* Notification Bell Animation */
+@keyframes bellRing {
+    0% { transform: rotate(0); }
+    10% { transform: rotate(15deg); }
+    20% { transform: rotate(-15deg); }
+    30% { transform: rotate(15deg); }
+    40% { transform: rotate(-15deg); }
+    50% { transform: rotate(0); }
+    100% { transform: rotate(0); }
+}
+
+.notification-bell-animation {
+    animation: bellRing 1s ease;
+    transform-origin: top center;
+}
+
+/* Notification Badge */
+#notificationDropdown .badge {
+    position: absolute;
+    top: 0;
+    right: 0;
+    font-size: 0.7rem;
+    transform: translate(25%, -25%);
+}
+
+/* Dropdown Item Badge */
+.dropdown-item .badge {
+    float: right;
+    margin-left: 8px;
+}
+
+/* Enhanced Notification Dropdown Styles */
+#notificationDropdown + .dropdown-menu {
+    width: 350px;
+    max-height: 500px;
+    overflow-y: auto;
+    padding: 0;
+}
+
+#notificationDropdown + .dropdown-menu .dropdown-header {
+    padding: 10px;
+    margin: 0;
+}
+
+#notificationDropdown + .dropdown-menu .dropdown-item {
+    padding: 12px 15px;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+    white-space: normal;
+    transition: background-color 0.2s;
+}
+
+#notificationDropdown + .dropdown-menu .dropdown-item:hover {
+    background-color: rgba(255, 255, 255, 0.1);
+}
+
+#notificationDropdown + .dropdown-menu .dropdown-item small {
+    font-size: 80%;
+    opacity: 0.8;
+}
+
+#notificationDropdown + .dropdown-menu .dropdown-divider {
+    margin: 0;
+}
+
+#notificationDropdown + .dropdown-menu::-webkit-scrollbar {
+    width: 5px;
+}
+
+#notificationDropdown + .dropdown-menu::-webkit-scrollbar-track {
+    background: rgba(0, 0, 0, 0.1);
+}
+
+#notificationDropdown + .dropdown-menu::-webkit-scrollbar-thumb {
+    background: rgba(255, 255, 255, 0.3);
+    border-radius: 5px;
+}
+
+#notificationDropdown + .dropdown-menu::-webkit-scrollbar-thumb:hover {
+    background: rgba(255, 255, 255, 0.5);
+}
+
+/* Notification Badge Animation */
+@keyframes pulse {
+    0% {
+        transform: scale(1);
+    }
+    50% {
+        transform: scale(1.2);
+    }
+    100% {
+        transform: scale(1);
+    }
+}
+
+.badge.new-notification {
+    animation: pulse 1s infinite;
+    background-color: #dc3545 !important;
 }
