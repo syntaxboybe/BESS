@@ -4,8 +4,6 @@ from django.contrib.auth.decorators import login_required
 from django.views.decorators.cache import cache_control
 from .decorators import admin_only
 from django.contrib.auth.models import User as user
-# Import document models
-from apps.UserPortal.models import clearance, CertificateOfIndigency, BusinessPermit, BuildingPermit, ResidencyCertificate, DocumentStatus
 # Create your views here.
 
 
@@ -29,34 +27,6 @@ def dashboard(request):
 
         cResident = ResidentsInfo.objects.all().count
 
-        # Get document statistics
-        # Pending status (id=1)
-        pending_status = DocumentStatus.objects.get(id=1)
-
-        # Clearance statistics
-        clearance_total = clearance.objects.all().count()
-        clearance_pending = clearance.objects.filter(status=pending_status).count()
-
-        # Indigency statistics
-        indigency_total = CertificateOfIndigency.objects.all().count()
-        indigency_pending = CertificateOfIndigency.objects.filter(status=pending_status).count()
-
-        # Business permit statistics
-        business_total = BusinessPermit.objects.all().count()
-        business_pending = BusinessPermit.objects.filter(status=pending_status).count()
-
-        # Building permit statistics
-        building_total = BuildingPermit.objects.all().count()
-        building_pending = BuildingPermit.objects.filter(status=pending_status).count()
-
-        # Residency certificate statistics
-        residency_total = ResidencyCertificate.objects.all().count()
-        residency_pending = ResidencyCertificate.objects.filter(status=pending_status).count()
-
-        # Calculate totals across all documents
-        document_total = clearance_total + indigency_total + business_total + building_total + residency_total
-        pending_total = clearance_pending + indigency_pending + business_pending + building_pending + residency_pending
-
         context = {
             "cResident": cResident,
             "cMale": cMale,
@@ -71,19 +41,6 @@ def dashboard(request):
             "resident_list": user.objects.filter(
                 groups__name__in=["resident"]
             ).order_by("id"),
-            # Document statistics
-            "clearance_total": clearance_total,
-            "clearance_pending": clearance_pending,
-            "indigency_total": indigency_total,
-            "indigency_pending": indigency_pending,
-            "business_total": business_total,
-            "business_pending": business_pending,
-            "building_total": building_total,
-            "building_pending": building_pending,
-            "residency_total": residency_total,
-            "residency_pending": residency_pending,
-            "document_total": document_total,
-            "pending_total": pending_total,
         }
 
         return render(request, "Dashboard/demographic.html", context)

@@ -1,4 +1,4 @@
-<form hx-post="{{ request.path }}" hx-trigger="confirmed" class="modal-content">
+<form hx-post="{{ request.path }}" class="modal-content">
   {% csrf_token %}
   <div class="modal-header">
     <h5 class="modal-title">Are you sure you want to revert this request?</h5>
@@ -19,7 +19,7 @@
     </div>
   </div>
   <div class="modal-footer">
-    <button id="yesButton" class="btn btn-success" type="button">
+    <button id="yesButton" class="btn btn-success" type="submit" onclick="showLoadingSpinner(event)">
       <span id="spinnerYes" class="spinner-border spinner-border-sm me-2" role="status" style="display: none;"></span>
       <i class="fas fa-check"></i> Yes
     </button>
@@ -29,46 +29,14 @@
   </div>
 </form>
 
-<!-- Add SweetAlert2 CDN -->
-<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
-
 <script>
-  // Handle yes button click
-  document.getElementById("yesButton").addEventListener("click", function(event) {
-    event.preventDefault();
-
-    // Get the reason text
-    const reasonText = document.getElementById("exampleFormControlTextarea1").value;
-    if (!reasonText.trim()) {
-      Swal.fire({
-        title: 'Error!',
-        text: 'Please provide a reason for reverting the request.',
-        icon: 'error',
-        confirmButtonText: 'OK'
-      });
-      return;
-    }
-
-    // Show loading state
-    const yesButton = this;
+  function showLoadingSpinner(event) {
+    // Prevent duplicate form submissions
+    const yesButton = document.getElementById("yesButton");
     const spinnerYes = document.getElementById("spinnerYes");
-    if (yesButton && spinnerYes) {
-      yesButton.disabled = true;
-      spinnerYes.style.display = "inline-block";
-    }
 
-    // Show success notification
-    Swal.fire({
-      title: 'Request Reverted!',
-      text: 'The business permit request has been successfully reverted.',
-      icon: 'success',
-      timer: 3000,
-      timerProgressBar: true,
-      showConfirmButton: false,
-      didOpen: () => {
-        // Trigger HTMX submission
-        htmx.trigger('form', 'confirmed');
-      }
-    });
-  });
+    // Show the spinner and disable the button
+    yesButton.disabled = false;
+    spinnerYes.style.display = "inline-block";
+  }
 </script>

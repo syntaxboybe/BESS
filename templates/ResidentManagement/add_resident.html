@@ -3,7 +3,7 @@
 {% block content %}
 
 <div class="container px-5">
-    <form action="." method="POST" enctype="multipart/form-data" autocomplete="off" id="registrationForm">
+    <form action="." method="POST" enctype="multipart/form-data" autocomplete="off">
         {% csrf_token %}
 
         <div class="row">
@@ -173,7 +173,7 @@
                         <label class="col-form-label text-primary">Upload Image (Click to browse)</label>
                     </div>
                     <div class="col-lg-12 col-md-12 col-12 mb-2">
-                        <div class="form-element-upload">
+                        <div class="form-element-upload"> 
                                     {{ form.image }}
                             <label for="file" id="file-preview">
                                         <img src="{% static 'img/default_profile_pic.jpg'%}">
@@ -203,19 +203,19 @@
         <div class="row bg-white rounded p-3">
             <div class="col-lg-12">
                 <div class="float-end">
-                    <button id="registerButton" class="btn btn-success bg-gradient mt-2" type="button">
-                        <span id="registerSpinner" class="spinner-border spinner-border-sm me-2" role="status" style="display: none;"></span>
-                        <i class="las la-check fs-4" style="vertical-align: middle;"></i>
-                        <span class="h6" style="vertical-align: middle;">Register</span>
-                    </button>
+    <button id="registerButton" type="submit" class="btn btn-success bg-gradient mt-2" onclick="showRegisterSpinner(event)">
+        <span id="registerSpinner" class="spinner-border spinner-border-sm me-2" role="status" style="display: none;"></span>
+        <i class="las la-check fs-4" style="vertical-align: middle;"></i>
+        <span class="h6" style="vertical-align: middle;">Register</span>
+    </button>
                     &nbsp;
                     &nbsp;
                     <div class="float-end">
-                        <a href="{% url 'resident_list' %}" type="button" class="btn bg-secondary bg-gradient mt-2">
-                            <i class="las la-times fs-4 text-white" style="vertical-align: middle;"></i>
-                            <span class="h6 text-white" style="vertical-align: middle;">Cancel</span>
-                        </a>
-                    </div>
+                    <a href="{% url 'resident_list' %}" type="button" class="btn bg-secondary bg-gradient mt-2">
+                        <i class="las la-times fs-4 text-white" style="vertical-align: middle;"></i>
+                        <span class="h6 text-white" style="vertical-align: middle;">Cancel</span></a>
+                    </button>
+
                 </div>
             </div>
         </div>
@@ -223,74 +223,30 @@
 
     <br><br><br><br><br><br><br><br>
 </div>
-
-<!-- Add SweetAlert2 CDN -->
-<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
-
 <script>
-    // Handle register button click
-    document.getElementById("registerButton").addEventListener("click", function(event) {
-        event.preventDefault();
+    let dateDropdown = document.getElementById('date-dropdown'); 
+         
+    let currentYear = new Date().getFullYear();    
+    let earliestYear = 1970;     
+    while (currentYear >= earliestYear) {      
+      let dateOption = document.createElement('option');          
+      dateOption.text = currentYear;      
+      dateOption.value = currentYear;        
+      dateDropdown.add(dateOption);      
+      currentYear -= 1;    
+    }
 
-        // Get form data
-        const form = document.getElementById("registrationForm");
-        const formData = new FormData(form);
-
-        // Basic validation - check if required fields are filled
-        let isValid = true;
-        const requiredFields = form.querySelectorAll('[required]');
-        requiredFields.forEach(field => {
-            if (!field.value) {
-                isValid = false;
-                field.classList.add('is-invalid');
-            } else {
-                field.classList.remove('is-invalid');
-            }
-        });
-
-        if (!isValid) {
-            Swal.fire({
-                title: 'Error!',
-                text: 'Please fill in all required fields.',
-                icon: 'error',
-                confirmButtonText: 'OK'
-            });
-            return;
-        }
-
-        // Show loading state
-        const registerButton = this;
+ function showRegisterSpinner(event) {
+        event.preventDefault(); // Prevent duplicate form submissions
+        const registerButton = document.getElementById("registerButton");
         const registerSpinner = document.getElementById("registerSpinner");
-        if (registerButton && registerSpinner) {
-            registerButton.disabled = true;
-            registerSpinner.style.display = "inline-block";
-        }
 
-        // Show success notification
-        Swal.fire({
-            title: 'Registration Successful!',
-            text: 'The resident has been successfully registered.',
-            icon: 'success',
-            timer: 3000,
-            timerProgressBar: true,
-            showConfirmButton: false,
-            didOpen: () => {
-                // Submit the form
-                form.submit();
-            }
-        });
-    });
+        // Show the spinner and disable the button
+        registerSpinner.style.display = "inline-block";
+        registerButton.disabled = true;
 
-    let dateDropdown = document.getElementById('date-dropdown');
-
-    let currentYear = new Date().getFullYear();
-    let earliestYear = 1970;
-    while (currentYear >= earliestYear) {
-        let dateOption = document.createElement('option');
-        dateOption.text = currentYear;
-        dateOption.value = currentYear;
-        dateDropdown.add(dateOption);
-        currentYear -= 1;
+        // Submit the form after showing the spinner
+        registerButton.closest('form').submit();
     }
 </script>
-{% endblock content %}
+{% endblock content %} 

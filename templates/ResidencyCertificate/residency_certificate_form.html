@@ -1,7 +1,7 @@
 {% load static %}
 <script src="{% static 'bootstrap/js/datepicker.js' %}" ></script>
 
-<form hx-post="{{ request.path }}" hx-trigger="confirmed" class="modal-content">
+<form hx-post="{{ request.path }}" class="modal-content" onsubmit="showSpinner(event)">
     {% csrf_token %}
     <div class="modal-header">
       {% if request.user.id != 30 %}
@@ -46,7 +46,7 @@
                     </span>
                 </div>
             </div>
-
+            
             {% endif %}
             <br>
             <hr>
@@ -54,7 +54,7 @@
     </div>
     <div class="modal-footer">
      {% if request.user.id != 30 %}
-
+      
 <button id="forwardButton" class="btn btn-success" type="submit">
             <span id="spinner" class="spinner-border spinner-border-sm me-2" role="status" style="display: none;"></span>
             <i class="fas fa-sign-in-alt"></i> Forward to Kapitan
@@ -67,12 +67,9 @@
     </div>
 </form>
 
-<!-- Add SweetAlert2 CDN -->
-<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
-
 <script>
   // JavaScript to handle image preview
-  document.getElementById("signatureUpload")?.addEventListener("change", function(event) {
+  document.getElementById("signatureUpload").addEventListener("change", function(event) {
     const file = event.target.files[0];
     const preview = document.getElementById("signatureImage");
     const previewContainer = document.getElementById("signaturePreview");
@@ -90,30 +87,23 @@
     }
   });
 
-  // Handle forward button click
-  document.getElementById("forwardButton")?.addEventListener("click", function(event) {
+
+function showSpinner(event) {
+    // Prevent default form submission
     event.preventDefault();
 
-    // Show loading state
-    const forwardButton = this;
+    // Get the button and spinner elements
+    const forwardButton = document.getElementById("forwardButton");
     const spinner = document.getElementById("spinner");
-    if (forwardButton && spinner) {
-      forwardButton.disabled = true;
-      spinner.style.display = "inline-block";
-    }
 
-    // Show success notification
-    Swal.fire({
-      title: 'Request Forwarded!',
-      text: 'The residency certificate request has been successfully forwarded to Kapitan.',
-      icon: 'success',
-      timer: 3000,
-      timerProgressBar: true,
-      showConfirmButton: false,
-      didOpen: () => {
-        // Trigger HTMX submission
-        htmx.trigger('form', 'confirmed');
-      }
-    });
-  });
+    // Disable the button and show the spinner
+    forwardButton.disabled = true;
+    spinner.style.display = "inline-block";
+
+    // Simulate form submission (remove this in production)
+    setTimeout(() => {
+      // Here you would typically submit the form via AJAX or allow the form submission to continue
+      event.target.submit();
+    }, 4000); // Adjust the timeout as needed
+  }
 </script>

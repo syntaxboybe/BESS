@@ -1,5 +1,5 @@
 {% extends "../base.html" %}
-{% load crispy_forms_tags %}
+{% load crispy_forms_tags %} 
 {% load static %}
 {% block content %}
 
@@ -20,24 +20,24 @@
 
             <!-- Resident Detail Tab -->
             <div class="tab-pane fade show active" id="resident_detail" role="tabpanel">
-                <form method="POST" enctype="multipart/form-data" id="updateForm">
+                <form action="." method="POST" enctype="multipart/form-data" autocomplete="off">
                     {% csrf_token %}
                     <div class="row p-4">
                         <div class="col-12 mb-3">
                             <p class="h4"><b>RESIDENT PROFILE</b></p>
                             <p>Update Here</p>
                         </div>
-
+            
                         <hr>
-
+            
                         <div class="col-lg-12 col-12 py-5">
-
+                            
                             <div class="row ">
                                 <div class="col-lg-12 col-md-12 col-12 d-flex justify-content-center mb-2">
                                     <label class="col-form-label">Upload Image (Click to browse)</label>
                                 </div>
                                 <div class="col-lg-12 col-md-12 col-12 d-flex justify-content-center mb-2">
-                                    <div class="form-element-upload">
+                                    <div class="form-element-upload"> 
                                                 {{ form.image }}
                                                 <label for="file" id="file-preview">
                                                     <img src="{{ prev_img.url }}">
@@ -48,34 +48,34 @@
                                     </div>
                                 </div>
                             </div>
-
-
+            
+            
                         </div>
-
+            
                         <hr>
                         <div class="col-lg-10 mb-3">
                             <p class="h6">Fullname</p>
                             <div class="row">
                                 <div class="col-lg-3 pb-2">{{ form.firstname }}</div>
-
+            
                                 <div class="col-lg-2 mb-3">{{ form.middlename }}</div>
-
+            
                                 <div class="col-lg-3 pb-2">{{ form.lastname }}</div>
-
+            
                                 <div class="col-lg-3 pb-2">{{ form.suffix }}</div>
                             </div>
                         </div>
-
+            
                         <div class="col-lg-2 mb-3">
                             <p class="h6">Sex</p>
                             {{ form.sex }}
                         </div>
-
+            
                         <div class="col-lg-6 mb-3">
                             <p class="h6">Contact</p>
                             {{ form.phone }}
                         </div>
-
+            
                         <div class="col-lg-6 mb-3">
                             <p class="h6">Birthdate</p>
                             <div class="input-group input-group-sm mb-3 date" id="datepicker">
@@ -85,27 +85,27 @@
                                 </span>
                             </div>
                         </div>
-
+            
                         <div class="col-lg-6 mb-3">
                             <p class="h6">Birthplace</p>
                             {{ form.birthplace }}
                         </div>
-
+            
                         <div class="col-lg-3 mb-3">
                             <p class="h6">Civil Status</p>
                             {{ form.civil_status }}
                         </div>
-
+            
                         <div class="col-lg-3 mb-3">
                             <p class="h6">Citizenship</p>
                             {{ form.citizenship }}
                         </div>
-
+            
                         <div class="col-lg-6 mb-3">
                             <p class="h6">Purok</p>
                             {{ form.purok }}
                         </div>
-
+            
                         <div class="col-lg-6 mb-3">
                             <p class="h6">Years Recided</p>
                             <div class="input-group input-group-sm mb-3 year">
@@ -115,63 +115,63 @@
                                 </span>
                             </div>
                         </div>
-
+            
                         <div class="col-lg-12 mb-3">
                             <p class="h6">Address</p>
                             {{ form.address }}
                         </div>
-
+            
                         <div class="col-lg-6 mb-3">
                             <p class="h6">Occupation</p>
                             {{ form.occupation }}
                         </div>
-
+            
                         <div class="col-lg-6 mb-3">
                             <p class="h6">Educational Attainment</p>
                             {{ form.educ_attainment }}
                         </div>
-
+            
                         <div class="col-lg-6 mb-3">
                             <p class="h6">Single Parent?</p>
                             {{ form.single_parent }}
                         </div>
-
+            
                         <div class="col-lg-6 mb-3">
                             <p class="h6">Status</p>
                             {{ form.status }}
                         </div>
-
+            
                         <br>
                         <br>
                         <br>
                         <br>
-
+            
                         <hr>
-
+            
                         <br>
                         <br>
-
-                        <div class="col-lg-12 col-md-12 col-12">
+            
+                        <div class="col-lg-12 col-md-12 col-12 ">
                             <div class="float-end">
-                                <button id="updateButton" class="btn btn-success bg-gradient mt-2" type="button">
-                                    <span id="updateSpinner" class="spinner-border spinner-border-sm me-2" role="status" style="display: none;"></span>
-                                    <i class="las la-check fs-4" style="vertical-align: middle;"></i>
-                                    <span class="h6" style="vertical-align: middle;">Update</span>
-                                </button>
+                              <button type="submit" class="btn btn-success bg-gradient mt-2">
+                                <i class="las la-check fs-4" style="vertical-align: middle;"></i>
+                                <span class="h6" style="vertical-align: middle;">Update</span>
+                              </button>
                                 &nbsp;
                                 &nbsp;
-                                <a href="{% url 'resident_list' %}" type="button" class="btn bg-secondary bg-gradient mt-2">
+                              <a href="{% url 'resident_list' %}" type="button" class="btn bg-secondary bg-gradient mt-2">
                                     <i class="las la-times fs-4 text-white" style="vertical-align: middle;"></i>
-                                    <span class="h6 text-white" style="vertical-align: middle;">Cancel</span>
-                                </a>
+                                    <span class="h6 text-white" style="vertical-align: middle;">Cancel</span></a>
+                              </button>
+
                             </div>
                         </div>
-
+            
                         <br>
                         <br>
                         <br>
                         <br>
-
+            
                     </div>
                 </form>
             </div>
@@ -197,62 +197,4 @@
         </div>
     </div>
 </div>
-
-<!-- Add SweetAlert2 CDN -->
-<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
-
-<script>
-    // Handle update button click
-    document.getElementById("updateButton").addEventListener("click", function(event) {
-        event.preventDefault();
-
-        // Get form data
-        const form = document.getElementById("updateForm");
-        const formData = new FormData(form);
-
-        // Basic validation - check if required fields are filled
-        let isValid = true;
-        const requiredFields = form.querySelectorAll('[required]');
-        requiredFields.forEach(field => {
-            if (!field.value) {
-                isValid = false;
-                field.classList.add('is-invalid');
-            } else {
-                field.classList.remove('is-invalid');
-            }
-        });
-
-        if (!isValid) {
-            Swal.fire({
-                title: 'Error!',
-                text: 'Please fill in all required fields.',
-                icon: 'error',
-                confirmButtonText: 'OK'
-            });
-            return;
-        }
-
-        // Show loading state
-        const updateButton = this;
-        const updateSpinner = document.getElementById("updateSpinner");
-        if (updateButton && updateSpinner) {
-            updateButton.disabled = true;
-            updateSpinner.style.display = "inline-block";
-        }
-
-        // Show success notification
-        Swal.fire({
-            title: 'Update Successful!',
-            text: 'The resident information has been successfully updated.',
-            icon: 'success',
-            timer: 3000,
-            timerProgressBar: true,
-            showConfirmButton: false,
-            didOpen: () => {
-                // Submit the form
-                form.submit();
-            }
-        });
-    });
-</script>
-{% endblock content %}
+{% endblock content %} 
