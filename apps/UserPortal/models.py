@@ -11,8 +11,8 @@ class DocumentStatus(models.Model):
     document_status = models.CharField(max_length=70)
 
     def __str__(self):
-        return self.document_status    
-    
+        return self.document_status
+
 
 class clearance(models.Model):
     document_type = models.CharField(max_length=70, default="Barangay Clearance")
@@ -51,12 +51,12 @@ class BuildingPermit(models.Model):
     prepared_by = models.CharField(max_length=255)
 
     paid_under_or = models.CharField(max_length=255)
-    
+
     date_requested = models.DateTimeField(auto_now_add=True)
     date_released = models.DateField(null=True)
 
     amount_paid = models.CharField(max_length=255)
-    
+
     status = models.ForeignKey(DocumentStatus, on_delete=models.CASCADE, default=1)
     transaction_id = models.UUIDField(unique=True, default=uuid.uuid4, editable=False)
 
@@ -83,7 +83,7 @@ class BusinessPermit(models.Model):
     paid_or_date_issued = models.DateField(null=True)
     paid_or_issued_at = models.CharField(max_length=255)
     amount_colledted = models.CharField(max_length=255)
-    
+
     status = models.ForeignKey(DocumentStatus, on_delete=models.CASCADE, default=1)
     transaction_id = models.UUIDField(unique=True, default=uuid.uuid4, editable=False)
 
@@ -97,3 +97,24 @@ class ResidencyCertificate (models.Model):
     purpose = models.CharField(max_length=255)
     status = models.ForeignKey(DocumentStatus, on_delete=models.CASCADE, default=1)
 
+
+class Notification(models.Model):
+    DOCUMENT_TYPES = (
+        ('clearance', 'Barangay Clearance'),
+        ('indigency', 'Certificate of Indigency'),
+        ('business', 'Business Permit'),
+        ('building', 'Building Permit'),
+        ('residency', 'Certificate of Residency'),
+    )
+
+    document_type = models.CharField(max_length=20, choices=DOCUMENT_TYPES)
+    resident = models.ForeignKey(ResidentsInfo, on_delete=models.CASCADE)
+    request_id = models.IntegerField()  # ID of the specific request
+    date_created = models.DateTimeField(auto_now_add=True)
+    is_read = models.BooleanField(default=False)
+
+    class Meta:
+        ordering = ['-date_created']
+
+    def __str__(self):
+        return f"{self.get_document_type_display()} request from {self.resident}"

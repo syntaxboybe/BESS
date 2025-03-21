@@ -1,4 +1,3 @@
-
 // issued Documents
 var buttonConfig = [];
 var exportTitle = "ExportTableData"
@@ -34,35 +33,31 @@ buttonConfig.push({
                   exportOptions: {columns: [ 0, 1, 2, 3, 4, 5, 6 ], rows: ':visible'},
                   title: "Issued Documenents"
                   });
-                          
+
 buttonConfig.push({
                   extend:'print',
                   text: '<i class="las la-print fs-3" style="vertical-align: middle;"></i>'+
                   '<span style="vertical-align: middle;">Print<span>',className: 'btn-warning',
                   exportOptions: { columns: [ 0, 1, 2, 3, 4, 5, 6 ], rows: ':visible' },
-                                  title: "Issued Documenents",            
+                                  title: "Issued Documenents",
                   });
 
 $.fn.dataTable.Buttons.defaults.dom.button.className = 'btn btn-primary'
 
 
 var minDate, maxDate;
- 
+
 // Custom filtering function which will search data in column four between two values
 $.fn.dataTable.ext.search.push(
     function( settings, data, dataIndex ) {
         let min = moment($('#min').val(), 'YYYY-MM-DD', true).isValid() ?
             moment($('#min').val(), 'YYYY-MM-DD', true).unix() :
             null;
-        
+
          let max = moment($('#max').val(), 'YYYY-MM-DD').isValid() ?
              moment( $('#max').val(), 'YYYY-MM-DD', true ).unix():
              null;
         var date = moment( data[4], 'YYYY-MM-DD', true ).unix();
-      
-      console.log("min: " + min + ' ' + $('#min').val())
-      console.log($('#min').val() + ": " + moment($('#min').val(), 'YYYY-MM-DD', true).isValid())
-      console.log("max: " + max + ' ' + $('#min').val())
 
         if (
             ( min === null && max === null ) ||
@@ -88,7 +83,7 @@ $(document).ready(function () {
 
     // DataTables initialisation
     var table = $('#report_table').DataTable({
-        
+
         aaSorting: [[4, 'asc']],
         buttons:buttonConfig
     });
@@ -96,7 +91,7 @@ $(document).ready(function () {
 
     yadcf.init(table, [
         {
-            column_number : 2, 
+            column_number : 2,
             filter_default_label: "All Document",
             filter_container_id: "docu_type",
             data: ["Barangay Clearance", "Certificate of Indigency", "Business Permit", "Building Permit", "Certificate of Residency"],

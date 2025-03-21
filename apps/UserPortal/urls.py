@@ -37,6 +37,11 @@ urlpatterns = [
         ),
         name="password_change_done",
     ),
+
+    # Notification API endpoints
+    path("api/notifications/count/", notification_count_api, name="notification_count_api"),
+    path("api/notifications/mark-read/<int:notification_id>/", mark_notification_read, name="mark_notification_read"),
+    path("api/notifications/mark-all-read/", mark_all_notifications_read, name="mark_all_notifications_read"),
 ]
 
 # urlpatterns = [
@@ -48,4 +53,3 @@ urlpatterns = [
 
 
 # ]
-

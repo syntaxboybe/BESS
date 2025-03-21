@@ -22,8 +22,12 @@
         </div>
 
         <div class="col-lg-6 col-md-8 col-12">
-            <div class="float-end">                
-<a target="_blank" class="scan" href="{% url 'details' %}"><button type="button" class="btn btn-outline-secondary"><i class="fa-solid fa-expand fs-5" ></i> Face Scanner</button></a>
+      <div class="float-end">
+        <a target="_blank" class="scan" href="{% url 'details' %}"
+          ><button type="button" class="btn btn-outline-dark">
+            <i class="fas fa-user-check fs-5"></i> Verify Resident Identity
+          </button></a
+        >
                 &nbsp;
                 &nbsp;
                 <a type="button" class="btn bg-primary bg-gradient" href="{% url 'add_profile' %}">
@@ -72,7 +76,7 @@
                             <th class="text-center">Action</th>
                         </tr>
                     </thead>
-    
+
                     <tbody>
                         {% for resident in pwd_list %}
                         <tr>
@@ -80,40 +84,40 @@
                             <td class="fs-6">{{resident.residentsinfo.res_id}}</td>
                             <td>
                                 <div class="d-flex align-items-center">
-                                    <img 
-                                        src='{{resident.residentsinfo.image.url}}' 
-                                        style="width: 45px; height: 45px; object-fit:cover;" 
+                                    <img
+                                        src='{{resident.residentsinfo.image.url}}'
+                                        style="width: 45px; height: 45px; object-fit:cover;"
                                         class="rounded-circle"/>
-    
+
                                         <div class="ms-3 align-items-center">
-                                            <p class="fs-6 mb-1">{{resident.residentsinfo.lastname}}, 
-                {{resident.residentsinfo.firstname}} 
+                                            <p class="fs-6 mb-1">{{resident.residentsinfo.lastname}},
+                {{resident.residentsinfo.firstname}}
                 {{resident.residentsinfo.middlename|make_list|first}}.
                 {{resident.residentsinfo.suffix}}</p>
                                         </div>
                                 </div>
                             </td>
-                            
+
                             <td class="fs-6">{{resident.residentsinfo.sex}}</td>
                             <td class="fs-6">{{resident.residentsinfo.purok}}</td>
                             <td class="fs-6">{{resident.residentsinfo.phone}}</td>
                             <td class="fs-6">{{resident.email}}</td>
                             <td class="text-center">
-                                
+
                                 <a target=”blank” href="{% url 'view_profile' resident.id %}" class="btn btn-primary bg-gradient">
                                     <i class="fas fa-eye fs-5" style="vertical-align: middle;"></i>
                                   <span style="vertical-align: middle"> View</span>
                                 </a>
-    
+
                                 <a href="{% url 'edit_profile' resident.id %}" class="btn btn-success bg-gradient">
                                     <i class="fas fa-edit fs-5" style="vertical-align: middle;"></i>
                                  <span style="vertical-align: middle"> Update</span>
                                 </a>
-    
+
                                 <!--<a href="{% url 'delete_profile' resident.id %}" method="post" class="btn btn-danger bg-gradient">-->
                                     <!--<i class="las la-trash-alt fs-5" style="vertical-align: middle;"></i>-->
                                 <!--</a>-->
-                                    
+
                             </td>
                         </tr>
                           {% endfor %}

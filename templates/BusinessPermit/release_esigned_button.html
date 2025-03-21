@@ -1,0 +1,58 @@
+<form method="POST" enctype="multipart/form-data" hx-post="{{ request.path }}" hx-trigger="confirmed" class="modal-content">
+  {% csrf_token %}
+  <div class="modal-header">
+    <h5 class="modal-title">Would you like to Release this request?</h5>
+  </div>
+  <div class="modal-body">
+    <div class="row">
+      <div class="col-12">
+        <p><b>Requested By:</b> {{ business_permit.res_id }}</p>
+        <p><b>Date Requested:</b> {{ business_permit.date_requested }}</p>
+        <p><b>Purpose:</b> {{ business_permit.purpose }}</p>
+        <p><b>Transaction ID:</b> {{ business_permit.transaction_id }}</p>
+      </div>
+    </div>
+
+    <div class="modal-footer">
+      <button id="yesButton" class="btn btn-success" type="button">
+        <span id="spinnerYes" class="spinner-border spinner-border-sm me-2" role="status" style="display: none;"></span>
+        <i class="fas fa-check"></i> Yes
+      </button>
+
+      <button class="btn btn-secondary" type="button" data-bs-dismiss="modal">
+        <i class="fas fa-times"></i> Cancel
+      </button>
+    </div>
+</form>
+
+<!-- Add SweetAlert2 CDN -->
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+
+<script>
+  // Handle yes button click
+  document.getElementById("yesButton").addEventListener("click", function(event) {
+    event.preventDefault();
+
+    // Show loading state
+    const yesButton = this;
+    const spinnerYes = document.getElementById("spinnerYes");
+    if (yesButton && spinnerYes) {
+      yesButton.disabled = true;
+      spinnerYes.style.display = "inline-block";
+    }
+
+    // Show success notification
+    Swal.fire({
+      title: 'Request Released!',
+      text: 'The document request has been successfully released.',
+      icon: 'success',
+      timer: 3000,
+      timerProgressBar: true,
+      showConfirmButton: false,
+      didOpen: () => {
+        // Trigger HTMX submission
+        htmx.trigger('form', 'confirmed');
+      }
+    });
+  });
+</script>

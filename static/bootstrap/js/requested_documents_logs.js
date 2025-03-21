@@ -65,14 +65,6 @@ $.fn.dataTable.ext.search.push(function (settings, data, dataIndex) {
     : null;
   var date = moment(data[4], "YYYY-MM-DD", true).unix();
 
-  console.log("min: " + min + " " + $("#min").val());
-  console.log(
-    $("#min").val() +
-      ": " +
-      moment($("#min").val(), "YYYY-MM-DD", true).isValid()
-  );
-  console.log("max: " + max + " " + $("#min").val());
-
   if (
     (min === null && max === null) ||
     (min === null && date <= max) ||

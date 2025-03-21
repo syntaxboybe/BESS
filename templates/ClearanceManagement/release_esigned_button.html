@@ -1,4 +1,4 @@
-<form method="POST" enctype="multipart/form-data" hx-post="{{ request.path }}" class="modal-content">
+<form method="POST" enctype="multipart/form-data" hx-post="{{ request.path }}" hx-trigger="confirmed" class="modal-content">
   {% csrf_token %}
   <div class="modal-header">
     <h5 class="modal-title">Would you like to Release this request?</h5>
@@ -22,27 +22,45 @@
         <!-- </a> -->
       </div>
 
-      <button id="yesButton" class="btn btn-success" type="submit" onclick="showLoadingSpinner(event)">
+      <button id="yesButton" class="btn btn-success" type="button">
         <span id="spinnerYes" class="spinner-border spinner-border-sm me-2" role="status" style="display: none;"></span>
         <i class="fas fa-check"></i> Yes
       </button>
 
-
       <button class="btn btn-secondary" type="button" data-bs-dismiss="modal">
         <i class="fas fa-times"></i> Cancel
       </button>
-
     </div>
 </form>
 
-<script>
-  function showLoadingSpinner(event) {
-    // Prevent duplicate form submissions
-    const yesButton = document.getElementById("yesButton");
-    const spinnerYes = document.getElementById("spinnerYes");
+<!-- Add SweetAlert2 CDN -->
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 
-    // Show the spinner and disable the button
-    yesButton.disabled = false;
-    spinnerYes.style.display = "inline-block";
-  }
+<script>
+  // Handle yes button click
+  document.getElementById("yesButton").addEventListener("click", function(event) {
+    event.preventDefault();
+
+    // Show loading state
+    const yesButton = this;
+    const spinnerYes = document.getElementById("spinnerYes");
+    if (yesButton && spinnerYes) {
+      yesButton.disabled = true;
+      spinnerYes.style.display = "inline-block";
+    }
+
+    // Show success notification
+    Swal.fire({
+      title: 'Request Released!',
+      text: 'The document request has been successfully released.',
+      icon: 'success',
+      timer: 3000,
+      timerProgressBar: true,
+      showConfirmButton: false,
+      didOpen: () => {
+        // Trigger HTMX submission
+        htmx.trigger('form', 'confirmed');
+      }
+    });
+  });
 </script>
