@@ -264,13 +264,70 @@
         <div class="card border-0 shadow mb-4">
           <div class="card-header py-3 d-flex justify-content-between align-items-center" style="background-color: #355389; color: white;">
             <h5 class="mb-0"><i class="fas fa-file-alt me-2"></i> Document Request Statistics</h5>
-            <div>
-              <button class="btn btn-sm btn-outline-light" onclick="downloadSection('documentStatsSection', 'Document_Statistics.jpeg', 'image/jpeg')">
-                <i class="fas fa-download"></i> Download as JPEG
-              </button>
-              <button class="btn btn-sm btn-outline-light ms-1" onclick="downloadSection('documentStatsSection', 'Document_Statistics.png', 'image/png')">
-                <i class="fas fa-download"></i> Download as PNG
-              </button>
+            <div class="d-flex align-items-center">
+              <!-- Time Period Filter -->
+              <div class="me-3 d-flex align-items-center">
+                <div class="me-2">
+
+                  <select id="periodFilter" class="form-select form-select-sm" onchange="togglePeriodOptions()">
+                    <option value="all">All Time</option>
+                    <option value="weekly">Weekly</option>
+                    <option value="monthly">Monthly</option>
+                    <option value="yearly">Yearly</option>
+                  </select>
+                </div>
+
+                <!-- Week Selector (Hidden by default) -->
+                <div id="weekOptions" class="me-2" style="display: none;">
+                  <select id="weekFilter" class="form-select form-select-sm">
+                    <option value="current">Current Week</option>
+                    <option value="last">Last Week</option>
+                    <option value="last2">2 Weeks Ago</option>
+                    <option value="last3">3 Weeks Ago</option>
+                    <option value="last4">4 Weeks Ago</option>
+                  </select>
+                </div>
+
+                <!-- Month Selector (Hidden by default) -->
+                <div id="monthOptions" class="me-2" style="display: none;">
+                  <select id="monthFilter" class="form-select form-select-sm">
+                    <option value="1">January</option>
+                    <option value="2">February</option>
+                    <option value="3">March</option>
+                    <option value="4">April</option>
+                    <option value="5">May</option>
+                    <option value="6">June</option>
+                    <option value="7">July</option>
+                    <option value="8">August</option>
+                    <option value="9">September</option>
+                    <option value="10">October</option>
+                    <option value="11">November</option>
+                    <option value="12">December</option>
+                  </select>
+                </div>
+
+                <!-- Year Selector (Hidden by default) -->
+                <div id="yearOptions" class="me-2" style="display: none;">
+                  <select id="yearFilter" class="form-select form-select-sm">
+                    <!-- Dynamically populated with JavaScript for the last 5 years -->
+                  </select>
+                </div>
+
+                <!-- Apply Filter Button -->
+                <button id="applyFilterBtn" class="btn btn-sm btn-light" onclick="applyFilters()" style="display: none;">
+                  <i class="fas fa-filter"></i> Apply
+                </button>
+              </div>
+
+              <!-- Download buttons -->
+              <div>
+                <button class="btn btn-sm btn-outline-light" onclick="downloadSection('documentStatsSection', 'Document_Statistics.jpeg', 'image/jpeg')">
+                  <i class="fas fa-download"></i> Download as JPEG
+                </button>
+                <button class="btn btn-sm btn-outline-light ms-1" onclick="downloadSection('documentStatsSection', 'Document_Statistics.png', 'image/png')">
+                  <i class="fas fa-download"></i> Download as PNG
+                </button>
+              </div>
             </div>
           </div>
           <div class="card-body" id="documentStatsSection">
@@ -284,16 +341,28 @@
                   </div>
                   <div class="card-body">
                     <div class="row">
-                      <div class="col-6 border-end">
+                      <div class="col-3">
                         <div class="text-center">
-                          <h6 class="text-muted">Total Requests</h6>
+                          <h6 class="text-muted">Total</h6>
                           <h3>{{ clearance_total|default:"0" }}</h3>
                         </div>
                       </div>
-                      <div class="col-6">
+                      <div class="col-3">
                         <div class="text-center">
                           <h6 class="text-muted">Pending</h6>
                           <h3 class="text-warning">{{ clearance_pending|default:"0" }}</h3>
+                        </div>
+                      </div>
+                      <div class="col-3">
+                        <div class="text-center">
+                          <h6 class="text-muted">Released</h6>
+                          <h3 class="text-success">{{ clearance_released|default:"0" }}</h3>
+                        </div>
+                      </div>
+                      <div class="col-3">
+                        <div class="text-center">
+                          <h6 class="text-muted">Reverted</h6>
+                          <h3 class="text-danger">{{ clearance_reverted|default:"0" }}</h3>
                         </div>
                       </div>
                     </div>
@@ -309,16 +378,28 @@
                   </div>
                   <div class="card-body">
                     <div class="row">
-                      <div class="col-6 border-end">
+                      <div class="col-3">
                         <div class="text-center">
-                          <h6 class="text-muted">Total Requests</h6>
+                          <h6 class="text-muted">Total</h6>
                           <h3>{{ indigency_total|default:"0" }}</h3>
                         </div>
                       </div>
-                      <div class="col-6">
+                      <div class="col-3">
                         <div class="text-center">
                           <h6 class="text-muted">Pending</h6>
                           <h3 class="text-warning">{{ indigency_pending|default:"0" }}</h3>
+                        </div>
+                      </div>
+                      <div class="col-3">
+                        <div class="text-center">
+                          <h6 class="text-muted">Released</h6>
+                          <h3 class="text-success">{{ indigency_released|default:"0" }}</h3>
+                        </div>
+                      </div>
+                      <div class="col-3">
+                        <div class="text-center">
+                          <h6 class="text-muted">Reverted</h6>
+                          <h3 class="text-danger">{{ indigency_reverted|default:"0" }}</h3>
                         </div>
                       </div>
                     </div>
@@ -334,16 +415,28 @@
                   </div>
                   <div class="card-body">
                     <div class="row">
-                      <div class="col-6 border-end">
+                      <div class="col-3">
                         <div class="text-center">
-                          <h6 class="text-muted">Total Requests</h6>
+                          <h6 class="text-muted">Total</h6>
                           <h3>{{ business_total|default:"0" }}</h3>
                         </div>
                       </div>
-                      <div class="col-6">
+                      <div class="col-3">
                         <div class="text-center">
                           <h6 class="text-muted">Pending</h6>
                           <h3 class="text-warning">{{ business_pending|default:"0" }}</h3>
+                        </div>
+                      </div>
+                      <div class="col-3">
+                        <div class="text-center">
+                          <h6 class="text-muted">Released</h6>
+                          <h3 class="text-success">{{ business_released|default:"0" }}</h3>
+                        </div>
+                      </div>
+                      <div class="col-3">
+                        <div class="text-center">
+                          <h6 class="text-muted">Reverted</h6>
+                          <h3 class="text-danger">{{ business_reverted|default:"0" }}</h3>
                         </div>
                       </div>
                     </div>
@@ -359,16 +452,28 @@
                   </div>
                   <div class="card-body">
                     <div class="row">
-                      <div class="col-6 border-end">
+                      <div class="col-3">
                         <div class="text-center">
-                          <h6 class="text-muted">Total Requests</h6>
+                          <h6 class="text-muted">Total</h6>
                           <h3>{{ building_total|default:"0" }}</h3>
                         </div>
                       </div>
-                      <div class="col-6">
+                      <div class="col-3">
                         <div class="text-center">
                           <h6 class="text-muted">Pending</h6>
                           <h3 class="text-warning">{{ building_pending|default:"0" }}</h3>
+                        </div>
+                      </div>
+                      <div class="col-3">
+                        <div class="text-center">
+                          <h6 class="text-muted">Released</h6>
+                          <h3 class="text-success">{{ building_released|default:"0" }}</h3>
+                        </div>
+                      </div>
+                      <div class="col-3">
+                        <div class="text-center">
+                          <h6 class="text-muted">Reverted</h6>
+                          <h3 class="text-danger">{{ building_reverted|default:"0" }}</h3>
                         </div>
                       </div>
                     </div>
@@ -384,16 +489,28 @@
                   </div>
                   <div class="card-body">
                     <div class="row">
-                      <div class="col-6 border-end">
+                      <div class="col-3">
                         <div class="text-center">
-                          <h6 class="text-muted">Total Requests</h6>
+                          <h6 class="text-muted">Total</h6>
                           <h3>{{ residency_total|default:"0" }}</h3>
                         </div>
                       </div>
-                      <div class="col-6">
+                      <div class="col-3">
                         <div class="text-center">
                           <h6 class="text-muted">Pending</h6>
                           <h3 class="text-warning">{{ residency_pending|default:"0" }}</h3>
+                        </div>
+                      </div>
+                      <div class="col-3">
+                        <div class="text-center">
+                          <h6 class="text-muted">Released</h6>
+                          <h3 class="text-success">{{ residency_released|default:"0" }}</h3>
+                        </div>
+                      </div>
+                      <div class="col-3">
+                        <div class="text-center">
+                          <h6 class="text-muted">Reverted</h6>
+                          <h3 class="text-danger">{{ residency_reverted|default:"0" }}</h3>
                         </div>
                       </div>
                     </div>
@@ -409,16 +526,28 @@
                   </div>
                   <div class="card-body">
                     <div class="row">
-                      <div class="col-6 border-end">
+                      <div class="col-3">
                         <div class="text-center">
-                          <h6 class="text-muted">Total Requests</h6>
+                          <h6 class="text-muted">Total</h6>
                           <h3>{{ document_total|default:"0" }}</h3>
                         </div>
                       </div>
-                      <div class="col-6">
+                      <div class="col-3">
                         <div class="text-center">
                           <h6 class="text-muted">Pending</h6>
                           <h3 class="text-warning">{{ pending_total|default:"0" }}</h3>
+                        </div>
+                      </div>
+                      <div class="col-3">
+                        <div class="text-center">
+                          <h6 class="text-muted">Released</h6>
+                          <h3 class="text-success">{{ released_total|default:"0" }}</h3>
+                        </div>
+                      </div>
+                      <div class="col-3">
+                        <div class="text-center">
+                          <h6 class="text-muted">Reverted</h6>
+                          <h3 class="text-danger">{{ reverted_total|default:"0" }}</h3>
                         </div>
                       </div>
                     </div>
@@ -530,7 +659,11 @@
 
 <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/chartjs-plugin-datalabels@2.0.0"></script>
 <script>
+  // Register ChartDataLabels plugin globally
+  Chart.register(ChartDataLabels);
+
   // Dynamic data from Django context
   var cResident = {{ cResident }};
   var cMale = {{ cMale }};
@@ -542,6 +675,374 @@
   var cSingle = {{ cSingle }};
   var cDivorced = {{ cDivorced }};
   var cWidowed = {{ cWidowed }};
+
+  // Document request data - using the Django template variables
+  const documentData = {
+    clearance: {
+      total: {{ clearance_total|default:"0" }},
+      pending: {{ clearance_pending|default:"0" }},
+      released: {{ clearance_released|default:"0" }},
+      reverted: {{ clearance_reverted|default:"0" }}
+    },
+    indigency: {
+      total: {{ indigency_total|default:"0" }},
+      pending: {{ indigency_pending|default:"0" }},
+      released: {{ indigency_released|default:"0" }},
+      reverted: {{ indigency_reverted|default:"0" }}
+    },
+    business: {
+      total: {{ business_total|default:"0" }},
+      pending: {{ business_pending|default:"0" }},
+      released: {{ business_released|default:"0" }},
+      reverted: {{ business_reverted|default:"0" }}
+    },
+    building: {
+      total: {{ building_total|default:"0" }},
+      pending: {{ building_pending|default:"0" }},
+      released: {{ building_released|default:"0" }},
+      reverted: {{ building_reverted|default:"0" }}
+    },
+    residency: {
+      total: {{ residency_total|default:"0" }},
+      pending: {{ residency_pending|default:"0" }},
+      released: {{ residency_released|default:"0" }},
+      reverted: {{ residency_reverted|default:"0" }}
+    },
+    all: {
+      total: {{ document_total|default:"0" }},
+      pending: {{ pending_total|default:"0" }},
+      released: {{ released_total|default:"0" }},
+      reverted: {{ reverted_total|default:"0" }}
+    }
+  };
+
+  // Initialize the filter interface when page loads
+  document.addEventListener('DOMContentLoaded', function() {
+    initDateFilters();
+
+    // Set current month and year as default for Monthly filter
+    const currentDate = new Date();
+    document.getElementById('monthFilter').value = currentDate.getMonth() + 1;
+
+    // Pre-select current year in year dropdown
+    if (document.getElementById('yearFilter').options.length > 0) {
+      document.getElementById('yearFilter').value = currentDate.getFullYear();
+    }
+  });
+
+  // Initialize date filters, including populating the year dropdown
+  function initDateFilters() {
+    // Get the year filter dropdown
+    const yearFilter = document.getElementById('yearFilter');
+
+    // Clear existing options
+    yearFilter.innerHTML = '';
+
+    // Get current year
+    const currentYear = new Date().getFullYear();
+
+    // Add options for the last 5 years
+    for (let i = 0; i < 5; i++) {
+      const yearOption = document.createElement('option');
+      yearOption.value = currentYear - i;
+      yearOption.textContent = currentYear - i;
+      yearFilter.appendChild(yearOption);
+    }
+  }
+
+  // Toggle display of period-specific options based on selected period
+  function togglePeriodOptions() {
+    const periodFilter = document.getElementById('periodFilter');
+    const weekOptions = document.getElementById('weekOptions');
+    const monthOptions = document.getElementById('monthOptions');
+    const yearOptions = document.getElementById('yearOptions');
+    const applyBtn = document.getElementById('applyFilterBtn');
+
+    // Hide all first
+    weekOptions.style.display = 'none';
+    monthOptions.style.display = 'none';
+    yearOptions.style.display = 'none';
+    applyBtn.style.display = 'none';
+
+    // Then show relevant ones based on selection
+    switch(periodFilter.value) {
+      case 'weekly':
+        weekOptions.style.display = 'block';
+        yearOptions.style.display = 'block';
+        applyBtn.style.display = 'block';
+        break;
+      case 'monthly':
+        monthOptions.style.display = 'block';
+        yearOptions.style.display = 'block';
+        applyBtn.style.display = 'block';
+        break;
+      case 'yearly':
+        yearOptions.style.display = 'block';
+        applyBtn.style.display = 'block';
+        break;
+      default: // 'all'
+        // Keep all hidden, but apply filter immediately
+        applyFilters();
+        break;
+    }
+  }
+
+  // Apply the selected filters and update the document statistics
+  function applyFilters() {
+    const periodFilter = document.getElementById('periodFilter').value;
+
+    // Get filter values
+    const filters = {
+      period: periodFilter,
+      week: document.getElementById('weekFilter').value,
+      month: document.getElementById('monthFilter').value,
+      year: document.getElementById('yearFilter').value
+    };
+
+    // Show loading indicator
+    showLoadingState();
+
+    // Get CSRF token
+    const csrfToken = getCsrfToken();
+    if (!csrfToken) {
+      console.error('No CSRF token found. Using fallback to current data.');
+      updateDocumentStatistics(documentData);
+      updateCharts(documentData);
+      hideLoadingState();
+      Swal.fire({
+        title: 'Error',
+        text: 'CSRF token not found. Using current data.',
+        icon: 'warning',
+        timer: 3000,
+        toast: true,
+        position: 'top-end',
+        showConfirmButton: false
+      });
+      return;
+    }
+
+    // Make an AJAX request to get filtered data from the server
+    fetch('/BESS/Dashboard/filter-stats/', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+        'X-CSRFToken': csrfToken
+      },
+      body: JSON.stringify(filters),
+      credentials: 'same-origin'
+    })
+    .then(response => {
+      if (!response.ok) {
+        return response.text().then(text => {
+          console.error('Error response:', text);
+          throw new Error(`Server responded with ${response.status}: ${text}`);
+        });
+      }
+      return response.json();
+    })
+    .then(data => {
+      // Update the UI with the filtered data
+      updateDocumentStatistics(data);
+      updateCharts(data);
+      hideLoadingState();
+
+      // Show notification of applied filter
+      showFilterAppliedNotification(filters);
+    })
+    .catch(error => {
+      console.error('Error fetching filtered data:', error);
+      // In case of error, fallback to current data
+      updateDocumentStatistics(documentData);
+      updateCharts(documentData);
+      hideLoadingState();
+
+      // Show error notification
+      Swal.fire({
+        title: 'Error',
+        text: 'Failed to load filtered data: ' + error.message,
+        icon: 'error',
+        timer: 3000,
+        toast: true,
+        position: 'top-end',
+        showConfirmButton: false
+      });
+    });
+  }
+
+  // Helper function to get CSRF token from cookies
+  function getCsrfToken() {
+    // First try to find the token in a meta tag
+    const metaTag = document.querySelector('meta[name="csrf-token"]');
+    if (metaTag) {
+      return metaTag.getAttribute('content');
+    }
+
+    // Fall back to searching in cookies
+    const name = 'csrftoken';
+    let cookieValue = null;
+    if (document.cookie && document.cookie !== '') {
+      const cookies = document.cookie.split(';');
+      for (let i = 0; i < cookies.length; i++) {
+        const cookie = cookies[i].trim();
+        if (cookie.substring(0, name.length + 1) === (name + '=')) {
+          cookieValue = decodeURIComponent(cookie.substring(name.length + 1));
+          break;
+        }
+      }
+    }
+
+    if (!cookieValue) {
+      console.warn('Could not find CSRF token in meta tag or cookies');
+    }
+
+    return cookieValue;
+  }
+
+  // Show loading state on cards while fetching data
+  function showLoadingState() {
+    const statsSection = document.getElementById('documentStatsSection');
+
+    // Add loading overlay
+    const loadingOverlay = document.createElement('div');
+    loadingOverlay.id = 'statsLoadingOverlay';
+    loadingOverlay.classList.add('position-absolute', 'top-0', 'start-0', 'w-100', 'h-100', 'd-flex', 'justify-content-center', 'align-items-center');
+    loadingOverlay.style.backgroundColor = 'rgba(255, 255, 255, 0.7)';
+    loadingOverlay.style.zIndex = '1000';
+
+    const spinner = document.createElement('div');
+    spinner.classList.add('spinner-border', 'text-primary');
+    spinner.setAttribute('role', 'status');
+    spinner.innerHTML = '<span class="visually-hidden">Loading...</span>';
+
+    loadingOverlay.appendChild(spinner);
+    statsSection.style.position = 'relative';
+    statsSection.appendChild(loadingOverlay);
+  }
+
+  // Hide loading state
+  function hideLoadingState() {
+    const loadingOverlay = document.getElementById('statsLoadingOverlay');
+    if (loadingOverlay) {
+      loadingOverlay.remove();
+    }
+  }
+
+  // Update document statistics UI with filtered data
+  function updateDocumentStatistics(data) {
+    // Update the UI with new values
+    document.querySelectorAll('#documentStatsSection .card').forEach(card => {
+      // Identify which card we're dealing with
+      const header = card.querySelector('.card-header');
+      if (!header) return;
+
+      const headerText = header.textContent.trim();
+      let category = null;
+
+      if (headerText.includes('Barangay Clearance')) category = 'clearance';
+      else if (headerText.includes('Certificate of Indigency')) category = 'indigency';
+      else if (headerText.includes('Business Permit')) category = 'business';
+      else if (headerText.includes('Building Permit')) category = 'building';
+      else if (headerText.includes('Certificate of Residency')) category = 'residency';
+      else if (headerText.includes('All Documents')) category = 'all';
+
+      if (!category) return;
+
+      // Update the values in the card - using .col-3 selectors
+      const totalElement = card.querySelector('.col-3:nth-child(1) h3');
+      const pendingElement = card.querySelector('.col-3:nth-child(2) h3');
+      const releasedElement = card.querySelector('.col-3:nth-child(3) h3');
+      const revertedElement = card.querySelector('.col-3:nth-child(4) h3');
+
+      if (totalElement) totalElement.textContent = data[category].total;
+      if (pendingElement) pendingElement.textContent = data[category].pending;
+      if (releasedElement) releasedElement.textContent = data[category].released;
+      if (revertedElement) revertedElement.textContent = data[category].reverted;
+    });
+  }
+
+  // Update charts with filtered data
+  function updateCharts(data) {
+    // Update pie chart
+    if (window.documentPieChart) {
+      documentPieChart.data.datasets[0].data = [
+        data.clearance.total,
+        data.indigency.total,
+        data.business.total,
+        data.building.total,
+        data.residency.total
+      ];
+      documentPieChart.update();
+    }
+
+    // Update status chart
+    if (window.documentStatusChart) {
+      documentStatusChart.data.datasets[0].data = [
+        data.clearance.total,
+        data.indigency.total,
+        data.business.total,
+        data.building.total,
+        data.residency.total
+      ];
+
+      documentStatusChart.data.datasets[1].data = [
+        data.clearance.pending,
+        data.indigency.pending,
+        data.business.pending,
+        data.building.pending,
+        data.residency.pending
+      ];
+
+      documentStatusChart.data.datasets[2].data = [
+        data.clearance.released,
+        data.indigency.released,
+        data.business.released,
+        data.building.released,
+        data.residency.released
+      ];
+
+      documentStatusChart.data.datasets[3].data = [
+        data.clearance.reverted,
+        data.indigency.reverted,
+        data.business.reverted,
+        data.building.reverted,
+        data.residency.reverted
+      ];
+
+      documentStatusChart.update();
+    }
+  }
+
+  // Show notification that filters have been applied
+  function showFilterAppliedNotification(filters) {
+    let filterDescription = '';
+
+    switch(filters.period) {
+      case 'weekly':
+        const weekText = document.getElementById('weekFilter').options[document.getElementById('weekFilter').selectedIndex].text;
+        filterDescription = `${weekText} of ${filters.year}`;
+        break;
+      case 'monthly':
+        const monthText = document.getElementById('monthFilter').options[document.getElementById('monthFilter').selectedIndex].text;
+        filterDescription = `${monthText} ${filters.year}`;
+        break;
+      case 'yearly':
+        filterDescription = `Year ${filters.year}`;
+        break;
+      default:
+        filterDescription = 'All Time (No Filter)';
+    }
+
+    // Using SweetAlert to show a notification
+    Swal.fire({
+      title: 'Filter Applied',
+      text: `Showing document statistics for: ${filterDescription}`,
+      icon: 'success',
+      timer: 2000,
+      toast: true,
+      position: 'top-end',
+      showConfirmButton: false
+    });
+  }
 
   // Function to download charts as images
   function downloadChart(chartId, filename, mimeType) {
@@ -822,6 +1323,33 @@
           font: {
             size: 16
           }
+        },
+        tooltip: {
+          callbacks: {
+            label: function(context) {
+              const label = context.label || '';
+              const value = context.raw || 0;
+              const total = context.chart.data.datasets[0].data.reduce((a, b) => a + b, 0);
+              const percentage = Math.round((value / total) * 100);
+              return `${label}: ${value} (${percentage}%)`;
+            }
+          }
+        },
+        datalabels: {
+          formatter: (value, ctx) => {
+            const total = ctx.chart.data.datasets[0].data.reduce((a, b) => a + b, 0);
+            const percentage = Math.round((value / total) * 100);
+            return percentage + '%';
+          },
+          color: '#fff',
+          font: {
+            weight: 'bold',
+            size: 16
+          },
+          textStrokeColor: '#000',
+          textStrokeWidth: 1,
+          align: 'center',
+          anchor: 'center'
         }
       }
     }
@@ -855,6 +1383,28 @@
             {{ residency_pending|default:"0" }}
           ],
           backgroundColor: 'rgba(255, 193, 7, 0.7)'
+        },
+        {
+          label: 'Released Requests',
+          data: [
+            {{ clearance_released|default:"0" }},
+            {{ indigency_released|default:"0" }},
+            {{ business_released|default:"0" }},
+            {{ building_released|default:"0" }},
+            {{ residency_released|default:"0" }}
+          ],
+          backgroundColor: 'rgba(40, 167, 69, 0.7)'
+        },
+        {
+          label: 'Reverted Requests',
+          data: [
+            {{ clearance_reverted|default:"0" }},
+            {{ indigency_reverted|default:"0" }},
+            {{ business_reverted|default:"0" }},
+            {{ building_reverted|default:"0" }},
+            {{ residency_reverted|default:"0" }}
+          ],
+          backgroundColor: 'rgba(220, 53, 69, 0.7)'
         }
       ]
     },
@@ -871,7 +1421,7 @@
       plugins: {
         title: {
           display: true,
-          text: 'Total vs Pending Document Requests',
+          text: 'Document Requests Status',
           font: {
             size: 16
           }
