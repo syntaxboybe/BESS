@@ -21,6 +21,8 @@
     <link rel="stylesheet" type="text/css" href="{% static 'bootstrap/css/dataTables.dateTime.min.css' %}">
     <!-- Dark Mode CSS -->
     <link rel="stylesheet" type="text/css" href="{% static 'bootstrap/css/dark-mode.css' %}">
+    <!-- SweetAlert2 CSS -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/sweetalert2@11/dist/sweetalert2.min.css">
 
 
     <script src="{% static 'bootstrap/js/jquery.min.js' %}" ></script>
@@ -28,6 +30,8 @@
     <script src="{% static 'bootstrap/js/dataTables.bootstrap5.min.js' %}" ></script>
     <script src="{% static 'bootstrap/js/bootstrap.min.js' %}" ></script>
     <script src="{% static 'bootstrap/js/filterDropDown.min.js' %}" ></script>
+    <!-- SweetAlert2 JS -->
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 
     <script src="{% static 'bootstrap/js/pdfmake.min.js' %}" ></script>
     <script src="{% static 'bootstrap/js/vfs_fonts.js' %}" ></script>
@@ -37,6 +41,89 @@
     <script src="{% static 'bootstrap/js/dataTables.dateTime.min.js' %}" ></script>
     <!-- Dark Mode JS -->
     <script src="{% static 'bootstrap/js/dark-mode.js' %}" ></script>
+
+    <!-- SweetAlert2 Global Configuration -->
+    <script>
+    // Configure SweetAlert2 with dark mode support
+    document.addEventListener('DOMContentLoaded', function() {
+      // Create global SweetAlert2 dark mode styles
+      const sweetAlertDarkModeStyles = document.createElement('style');
+      sweetAlertDarkModeStyles.textContent = `
+        /* Dark mode styles for all SweetAlert2 popups */
+        body.dark-mode .swal2-popup {
+          background-color: #333 !important;
+          color: #fff !important;
+        }
+        body.dark-mode .swal2-title {
+          color: #4CAF50 !important;
+          border-bottom-color: rgba(255, 255, 255, 0.1);
+        }
+        body.dark-mode .swal2-html-container,
+        body.dark-mode .swal2-content {
+          color: #ddd !important;
+        }
+        body.dark-mode .swal2-input,
+        body.dark-mode .swal2-textarea {
+          background-color: #444 !important;
+          color: #fff !important;
+          border-color: #555 !important;
+        }
+        body.dark-mode .swal2-validation-message {
+          background-color: #3a3a3a !important;
+          color: #f27474 !important;
+        }
+        body.dark-mode .swal2-confirm,
+        body.dark-mode .swal2-deny,
+        body.dark-mode .swal2-cancel {
+          filter: brightness(0.85);
+        }
+        body.dark-mode .swal2-confirm:focus,
+        body.dark-mode .swal2-deny:focus,
+        body.dark-mode .swal2-cancel:focus {
+          box-shadow: 0 0 0 3px rgba(50, 200, 50, 0.4) !important;
+        }
+        body.dark-mode .text-muted {
+          color: #bbb !important;
+        }
+        /* Improve timer progress bar visibility in dark mode */
+        body.dark-mode .swal2-timer-progress-bar {
+          background: rgba(76, 175, 80, 0.6) !important;
+        }
+      `;
+      document.head.appendChild(sweetAlertDarkModeStyles);
+
+      // Create a SweetAlert2 hook to apply dark mode to all alerts
+      const originalSwalFire = Swal.fire;
+      Swal.fire = function() {
+        // Get the arguments passed to Swal.fire
+        const args = Array.from(arguments);
+
+        // Check if args is an object (most common usage)
+        if (args.length === 1 && typeof args[0] === 'object') {
+          const isDarkMode = document.body.classList.contains('dark-mode');
+
+          // Merge with dark mode settings if needed
+          if (isDarkMode) {
+            args[0] = Object.assign({}, args[0], {
+              background: args[0].background || '#333',
+              color: args[0].color || '#fff'
+            });
+          }
+        }
+
+        // Call the original Swal.fire with potentially modified arguments
+        return originalSwalFire.apply(this, args);
+      };
+
+      // Update SweetAlert style when dark mode changes
+      const darkModeToggle = document.getElementById('darkModeToggle');
+      if (darkModeToggle) {
+        darkModeToggle.addEventListener('click', function() {
+          // Any open SweetAlert will be properly styled via CSS
+        });
+      }
+    });
+    </script>
 
 <style>
     .dropdown-menu .dropdown-item {
@@ -50,6 +137,42 @@
 
     .dropdown-menu {
         background-color: #008000; /* Keep the green background */
+    }
+
+    /* Make the pending status badge visible in both light and dark modes */
+    .badge-pending,
+    .badge-warning,
+    .badge-yellow {
+        background-color: #ffff00 !important;
+        color: #000000 !important;
+        font-weight: bold !important;
+        border: 1px solid rgba(0, 0, 0, 0.2);
+    }
+
+    /* Ensure all status badges are visible in dark mode */
+    body.dark-mode .badge {
+        border: 1px solid rgba(255, 255, 255, 0.2);
+    }
+
+    /* Specific fixes for yellow/pending badges in dark mode */
+    body.dark-mode .badge-pending,
+    body.dark-mode .badge-warning,
+    body.dark-mode .badge-yellow,
+    body.dark-mode .bg-warning,
+    body.dark-mode .bg-yellow,
+    body.dark-mode [class*="bg-yellow-"] {
+        color: #000 !important;
+        font-weight: bold !important;
+        box-shadow: 0 0 5px rgba(255, 255, 255, 0.3);
+    }
+
+    /* For text that says "Pending" without a badge class */
+    body.dark-mode .text-warning,
+    body.dark-mode .text-yellow,
+    body.dark-mode .pending-status {
+        color: #ffff00 !important;
+        font-weight: bold !important;
+        text-shadow: 0px 0px 2px rgba(0, 0, 0, 0.8);
     }
 </style>
 
@@ -361,16 +484,21 @@
 </li>
 {% endif %}
 
-                      <!-- Dark Mode Toggle Switch -->
-                      <li class="nav-item theme-switch-wrapper">
-                        <label class="theme-switch" for="checkbox" title="Toggle dark/light mode">
-                          <input type="checkbox" id="checkbox" />
-                          <div class="slider round">
-                            <i class="fas fa-sun"></i>
-                            <i class="fas fa-moon"></i>
-                          </div>
-                        </label>
-                      </li>
+<!-- Fullscreen Toggle Button -->
+<li class="nav-item">
+  <a class="nav-link" href="#" id="fullscreenToggle" title="Toggle fullscreen">
+    <i class="fas fa-expand fs-5" id="expandIcon"></i>
+    <i class="fas fa-compress fs-5 d-none" id="compressIcon"></i>
+  </a>
+</li>
+
+<!-- Dark Mode Toggle Button -->
+<li class="nav-item">
+  <a class="nav-link" href="#" id="darkModeToggle" title="Toggle dark/light mode">
+    <i class="fas fa-moon fs-5" id="lightModeIcon"></i>
+    <i class="fas fa-sun fs-5 d-none" id="darkModeIcon"></i>
+  </a>
+</li>
 
                       <li class="nav-item">
                         <a class="nav-link active" aria-current="page" href="#"><i class="fas fa-user fs-5 me-2"></i> {{ user.username }}</a>
@@ -405,6 +533,120 @@
 <script src="{% static 'bootstrap/js/requested_documents_logs.js' %}" ></script>
 {% if user.id != 1 and not user.groups.all.0.name == 'superadmin' %}
 <script src="{% static 'js/notifications.js' %}" ></script>
+
+<script>
+// New notification alert functionality
+document.addEventListener('DOMContentLoaded', function() {
+  // Check if we're on the dashboard page
+  const isDashboardPage = window.location.pathname.includes('/Dashboard') || window.location.pathname === '/' || window.location.pathname === '';
+
+  // Only show notification on dashboard page
+  if (!isDashboardPage) return;
+
+  // Check if there are new notifications
+  const notificationBadge = document.querySelector('.fa-bell + .badge');
+
+  if (notificationBadge) {
+    const notificationCount = parseInt(notificationBadge.innerText);
+
+    if (notificationCount > 0) {
+      // Get notification details for the alert
+      const latestNotifications = [];
+
+      // Get all notification items
+      const notificationItems = document.querySelectorAll('.dropdown-item .badge');
+      let maxNotificationsToShow = Math.min(notificationItems.length, 3); // Limit to 3 max
+
+      for (let i = 0; i < maxNotificationsToShow; i++) {
+        const item = notificationItems[i].closest('.dropdown-item');
+        if (item) {
+          const icon = item.querySelector('div i').cloneNode(true);
+          const title = item.querySelector('div i').nextSibling.textContent.trim();
+          const name = item.querySelector('small:nth-of-type(1)').textContent.trim();
+          const date = item.querySelector('small:nth-of-type(2)').textContent.trim();
+
+          // Create HTML structure for each notification entry
+          const entryHtml = `
+            <div class="notification-item">
+              <div class="d-flex justify-content-between align-items-center mb-1">
+                <span class="fw-bold">${title}</span>
+                <span class="badge rounded-pill bg-danger">New</span>
+              </div>
+              <div class="text-muted small">${name}</div>
+              <div class="text-muted small">${date}</div>
+            </div>
+          `;
+          latestNotifications.push(entryHtml);
+        }
+      }
+
+      // Create notification message
+      let notificationHtml = '';
+      if (latestNotifications.length > 0) {
+        notificationHtml = latestNotifications.join('<hr class="my-2">');
+        if (notificationCount > latestNotifications.length) {
+          notificationHtml += `<hr class="my-2"><div class="text-center">...and ${notificationCount - latestNotifications.length} more</div>`;
+        }
+      } else {
+        notificationHtml = '<div class="text-center">You have new document requests.</div>';
+      }
+
+      // Add mark all as read button
+      notificationHtml += `
+        <div class="text-center mt-3">
+          <button class="btn btn-sm btn-outline-success" onclick="markAllAsRead(); Swal.close();">
+            <i class="fas fa-check-double me-1"></i> Mark all as read
+          </button>
+        </div>
+      `;
+
+      // Show SweetAlert notification - dark mode is automatically applied by global config
+      Swal.fire({
+        title: 'New Requests',
+        icon: null,
+        html: notificationHtml,
+        showConfirmButton: false,
+        showCloseButton: true,
+        width: '350px',
+        padding: '1rem',
+        customClass: {
+          container: 'notification-container',
+          popup: 'notification-popup',
+          title: 'text-success fw-bold',
+          closeButton: 'notification-close-btn'
+        }
+      });
+
+      // Add CSS for notification styling (non-dark-mode specific)
+      const style = document.createElement('style');
+      style.textContent = `
+        .notification-container {
+          z-index: 9999;
+        }
+        .notification-popup {
+          border-radius: 8px;
+          box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+          overflow: hidden;
+        }
+        .notification-item {
+          padding: 8px 0;
+        }
+        .swal2-title {
+          font-size: 1.25rem;
+          color: #008000 !important;
+          font-weight: bold !important;
+          padding-bottom: 0.5rem;
+          border-bottom: 1px solid rgba(0, 0, 0, 0.1);
+        }
+        .notification-close-btn {
+          color: #666 !important;
+        }
+      `;
+      document.head.appendChild(style);
+    }
+  }
+});
+</script>
 {% endif %}
 
 <script>
@@ -457,6 +699,101 @@
             document.querySelector("body").style.visibility = "visible";
         }
     };
+</script>
+
+<script>
+// Dark mode toggle functionality
+document.addEventListener('DOMContentLoaded', function() {
+  const darkModeToggle = document.getElementById('darkModeToggle');
+  const lightModeIcon = document.getElementById('lightModeIcon');
+  const darkModeIcon = document.getElementById('darkModeIcon');
+
+  // Check if dark mode is enabled on page load
+  if (localStorage.getItem('darkMode') === 'enabled') {
+    document.body.classList.add('dark-mode');
+    lightModeIcon.classList.add('d-none');
+    darkModeIcon.classList.remove('d-none');
+  }
+
+  // Toggle dark mode
+  darkModeToggle.addEventListener('click', function(e) {
+    e.preventDefault();
+    if (document.body.classList.contains('dark-mode')) {
+      document.body.classList.remove('dark-mode');
+      localStorage.setItem('darkMode', 'disabled');
+      lightModeIcon.classList.remove('d-none');
+      darkModeIcon.classList.add('d-none');
+    } else {
+      document.body.classList.add('dark-mode');
+      localStorage.setItem('darkMode', 'enabled');
+      lightModeIcon.classList.add('d-none');
+      darkModeIcon.classList.remove('d-none');
+    }
+  });
+});
+</script>
+
+<script>
+// Fullscreen toggle functionality
+document.addEventListener('DOMContentLoaded', function() {
+  const fullscreenToggle = document.getElementById('fullscreenToggle');
+  const expandIcon = document.getElementById('expandIcon');
+  const compressIcon = document.getElementById('compressIcon');
+
+  fullscreenToggle.addEventListener('click', function(e) {
+    e.preventDefault();
+
+    if (!document.fullscreenElement &&
+        !document.mozFullScreenElement &&
+        !document.webkitFullscreenElement &&
+        !document.msFullscreenElement) {
+      // Enter fullscreen
+      if (document.documentElement.requestFullscreen) {
+        document.documentElement.requestFullscreen();
+      } else if (document.documentElement.msRequestFullscreen) {
+        document.documentElement.msRequestFullscreen();
+      } else if (document.documentElement.mozRequestFullScreen) {
+        document.documentElement.mozRequestFullScreen();
+      } else if (document.documentElement.webkitRequestFullscreen) {
+        document.documentElement.webkitRequestFullscreen(Element.ALLOW_KEYBOARD_INPUT);
+      }
+      expandIcon.classList.add('d-none');
+      compressIcon.classList.remove('d-none');
+    } else {
+      // Exit fullscreen
+      if (document.exitFullscreen) {
+        document.exitFullscreen();
+      } else if (document.msExitFullscreen) {
+        document.msExitFullscreen();
+      } else if (document.mozCancelFullScreen) {
+        document.mozCancelFullScreen();
+      } else if (document.webkitExitFullscreen) {
+        document.webkitExitFullscreen();
+      }
+      expandIcon.classList.remove('d-none');
+      compressIcon.classList.add('d-none');
+    }
+  });
+
+  // Listen for fullscreen change events to update icon state
+  document.addEventListener('fullscreenchange', updateFullscreenIcon);
+  document.addEventListener('webkitfullscreenchange', updateFullscreenIcon);
+  document.addEventListener('mozfullscreenchange', updateFullscreenIcon);
+  document.addEventListener('MSFullscreenChange', updateFullscreenIcon);
+
+  function updateFullscreenIcon() {
+    if (document.fullscreenElement ||
+        document.webkitFullscreenElement ||
+        document.mozFullScreenElement ||
+        document.msFullscreenElement) {
+      expandIcon.classList.add('d-none');
+      compressIcon.classList.remove('d-none');
+    } else {
+      expandIcon.classList.remove('d-none');
+      compressIcon.classList.add('d-none');
+    }
+  }
+});
 </script>
 </body>
 </html>
