@@ -11,6 +11,10 @@
     padding-bottom: 5%;
   }
 </style>
+
+<!-- Add Popper.js before Bootstrap script (bootstrap.min.js already included in base.html) -->
+<script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.8/dist/umd/popper.min.js" integrity="sha384-I7E8VVD/ismYTF4hNIPjVp/Zjvgyol6VFvRkX/vR+Vc4jQkC+hVqc2pM8ODewa9r" crossorigin="anonymous"></script>
+
 <section>
   <div class="container-fluid fade-page">
     <div class="row">
@@ -50,6 +54,18 @@
 
       <div class="col" style="margin-top: -4em">
         <div class="row px-4">
+          <div class="col-12 mb-3 d-flex justify-content-end">
+            <div>
+              <button class="btn btn-sm btn-outline-primary" onclick="downloadSection('demographicsSection', 'Demographics_Cards.jpeg', 'image/jpeg')">
+                <i class="fas fa-download"></i> Download as JPEG
+              </button>
+              <button class="btn btn-sm btn-outline-primary ms-1" onclick="downloadSection('demographicsSection', 'Demographics_Cards.png', 'image/png')">
+                <i class="fas fa-download"></i> Download as PNG
+              </button>
+            </div>
+          </div>
+
+          <div id="demographicsSection" class="row">
           <div class="col-lg-4 col-md-12">
             <a href="{% url 'resident_list' %}" style="text-decoration: none">
               <div class="col-md">
@@ -233,6 +249,7 @@
               </div>
             </div>
           </div>
+          </div> <!-- Closing tag for demographicsSection div -->
         </div>
       </div>
     </div>
@@ -245,10 +262,18 @@
     <div class="row">
       <div class="col-12">
         <div class="card border-0 shadow mb-4">
-          <div class="card-header py-3" style="background-color: #355389; color: white;">
+          <div class="card-header py-3 d-flex justify-content-between align-items-center" style="background-color: #355389; color: white;">
             <h5 class="mb-0"><i class="fas fa-file-alt me-2"></i> Document Request Statistics</h5>
+            <div>
+              <button class="btn btn-sm btn-outline-light" onclick="downloadSection('documentStatsSection', 'Document_Statistics.jpeg', 'image/jpeg')">
+                <i class="fas fa-download"></i> Download as JPEG
+              </button>
+              <button class="btn btn-sm btn-outline-light ms-1" onclick="downloadSection('documentStatsSection', 'Document_Statistics.png', 'image/png')">
+                <i class="fas fa-download"></i> Download as PNG
+              </button>
+            </div>
           </div>
-          <div class="card-body">
+          <div class="card-body" id="documentStatsSection">
             <div class="row">
 
               <!-- Barangay Clearance -->
@@ -415,8 +440,16 @@
     <div class="row">
       <div class="col-lg-6 col-md-12 mb-4">
         <div class="card border-0 shadow h-100">
-          <div class="card-header py-3" style="background-color: #355389; color: white;">
+          <div class="card-header py-3 d-flex justify-content-between align-items-center" style="background-color: #355389; color: white;">
             <h5 class="mb-0"><i class="fas fa-chart-pie me-2"></i> Document Request Distribution</h5>
+            <div>
+              <button class="btn btn-sm btn-outline-light" onclick="downloadChart('documentPieChart', 'Document_Request_Distribution.jpeg', 'image/jpeg')">
+                <i class="fas fa-download"></i> Download as JPEG
+              </button>
+              <button class="btn btn-sm btn-outline-light ms-1" onclick="downloadChart('documentPieChart', 'Document_Request_Distribution.png', 'image/png')">
+                <i class="fas fa-download"></i> Download as PNG
+              </button>
+            </div>
           </div>
           <div class="card-body">
             <canvas id="documentPieChart" width="400" height="300"></canvas>
@@ -426,8 +459,16 @@
 
       <div class="col-lg-6 col-md-12 mb-4">
         <div class="card border-0 shadow h-100">
-          <div class="card-header py-3" style="background-color: #355389; color: white;">
+          <div class="card-header py-3 d-flex justify-content-between align-items-center" style="background-color: #355389; color: white;">
             <h5 class="mb-0"><i class="fas fa-chart-bar me-2"></i> Documents Status</h5>
+            <div>
+              <button class="btn btn-sm btn-outline-light" onclick="downloadChart('documentStatusChart', 'Documents_Status.jpeg', 'image/jpeg')">
+                <i class="fas fa-download"></i> Download as JPEG
+              </button>
+              <button class="btn btn-sm btn-outline-light ms-1" onclick="downloadChart('documentStatusChart', 'Documents_Status.png', 'image/png')">
+                <i class="fas fa-download"></i> Download as PNG
+              </button>
+            </div>
           </div>
           <div class="card-body">
             <canvas id="documentStatusChart" width="400" height="300"></canvas>
@@ -443,11 +484,19 @@
   <div class="row px-4">
     <!-- Radar Chart Section -->
     <div class="col-lg-6 col-md-12">
-  <div class="card text-center text-black mb-3 border-0 shadow" style="color: #355389;">
-    <div class="card-header" style="background-color: #355389; color: white;">
-      <h5 class="card-title">
-        <i class="fa-solid fa-crosshairs"></i> Resident Radar Chart
-      </h5>
+      <div class="card text-center text-black mb-3 border-0 shadow" style="color: #355389;">
+        <div class="card-header d-flex justify-content-between align-items-center" style="background-color: #355389; color: white;">
+          <h5 class="card-title mb-0">
+            <i class="fa-solid fa-crosshairs"></i> Resident Radar Chart
+          </h5>
+          <div>
+            <button class="btn btn-sm btn-outline-light" onclick="downloadChart('radarChart', 'Resident_Radar_Chart.jpeg', 'image/jpeg')">
+              <i class="fas fa-download"></i> Download as JPEG
+            </button>
+            <button class="btn btn-sm btn-outline-light ms-1" onclick="downloadChart('radarChart', 'Resident_Radar_Chart.png', 'image/png')">
+              <i class="fas fa-download"></i> Download as PNG
+            </button>
+          </div>
         </div>
         <div class="card-body">
           <canvas id="radarChart" width="400" height="400"></canvas>
@@ -458,10 +507,18 @@
     <!-- Bar Chart Section -->
     <div class="col-lg-6 col-md-12">
       <div class="card text-center text-black mb-3 border-0 shadow" style="color: #355389;">
-    <div class="card-header" style="background-color: #355389; color: white;">
-          <h5 class="card-title">
+        <div class="card-header d-flex justify-content-between align-items-center" style="background-color: #355389; color: white;">
+          <h5 class="card-title mb-0">
             <i class="fa-solid fa-chart-bar"></i> Resident Bar Chart
           </h5>
+          <div>
+            <button class="btn btn-sm btn-outline-light" onclick="downloadChart('residentChart', 'Resident_Bar_Chart.jpeg', 'image/jpeg')">
+              <i class="fas fa-download"></i> Download as JPEG
+            </button>
+            <button class="btn btn-sm btn-outline-light ms-1" onclick="downloadChart('residentChart', 'Resident_Bar_Chart.png', 'image/png')">
+              <i class="fas fa-download"></i> Download as PNG
+            </button>
+          </div>
         </div>
         <div class="card-body">
           <canvas id="residentChart" width="400" height="400"></canvas>
@@ -469,8 +526,10 @@
       </div>
     </div>
   </div>
+</div>
 
 <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
 <script>
   // Dynamic data from Django context
   var cResident = {{ cResident }};
@@ -483,6 +542,189 @@
   var cSingle = {{ cSingle }};
   var cDivorced = {{ cDivorced }};
   var cWidowed = {{ cWidowed }};
+
+  // Function to download charts as images
+  function downloadChart(chartId, filename, mimeType) {
+    const canvas = document.getElementById(chartId);
+    if (!canvas) {
+      console.error('Chart canvas not found:', chartId);
+      Swal.fire({
+        title: 'Error',
+        text: 'Could not find the chart to download',
+        icon: 'error',
+        timer: 2000,
+        showConfirmButton: false
+      });
+      return;
+    }
+
+    try {
+      // Show loading indicator
+      Swal.fire({
+        title: 'Preparing download...',
+        text: 'Please wait',
+        allowOutsideClick: false,
+        didOpen: () => {
+          Swal.showLoading();
+        }
+      });
+
+      // For charts, we can directly get the image from the canvas
+      const image = canvas.toDataURL(mimeType, 1.0);
+
+      // Create a download link
+      const downloadLink = document.createElement('a');
+      downloadLink.href = image;
+      downloadLink.download = filename;
+
+      // Trigger the download
+      document.body.appendChild(downloadLink);
+      downloadLink.click();
+      document.body.removeChild(downloadLink);
+
+      // Close loading indicator
+      setTimeout(() => {
+        Swal.close();
+      }, 500);
+    } catch (error) {
+      console.error('Error downloading chart:', error);
+      Swal.fire({
+        title: 'Error',
+        text: 'Failed to download the chart',
+        icon: 'error',
+        timer: 2000
+      });
+    }
+  }
+
+  // Function to download a section (like stats cards)
+  function downloadSection(sectionId, filename, mimeType) {
+    const section = document.getElementById(sectionId);
+    if (!section) {
+      console.error('Section not found:', sectionId);
+      Swal.fire({
+        title: 'Error',
+        text: 'Could not find the section to download',
+        icon: 'error',
+        timer: 2000,
+        showConfirmButton: false
+      });
+      return;
+    }
+
+    // Show loading indicator
+    Swal.fire({
+      title: 'Preparing download...',
+      text: 'Please wait',
+      allowOutsideClick: false,
+      didOpen: () => {
+        Swal.showLoading();
+      }
+    });
+
+    // Check if we're in dark mode
+    const isDarkMode = document.body.classList.contains('dark-mode');
+
+    // Create a clone of the section to capture
+    const sectionClone = section.cloneNode(true);
+    sectionClone.style.position = 'absolute';
+    sectionClone.style.left = '-9999px';
+    sectionClone.style.top = '-9999px';
+    document.body.appendChild(sectionClone);
+
+    // Force light mode styles for the clone if needed
+    if (isDarkMode) {
+      // Process all child elements to ensure proper styling
+      const applyLightModeStyles = (element) => {
+        // Remove dark mode classes
+        if (element.classList) {
+          element.classList.remove('dark-mode');
+        }
+
+        // Apply light background to cards if they have dark backgrounds
+        if (element.classList && element.classList.contains('card')) {
+          // Ensure card backgrounds are white/light
+          element.style.backgroundColor = '#ffffff';
+          element.style.color = '#333333';
+        }
+
+        // Fix text colors
+        if (element.classList && (element.classList.contains('text-white') || element.classList.contains('text-light'))) {
+          if (!element.closest('.card-header')) { // Don't change header text colors
+            element.style.color = '#333333';
+          }
+        }
+
+        // Apply to all children
+        if (element.children && element.children.length > 0) {
+          Array.from(element.children).forEach(child => {
+            applyLightModeStyles(child);
+          });
+        }
+      };
+
+      // Start processing from the clone
+      applyLightModeStyles(sectionClone);
+    }
+
+    // Create screenshot of the section
+    html2canvas(sectionClone, {
+      scale: 2, // Higher scale for better quality
+      backgroundColor: '#ffffff', // Force white background
+      logging: false,
+      useCORS: true,
+      allowTaint: true
+    }).then(canvas => {
+      try {
+        // Convert to image data
+        const image = canvas.toDataURL(mimeType, 1.0);
+
+        // Create a download link
+        const downloadLink = document.createElement('a');
+        downloadLink.href = image;
+        downloadLink.download = filename;
+
+        // Trigger the download
+        document.body.appendChild(downloadLink);
+        downloadLink.click();
+        document.body.removeChild(downloadLink);
+
+        // Remove the cloned section
+        document.body.removeChild(sectionClone);
+
+        // Close loading indicator
+        setTimeout(() => {
+          Swal.close();
+        }, 500);
+      } catch (error) {
+        console.error('Error processing download:', error);
+        Swal.fire({
+          title: 'Error',
+          text: 'Failed to process the download',
+          icon: 'error',
+          timer: 2000
+        });
+
+        // Clean up
+        if (document.body.contains(sectionClone)) {
+          document.body.removeChild(sectionClone);
+        }
+      }
+    }).catch(error => {
+      console.error('Error capturing section:', error);
+      Swal.fire({
+        title: 'Error',
+        text: 'Failed to capture the section',
+        icon: 'error',
+        timer: 2000
+      });
+
+      // Clean up
+      if (document.body.contains(sectionClone)) {
+        document.body.removeChild(sectionClone);
+      }
+    });
+  }
 
   // Bar Chart
   var barCtx = document.getElementById('residentChart').getContext('2d');
