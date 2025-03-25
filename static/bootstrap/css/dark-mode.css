@@ -1,3 +1,8 @@
+/* Normal mode sidebar */
+#side_nav {
+    background-color: #355389;
+}
+
 /* Fix for white backgrounds in specific elements with inline styles */
 body.dark-mode [style*="background"][style*="rgb(248"] {
   background-color: #0d1a2f !important;
@@ -154,6 +159,41 @@ body.dark-mode .navbar-light .navbar-toggler-icon {
 /* Sidebar in dark mode */
 body.dark-mode #side_nav {
     background-color: #1e3f76 !important;
+}
+
+/* Profile section in sidebar - transparent background in dark mode */
+body.dark-mode .sidebar .header-box {
+    background-color: transparent !important;
+}
+
+/* Create a gradient background for the profile section in dark mode */
+body.dark-mode .sidebar .header-box .container {
+    background: linear-gradient(rgba(30, 63, 118, 0.3), rgba(30, 63, 118, 0)) !important;
+    border-radius: 10px;
+    padding: 10px;
+}
+
+/* Ensure the profile image container and its content have transparent backgrounds */
+body.dark-mode .sidebar .header-box .row,
+body.dark-mode .sidebar .header-box .col-12 {
+    background-color: transparent !important;
+}
+
+/* Add subtle glow to profile image in dark mode */
+body.dark-mode .sidebar .header-box img.rounded-circle {
+    border: 2px solid rgba(255, 255, 255, 0.3);
+    box-shadow: 0 0 15px rgba(80, 200, 120, 0.4);
+}
+
+/* Improve text visibility with text shadow */
+body.dark-mode .sidebar .header-box h5 {
+    color: #ffffff !important;
+    text-shadow: 0 1px 2px rgba(0, 0, 0, 0.3);
+}
+
+body.dark-mode .sidebar .header-box p {
+    color: #50C878 !important;
+    text-shadow: 0 1px 1px rgba(0, 0, 0, 0.3);
 }
 
 body.dark-mode .sidebar a {

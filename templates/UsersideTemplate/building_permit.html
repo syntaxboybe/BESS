@@ -3,7 +3,7 @@
 {% block content %}
 
 <div class="container bg-white rounded shadow p-5">
-<form action="." method="POST">
+<form action="." method="POST" id="buildingPermitForm">
 {% csrf_token %}
     <div class="row">
         <div class="col-12 d-flex justify-content-center" style="color: #355389;">
@@ -12,7 +12,7 @@
         <div class="col-12 d-flex justify-content-center pb-4">
             <p>Fill-up the form and submit</p>
         </div>
-        
+
         <div class="col-lg-6 py-3">
             <p class="h6">PROPOSED CONSTRUCTION OF:</p>
             {{form.proposed_construction}}
@@ -44,9 +44,9 @@
         </div>
 
         <div class="col-12 pt-5 d-flex justify-content-end">
-            <input type="submit" name="btnLogin" class="btn-theme col-12 col-md-3 -btn2" value="Submit">
+            <button type="button" id="submitBtn" class="btn-theme col-12 col-md-3 -btn2">Submit</button>
             &nbsp;&nbsp;
-            <a href="{% url 'service_portal'%}" class="btn-theme -btn1 col-12 col-md-3 text-center">Cancel</a>
+            <button type="button" id="cancelBtn" class="btn-theme -btn1 col-12 col-md-3 text-center">Cancel</button>
         </div>
 
     </div>
@@ -55,4 +55,71 @@
 <br>
 <br>
 <br>
+
+<script>
+    document.addEventListener('DOMContentLoaded', function() {
+        // Submit button click handler
+        document.getElementById('submitBtn').addEventListener('click', function() {
+            // Check if required fields are filled
+            const constructionField = document.querySelector('[name="proposed_construction"]');
+            const areaField = document.querySelector('[name="total_area"]');
+            const costField = document.querySelector('[name="estimated_cost"]');
+            const locationField = document.querySelector('[name="location"]');
+            const ownerField = document.querySelector('[name="owner"]');
+
+            if (!constructionField.value.trim() || !areaField.value.trim() ||
+                !costField.value.trim() || !locationField.value.trim() || !ownerField.value.trim()) {
+                Swal.fire({
+                    title: 'Required Fields Empty',
+                    text: 'Please fill in all the required fields',
+                    icon: 'warning',
+                    confirmButtonText: 'OK'
+                });
+                return;
+            }
+
+            Swal.fire({
+                title: 'Submit Building Permit Request?',
+                text: 'Are you sure you want to submit this building permit request?',
+                icon: 'question',
+                showCancelButton: true,
+                confirmButtonText: 'Yes, submit it!',
+                cancelButtonText: 'No, review again'
+            }).then((result) => {
+                if (result.isConfirmed) {
+                    // Show loading state
+                    Swal.fire({
+                        title: 'Processing...',
+                        text: 'Please wait while we process your request',
+                        allowOutsideClick: false,
+                        allowEscapeKey: false,
+                        showConfirmButton: false,
+                        willOpen: () => {
+                            Swal.showLoading();
+                        }
+                    });
+
+                    // Submit the form
+                    document.getElementById('buildingPermitForm').submit();
+                }
+            });
+        });
+
+        // Cancel button click handler
+        document.getElementById('cancelBtn').addEventListener('click', function() {
+            Swal.fire({
+                title: 'Cancel Request?',
+                text: 'Are you sure you want to cancel? Any information entered will be lost.',
+                icon: 'warning',
+                showCancelButton: true,
+                confirmButtonText: 'Yes, cancel it!',
+                cancelButtonText: 'No, continue editing'
+            }).then((result) => {
+                if (result.isConfirmed) {
+                    window.location.href = "{% url 'service_portal' %}";
+                }
+            });
+        });
+    });
+</script>
 {% endblock content %}

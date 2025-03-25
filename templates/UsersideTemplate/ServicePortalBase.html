@@ -14,6 +14,10 @@
     <link rel="icon" href="{% static 'img/favicon-48x48.png' %}" type="image/x-icon">
     <link rel="stylesheet" type="text/css" href="{% static 'bootstrap/css/dataTables.bootstrap5.min.css' %}">
     <link rel="stylesheet" type="text/css" href="{% static 'bootstrap/css/jquery.dataTables.yadcf.css' %}">
+    <!-- Dark Mode CSS -->
+    <link rel="stylesheet" type="text/css" href="{% static 'bootstrap/css/dark-mode.css' %}">
+    <!-- SweetAlert2 CSS -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/sweetalert2@11/dist/sweetalert2.min.css">
 
     <script src="{% static 'bootstrap/js/jquery.min.js' %}" ></script>
     <script src="{% static 'bootstrap/js/jquery.dataTables.js' %}" ></script>
@@ -21,6 +25,8 @@
     <script src="{% static 'bootstrap/js/bootstrap.min.js' %}" ></script>
     <script src="{% static 'bootstrap/js/jquery.dataTables.yadcf.js' %}" ></script>
     <script src="{% static 'bootstrap/js/datatables.min.js' %}" ></script>
+    <!-- SweetAlert2 JS -->
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 
     <title>Barangay E-Service System</title>
 </head>
@@ -36,17 +42,16 @@
 </style>
 <body>
     <div class="main-container d-flex" >
-        <div class="sidebar" id="side_nav" style="background-color: #355389;">
+        <div class="sidebar" id="side_nav">
 
             <div class="header-box px-2 pt-3 pb-4 d-flex justify-content-between">
 
-
               <div class="container">
-                <div class="row">
-                  <div class="col-2">
-                    <img class="rounded-circle" src="/media/{{userinfo.residentsinfo.image}}" style="width: 45px; height: 45px; object-fit:cover;">
+                <div class="row text-center">
+                  <div class="col-12 mb-2">
+                    <img class="rounded-circle mx-auto" src="/media/{{userinfo.residentsinfo.image}}" style="width: 70px; height: 70px; object-fit:cover;">
                   </div>
-                  <div class="col-10 pt-2 ps-3">
+                  <div class="col-12">
                     <div class=""><h5 class="" style="color: #FFFFFF;"> {{userinfo.residentsinfo.firstname}} {{userinfo.residentsinfo.lastname}}</h5></div>
                     <div class=""><p style="margin-top: -5px; color: #50C878;">Resident</p></div>
                   </div>
@@ -63,6 +68,15 @@
                 <li class=""><a href="{% url 'profile' %}" class="text-decoration-none px-3 py-2 d-block"><i class="fa-solid fa-user fs-5"></i><b> Profile</b></a></li>
                 <li class=""><a href="{% url 'userLogout' %}" class="text-decoration-none px-3 py-2 d-block"><i class="fa-solid fa-right-from-bracket"></i><b> Logout</b></a></li>
             </ul>
+
+            <!-- Dark Mode Toggle Button -->
+            <div class="px-4 pb-3 text-center">
+                <a href="#" id="darkModeToggle" class="text-decoration-none" title="Toggle dark/light mode">
+                    <i class="fas fa-moon fs-5 text-white" id="lightModeIcon"></i>
+                    <i class="fas fa-sun fs-5 text-white d-none" id="darkModeIcon"></i>
+                    <span class="text-white ms-2">Theme</span>
+                </a>
+            </div>
         </div>
 
         <div class="content">
@@ -146,6 +160,75 @@
     });
 
     // Sidebar toggle functionality is now handled in function.js
+</script>
+
+<!-- Dark Mode Toggle Script -->
+<script>
+    // Dark mode toggle functionality
+    document.addEventListener('DOMContentLoaded', function() {
+        const darkModeToggle = document.getElementById('darkModeToggle');
+        const lightModeIcon = document.getElementById('lightModeIcon');
+        const darkModeIcon = document.getElementById('darkModeIcon');
+
+        // Check if dark mode is enabled on page load
+        if (localStorage.getItem('darkMode') === 'enabled') {
+            document.body.classList.add('dark-mode');
+            lightModeIcon.classList.add('d-none');
+            darkModeIcon.classList.remove('d-none');
+        }
+
+        // Toggle dark mode
+        darkModeToggle.addEventListener('click', function(e) {
+            e.preventDefault();
+            if (document.body.classList.contains('dark-mode')) {
+                document.body.classList.remove('dark-mode');
+                localStorage.setItem('darkMode', 'disabled');
+                lightModeIcon.classList.remove('d-none');
+                darkModeIcon.classList.add('d-none');
+            } else {
+                document.body.classList.add('dark-mode');
+                localStorage.setItem('darkMode', 'enabled');
+                lightModeIcon.classList.add('d-none');
+                darkModeIcon.classList.remove('d-none');
+            }
+        });
+    });
+</script>
+
+<!-- Configure SweetAlert2 for Dark Mode Support -->
+<script>
+    // Set up SweetAlert2 with dark mode support based on user preference
+    document.addEventListener('DOMContentLoaded', function() {
+        // Function to update SweetAlert theme based on dark mode
+        function updateSweetAlertTheme() {
+            const isDarkMode = document.body.classList.contains('dark-mode');
+
+            // Set default SweetAlert2 configuration
+            Swal.mixin({
+                customClass: {
+                    confirmButton: 'btn btn-success mx-2',
+                    cancelButton: 'btn btn-danger mx-2'
+                },
+                buttonsStyling: false,
+                background: isDarkMode ? '#222' : '#fff',
+                color: isDarkMode ? '#fff' : '#000'
+            });
+        }
+
+        // Update theme on page load
+        updateSweetAlertTheme();
+
+        // Update theme when dark mode changes
+        const observer = new MutationObserver(function(mutations) {
+            mutations.forEach(function(mutation) {
+                if (mutation.attributeName === 'class') {
+                    updateSweetAlertTheme();
+                }
+            });
+        });
+
+        observer.observe(document.body, { attributes: true });
+    });
 </script>
 </body>
 </html>

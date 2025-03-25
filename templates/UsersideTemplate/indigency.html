@@ -3,7 +3,7 @@
 {% block content %}
 
 <div class="container bg-white rounded shadow p-5">
-<form action="." method="POST">
+<form action="." method="POST" id="indigencyForm">
 {% csrf_token %}
     <div class="row">
         <div class="col-12 d-flex justify-content-center" style="color: #355389;">
@@ -31,9 +31,9 @@
             </div>
 
             <div class="col-12 pt-5 d-flex justify-content-end">
-                <input type="submit" name="btnLogin" class="btn-theme col-12 col-md-3 -btn2" value="Submit">
+                <button type="button" id="submitBtn" class="btn-theme col-12 col-md-3 -btn2">Submit</button>
                 &nbsp;&nbsp;
-                <a href="{% url 'service_portal'%}" class="btn-theme -btn1 col-12 col-md-3 text-center">Cancel</a>
+                <button type="button" id="cancelBtn" class="btn-theme -btn1 col-12 col-md-3 text-center">Cancel</button>
             </div>
     </div>
 </form>
@@ -41,4 +41,65 @@
 <br>
 <br>
 <br>
+
+<script>
+    document.addEventListener('DOMContentLoaded', function() {
+        // Submit button click handler
+        document.getElementById('submitBtn').addEventListener('click', function() {
+            const purposeField = document.querySelector('[name="purpose"]');
+
+            if (!purposeField.value.trim()) {
+                Swal.fire({
+                    title: 'Required Field Empty',
+                    text: 'Please enter the purpose for your certificate of indigency request',
+                    icon: 'warning',
+                    confirmButtonText: 'OK'
+                });
+                return;
+            }
+
+            Swal.fire({
+                title: 'Submit Certificate of Indigency Request?',
+                text: 'Are you sure you want to submit this certificate of indigency request?',
+                icon: 'question',
+                showCancelButton: true,
+                confirmButtonText: 'Yes, submit it!',
+                cancelButtonText: 'No, review again'
+            }).then((result) => {
+                if (result.isConfirmed) {
+                    // Show loading state
+                    Swal.fire({
+                        title: 'Processing...',
+                        text: 'Please wait while we process your request',
+                        allowOutsideClick: false,
+                        allowEscapeKey: false,
+                        showConfirmButton: false,
+                        willOpen: () => {
+                            Swal.showLoading();
+                        }
+                    });
+
+                    // Submit the form
+                    document.getElementById('indigencyForm').submit();
+                }
+            });
+        });
+
+        // Cancel button click handler
+        document.getElementById('cancelBtn').addEventListener('click', function() {
+            Swal.fire({
+                title: 'Cancel Request?',
+                text: 'Are you sure you want to cancel? Any information entered will be lost.',
+                icon: 'warning',
+                showCancelButton: true,
+                confirmButtonText: 'Yes, cancel it!',
+                cancelButtonText: 'No, continue editing'
+            }).then((result) => {
+                if (result.isConfirmed) {
+                    window.location.href = "{% url 'service_portal' %}";
+                }
+            });
+        });
+    });
+</script>
 {% endblock content %}
