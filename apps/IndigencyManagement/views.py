@@ -52,10 +52,13 @@ def edit_indigency(request, id):
             message = f"""
             Dear {username},
 
-            We are pleased to inform you that your request has been received and is currently forwarded to kapitan. We will notify you once your request has been approved and is ready for pick-up. If you have any questions or concerns, please do not hesitate to contact us at the following numbers:            
+            We are pleased to inform you that your request has been received and is currently forwarded to kapitan. We will notify you once your request has been approved and is ready for pick-up. If you have any questions or concerns, please do not hesitate to contact us at the following numbers:
             Globe: 09361174734
             TM: 09057198345
-            
+
+            Transaction ID: {indigency.transaction_id}
+            You can track your document status anytime at: {request.build_absolute_uri('/document_tracker/')}?txn={indigency.transaction_id}
+
             Sincerely,
             The Barangay E-Service Team
             """
@@ -137,11 +140,14 @@ def unsign_indigency_cert(request, id):
             message = f"""
             Dear {username},
 
-            We are pleased to inform you that your request has been approved and is ready for pick-up. Kindy prepare the necessary documents for claiming. 
-            If you have any questions or concerns, please do not hesitate to contact us at the following numbers:            
+            We are pleased to inform you that your request has been approved and is ready for pick-up. Kindy prepare the necessary documents for claiming.
+            If you have any questions or concerns, please do not hesitate to contact us at the following numbers:
             Globe: 09361174734
             TM: 09057198345
-            
+
+            Transaction ID: {indigency_cert.transaction_id}
+            You can track your document status anytime at: {request.build_absolute_uri('/document_tracker/')}?txn={indigency_cert.transaction_id}
+
             Sincerely,
             The Barangay E-Service Team
             """
@@ -199,10 +205,13 @@ def confirm_button_indigency(request, id):
             Dear {username},
 
             We are pleased to inform you that your request has been officially released. Thank you for your using our service!
-            If you have any questions or concerns, please do not hesitate to contact us at the following numbers:            
+            If you have any questions or concerns, please do not hesitate to contact us at the following numbers:
             Globe: 09361174734
             TM: 09057198345
-            
+
+            Transaction ID: {indigency_cert.transaction_id}
+            You can track your document status anytime at: {request.build_absolute_uri('/document_tracker/')}?txn={indigency_cert.transaction_id}
+
             Sincerely,
             The Barangay E-Service Team
             """
@@ -262,6 +271,9 @@ def delete_indigency(request, id):
             We appreciate your understanding and the effort you put into presenting your request. If you have any questions or concerns, please do not hesitate to contact us at the following numbers:
             Globe: 09361174734
             TM: 09057198345
+
+            Transaction ID: {indigency.transaction_id}
+            You can track your document status anytime at: {request.build_absolute_uri('/document_tracker/')}?txn={indigency.transaction_id}
 
             If there is an opportunity to revisit this in the future, we would be glad to reconnect. In the meantime, please feel free to reach out if there are other matters we can assist with.
 
@@ -345,11 +357,14 @@ def esign_indigency_cert(request, id):
             message = f"""
             Dear {username},
 
-            We are pleased to inform you that your request has been approved and is ready for pick-up. Kindy prepare the necessary documents for claiming. 
-            If you have any questions or concerns, please do not hesitate to contact us at the following numbers:            
+            We are pleased to inform you that your request has been approved and is ready for pick-up. Kindy prepare the necessary documents for claiming.
+            If you have any questions or concerns, please do not hesitate to contact us at the following numbers:
             Globe: 09361174734
             TM: 09057198345
-            
+
+            Transaction ID: {indigency_cert.transaction_id}
+            You can track your document status anytime at: {request.build_absolute_uri('/document_tracker/')}?txn={indigency_cert.transaction_id}
+
             Sincerely,
             The Barangay E-Service Team
             """
@@ -403,10 +418,13 @@ def esign_button_indigency(request, id):
             Dear {username},
 
             We are pleased to inform you that your request has been officially released. Thank you for your using our service!
-            If you have any questions or concerns, please do not hesitate to contact us at the following numbers:            
+            If you have any questions or concerns, please do not hesitate to contact us at the following numbers:
             Globe: 09361174734
             TM: 09057198345
-            
+
+            Transaction ID: {indigency_cert.transaction_id}
+            You can track your document status anytime at: {request.build_absolute_uri('/document_tracker/')}?txn={indigency_cert.transaction_id}
+
             Sincerely,
             The Barangay E-Service Team
             """
@@ -462,10 +480,13 @@ def release_esigned_indigency(request, id):
             Dear {username},
 
             We are pleased to inform you that your request has been officially released. Thank you for your using our service!
-            If you have any questions or concerns, please do not hesitate to contact us at the following numbers:            
+            If you have any questions or concerns, please do not hesitate to contact us at the following numbers:
             Globe: 09361174734
             TM: 09057198345
-            
+
+            Transaction ID: {indigency_cert.transaction_id}
+            You can track your document status anytime at: {request.build_absolute_uri('/document_tracker/')}?txn={indigency_cert.transaction_id}
+
             Sincerely,
             The Barangay E-Service Team
             """
@@ -522,10 +543,13 @@ def release_unsign_indigency(request, id):
             Dear {username},
 
             We are pleased to inform you that your request has been officially released. Thank you for your using our service!
-            If you have any questions or concerns, please do not hesitate to contact us at the following numbers:            
+            If you have any questions or concerns, please do not hesitate to contact us at the following numbers:
             Globe: 09361174734
             TM: 09057198345
-            
+
+            Transaction ID: {indigency_cert.transaction_id}
+            You can track your document status anytime at: {request.build_absolute_uri('/document_tracker/')}?txn={indigency_cert.transaction_id}
+
             Sincerely,
             The Barangay E-Service Team
             """

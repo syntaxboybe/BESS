@@ -26,7 +26,7 @@
                                 <th scope="col " class="text-center">Action</th>
                             </tr>
                         </thead>
-                        
+
                         <tbody>
                             {% for indigency in indigency %}
                             <tr>
@@ -37,32 +37,32 @@
                                 <td>{{ indigency.transaction_id}}</td>
                                 <td>{{ indigency.status}}</td>
                                 <td class="text-center">
-                            
+
                                     <a target=”_blank” type="button" class="btn btn-warning bg-gradient" href="{% url 'generate_indigency' indigency.id %}">
                                         <i class="fas fa-eye fs-4" style="vertical-align: middle;"></i>
                                         <span style="vertical-align: middle;">View PDF</span>
                                     </a>
-                                    
+
                                 </td>
                             </tr>
-                            
+
                             {% empty %}
-                            
+
                             <tr align="center">
                                 <td colspan="7">
                                     <h6 class="text-muted p-4">CURRENTLY NO DATA AVAILABLE</h6>
                                 </td>
                             </tr>
-                            
+
                             <!-- modal placeholder -->
-                            
+
                             {% endfor %}
                         </tbody>
                     </table>
                 </div>
             </div>
 
-            
+
         </div>
     </div>
 </section>

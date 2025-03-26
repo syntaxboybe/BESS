@@ -1,0 +1,866 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="stylesheet" type="text/css" href="{% static 'bootstrap/css/bootstrap.min.css' %}" />
+    <link rel="stylesheet" type="text/css" href="{% static 'bootstrap/css/style.css' %}" />
+    <link rel="stylesheet" type="text/css" href="{% static 'bootstrap/css/custom.css' %}" />
+    <link rel="icon" href="{% static 'img/favicon-48x48.png' %}" type="image/x-icon" />
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css" rel="stylesheet" />
+    <!-- SweetAlert2 CSS -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/sweetalert2@11/dist/sweetalert2.min.css">
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+
+    <title>Document Tracker</title>
+    <style>
+        body {
+            background: url("/static/img/service-bg.png") no-repeat center center fixed;
+            -webkit-background-size: cover;
+            -moz-background-size: cover;
+            -o-background-size: cover;
+            background-size: cover;
+            font-family: 'Poppins', sans-serif;
+            color: #333;
+        }
+
+        /* Modern tracker card */
+        .tracker-card {
+            background: rgba(255, 255, 255, 0.85);
+            backdrop-filter: blur(10px);
+            border-radius: 16px;
+            padding: 30px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+            max-width: 850px;
+            margin: 0 auto;
+            transition: all 0.3s ease;
+            border: 1px solid rgba(255, 255, 255, 0.3);
+        }
+
+        /* Futuristic header */
+        .tracker-header {
+            position: relative;
+            margin-bottom: 2rem;
+            padding-bottom: 1rem;
+            text-align: center;
+        }
+
+        .tracker-header h2 {
+            font-weight: 600;
+            color: #355389;
+            margin-bottom: 0;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+        }
+
+        .tracker-header::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 100px;
+            height: 4px;
+            background: linear-gradient(90deg, #355389, #4a90e2);
+            border-radius: 2px;
+        }
+
+        /* Modern form styling */
+        .form-control {
+            border-radius: 10px;
+            padding: 12px 15px;
+            border: 1px solid #e0e0e0;
+            font-size: 15px;
+            transition: all 0.3s;
+            background: rgba(255, 255, 255, 0.9);
+        }
+
+        .form-control:focus {
+            box-shadow: 0 0 0 3px rgba(53, 83, 137, 0.2);
+            border-color: #355389;
+        }
+
+        .form-label {
+            font-weight: 500;
+            margin-bottom: 8px;
+            color: #355389;
+        }
+
+        /* Modern button styling */
+        .btn-track {
+            background: linear-gradient(135deg, #355389, #4a90e2);
+            color: white;
+            border: none;
+            border-radius: 10px;
+            padding: 12px 25px;
+            font-weight: 500;
+            transition: all 0.3s ease;
+            box-shadow: 0 5px 15px rgba(53, 83, 137, 0.3);
+        }
+
+        .btn-track:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 20px rgba(53, 83, 137, 0.4);
+            background: linear-gradient(135deg, #4a90e2, #355389);
+        }
+
+        /* Enhanced status badges */
+        .status-badge {
+            padding: 8px 16px;
+            border-radius: 30px;
+            font-weight: 600;
+            font-size: 14px;
+            display: inline-block;
+            text-align: center;
+            min-width: 120px;
+            box-shadow: 0 3px 8px rgba(0, 0, 0, 0.1);
+            animation: badgePulse 2s infinite;
+        }
+
+        @keyframes badgePulse {
+            0% { box-shadow: 0 0 0 0 rgba(53, 83, 137, 0.4); }
+            70% { box-shadow: 0 0 0 8px rgba(53, 83, 137, 0); }
+            100% { box-shadow: 0 0 0 0 rgba(53, 83, 137, 0); }
+        }
+
+        .status-pending {
+            background: linear-gradient(135deg, #ffc107, #ff9800);
+            color: #000;
+        }
+
+        .status-reverted {
+            background: linear-gradient(135deg, #dc3545, #c82333);
+            color: #fff;
+        }
+
+        .status-forwarded {
+            background: linear-gradient(135deg, #fd7e14, #e65c00);
+            color: #fff;
+        }
+
+        .status-released {
+            background: linear-gradient(135deg, #28a745, #1e7e34);
+            color: #fff;
+        }
+
+        /* Enhanced result card */
+        .result-card {
+            margin-top: 25px;
+            border: none;
+            border-radius: 16px;
+            overflow: hidden;
+            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.08);
+            transition: all 0.3s ease;
+            transform: translateY(0);
+            animation: fadeInUp 0.5s;
+        }
+
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .result-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 12px 25px rgba(0, 0, 0, 0.12);
+        }
+
+        .card-header {
+            background: linear-gradient(135deg, #355389, #4a90e2);
+            color: white;
+            border: none;
+            padding: 15px 20px;
+        }
+
+        .card-header h5 {
+            margin: 0;
+            font-weight: 600;
+        }
+
+        .card-body {
+            padding: 20px;
+        }
+
+        /* Futuristic timeline */
+        .timeline {
+            position: relative;
+            padding-left: 30px;
+            margin-top: 20px;
+        }
+
+        .timeline::before {
+            content: '';
+            position: absolute;
+            top: 10px;
+            bottom: 0;
+            left: 20px;
+            width: 4px;
+            background: linear-gradient(to bottom, #355389, #4a90e2);
+            border-radius: 4px;
+            height: calc(100% - 20px);
+        }
+
+        .list-group-item {
+            background: transparent;
+            border: none;
+            padding: 0.75rem 0;
+            margin-bottom: 15px;
+            position: relative;
+        }
+
+        .timeline-icon {
+            position: relative;
+            z-index: 2;
+            border-radius: 50%;
+            width: 40px;
+            height: 40px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            box-shadow: 0 3px 8px rgba(0, 0, 0, 0.2);
+        }
+
+        .timeline-icon.document-requested {
+            background-color: #4a90e2;
+            color: white;
+        }
+
+        .timeline-icon.processing {
+            background-color: #28a745;
+            color: white;
+        }
+
+        .timeline-icon.forwarded {
+            background-color: #17a2b8;
+            color: white;
+        }
+
+        .timeline-icon.ready {
+            background-color: #28a745;
+            color: white;
+        }
+
+        .timeline-icon.released {
+            background-color: #28a745;
+            color: white;
+        }
+
+        .timeline-content {
+            padding-left: 15px;
+        }
+
+        .timeline-content strong {
+            display: block;
+            margin-bottom: 5px;
+            color: #333;
+        }
+
+        /* Enhanced info section */
+        .info-section {
+            background: rgba(255, 255, 255, 0.8);
+            backdrop-filter: blur(8px);
+            -webkit-backdrop-filter: blur(8px);
+            border-radius: 15px;
+            padding: 25px;
+            margin-top: 35px;
+            border: 1px solid rgba(255, 255, 255, 0.5);
+            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.05);
+            transition: all 0.3s ease;
+        }
+
+        .info-section:hover {
+            box-shadow: 0 12px 25px rgba(0, 0, 0, 0.08);
+            transform: translateY(-3px);
+        }
+
+        .info-section h6 {
+            font-weight: 600;
+            color: #355389;
+            margin-bottom: 18px;
+            letter-spacing: 0.3px;
+        }
+
+        /* Info cards styling */
+        .info-card {
+            border-radius: 12px;
+            overflow: hidden;
+            transition: all 0.3s ease;
+            background: rgba(255, 255, 255, 0.9);
+            backdrop-filter: blur(5px);
+            -webkit-backdrop-filter: blur(5px);
+        }
+
+        .info-card:hover {
+            transform: translateY(-8px);
+            box-shadow: 0 15px 25px rgba(0, 0, 0, 0.08) !important;
+        }
+
+        .info-icon {
+            height: 70px;
+            width: 70px;
+            border-radius: 50%;
+            background: linear-gradient(135deg, rgba(53, 83, 137, 0.1), rgba(74, 144, 226, 0.1));
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 0 auto;
+            transition: all 0.3s ease;
+            border: 1px solid rgba(74, 144, 226, 0.2);
+        }
+
+        .info-card:hover .info-icon {
+            transform: scale(1.1);
+            background: linear-gradient(135deg, rgba(53, 83, 137, 0.15), rgba(74, 144, 226, 0.15));
+            box-shadow: 0 5px 15px rgba(74, 144, 226, 0.2);
+        }
+
+        .info-card .card-title {
+            font-weight: 600;
+            color: #355389;
+            margin-bottom: 10px;
+        }
+
+        .info-card .card-text {
+            color: #666;
+            font-size: 0.9rem;
+        }
+
+        .alert-info {
+            background: rgba(74, 144, 226, 0.08);
+            border-left: 4px solid #4a90e2;
+            border-radius: 10px;
+            padding: 20px;
+            transition: all 0.3s ease;
+        }
+
+        .alert-info:hover {
+            background: rgba(74, 144, 226, 0.12);
+            transform: translateY(-3px);
+            box-shadow: 0 8px 15px rgba(74, 144, 226, 0.1);
+        }
+
+        /* Enhanced navbar styling */
+        .navbar {
+            background: rgba(33, 37, 41, 0.95) !important;
+            backdrop-filter: blur(10px);
+            -webkit-backdrop-filter: blur(10px);
+            box-shadow: 0 3px 15px rgba(0, 0, 0, 0.2);
+        }
+
+        /* Navbar styling */
+        .navbar-brand {
+            display: flex;
+            align-items: center;
+            font-weight: 500;
+        }
+
+        .navbar-brand img {
+            margin-right: 10px;
+            filter: drop-shadow(0 2px 4px rgba(0,0,0,0.2));
+        }
+
+        /* Data display styling */
+        .data-label {
+            font-weight: 600;
+            color: #355389;
+            margin-bottom: 0.25rem;
+        }
+
+        .data-value {
+            font-weight: 500;
+            margin-bottom: 1rem;
+        }
+
+        /* Animation for the notification dot */
+        @keyframes pulse {
+            0% { transform: scale(0.95); opacity: 0.7; }
+            50% { transform: scale(1.05); opacity: 1; }
+            100% { transform: scale(0.95); opacity: 0.7; }
+        }
+
+        .pulse-dot {
+            display: inline-block;
+            width: 10px;
+            height: 10px;
+            background-color: #28a745;
+            border-radius: 50%;
+            margin-right: 8px;
+            animation: pulse 2s infinite;
+        }
+
+        /* Not found message enhancement */
+        #notFoundMessage {
+            border-radius: 12px;
+            padding: 20px;
+            box-shadow: 0 8px 15px rgba(0, 0, 0, 0.1);
+            animation: fadeIn 0.5s;
+        }
+
+        /* Shake animation for validation errors */
+        @keyframes shake {
+            0%, 100% { transform: translateX(0); }
+            10%, 30%, 50%, 70%, 90% { transform: translateX(-5px); }
+            20%, 40%, 60%, 80% { transform: translateX(5px); }
+        }
+
+        .shake-animation {
+            animation: shake 0.8s ease;
+        }
+
+        /* Loading state enhancement */
+        .loading-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(255, 255, 255, 0.8);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            z-index: 1000;
+            backdrop-filter: blur(5px);
+            -webkit-backdrop-filter: blur(5px);
+        }
+
+        .loader {
+            width: 50px;
+            height: 50px;
+            border: 3px solid rgba(74, 144, 226, 0.2);
+            border-radius: 50%;
+            border-top-color: #4a90e2;
+            animation: spin 1s ease-in-out infinite;
+        }
+
+        @keyframes spin {
+            to { transform: rotate(360deg); }
+        }
+
+        /* Page transition animations */
+        .page-loaded .tracker-card {
+            animation: fadeInUp 0.8s ease;
+        }
+
+        .page-loaded .navbar {
+            animation: fadeInDown 0.6s ease;
+        }
+
+        @keyframes fadeInDown {
+            from {
+                opacity: 0;
+                transform: translateY(-20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        /* Animated form input focus */
+        .form-control:focus + .form-control-focus {
+            opacity: 1;
+            transform: scaleX(1);
+        }
+
+        .form-control-focus {
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 100%;
+            height: 2px;
+            background: linear-gradient(to right, #355389, #4a90e2);
+            transform: scaleX(0);
+            transition: all 0.3s;
+            opacity: 0;
+            transform-origin: left;
+        }
+    </style>
+</head>
+<body>
+    <nav class="navbar navbar-expand-lg navbar-dark">
+        <div class="container">
+            <a class="navbar-brand" href="{% url 'home' %}">
+                <img src="{% static 'img/poblacionlogo.png' %}" alt="Logo" height="45">
+                <span>Barangay E-Service System</span>
+            </a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav ms-auto">
+                    <li class="nav-item">
+                        <a class="nav-link" href="{% url 'home' %}"><i class="fas fa-home"></i> Home</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="{% url 'loginPage' %}"><i class="fas fa-sign-in-alt"></i> Login</a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+    <div class="container my-5">
+        <div class="tracker-card">
+            <div class="tracker-header">
+                <h2><i class="fas fa-search"></i> Document Request Tracker</h2>
+            </div>
+
+            <form id="trackerForm" class="mb-4">
+                <div class="mb-4">
+                    <label for="transactionId" class="form-label"><i class="fas fa-hashtag me-2"></i>Transaction ID</label>
+                    <div class="input-group">
+                        <span class="input-group-text bg-white border-end-0">
+                            <i class="fas fa-hashtag text-primary"></i>
+                        </span>
+                        <input type="text" class="form-control border-start-0" id="transactionId" name="transaction_id"
+                               value="{{ transaction_id }}"
+                               placeholder="Enter your transaction ID (e.g., efa0d323-3e3c-444e-b1c5-f3d170e52e62)" required>
+                    </div>
+                    <small class="text-muted mt-2 d-block">You can find your Transaction ID in the email notifications</small>
+                </div>
+                <div class="text-center">
+                    <button type="submit" class="btn-track d-inline-flex justify-content-center align-items-center">
+                        <i class="fas fa-search me-2"></i> Track Document
+                    </button>
+                </div>
+            </form>
+
+            <div id="trackingResult" class="d-none">
+                <div class="card result-card">
+                    <div class="card-header d-flex align-items-center">
+                        <i class="fas fa-file-alt me-2"></i>
+                        <h5 class="mb-0">Document Request Information</h5>
+                    </div>
+                    <div class="card-body">
+                        <div class="row mb-4">
+                            <div class="col-md-6">
+                                <p class="data-label"><i class="fas fa-file-contract me-2"></i>Document Type</p>
+                                <p class="data-value" id="documentType"></p>
+
+                                <p class="data-label"><i class="far fa-calendar-alt me-2"></i>Date Requested</p>
+                                <p class="data-value" id="dateRequested"></p>
+
+                                <p class="data-label"><i class="fas fa-info-circle me-2"></i>Purpose</p>
+                                <p class="data-value" id="purpose"></p>
+                            </div>
+                            <div class="col-md-6">
+                                <p class="data-label"><i class="fas fa-hashtag me-2"></i>Transaction ID</p>
+                                <p class="data-value" id="txnId"></p>
+
+                                <p class="data-label"><i class="fas fa-chart-line me-2"></i>Status</p>
+                                <p class="data-value"><span id="status" class="status-badge"></span></p>
+
+                                <p class="data-label"><i class="fas fa-calendar-check me-2"></i>Date Released</p>
+                                <p class="data-value" id="dateReleased"></p>
+                            </div>
+                        </div>
+
+                        <div id="trackingTimeline" class="mt-4">
+                            <h6 class="mb-3 fw-bold"><i class="fas fa-history me-2"></i>Tracking Timeline</h6>
+                            <div class="timeline">
+                                <ul class="list-group" id="timelineItems">
+                                    <!-- Timeline items will be populated via JavaScript -->
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div id="notFoundMessage" class="alert alert-warning text-center d-none" role="alert">
+                <i class="fas fa-exclamation-triangle me-2"></i> No document request found with the provided Transaction ID.
+            </div>
+
+            <div class="info-section">
+                <h6 class="text-muted mb-4"><i class="fas fa-info-circle me-2"></i>How to use this tracker:</h6>
+
+                <div class="row g-4">
+                    <div class="col-md-4">
+                        <div class="card h-100 border-0 shadow-sm info-card">
+                            <div class="card-body text-center">
+                                <div class="info-icon mb-3">
+                                    <i class="fas fa-keyboard fa-2x text-primary"></i>
+                                </div>
+                                <h6 class="card-title">Step 1</h6>
+                                <p class="card-text">Enter your document's Transaction ID in the field above</p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-4">
+                        <div class="card h-100 border-0 shadow-sm info-card">
+                            <div class="card-body text-center">
+                                <div class="info-icon mb-3">
+                                    <i class="fas fa-search fa-2x text-primary"></i>
+                                </div>
+                                <h6 class="card-title">Step 2</h6>
+                                <p class="card-text">Click the "Track Document" button to search the system</p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-4">
+                        <div class="card h-100 border-0 shadow-sm info-card">
+                            <div class="card-body text-center">
+                                <div class="info-icon mb-3">
+                                    <i class="fas fa-check-circle fa-2x text-primary"></i>
+                                </div>
+                                <h6 class="card-title">Step 3</h6>
+                                <p class="card-text">View your document's current status and progress</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="alert alert-info mt-4">
+                    <div class="d-flex align-items-center">
+                        <i class="fas fa-lightbulb me-3 fa-2x text-primary"></i>
+                        <div>
+                            <h6 class="mb-2">Helpful Tip</h6>
+                            <p class="mb-0">You can find your Transaction ID in the email notifications sent to you about your document request.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="{% static 'bootstrap/js/jquery.min.js' %}"></script>
+    <script src="{% static 'bootstrap/js/bootstrap.min.js' %}"></script>
+    <!-- SweetAlert2 JS -->
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+
+    <script>
+        $(document).ready(function() {
+            // Add animation class to body when page loads
+            $('body').addClass('page-loaded');
+
+            // Enhanced focus effects on form with animations
+            $('#transactionId').on('focus', function() {
+                $(this).parent().addClass('shadow-sm').css('transform', 'translateY(-2px)');
+            }).on('blur', function() {
+                $(this).parent().removeClass('shadow-sm').css('transform', 'translateY(0)');
+            });
+
+            // Add subtle hover effects to the form
+            $('.tracker-card').hover(
+                function() {
+                    $(this).css('transform', 'translateY(-5px)');
+                },
+                function() {
+                    $(this).css('transform', 'translateY(0)');
+                }
+            );
+
+            // Pre-fill transaction ID from URL parameter if present
+            const urlParams = new URLSearchParams(window.location.search);
+            const txnParam = urlParams.get('txn');
+            if (txnParam) {
+                $('#transactionId').val(txnParam);
+                // Use setTimeout to ensure the DOM is fully ready with a nice delay for better UX
+                setTimeout(() => {
+                    $('#trackerForm').submit();
+                }, 800);
+            }
+
+            // Function to handle document tracking with enhanced animations
+            function trackDocument(transactionId) {
+                // Show enhanced loading indicator
+                Swal.fire({
+                    title: 'Tracking Document',
+                    html: '<div class="mb-3">Please wait while we retrieve your document status</div>' +
+                          '<div class="small text-muted">Connecting to service...</div>',
+                    allowOutsideClick: false,
+                    backdrop: 'rgba(53, 83, 137, 0.4)',
+                    customClass: {
+                        popup: 'animated fadeInUp faster',
+                        title: 'text-primary'
+                    },
+                    didOpen: () => {
+                        Swal.showLoading();
+                    }
+                });
+
+                // Clear previous results with a fade effect
+                $('#trackingResult').fadeOut(300, function() {
+                    $(this).addClass('d-none');
+                });
+                $('#notFoundMessage').fadeOut(300, function() {
+                    $(this).addClass('d-none');
+                });
+                $('#timelineItems').empty();
+
+                // Make API request to get document status
+                $.ajax({
+                    url: "{% url 'get_document_status' %}",
+                    data: { txn: transactionId },
+                    dataType: "json",
+                    success: function(response) {
+                        // Add a small delay for better UX
+                        setTimeout(() => {
+                            Swal.close();
+
+                            if (response.success) {
+                                // Update document info with fade animations
+                                $('#documentType').text(response.document_type).hide().fadeIn(500);
+                                $('#dateRequested').text(response.date_requested).hide().fadeIn(600);
+                                $('#purpose').text(response.purpose).hide().fadeIn(700);
+                                $('#txnId').text(response.transaction_id).hide().fadeIn(800);
+                                $('#dateReleased').text(response.date_released).hide().fadeIn(900);
+
+                                // Update status badge with animation
+                                const statusBadge = $('#status');
+                                statusBadge.removeClass('status-pending status-reverted status-forwarded status-released');
+
+                                if (response.status === 'Pending') {
+                                    statusBadge.addClass('status-pending');
+                                } else if (response.status === 'Reverted') {
+                                    statusBadge.addClass('status-reverted');
+                                } else if (response.status.includes('Forwarded')) {
+                                    statusBadge.addClass('status-forwarded');
+                                } else if (response.status.includes('Released')) {
+                                    statusBadge.addClass('status-released');
+                                } else if (response.status.includes('Ready')) {
+                                    statusBadge.addClass('status-pending');
+                                }
+
+                                statusBadge.text(response.status).hide().fadeIn(1000);
+
+                                // Update timeline with enhanced staggered animations
+                                response.timeline.forEach(function(item, index) {
+                                    // Determine icon class based on the action
+                                    let iconClass = "document-requested";
+                                    if (item.action.includes("approved by secretary")) {
+                                        iconClass = "processing";
+                                    } else if (item.action.includes("Forwarded to Barangay Captain")) {
+                                        iconClass = "forwarded";
+                                    } else if (item.action.includes("ready to claim")) {
+                                        iconClass = "ready";
+                                    } else if (item.action.includes("released")) {
+                                        iconClass = "released";
+                                    }
+
+                                    // Add delay for staggered animation effect
+                                    setTimeout(() => {
+                                        const timelineItem = `
+                                            <li class="list-group-item border-0 pb-0" style="opacity: 0; transform: translateY(20px);">
+                                                <div class="d-flex align-items-start">
+                                                    <div class="timeline-icon ${iconClass}">
+                                                        <i class="${item.icon} fa-lg"></i>
+                                                    </div>
+                                                    <div class="timeline-content">
+                                                        <strong>${item.date}</strong>
+                                                        <p class="mb-0">${item.action}</p>
+                                                    </div>
+                                                </div>
+                                            </li>
+                                        `;
+                                        const $item = $(timelineItem).appendTo('#timelineItems');
+
+                                        // Animate the timeline item
+                                        setTimeout(() => {
+                                            $item.animate({
+                                                opacity: 1,
+                                                transform: 'translateY(0)'
+                                            }, 400);
+                                        }, 50);
+
+                                    }, 150 * index);
+                                });
+
+                                // Show results with enhanced animation
+                                setTimeout(() => {
+                                    $('#trackingResult').removeClass('d-none').css({
+                                        opacity: 0,
+                                        transform: 'translateY(20px)'
+                                    }).animate({
+                                        opacity: 1,
+                                        transform: 'translateY(0)'
+                                    }, 500);
+
+                                    // Smooth scroll to result with easing
+                                    $('html, body').animate({
+                                        scrollTop: $('#trackingResult').offset().top - 80
+                                    }, 1000, 'easeOutQuart');
+                                }, 200);
+                            } else {
+                                // Show not found message with improved animation
+                                setTimeout(() => {
+                                    $('#notFoundMessage').removeClass('d-none').css({
+                                        opacity: 0,
+                                        transform: 'translateY(20px)'
+                                    }).animate({
+                                        opacity: 1,
+                                        transform: 'translateY(0)'
+                                    }, 500);
+                                }, 200);
+                            }
+                        }, 800); // Added delay for better UX
+                    },
+                    error: function() {
+                        setTimeout(() => {
+                            Swal.close();
+                            // Show error message with enhanced styling
+                            Swal.fire({
+                                icon: 'error',
+                                title: 'Connection Error',
+                                text: 'Failed to track document. Please check your internet connection and try again.',
+                                confirmButtonColor: '#355389',
+                                customClass: {
+                                    popup: 'animated fadeInUp faster'
+                                }
+                            });
+                        }, 800);
+                    }
+                });
+            }
+
+            // Handle form submission with validation animation
+            $('#trackerForm').on('submit', function(e) {
+                e.preventDefault();
+                const transactionId = $('#transactionId').val().trim();
+
+                if (transactionId) {
+                    // Add a subtle button animation
+                    const $btn = $('.btn-track');
+                    $btn.css('transform', 'scale(0.95)');
+                    setTimeout(() => {
+                        $btn.css('transform', 'scale(1)');
+                        trackDocument(transactionId);
+                    }, 150);
+                } else {
+                    // Animated validation error
+                    $('#transactionId').addClass('is-invalid').parent().addClass('shake-animation');
+                    setTimeout(() => {
+                        $('#transactionId').removeClass('is-invalid').parent().removeClass('shake-animation');
+                    }, 800);
+
+                    Swal.fire({
+                        icon: 'warning',
+                        title: 'Missing Information',
+                        text: 'Please enter a transaction ID',
+                        confirmButtonColor: '#355389',
+                        customClass: {
+                            popup: 'animated fadeInUp faster'
+                        }
+                    });
+                }
+            });
+
+            // Add easing function for smoother animations
+            jQuery.easing.easeOutQuart = function (x, t, b, c, d) {
+                return -c * ((t=t/d-1)*t*t*t - 1) + b;
+            };
+        });
+    </script>
+</body>
+</html>

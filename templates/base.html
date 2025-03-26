@@ -8,6 +8,8 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
     <link rel="icon" href="{% static 'img/favicon-48x48.png' %}" type="image/x-icon">
+    <!-- Google Fonts - Poppins -->
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
     <link rel="stylesheet" type="text/css" href="{% static 'bootstrap/css/bootstrap.min.css' %}">
@@ -174,6 +176,27 @@
         font-weight: bold !important;
         text-shadow: 0px 0px 2px rgba(0, 0, 0, 0.8);
     }
+
+    /* Global Font Rule: Apply Poppins font to all elements */
+    * {
+        font-family: 'Poppins', sans-serif !important;
+        font-weight: 400;
+    }
+
+    /* Ensure icons from font-awesome and line-awesome remain untouched */
+    .fa, .fas, .far, .fab, .la, .las, .lar, .lab, [class*="fa-"], [class*="la-"] {
+        font-family: inherit;
+    }
+
+    /* Specific font-family override for FontAwesome icons */
+    .fa, .fas, .far, .fab, [class*="fa-"] {
+        font-family: 'Font Awesome 6 Free', 'FontAwesome', 'Font Awesome 6 Brands' !important;
+    }
+
+    /* Specific font-family override for LineAwesome icons */
+    .la, .las, .lar, .lab, [class*="la-"] {
+        font-family: 'Line Awesome Free', 'LineAwesome', 'Line Awesome Brands' !important;
+    }
 </style>
 
   <title>Barangay E-Service System</title>
@@ -205,17 +228,17 @@
                 </div>
             </div>
             <ul class="list-unstyled px-2">
-                <li class=""><a href="{% url 'dashboard' %}" class="text-decoration-none px-3 py-2 d-block"><i class="fa fa-line-chart"></i><b> Dashboard</b></a></li>
+                <li class=""><a href="{% url 'dashboard' %}" class="text-decoration-none px-3 py-2 d-block"><i class="fa fa-line-chart"></i> Dashboard</a></li>
 
  {% if request.user.groups.all.0.name == 'superadmin' %}
-            <li class=""><a href="{% url 'announcementPage' %}" class="text-decoration-none px-3 py-2 d-block"><i class="fas fa-bullhorn"></i><b> Announcements</b></a></li>
+            <li class=""><a href="{% url 'announcementPage' %}" class="text-decoration-none px-3 py-2 d-block"><i class="fas fa-bullhorn"></i> Announcements</a></li>
                 {% endif %}
 
                 {% if request.user.groups.all.0.name == 'superadmin' %}
 <div class="side-sub-menu py-2">
                     <div class="accordion-button px-3 py-2" data-bs-toggle="collapse" href="#collapseAccounts" aria-expanded="false" aria-controls="collapseAccounts" style="background-color: #008000;">
                         <a class="text-decoration-none d-block">
-                            <i class="fas fa-address-card"></i><b> Accounts</b>
+                            <i class="fas fa-address-card"></i> Accounts
                         </a>
                     </div>
 
@@ -233,8 +256,7 @@
                 <div class="side-sub-menu py-2">
                     <div class="accordion-button px-3 py-2" data-bs-toggle="collapse" href="#collapseResident" aria-expanded="false" aria-controls="collapseResident" style="background-color: #008000;">
                         <a class="text-decoration-none d-block">
-                            <i class="fas fa-address-card"></i><b> Profiling</b>
-                        </a>
+                            <i class="fas fa-address-card"></i> Profiling</a>
                     </div>
 
 
@@ -273,7 +295,7 @@
 <div class="side-sub-menu py-2">
                     <div class="accordion-button px-3 py-2" data-bs-toggle="collapse" href="#collapseIssuances" aria-expanded="false" aria-controls="collapseIssuances" style="background-color: #008000;">
                         <a class="text-decoration-none d-block">
-                            <i class="fas fa-file-alt"></i><b> Issuances</b>
+                            <i class="fas fa-file-alt"></i> Issuances
                         </a>
                     </div>
 
@@ -282,8 +304,8 @@
 
                 <li class=""><a href="{% url 'clearance'%}" class="text-decoration-none px-3 py-2 d-block"><i class="fas fa-file-alt "></i> Barangay Clearance</a></li>
                 <li class=""><a href="{% url 'indigency_request' %}" class="text-decoration-none px-3 py-2 d-block"><i class="fas fa-feather-alt "></i> Certificate of Indigency</a></li>
-                <li class=""><a href="{% url 'business_permit_module' %}" class="text-decoration-none px-3 py-2 d-block"><i class="fas fa-file-contract "></i> Barangay Business Permit</a></li>
-                <li class=""><a href="{% url 'building_permit_module' %}" class="text-decoration-none px-3 py-2 d-block"><i class="far fa-building "></i> Barangay Building Permit</a></li>
+                <li class=""><a href="{% url 'business_permit_module' %}" class="text-decoration-none px-3 py-2 d-block"><i class="fas fa-file-contract "></i> Business Permit</a></li>
+                <li class=""><a href="{% url 'building_permit_module' %}" class="text-decoration-none px-3 py-2 d-block"><i class="far fa-building "></i> Building Permit</a></li>
                 <li class=""><a href="{% url 'residency_certificate_module' %}" class="text-decoration-none px-3 py-2 d-block"><i class="fas fa-certificate "></i> Certificate of Residency</a></li>
                 </ul>
           {% endif %}
@@ -291,7 +313,7 @@
           {% if not request.user.groups.all.0.name != 'superadmin' %}
           <div class="side-sub-menu py-2">
                 <!--<hr class="h-color mx-3">-->
-                <li class=""><a href="{% url 'adminProfile' %}" class="text-decoration-none px-3 py-2 d-block"><i class="fas fa-user"></i><b> Profile </b></a></li>
+                <li class=""><a href="{% url 'adminProfile' %}" class="text-decoration-none px-3 py-2 d-block"><i class="fas fa-user"></i> Profile</a></li>
                 <!--<hr class="h-color mx-3">-->
                 {% endif %}
                </div>
@@ -301,7 +323,7 @@
           <div class="side-sub-menu py-2">
                     <div class="accordion-button px-3 py-2" data-bs-toggle="collapse" href="#collapseReports" aria-expanded="false" aria-controls="collapseReports" style="background-color: #008000;">
                         <a class="text-decoration-none d-block">
-                            <i class="fas fa-calendar-week"></i><b> Reports</b>
+                            <i class="fas fa-calendar-week"></i> Reports
                         </a>
                     </div>
 
@@ -339,7 +361,7 @@
 
                 {% if request.user.id != 30 %}
                 {% if not request.user.groups.all.0.name == 'superadmin' %}
-                <li class=""><a href="{% url 'requestLogs' %}" class="text-decoration-none px-3 py-2 d-block"><i class="fas fa-history fs-5"></i><b> Request Logs</b></a></li>
+                <li class=""><a href="{% url 'requestLogs' %}" class="text-decoration-none px-3 py-2 d-block"><i class="fas fa-history fs-5"></i> Request Logs</a></li>
                 <div class="side-sub-menu">
 
                 {% endif %}
@@ -503,7 +525,7 @@
                         </li>
 
                         <li class="nav-item">
-                        <a class="nav-link active" aria-current="page" href="{% url 'adminLogout' %}"><i class="fas fa-sign-out-alt fs-5"></i> Logout</a>
+                        <a class="nav-link active" aria-current="page" href="#" id="adminLogoutBtn"><i class="fas fa-sign-out-alt fs-5"></i> Logout</a>
                         </li>
                     </ul>
                     </div>
@@ -792,6 +814,34 @@ document.addEventListener('DOMContentLoaded', function() {
     }
   }
 });
+</script>
+
+<!-- Admin Logout Confirmation Script -->
+<script>
+    document.addEventListener('DOMContentLoaded', function() {
+        const adminLogoutBtn = document.getElementById('adminLogoutBtn');
+
+        if (adminLogoutBtn) {
+            adminLogoutBtn.addEventListener('click', function(e) {
+                e.preventDefault();
+
+                Swal.fire({
+                    title: 'Logout Confirmation',
+                    text: 'Are you sure you want to logout?',
+                    icon: 'question',
+                    showCancelButton: true,
+                    confirmButtonText: 'Yes, logout',
+                    cancelButtonText: 'Cancel',
+                    confirmButtonColor: '#355389',
+                    reverseButtons: true
+                }).then((result) => {
+                    if (result.isConfirmed) {
+                        window.location.href = "{% url 'adminLogout' %}";
+                    }
+                });
+            });
+        }
+    });
 </script>
 </body>
 </html>

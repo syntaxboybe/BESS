@@ -42,7 +42,8 @@ def servicesPortal(request):
 
 def userLogout(request):
      logout(request)
-     return redirect(reverse('home'))
+     messages.success(request, 'logout successfully')
+     return redirect(reverse('loginPage'))
 
 
 def about(request):

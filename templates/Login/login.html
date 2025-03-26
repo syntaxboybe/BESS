@@ -5,6 +5,8 @@
     <meta charset="UTF-8" />
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <!-- Google Fonts - Poppins (Regular weight only) -->
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400&display=swap" rel="stylesheet">
     <link
       rel="stylesheet"
       type="text/css"
@@ -29,58 +31,75 @@
       href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css"
       rel="stylesheet"
     />
+    <!-- SweetAlert2 CSS -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/sweetalert2@11/dist/sweetalert2.min.css">
 
     <title>Login</title>
+    <style>
+      /* Global Font Rule: Apply Poppins font to all elements */
+      * {
+          font-family: 'Poppins', sans-serif !important;
+          font-weight: 400;
+      }
+
+      /* Ensure icons from font-awesome remain untouched */
+      .fa, .fas, .far, .fab, [class*="fa-"] {
+          font-family: inherit;
+      }
+
+      /* Specific font-family override for FontAwesome icons */
+      .fa, .fas, .far, .fab, [class*="fa-"] {
+          font-family: 'Font Awesome 5 Free', 'FontAwesome', 'Font Awesome 5 Brands' !important;
+      }
+
+      p {
+        margin: 0;
+      }
+
+      .title-holder {
+        top: 50%;
+        left: 40%;
+        position: absolute;
+      }
+
+      .title {
+        font-size: 16px;
+        color: #008000; /* Green color for text */
+        width: 0; /* Start hidden */
+        overflow: hidden; /* Hide overflowing text */
+        white-space: nowrap; /* Prevent wrapping */
+        display: inline-block;
+        border-right: 2px solid #4169e1; /* Cursor simulation */
+        animation: typewriter 6.6s steps(30, end) infinite, blinking-cursor 0.5s step-end;
+        animation-fill-mode: forwards; /* Ensure it stays visible at end of each loop */
+      }
+
+      @keyframes typewriter {
+        0% {
+          width: 0;
+        }
+        50% {
+          width: 100%; /* Fully typed */
+        }
+        75% {
+          width: 100%; /* Pause before deletion */
+        }
+        100% {
+          width: 0; /* Text deleted */
+        }
+      }
+
+      @keyframes blinking-cursor {
+        0%, 100% {
+          border-color: transparent;
+        }
+        50% {
+          border-color: #4169e1; /* Cursor color */
+        }
+      }
+    </style>
   </head>
 
-  <style>
-    p {
-      margin: 0;
-    }
-
-    .title-holder {
-    top: 50%;
-    left: 40%;
-    position: absolute;
-  }
-
-    .title {
-    font-family: "Lato", sans-serif;
-    font-size: 16px;
-    color: #008000; /* Green color for text */
-    width: 0; /* Start hidden */
-    overflow: hidden; /* Hide overflowing text */
-    white-space: nowrap; /* Prevent wrapping */
-    display: inline-block;
-    border-right: 2px solid #4169e1; /* Cursor simulation */
-    animation: typewriter 6.6s steps(30, end) infinite, blinking-cursor 0.5s step-end;
-    animation-fill-mode: forwards; /* Ensure it stays visible at end of each loop */
-}
-
-@keyframes typewriter {
-  0% {
-    width: 0;
-  }
-  50% {
-    width: 100%; /* Fully typed */
-  }
-  75% {
-    width: 100%; /* Pause before deletion */
-  }
-  100% {
-    width: 0; /* Text deleted */
-  }
-}
-
-@keyframes blinking-cursor {
-  0%, 100% {
-    border-color: transparent;
-  }
-  50% {
-    border-color: #4169e1; /* Cursor color */
-  }
-}
-  </style>
   <body class="bg-white">
     <div
   class="alert alert-primary alert-dismissible fade show mb-0"
@@ -114,7 +133,7 @@
                 height: 100vh;
               "
             >
-              
+
 <div class="col-12 d-flex flex-column align-items-center ps-5 pt-3">
   <div class="d-flex justify-content-center mb-4">
     <img
@@ -130,7 +149,7 @@
   </div>
   <div class="text-center mt-4">
     <p class="display-6" style="font-weight: 400">WELCOME TO</p>
-    <h1 class="display-2" style="font-weight: 700; color: #355389">BARANGAY E-SERVICE SYSTEM</h1>
+    <h2 class="display-2" style="font-weight: 700; color: #355389">BARANGAY E-SERVICE SYSTEM</h2>
     <p class="title" style="font-weight: 500;">SANGGUNIANG BARANGAY NG POBLACION NAAWAN</p>
   </div>
 </div>
@@ -153,14 +172,14 @@
         {% csrf_token %}
         <div class="row">
             <div class="col-lg-12 px-5">
-              </div>  
+              </div>
               <div class="text-center mb-4">
-                    <p class="h2"><b>Login</b></p>
+                    <p class="h1"><b>B.E.S.S</b></p>
                 </div>
 
-                
+
 <div class="form-outline py-2">
-    <label class="form-label" style="font-size: 1.2rem;"><b>Username</b><span class="required-asterisk">*</span></label>
+    <label class="form-label" style="font-size: 1.2rem;">Username<span class="required-asterisk">*</span></label>
     <input
         type="name"
         class="form-control"
@@ -171,7 +190,7 @@
 </div>
 
 <div class="form-group py-2">
-    <label class="form-label" style="font-size: 1.2rem;"><b>Password</b><span class="required-asterisk">*</span></label>
+    <label class="form-label" style="font-size: 1.2rem;">Password<span class="required-asterisk">*</span></label>
     <div class="input-group">
         <input
             type="password"
@@ -193,10 +212,16 @@
     </div>
 </div>
 
+                {% comment %} Replace standard alerts with SweetAlert for logout message {% endcomment %}
                 {% for message in messages %}
-                <div class="alert {{ message.tags }}">
-                    <p>{{ message }}</p>
-                </div>
+                    {% if 'logout successfully' in message.message|lower %}
+                        <!-- Logout message will be handled by SweetAlert -->
+                        <input type="hidden" id="logout-message" value="{{ message }}">
+                    {% else %}
+                        <div class="alert {{ message.tags }}">
+                            <p>{{ message }}</p>
+                        </div>
+                    {% endif %}
                 {% endfor %}
 
                 <div class="py-3">
@@ -208,9 +233,15 @@
                     />
                 </div>
 
-                
+
          <div class="py-3 d-flex justify-content-center">
-              <a href="{% url 'reset_password' %}" class="text-decoration-none custom-link">Forgot Password</a>
+              <a href="{% url 'reset_password' %}" class="text-decoration-none custom-link">Forgot Password?</a>
+          </div>
+
+          <div class="py-2 d-flex justify-content-center">
+              <a href="{% url 'document_tracker' %}" class="btn-theme -btn2 w-100 d-flex justify-content-center align-items-center">
+                <i class="fas fa-search me-2"></i> Track Document Request
+              </a>
           </div>
 
             </div>
@@ -239,5 +270,25 @@
     </script>
     <script src="{% static 'bootstrap/js/bootstrap.min.js' %}"></script>
     <script src="{% static 'bootstrap/js/jquery.min.js' %}"></script>
+    <!-- SweetAlert2 JS -->
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+
+    <!-- Check for logout message and show SweetAlert -->
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            // Check if logout message exists
+            const logoutMessage = document.getElementById('logout-message');
+            if (logoutMessage && logoutMessage.value.includes('logout successfully')) {
+                Swal.fire({
+                    title: 'Logged Out!',
+                    text: 'You have been successfully logged out.',
+                    icon: 'success',
+                    confirmButtonColor: '#355389',
+                    timer: 3000,
+                    timerProgressBar: true
+                });
+            }
+        });
+    </script>
   </body>
 </html>

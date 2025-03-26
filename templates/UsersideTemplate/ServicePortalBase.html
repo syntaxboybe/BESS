@@ -6,6 +6,8 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <!-- Google Fonts - Poppins (Regular weight only) -->
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400&display=swap" rel="stylesheet">
     <link rel="stylesheet" type="text/css" href="{% static 'bootstrap/css/bootstrap.min.css' %}">
     <link rel="stylesheet" type="text/css" href="{% static 'bootstrap/css/style.css' %}">
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.1/css/all.min.css" rel="stylesheet">
@@ -29,6 +31,28 @@
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 
     <title>Barangay E-Service System</title>
+    <style>
+        /* Global Font Rule: Apply Poppins font to all elements */
+        * {
+            font-family: 'Poppins', sans-serif !important;
+            font-weight: 400;
+        }
+
+        /* Ensure icons from font-awesome and line-awesome remain untouched */
+        .fa, .fas, .far, .fab, .la, .las, .lar, .lab, [class*="fa-"], [class*="la-"] {
+            font-family: inherit;
+        }
+
+        /* Specific font-family override for FontAwesome icons */
+        .fa, .fas, .far, .fab, [class*="fa-"] {
+            font-family: 'Font Awesome 6 Free', 'FontAwesome', 'Font Awesome 6 Brands' !important;
+        }
+
+        /* Specific font-family override for LineAwesome icons */
+        .la, .las, .lar, .lab, [class*="la-"] {
+            font-family: 'Line Awesome Free', 'LineAwesome', 'Line Awesome Brands' !important;
+        }
+    </style>
 </head>
 
 <style>
@@ -63,10 +87,10 @@
             </div>
 
             <ul class="list-unstyled px-2">
-                <li class=""><a href="{% url 'service_portal' %}" class="text-decoration-none px-3 py-2 d-block"><i class="fa-solid fa-file-import"></i><b> Request Document</b></a></li>
-                <li class=""><a href="{% url 'document-status' %}" class="text-decoration-none px-3 py-2 d-block"><i class="fa-solid fa-cart-arrow-down"></i><b> Request Tracker</b></a></li>
-                <li class=""><a href="{% url 'profile' %}" class="text-decoration-none px-3 py-2 d-block"><i class="fa-solid fa-user fs-5"></i><b> Profile</b></a></li>
-                <li class=""><a href="{% url 'userLogout' %}" class="text-decoration-none px-3 py-2 d-block"><i class="fa-solid fa-right-from-bracket"></i><b> Logout</b></a></li>
+                <li class=""><a href="{% url 'service_portal' %}" class="text-decoration-none px-3 py-2 d-block"><i class="fa-solid fa-file-import"></i> Request Document</a></li>
+                <li class=""><a href="{% url 'document-status' %}" class="text-decoration-none px-3 py-2 d-block"><i class="fa-solid fa-cart-arrow-down"></i> Request Tracker</a></li>
+                <li class=""><a href="{% url 'profile' %}" class="text-decoration-none px-3 py-2 d-block"><i class="fa-solid fa-user fs-5"></i> Profile</a></li>
+                <li class=""><a href="#" id="logoutBtn" class="text-decoration-none px-3 py-2 d-block"><i class="fa-solid fa-right-from-bracket"></i> Logout</a></li>
             </ul>
 
             <!-- Dark Mode Toggle Button -->
@@ -228,6 +252,34 @@
         });
 
         observer.observe(document.body, { attributes: true });
+    });
+</script>
+
+<!-- Logout with SweetAlert Script -->
+<script>
+    document.addEventListener('DOMContentLoaded', function() {
+        const logoutBtn = document.getElementById('logoutBtn');
+
+        if (logoutBtn) {
+            logoutBtn.addEventListener('click', function(e) {
+                e.preventDefault();
+
+                Swal.fire({
+                    title: 'Logout Confirmation',
+                    text: 'Are you sure you want to logout?',
+                    icon: 'question',
+                    showCancelButton: true,
+                    confirmButtonText: 'Yes, logout',
+                    cancelButtonText: 'Cancel',
+                    confirmButtonColor: '#355389',
+                    reverseButtons: true
+                }).then((result) => {
+                    if (result.isConfirmed) {
+                        window.location.href = "{% url 'userLogout' %}";
+                    }
+                });
+            });
+        }
     });
 </script>
 </body>

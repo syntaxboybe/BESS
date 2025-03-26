@@ -50,10 +50,13 @@ def edit_clearance(request, id):
             message = f"""
             Dear {username},
 
-            We are pleased to inform you that your request has been received and is currently forwarded to kapitan. We will notify you once your request has been approved and is ready for pick-up. If you have any questions or concerns, please do not hesitate to contact us at the following numbers:            
+            We are pleased to inform you that your request has been received and is currently forwarded to kapitan. We will notify you once your request has been approved and is ready for pick-up. If you have any questions or concerns, please do not hesitate to contact us at the following numbers:
             Globe: 09361174734
             TM: 09057198345
-            
+
+            Transaction ID: {clearance.transaction_id}
+            You can track your document status anytime at: {request.build_absolute_uri('/document_tracker/')}?txn={clearance.transaction_id}
+
             Sincerely,
             The Barangay E-Service Team
             """
@@ -132,11 +135,14 @@ def esign_clearance(request, id):
             message = f"""
             Dear {username},
 
-            We are pleased to inform you that your request has been approved and is ready for pick-up. Kindy prepare the necessary documents for claiming. 
-            If you have any questions or concerns, please do not hesitate to contact us at the following numbers:            
+            We are pleased to inform you that your request has been approved and is ready for pick-up. Kindy prepare the necessary documents for claiming.
+            If you have any questions or concerns, please do not hesitate to contact us at the following numbers:
             Globe: 09361174734
             TM: 09057198345
-            
+
+            Transaction ID: {clearance.transaction_id}
+            You can track your document status anytime at: {request.build_absolute_uri('/document_tracker/')}?txn={clearance.transaction_id}
+
             Sincerely,
             The Barangay E-Service Team
             """
@@ -190,10 +196,13 @@ def esign_button(request, id):
             Dear {username},
 
             We are pleased to inform you that your request has been officially released. Thank you for your using our service!
-            If you have any questions or concerns, please do not hesitate to contact us at the following numbers:            
+            If you have any questions or concerns, please do not hesitate to contact us at the following numbers:
             Globe: 09361174734
             TM: 09057198345
-            
+
+            Transaction ID: {clearance.transaction_id}
+            You can track your document status anytime at: {request.build_absolute_uri('/document_tracker/')}?txn={clearance.transaction_id}
+
             Sincerely,
             The Barangay E-Service Team
             """
@@ -249,6 +258,9 @@ def delete_clearance(request, id):
             We appreciate your understanding and the effort you put into presenting your request. If you have any questions or concerns, please do not hesitate to contact us at the following numbers:
             Globe: 09361174734
             TM: 09057198345
+
+            Transaction ID: {clearance.transaction_id}
+            You can track your document status anytime at: {request.build_absolute_uri('/document_tracker/')}?txn={clearance.transaction_id}
 
             If there is an opportunity to revisit this in the future, we would be glad to reconnect. In the meantime, please feel free to reach out if there are other matters we can assist with.
 
@@ -333,11 +345,14 @@ def unsign_clearance(request, id):
             message = f"""
             Dear {username},
 
-            We are pleased to inform you that your request has been approved and is ready for pick-up. Kindy prepare the necessary documents for claiming. 
-            If you have any questions or concerns, please do not hesitate to contact us at the following numbers:            
+            We are pleased to inform you that your request has been approved and is ready for pick-up. Kindy prepare the necessary documents for claiming.
+            If you have any questions or concerns, please do not hesitate to contact us at the following numbers:
             Globe: 09361174734
             TM: 09057198345
-            
+
+            Transaction ID: {clearance.transaction_id}
+            You can track your document status anytime at: {request.build_absolute_uri('/document_tracker/')}?txn={clearance.transaction_id}
+
             Sincerely,
             The Barangay E-Service Team
             """
@@ -392,10 +407,13 @@ def confirm_button(request, id):
             Dear {username},
 
             We are pleased to inform you that your request has been officially released. Thank you for your using our service!
-            If you have any questions or concerns, please do not hesitate to contact us at the following numbers:            
+            If you have any questions or concerns, please do not hesitate to contact us at the following numbers:
             Globe: 09361174734
             TM: 09057198345
-            
+
+            Transaction ID: {clearance.transaction_id}
+            You can track your document status anytime at: {request.build_absolute_uri('/document_tracker/')}?txn={clearance.transaction_id}
+
             Sincerely,
             The Barangay E-Service Team
             """
@@ -448,10 +466,13 @@ def release_unsign_button(request, id):
             Dear {username},
 
             We are pleased to inform you that your request has been officially released. Thank you for your using our service!
-            If you have any questions or concerns, please do not hesitate to contact us at the following numbers:            
+            If you have any questions or concerns, please do not hesitate to contact us at the following numbers:
             Globe: 09361174734
             TM: 09057198345
-            
+
+            Transaction ID: {clearance.transaction_id}
+            You can track your document status anytime at: {request.build_absolute_uri('/document_tracker/')}?txn={clearance.transaction_id}
+
             Sincerely,
             The Barangay E-Service Team
             """
@@ -506,10 +527,13 @@ def release_esigned_button(request, id):
             Dear {username},
 
             We are pleased to inform you that your request has been officially released. Thank you for your using our service!
-            If you have any questions or concerns, please do not hesitate to contact us at the following numbers:            
+            If you have any questions or concerns, please do not hesitate to contact us at the following numbers:
             Globe: 09361174734
             TM: 09057198345
-            
+
+            Transaction ID: {clearance.transaction_id}
+            You can track your document status anytime at: {request.build_absolute_uri('/document_tracker/')}?txn={clearance.transaction_id}
+
             Sincerely,
             The Barangay E-Service Team
             """
