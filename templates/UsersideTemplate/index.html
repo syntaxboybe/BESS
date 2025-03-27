@@ -47,7 +47,357 @@
   }
 }
 
+/* Chatbot Styles */
+.chatbot-container {
+  position: fixed;
+  bottom: 30px;
+  left: 30px;
+  z-index: 1000;
+  font-family: 'Inter', sans-serif;
+}
 
+.chatbot-button {
+  width: 60px;
+  height: 60px;
+  border-radius: 50%;
+  background-color: #355389;
+  box-shadow: 0 4px 12px rgba(53, 83, 137, 0.3);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  position: relative;
+}
+
+/* Add glow effect */
+.chatbot-button::before {
+  content: '';
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  border-radius: 50%;
+  background-color: #355389;
+  z-index: -1;
+  animation: pulse 2s ease-out infinite;
+}
+
+.chatbot-button::after {
+  content: '';
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  border-radius: 50%;
+  background-color: #355389;
+  z-index: -1;
+  animation: pulse 2s ease-out infinite;
+  animation-delay: 1s;
+}
+
+@keyframes pulse {
+  0% {
+    transform: scale(1);
+    opacity: 0.8;
+    box-shadow: 0 0 0 0 rgba(53, 83, 137, 0.8);
+  }
+  70% {
+    transform: scale(1.3);
+    opacity: 0;
+    box-shadow: 0 0 0 20px rgba(53, 83, 137, 0);
+  }
+  100% {
+    transform: scale(1.3);
+    opacity: 0;
+    box-shadow: 0 0 0 0 rgba(53, 83, 137, 0);
+  }
+}
+
+.chatbot-button img {
+  width: 60px;
+  height: 60px;
+  border-radius: 50%;
+  object-fit: cover;
+  position: relative;
+  z-index: 1;
+}
+
+.chatbot-button:hover {
+  transform: scale(1.05);
+  box-shadow: 0 6px 16px rgba(53, 83, 137, 0.4);
+}
+
+.chatbot-button:hover::before,
+.chatbot-button:hover::after {
+  animation-play-state: paused;
+}
+
+.chatbot-box {
+  position: absolute;
+  bottom: 80px;
+  left: 0;
+  width: 320px;
+  max-height: 480px;
+  background-color: #ffffff;
+  border-radius: 20px;
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.15);
+  display: none;
+  flex-direction: column;
+  overflow: hidden;
+  transition: all 0.3s ease;
+  transform-origin: bottom left;
+}
+
+.chatbot-box.active {
+  display: flex;
+  animation: scaleUp 0.3s forwards;
+}
+
+.chatbot-header {
+  background-color: #355389;
+  color: white;
+  padding: 16px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.chatbot-header h4 {
+  margin: 0;
+  font-size: 15px;
+  font-weight: 600;
+  display: flex;
+  align-items: center;
+  letter-spacing: 0.3px;
+}
+
+.chatbot-header h4 img {
+  width: 28px;
+  height: 28px;
+  margin-right: 10px;
+  border-radius: 50%;
+  border: 2px solid rgba(255, 255, 255, 0.2);
+}
+
+.chatbot-close {
+  background: none;
+  border: none;
+  color: white;
+  font-size: 20px;
+  cursor: pointer;
+  padding: 4px;
+  opacity: 0.8;
+  transition: opacity 0.2s ease;
+}
+
+.chatbot-close:hover {
+  opacity: 1;
+}
+
+.chatbot-body {
+  flex: 1;
+  overflow-y: auto;
+  padding: 16px;
+  background-color: #f8f9fa;
+}
+
+.message {
+  margin-bottom: 12px;
+  max-width: 85%;
+  word-wrap: break-word;
+  font-size: 14px;
+  line-height: 1.5;
+}
+
+.bot-message {
+  background-color: #ffffff;
+  color: #2c3e50;
+  padding: 12px 16px;
+  border-radius: 16px 16px 16px 4px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
+  border: 1px solid #e9ecef;
+}
+
+.user-message {
+  background-color: #355389;
+  color: white;
+  padding: 12px 16px;
+  border-radius: 16px 16px 4px 16px;
+  margin-left: auto;
+  box-shadow: 0 2px 4px rgba(53, 83, 137, 0.2);
+}
+
+.bot-message-container {
+  display: flex;
+  align-items: flex-start;
+  margin-bottom: 16px;
+}
+
+.bot-avatar {
+  width: 32px;
+  height: 32px;
+  margin-right: 8px;
+  border-radius: 50%;
+  overflow: hidden;
+  border: 2px solid #355389;
+  flex-shrink: 0;
+}
+
+.bot-avatar img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.chatbot-footer {
+  padding: 12px 16px;
+  background-color: #ffffff;
+  border-top: 1px solid #e9ecef;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.chatbot-input {
+  flex: 1;
+  border: 1px solid #dee2e6;
+  border-radius: 24px;
+  padding: 10px 16px;
+  font-size: 14px;
+  outline: none;
+  transition: all 0.2s ease;
+  background-color: #f8f9fa;
+}
+
+.chatbot-input:focus {
+  border-color: #355389;
+  background-color: #ffffff;
+  box-shadow: 0 0 0 3px rgba(53, 83, 137, 0.1);
+}
+
+.chatbot-send {
+  background-color: #355389;
+  color: white;
+  border: none;
+  border-radius: 50%;
+  width: 36px;
+  height: 36px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  flex-shrink: 0;
+}
+
+.chatbot-send:hover {
+  background-color: #2a4370;
+  transform: scale(1.05);
+}
+
+.quick-replies {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 4px;
+  padding-bottom: 4px;
+}
+
+.quick-reply-btn {
+  background-color: #ffffff;
+  border: 1px solid #355389;
+  color: #355389;
+  border-radius: 16px;
+  padding: 4px 12px;
+  font-size: 12px;
+  font-weight: 400;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  white-space: nowrap;
+  line-height: 1;
+}
+
+.quick-reply-btn:hover {
+  background-color: #355389;
+  color: white;
+  transform: translateY(-1px);
+  box-shadow: 0 2px 4px rgba(53, 83, 137, 0.2);
+}
+
+.input-container {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.typing-indicator {
+  display: flex;
+  align-items: center;
+  padding: 12px 16px;
+  background-color: #ffffff;
+  border-radius: 16px 16px 16px 4px;
+  width: fit-content;
+  margin-left: 40px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
+}
+
+.typing-indicator span {
+  height: 6px;
+  width: 6px;
+  background-color: #355389;
+  border-radius: 50%;
+  display: inline-block;
+  margin-right: 3px;
+  opacity: 0.6;
+  animation: bounce 1.3s infinite;
+}
+
+.typing-indicator span:nth-child(2) {
+  animation-delay: 0.15s;
+  opacity: 0.8;
+}
+
+.typing-indicator span:nth-child(3) {
+  animation-delay: 0.3s;
+  opacity: 1;
+  margin-right: 0;
+}
+
+@keyframes bounce {
+  0%, 60%, 100% {
+    transform: translateY(0);
+  }
+  30% {
+    transform: translateY(-4px);
+  }
+}
+
+@keyframes scaleUp {
+  0% {
+    transform: scale(0.95);
+    opacity: 0;
+  }
+  100% {
+    transform: scale(1);
+    opacity: 1;
+  }
+}
+
+/* Add smooth scrollbar for the chat body */
+.chatbot-body::-webkit-scrollbar {
+  width: 6px;
+}
+
+.chatbot-body::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+.chatbot-body::-webkit-scrollbar-thumb {
+  background-color: rgba(53, 83, 137, 0.2);
+  border-radius: 3px;
+}
+
+.chatbot-body::-webkit-scrollbar-thumb:hover {
+  background-color: rgba(53, 83, 137, 0.3);
+}
 </style>
 
 <section>
@@ -64,7 +414,7 @@
         <div class="container-fluid">
 
           <div class="row p-5">
-        
+
             <div class="col-lg-7 col-md-12 col-12 my-auto p-5">
               <div ><img src="{% static 'img/index_bg.png'%}" class="img-fluid"></div>
               <a class="link-freepick" href="http://www.freepik.com">Designed by pch.vector / Freepik</a>
@@ -80,7 +430,7 @@
                 </blockquote>
               </div>
               <div>
-                <br>               
+                <br>
 <a type="button" class="btn-theme-outline" href="{% url 'about' %}">
     <i class="fa fa-info-circle"></i><b> About Us</b>
 </a>
@@ -93,7 +443,7 @@
               <img src="{% static 'img/naawanlogo.jpg'%}" width="70">
             </div>
 
-            
+
 
 <div class="col-lg-12 d-flex justify-content-center pt-3">
     <figure class="text-end pt-3">
@@ -113,7 +463,7 @@
             <source src="{% static 'img/Naawan.mp4'%}" type="video/webm">
             Your browser does not support the video tag.
           </video>
-        
+
           <div class="header">
             <h1 class="display-1"><b>THE BEAUTY OF POBLACION NAAWAN</b></h1>
             <h1 class="display-6">ALONG WITH THE NATURE BY THE SEA</h1>
@@ -132,5 +482,350 @@
     </button>
   </div>
 </section>
+
+<!-- Chatbot Component -->
+<div class="chatbot-container">
+    <div class="chatbot-button">
+        <img src="{% static 'img/poblacionlogo.png' %}" alt="Barangay Poblacion Logo">
+    </div>
+
+    <div class="chatbot-box">
+        <div class="chatbot-header">
+            <h4>
+                <img src="{% static 'img/poblacionlogo.png' %}" alt="Barangay Poblacion Logo">
+                B.E.S.S Assistant
+            </h4>
+            <button class="chatbot-close"><i class="fas fa-times"></i></button>
+        </div>
+        <div class="chatbot-body">
+            <!-- Messages will be added here dynamically -->
+        </div>
+        <div class="chatbot-footer">
+            <div class="quick-replies">
+                <button class="quick-reply-btn">Available Services</button>
+                <button class="quick-reply-btn">Office Hours</button>
+                <button class="quick-reply-btn">About Barangay Poblacion</button>
+                <button class="quick-reply-btn">Request Process</button>
+            </div>
+            <div class="input-container">
+                <input type="text" class="chatbot-input" placeholder="Type your message...">
+                <button class="chatbot-send"><i class="fas fa-paper-plane"></i></button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+    // Chat history storage
+    let chatHistory = [];
+
+    // Reference to DOM elements
+    const chatbotButton = document.querySelector('.chatbot-button');
+    const chatbotBox = document.querySelector('.chatbot-box');
+    const chatbotBody = document.querySelector('.chatbot-body');
+    const chatbotInput = document.querySelector('.chatbot-input');
+    const chatbotSend = document.querySelector('.chatbot-send');
+    const chatbotClose = document.querySelector('.chatbot-close');
+
+    // Knowledge base for the chatbot
+    const knowledgeBase = {
+        greetings: [
+            "Hello! Welcome to Barangay Poblacion E-Service. How can I assist you today?",
+            "Hi there! I'm your Barangay Poblacion assistant. What would you like to know?",
+            "Welcome to our barangay's digital services. How may I help you?"
+        ],
+        about: [
+            "Barangay Poblacion is located in Naawan, Misamis Oriental. We aim to provide efficient and accessible services to our residents through our E-Service System. This system allows residents to request documents and access barangay services online."
+        ],
+        services: [
+            "Our E-Service system offers the following document requests:\n• Barangay Clearance\n• Certificate of Residency\n• Certificate of Indigency\n• Business Permit\n• Building Permit\n\nTo request these documents, please log in to your account and navigate to the Services Portal."
+        ],
+        barangay_clearance: [
+            "A Barangay Clearance is a document certifying that you are a resident with good standing in the barangay. It is often required for employment, school admission, or other official transactions. You can request one through our Services Portal."
+        ],
+        certificate_of_residency: [
+            "A Certificate of Residency confirms that you are a legitimate resident of our barangay. This document is typically needed for voter's registration, school enrollment, and other official matters. You can request this document through our Services Portal."
+        ],
+        certificate_of_indigency: [
+            "A Certificate of Indigency is issued to residents with low income who need financial assistance. This document can be used when applying for medical assistance, educational scholarships, or other social services. You can request this through our Services Portal."
+        ],
+        business_permit: [
+            "A Barangay Business Permit is required for any business operating within our barangay. This document verifies that your business complies with local regulations. To request one, please log in to your account and select 'Business Permit' in the Services Portal."
+        ],
+        building_permit: [
+            "A Barangay Building Permit is needed before starting any construction activity within our barangay. This ensures that construction projects comply with local building codes. You can request this document through our Services Portal."
+        ],
+        request_process: [
+            "The document request process follows these steps:\n1. Log in to your account\n2. Go to the Services Portal\n3. Select the document you need\n4. Fill out the required information\n5. Upload any necessary supporting documents\n6. Submit your request\n7. Track your request status\n8. Receive notification when your document is ready\n9. Visit the barangay office to claim your document"
+        ],
+        contact_info: [
+            "You can reach us through:\nPhone: 09361174734 (Globe) or 09057198345 (TM)\nEmail: barangaypoblacion@gmail.com\nOffice Hours: Monday to Friday, 8:00 AM - 5:00 PM"
+        ],
+        office_hours: [
+            "Our barangay office is open from Monday to Friday, 8:00 AM to 5:00 PM."
+        ],
+        document_status: [
+            "To check the status of your document request, please log in to your account and go to the 'Document Status' section. You can also use the document tracker by entering your transaction ID."
+        ],
+        supporting_documents: [
+            "Different document requests may require specific supporting documents. Generally, you may need to provide proof of identity (valid ID), proof of residency, and other relevant documents depending on the request type. The system will indicate what documents are needed when you make your request."
+        ],
+        account_registration: [
+            "To register for an account, click on the 'Sign Up' or 'Register' link on the login page. You'll need to provide basic information like your name, address, contact information, and create a username and password."
+        ],
+        fallback: [
+            "I'm sorry, I don't have information about that yet. Please contact our barangay office directly for more specific questions.",
+            "I don't have that information at the moment. Please try asking something about our services or visit our barangay office for more assistance.",
+            "I'm still learning! Please try asking about our document services or contact the barangay office for more detailed information."
+        ]
+    };
+
+    // Quick reply options
+    const quickReplies = [
+        { text: "About Barangay Poblacion", query: "about" },
+        { text: "Available Services", query: "services" },
+        { text: "Request Process", query: "request process" },
+        { text: "Contact Information", query: "contact" },
+        { text: "Office Hours", query: "office hours" },
+        { text: "Document Status", query: "document status" }
+    ];
+
+    // Initialize the chatbot
+    function initChatbot() {
+        // Add event listeners
+        chatbotButton.addEventListener('click', toggleChatbot);
+        chatbotClose.addEventListener('click', toggleChatbot);
+        chatbotSend.addEventListener('click', sendMessage);
+        chatbotInput.addEventListener('keypress', function(e) {
+            if (e.key === 'Enter') {
+                sendMessage();
+            }
+        });
+
+        // Start with a welcome message
+        setTimeout(() => {
+            addBotMessage(getRandomResponse('greetings'));
+            showQuickReplies();
+        }, 500);
+    }
+
+    // Toggle chatbot visibility
+    function toggleChatbot() {
+        chatbotBox.classList.toggle('active');
+
+        // If opening the chatbot and it's empty, add welcome message
+        if (chatbotBox.classList.contains('active') && chatHistory.length === 0) {
+            addBotMessage(getRandomResponse('greetings'));
+            showQuickReplies();
+        }
+
+        // Focus on input when opened
+        if (chatbotBox.classList.contains('active')) {
+            setTimeout(() => {
+                chatbotInput.focus();
+            }, 300);
+        }
+    }
+
+    // Send a message from the user
+    function sendMessage() {
+        const message = chatbotInput.value.trim();
+        if (message === '') return;
+
+        // Add user message to chat
+        addUserMessage(message);
+
+        // Clear input field
+        chatbotInput.value = '';
+
+        // Show typing indicator
+        showTypingIndicator();
+
+        // Process the message and respond after a delay
+        setTimeout(() => {
+            removeTypingIndicator();
+            const response = processMessage(message);
+            addBotMessage(response);
+
+            // Show quick replies after response
+            if (shouldShowQuickReplies(message)) {
+                showQuickReplies();
+            }
+        }, 1000 + Math.random() * 1000); // Random delay between 1-2s for natural feel
+    }
+
+    // Process the user message and return a response
+    function processMessage(message) {
+        const lowerMessage = message.toLowerCase();
+
+        // Check for keywords and return appropriate responses
+        if (containsAnyKeyword(lowerMessage, ['hi', 'hello', 'hey', 'greetings'])) {
+            return getRandomResponse('greetings');
+        } else if (containsAnyKeyword(lowerMessage, ['about', 'barangay', 'poblacion', 'what is'])) {
+            return getRandomResponse('about');
+        } else if (containsAnyKeyword(lowerMessage, ['service', 'services', 'offer', 'what do you offer'])) {
+            return getRandomResponse('services');
+        } else if (containsAnyKeyword(lowerMessage, ['clearance', 'barangay clearance'])) {
+            return getRandomResponse('barangay_clearance');
+        } else if (containsAnyKeyword(lowerMessage, ['residency', 'certificate of residency', 'residency certificate'])) {
+            return getRandomResponse('certificate_of_residency');
+        } else if (containsAnyKeyword(lowerMessage, ['indigency', 'certificate of indigency', 'indigent'])) {
+            return getRandomResponse('certificate_of_indigency');
+        } else if (containsAnyKeyword(lowerMessage, ['business', 'business permit', 'permit for business'])) {
+            return getRandomResponse('business_permit');
+        } else if (containsAnyKeyword(lowerMessage, ['building', 'building permit', 'construction', 'construct'])) {
+            return getRandomResponse('building_permit');
+        } else if (containsAnyKeyword(lowerMessage, ['process', 'how to', 'steps', 'request process', 'apply'])) {
+            return getRandomResponse('request_process');
+        } else if (containsAnyKeyword(lowerMessage, ['contact', 'phone', 'email', 'address', 'reach'])) {
+            return getRandomResponse('contact_info');
+        } else if (containsAnyKeyword(lowerMessage, ['hour', 'hours', 'schedule', 'open', 'time'])) {
+            return getRandomResponse('office_hours');
+        } else if (containsAnyKeyword(lowerMessage, ['status', 'track', 'check status', 'document status'])) {
+            return getRandomResponse('document_status');
+        } else if (containsAnyKeyword(lowerMessage, ['document', 'requirements', 'supporting', 'attach', 'upload'])) {
+            return getRandomResponse('supporting_documents');
+        } else if (containsAnyKeyword(lowerMessage, ['register', 'sign up', 'create account', 'account', 'signup'])) {
+            return getRandomResponse('account_registration');
+        } else if (containsAnyKeyword(lowerMessage, ['thank you', 'thanks', 'thank'])) {
+            return "You're welcome! If you have more questions, feel free to ask.";
+        } else {
+            return getRandomResponse('fallback');
+        }
+    }
+
+    // Helper function to check if a message contains any of the keywords
+    function containsAnyKeyword(message, keywords) {
+        return keywords.some(keyword => message.includes(keyword));
+    }
+
+    // Get a random response from the knowledge base
+    function getRandomResponse(category) {
+        const responses = knowledgeBase[category] || knowledgeBase.fallback;
+        return responses[Math.floor(Math.random() * responses.length)];
+    }
+
+    // Add a bot message to the chat
+    function addBotMessage(message) {
+        const messageContainer = document.createElement('div');
+        messageContainer.className = 'bot-message-container';
+
+        const avatar = document.createElement('div');
+        avatar.className = 'bot-avatar';
+        const avatarImg = document.createElement('img');
+        avatarImg.src = "{% static 'img/poblacionlogo.png' %}";
+        avatarImg.alt = "Barangay Poblacion Logo";
+        avatar.appendChild(avatarImg);
+
+        const messageElement = document.createElement('div');
+        messageElement.className = 'message bot-message';
+        messageElement.textContent = message;
+
+        messageContainer.appendChild(avatar);
+        messageContainer.appendChild(messageElement);
+
+        chatbotBody.appendChild(messageContainer);
+
+        // Save to history
+        chatHistory.push({ sender: 'bot', message });
+
+        // Scroll to bottom
+        chatbotBody.scrollTop = chatbotBody.scrollHeight;
+    }
+
+    // Add a user message to the chat
+    function addUserMessage(message) {
+        const messageContainer = document.createElement('div');
+        messageContainer.className = 'user-message-container';
+
+        const messageElement = document.createElement('div');
+        messageElement.className = 'message user-message';
+        messageElement.textContent = message;
+
+        messageContainer.appendChild(messageElement);
+
+        chatbotBody.appendChild(messageContainer);
+
+        // Save to history
+        chatHistory.push({ sender: 'user', message });
+
+        // Scroll to bottom
+        chatbotBody.scrollTop = chatbotBody.scrollHeight;
+    }
+
+    // Show typing indicator
+    function showTypingIndicator() {
+        const typingIndicator = document.createElement('div');
+        typingIndicator.className = 'bot-message-container typing-indicator-container';
+
+        const avatar = document.createElement('div');
+        avatar.className = 'bot-avatar';
+        const avatarImg = document.createElement('img');
+        avatarImg.src = "{% static 'img/poblacionlogo.png' %}";
+        avatarImg.alt = "Barangay Poblacion Logo";
+        avatar.appendChild(avatarImg);
+
+        const indicator = document.createElement('div');
+        indicator.className = 'typing-indicator';
+        indicator.innerHTML = '<span></span><span></span><span></span>';
+
+        typingIndicator.appendChild(avatar);
+        typingIndicator.appendChild(indicator);
+
+        chatbotBody.appendChild(typingIndicator);
+
+        // Scroll to bottom
+        chatbotBody.scrollTop = chatbotBody.scrollHeight;
+    }
+
+    // Remove typing indicator
+    function removeTypingIndicator() {
+        const typingIndicator = document.querySelector('.typing-indicator-container');
+        if (typingIndicator) {
+            typingIndicator.remove();
+        }
+    }
+
+    // Show quick reply options
+    function showQuickReplies() {
+        // Remove existing quick replies
+        const existingQuickReplies = document.querySelector('.quick-replies');
+        if (existingQuickReplies) {
+            existingQuickReplies.remove();
+        }
+
+        const quickRepliesContainer = document.createElement('div');
+        quickRepliesContainer.className = 'quick-replies';
+
+        // Add all quick reply options
+        quickReplies.forEach(reply => {
+            const button = document.createElement('button');
+            button.className = 'quick-reply-btn';
+            button.textContent = reply.text;
+            button.addEventListener('click', () => {
+                chatbotInput.value = reply.query;
+                sendMessage();
+            });
+            quickRepliesContainer.appendChild(button);
+        });
+
+        // Add to the footer before the input container
+        const footer = document.querySelector('.chatbot-footer');
+        const inputContainer = document.querySelector('.input-container');
+        footer.insertBefore(quickRepliesContainer, inputContainer);
+    }
+
+    // Determine if quick replies should be shown after a specific message
+    function shouldShowQuickReplies(message) {
+        const lowerMessage = message.toLowerCase();
+        // Don't show quick replies after simple thank you messages
+        return !containsAnyKeyword(lowerMessage, ['thank', 'thanks', 'thank you']);
+    }
+
+    // Initialize chatbot
+    initChatbot();
+});
+</script>
 
 {% endblock content %}
