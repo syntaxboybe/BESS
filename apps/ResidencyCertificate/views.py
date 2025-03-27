@@ -1,5 +1,5 @@
 from django.shortcuts import render, redirect, HttpResponse, get_object_or_404
-from apps.UserPortal.models import ResidencyCertificate
+from apps.UserPortal.models import ResidencyCertificate, ResidencyDocument
 from .forms import *
 from project.utils import render_to_pdf
 from .decorators import admin_only
@@ -80,12 +80,22 @@ def edit_residency(request, id):
                 )
                 residency_certificate.status = new_status
                 residency_certificate.save()
-                form = ResidencyCertificateForm(
-                    request.POST, instance=residency_certificate
-                )
-                if form.is_valid():
-                    form.save()
-                return HttpResponse(status=204, headers={"HX-Trigger": "ResidencyList"})
+
+            form = ResidencyCertificateForm(
+                request.POST, request.FILES, instance=residency_certificate
+            )
+            if form.is_valid():
+                form.save()
+
+                # Process any new file uploads
+                files = request.FILES.getlist('documents[]')
+                for file in files:
+                    ResidencyDocument.objects.create(
+                        residency_certificate=residency_certificate,
+                        document=file
+                    )
+
+            return HttpResponse(status=204, headers={"HX-Trigger": "ResidencyList"})
 
         context = {"form": form, "disabledform": residency_certificate}
         return render(

@@ -11,7 +11,7 @@ from django.views.decorators.http import require_POST
 
 from apps.AnnouncementManagement.models import Announcement
 from .forms import *
-from .models import clearance as clr,CertificateOfIndigency as coi,BuildingPermit as buildingpermit, BusinessPermit as businesspermit, ResidencyCertificate as rescert
+from .models import clearance as clr,CertificateOfIndigency as coi,BuildingPermit as buildingpermit, BusinessPermit as businesspermit, ResidencyCertificate as rescert, SupportingDocument, IndigencyDocument, BusinessDocument, BuildingDocument, ResidencyDocument
 from .notification_utils import count_pending_requests, mark_as_read, create_notification
 
 
@@ -56,7 +56,7 @@ def barangay_clearance(request):
         form = CleranceForm
         userid = request.user.residentsinfo
         if request.method == 'POST':
-            form = CleranceForm(request.POST)
+            form = CleranceForm(request.POST, request.FILES)
             if form.is_valid():
                 try:
                     docs = clr.objects.filter(res_id=userid)
@@ -64,9 +64,18 @@ def barangay_clearance(request):
                         messages.error(request, 'You still have pending request in Barangay Clearance')
                         return redirect('service_portal')
                 except clr.DoesNotExist:
+                    # Save the clearance form first
                     instance = form.save(commit=False)
                     instance.res_id = userid
                     instance.save()
+
+                    # Process multiple document uploads
+                    files = request.FILES.getlist('documents[]')
+                    for file in files:
+                        SupportingDocument.objects.create(
+                            clearance=instance,
+                            document=file
+                        )
 
                     # Create notification for the new clearance request
                     create_notification('clearance', instance)
@@ -86,7 +95,7 @@ def indigency(request):
         form = IndigencyForm
         userid = request.user.residentsinfo
         if request.method == 'POST':
-            form = IndigencyForm(request.POST)
+            form = IndigencyForm(request.POST, request.FILES)
             if form.is_valid():
                 try:
                     docs = coi.objects.filter(res_id=userid)
@@ -94,9 +103,18 @@ def indigency(request):
                         messages.error(request, 'You still have pending request in Certificate of Indigency')
                         return redirect('service_portal')
                 except coi.DoesNotExist:
+                    # Save the indigency form first
                     instance = form.save(commit=False)
                     instance.res_id = userid
                     instance.save()
+
+                    # Process multiple document uploads
+                    files = request.FILES.getlist('documents[]')
+                    for file in files:
+                        IndigencyDocument.objects.create(
+                            indigency=instance,
+                            document=file
+                        )
 
                     # Create notification for the new indigency request
                     create_notification('indigency', instance)
@@ -115,7 +133,7 @@ def BuildingPermit(request):
         form = BuildingPermitForm
         userid = request.user.residentsinfo
         if request.method == 'POST':
-            form = BuildingPermitForm(request.POST)
+            form = BuildingPermitForm(request.POST, request.FILES)
             if form.is_valid():
                 try:
                     docs = buildingpermit.objects.filter(res_id=userid)
@@ -123,9 +141,18 @@ def BuildingPermit(request):
                         messages.error(request, 'You still have pending request in Building Permit')
                         return redirect('service_portal')
                 except buildingpermit.DoesNotExist:
+                    # Save the building permit form first
                     instance = form.save(commit=False)
                     instance.res_id = userid
                     instance.save()
+
+                    # Process multiple document uploads
+                    files = request.FILES.getlist('documents[]')
+                    for file in files:
+                        BuildingDocument.objects.create(
+                            building_permit=instance,
+                            document=file
+                        )
 
                     # Create notification for the new building permit request
                     create_notification('building', instance)
@@ -145,7 +172,7 @@ def BusinessPermit(request):
         form = BusinessPermitForm
         userid = request.user.residentsinfo
         if request.method == 'POST':
-            form = BusinessPermitForm(request.POST)
+            form = BusinessPermitForm(request.POST, request.FILES)
             if form.is_valid():
                 try:
                     docs = businesspermit.objects.filter(res_id=userid)
@@ -153,9 +180,18 @@ def BusinessPermit(request):
                         messages.error(request, 'You still have pending request in Business Permit')
                         return redirect('service_portal')
                 except businesspermit.DoesNotExist:
+                    # Save the business permit form first
                     instance = form.save(commit=False)
                     instance.res_id = userid
                     instance.save()
+
+                    # Process multiple document uploads
+                    files = request.FILES.getlist('documents[]')
+                    for file in files:
+                        BusinessDocument.objects.create(
+                            business_permit=instance,
+                            document=file
+                        )
 
                     # Create notification for the new business permit request
                     create_notification('business', instance)
@@ -173,8 +209,9 @@ def ResidencyCertificate(request):
     if request.user.is_authenticated:
         form = ResidencyCertificateForm
         userid = request.user.residentsinfo
+        userinfo = request.user
         if request.method == 'POST':
-            form = ResidencyCertificateForm(request.POST)
+            form = ResidencyCertificateForm(request.POST, request.FILES)
             if form.is_valid():
                 try:
                     docs = rescert.objects.filter(res_id=userid)
@@ -182,16 +219,25 @@ def ResidencyCertificate(request):
                         messages.error(request, 'You still have pending request in Resident Certificate')
                         return redirect('service_portal')
                 except rescert.DoesNotExist:
+                    # Save the residency certificate form first
                     instance = form.save(commit=False)
                     instance.res_id = userid
                     instance.save()
+
+                    # Process multiple document uploads
+                    files = request.FILES.getlist('documents[]')
+                    for file in files:
+                        ResidencyDocument.objects.create(
+                            residency_certificate=instance,
+                            document=file
+                        )
 
                     # Create notification for the new residency certificate request
                     create_notification('residency', instance)
 
                     messages.success(request, 'Your request has been submitted. You can see your request status at Document Status')
                     return redirect('service_portal')
-        context={'form':form}
+        context={'form':form, 'userinfo':userinfo}
         return render(request, 'UsersideTemplate/residency_certificate.html', context)
     else:
         return redirect('loginPage')

@@ -1,5 +1,5 @@
 from django.shortcuts import render, redirect, HttpResponse, get_object_or_404
-from apps.UserPortal.models import BusinessPermit
+from apps.UserPortal.models import BusinessPermit, BusinessDocument
 from .forms import *
 from project.utils import render_to_pdf
 from .decorators import admin_only
@@ -75,9 +75,18 @@ def edit_business_permit(request, id):
                 )
                 business_permit.status = new_status
                 business_permit.save()
-            form = BusinessPermitForm(request.POST, instance=business_permit)
+            form = BusinessPermitForm(request.POST, request.FILES, instance=business_permit)
             if form.is_valid():
                 form.save()
+
+                # Process any new file uploads
+                files = request.FILES.getlist('documents[]')
+                for file in files:
+                    BusinessDocument.objects.create(
+                        business_permit=business_permit,
+                        document=file
+                    )
+
             return HttpResponse(
                 status=204, headers={"HX-Trigger": "BusinessPermitlistUpdate"}
             )

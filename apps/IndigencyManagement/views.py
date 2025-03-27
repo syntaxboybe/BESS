@@ -77,7 +77,7 @@ def edit_indigency(request, id):
                 )
                 indigency.status = new_status
                 indigency.save()
-                form = indigencyForm(request.POST, instance=indigency)
+                form = indigencyForm(request.POST, request.FILES, instance=indigency)
 
                 if form.is_valid():
                     form.save()

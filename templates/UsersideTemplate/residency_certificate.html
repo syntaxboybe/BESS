@@ -3,7 +3,7 @@
 {% block content %}
 
 <div class="container bg-white rounded shadow p-5">
-<form action="." method="POST" id="residencyForm">
+<form action="." method="POST" id="residencyForm" enctype="multipart/form-data">
 {% csrf_token %}
     <div class="row">
         <div class="col-12 d-flex justify-content-center" style="color: #355389;">
@@ -27,6 +27,22 @@
 
         <hr>
 
+        <div class="col-12 col-lg-12 pt-3">
+            <p class="h6">Upload Supporting Documents (Optional - Max 5 files)</p>
+            <div class="file-upload-container">
+                <div class="input-group mb-2">
+                    <input type="file" name="documents[]" id="documentUpload" class="form-control form-control-sm" accept="image/*,.pdf" multiple>
+                    <button type="button" id="addMoreBtn" class="btn btn-outline-secondary btn-sm">
+                        <i class="fas fa-plus"></i> Add More
+                    </button>
+                </div>
+                <div id="fileList" class="mb-2"></div>
+                <div id="extraFileInputs"></div>
+            </div>
+            <small class="text-muted">Accepted file types: JPG, PNG, PDF (Max size: 5MB per file)</small>
+            <div id="fileError" class="text-danger small mt-1" style="display: none;"></div>
+        </div>
+
         <div class="col-12 pt-5 d-flex justify-content-end">
             <button type="button" id="submitBtn" class="btn-theme col-12 col-md-3 -btn2">Submit</button>
             &nbsp;&nbsp;
@@ -41,6 +57,191 @@
 
 <script>
     document.addEventListener('DOMContentLoaded', function() {
+        // File input handler for multiple files
+        const documentUpload = document.getElementById('documentUpload');
+        const fileList = document.getElementById('fileList');
+        const fileError = document.getElementById('fileError');
+        const addMoreBtn = document.getElementById('addMoreBtn');
+        const extraFileInputs = document.getElementById('extraFileInputs');
+        const MAX_FILES = 5;
+        let fileCount = 0;
+
+        // Function to create preview for each file
+        function createFilePreview(file, inputId) {
+            if (fileCount >= MAX_FILES) {
+                showError(`Maximum ${MAX_FILES} files allowed`);
+                return false;
+            }
+
+            // Check file size (5MB max)
+            if (file.size > 5 * 1024 * 1024) {
+                showError(`File ${file.name} exceeds 5MB limit`);
+                return false;
+            }
+
+            const fileItem = document.createElement('div');
+            fileItem.className = 'file-item border rounded p-2 mb-2 d-flex align-items-center';
+            fileItem.dataset.inputId = inputId;
+
+            // Preview container
+            const previewContainer = document.createElement('div');
+            previewContainer.className = 'preview-container me-2';
+            previewContainer.style.width = '50px';
+            previewContainer.style.height = '50px';
+
+            if (file.type.startsWith('image/')) {
+                const img = document.createElement('img');
+                img.className = 'img-fluid rounded';
+                img.style.width = '100%';
+                img.style.height = '100%';
+                img.style.objectFit = 'cover';
+
+                const reader = new FileReader();
+                reader.onload = function(e) {
+                    img.src = e.target.result;
+                };
+                reader.readAsDataURL(file);
+
+                previewContainer.appendChild(img);
+            } else if (file.type === 'application/pdf') {
+                const pdfIcon = document.createElement('i');
+                pdfIcon.className = 'fas fa-file-pdf text-danger';
+                pdfIcon.style.fontSize = '32px';
+                pdfIcon.style.display = 'block';
+                pdfIcon.style.margin = '8px auto';
+
+                previewContainer.appendChild(pdfIcon);
+            }
+
+            // File info
+            const fileInfo = document.createElement('div');
+            fileInfo.className = 'file-info flex-grow-1';
+            fileInfo.innerHTML = `
+                <p class="mb-0 text-truncate" style="max-width: 200px;">${file.name}</p>
+                <small class="text-muted">${formatFileSize(file.size)}</small>
+            `;
+
+            // Remove button
+            const removeBtn = document.createElement('button');
+            removeBtn.type = 'button';
+            removeBtn.className = 'btn btn-sm btn-outline-danger ms-2';
+            removeBtn.innerHTML = '<i class="fas fa-times"></i>';
+            removeBtn.addEventListener('click', function() {
+                fileItem.remove();
+                fileCount--;
+
+                // If we're removing from the main input, we need to clear that file
+                if (inputId === 'documentUpload') {
+                    documentUpload.value = '';
+                }
+
+                updateAddMoreButtonState();
+            });
+
+            fileItem.appendChild(previewContainer);
+            fileItem.appendChild(fileInfo);
+            fileItem.appendChild(removeBtn);
+            fileList.appendChild(fileItem);
+
+            fileCount++;
+            updateAddMoreButtonState();
+            return true;
+        }
+
+        // Format file size
+        function formatFileSize(bytes) {
+            if (bytes < 1024) return bytes + ' bytes';
+            else if (bytes < 1048576) return (bytes / 1024).toFixed(1) + ' KB';
+            else return (bytes / 1048576).toFixed(1) + ' MB';
+        }
+
+        // Show error message
+        function showError(message) {
+            fileError.textContent = message;
+            fileError.style.display = 'block';
+
+            setTimeout(() => {
+                fileError.style.display = 'none';
+            }, 5000);
+        }
+
+        // Update add more button state
+        function updateAddMoreButtonState() {
+            addMoreBtn.disabled = fileCount >= MAX_FILES;
+        }
+
+        // Handle main file input change
+        documentUpload.addEventListener('change', function(e) {
+            const files = Array.from(this.files);
+
+            if (files.length > MAX_FILES) {
+                showError(`Maximum ${MAX_FILES} files allowed`);
+                this.value = '';
+                return;
+            }
+
+            // Clear any existing previews from main input
+            Array.from(fileList.children).forEach(child => {
+                if (child.dataset.inputId === 'documentUpload') {
+                    child.remove();
+                    fileCount--;
+                }
+            });
+
+            // Create previews for each file
+            let allValid = true;
+            files.forEach(file => {
+                const result = createFilePreview(file, 'documentUpload');
+                if (!result) allValid = false;
+            });
+
+            if (!allValid) {
+                this.value = '';
+            }
+        });
+
+        // Handle add more button click
+        let extraInputCounter = 0;
+        addMoreBtn.addEventListener('click', function() {
+            if (fileCount >= MAX_FILES) {
+                showError(`Maximum ${MAX_FILES} files allowed`);
+                return;
+            }
+
+            extraInputCounter++;
+            const inputId = `extraFile${extraInputCounter}`;
+
+            const inputGroup = document.createElement('div');
+            inputGroup.className = 'input-group mb-2';
+
+            const fileInput = document.createElement('input');
+            fileInput.type = 'file';
+            fileInput.name = 'documents[]';
+            fileInput.id = inputId;
+            fileInput.className = 'form-control form-control-sm';
+            fileInput.accept = 'image/*,.pdf';
+
+            fileInput.addEventListener('change', function(e) {
+                if (this.files.length > 0) {
+                    // Remove any previous preview for this input
+                    Array.from(fileList.children).forEach(child => {
+                        if (child.dataset.inputId === inputId) {
+                            child.remove();
+                            fileCount--;
+                        }
+                    });
+
+                    // Create preview for the new file
+                    if (!createFilePreview(this.files[0], inputId)) {
+                        this.value = '';
+                    }
+                }
+            });
+
+            inputGroup.appendChild(fileInput);
+            extraFileInputs.appendChild(inputGroup);
+        });
+
         // Submit button click handler
         document.getElementById('submitBtn').addEventListener('click', function() {
             const purposeField = document.querySelector('[name="purpose"]');

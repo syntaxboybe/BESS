@@ -118,3 +118,48 @@ class Notification(models.Model):
 
     def __str__(self):
         return f"{self.get_document_type_display()} request from {self.resident}"
+
+
+class SupportingDocument(models.Model):
+    clearance = models.ForeignKey(clearance, on_delete=models.CASCADE, related_name='documents')
+    document = models.FileField(upload_to='clearance_documents/')
+    uploaded_at = models.DateTimeField(auto_now_add=True)
+
+    def __str__(self):
+        return f"Document for {self.clearance.res_id} - {self.uploaded_at}"
+
+
+class IndigencyDocument(models.Model):
+    indigency = models.ForeignKey(CertificateOfIndigency, on_delete=models.CASCADE, related_name='documents')
+    document = models.FileField(upload_to='indigency_documents/')
+    uploaded_at = models.DateTimeField(auto_now_add=True)
+
+    def __str__(self):
+        return f"Document for {self.indigency.res_id} - {self.uploaded_at}"
+
+
+class BusinessDocument(models.Model):
+    business_permit = models.ForeignKey(BusinessPermit, on_delete=models.CASCADE, related_name='documents')
+    document = models.FileField(upload_to='business_documents/')
+    uploaded_at = models.DateTimeField(auto_now_add=True)
+
+    def __str__(self):
+        return f"Document for {self.business_permit.business_name} Business Permit"
+
+
+class BuildingDocument(models.Model):
+    building_permit = models.ForeignKey(BuildingPermit, on_delete=models.CASCADE, related_name='documents')
+    document = models.FileField(upload_to='building_documents/')
+    uploaded_at = models.DateTimeField(auto_now_add=True)
+
+    def __str__(self):
+        return f"Document for {self.building_permit.owner} Building Permit"
+
+
+class ResidencyDocument(models.Model):
+    residency_certificate = models.ForeignKey(ResidencyCertificate, on_delete=models.CASCADE, related_name='documents')
+    document = models.FileField(upload_to='residency_documents/')
+    uploaded_at = models.DateTimeField(auto_now_add=True)
+
+    def __str__(self):
+        return f"Document for {self.residency_certificate.res_id} Certificate of Residency"

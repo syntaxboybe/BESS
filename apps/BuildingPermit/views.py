@@ -1,5 +1,5 @@
 from django.shortcuts import render, redirect, HttpResponse, get_object_or_404
-from apps.UserPortal.models import BuildingPermit
+from apps.UserPortal.models import BuildingPermit, BuildingDocument
 from .forms import *
 from project.utils import render_to_pdf
 from .decorators import admin_only
@@ -74,10 +74,19 @@ def edit_building_permit(request, id):
                 )
                 building_permit.status = new_status
                 building_permit.save()
-                form = BuildingPermitForm(
-                    request.POST, instance=building_permit)
+
+            form = BuildingPermitForm(request.POST, request.FILES, instance=building_permit)
             if form.is_valid():
                 form.save()
+
+                # Process any new file uploads
+                files = request.FILES.getlist('documents[]')
+                for file in files:
+                    BuildingDocument.objects.create(
+                        building_permit=building_permit,
+                        document=file
+                    )
+
             return HttpResponse(
                 status=204, headers={"HX-Trigger": "BuildingPermitList"}
             )

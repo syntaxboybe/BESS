@@ -103,6 +103,49 @@
     </div>
 </div>
 
+<div class="col-6 py-2" style="border-left: 2px solid #f8f9fa;">
+    <p class="h6">Supporting Documents</p>
+    <div class="document-area bg-light rounded p-2" style="min-height: 100px; max-height: 300px; overflow-y: auto;">
+        {% with documents=disabledform.documents.all %}
+        {% if documents %}
+        <div class="document-list">
+            {% for doc in documents %}
+            <div class="document-item mb-2 p-2 border-bottom">
+                <div class="d-flex align-items-center">
+                    {% if doc.document.url|slice:"-4:" == ".pdf" %}
+                    <div class="document-icon me-2">
+                        <i class="fas fa-file-pdf text-danger" style="font-size: 24px;"></i>
+                    </div>
+                    {% else %}
+                    <div class="document-thumbnail me-2">
+                        <img src="{{ doc.document.url }}" class="img-thumbnail" style="width: 50px; height: 50px; object-fit: cover;">
+                    </div>
+                    {% endif %}
+
+                    <div class="document-info flex-grow-1">
+                        <p class="mb-0 text-truncate small" style="max-width: 120px;">{{ doc.document.name|slice:"19:" }}</p>
+                        <small class="text-muted">{{ doc.uploaded_at|date:"M d, Y" }}</small>
+                    </div>
+
+                    <div class="document-actions">
+                        <a href="{{ doc.document.url }}" class="btn btn-sm btn-primary me-1" target="_blank" title="View">
+                            <i class="fas fa-eye"></i>
+                        </a>
+                        <a href="{{ doc.document.url }}" class="btn btn-sm btn-success" download title="Download">
+                            <i class="fas fa-download"></i>
+                        </a>
+                    </div>
+                </div>
+            </div>
+            {% endfor %}
+        </div>
+        {% else %}
+        <div class="alert alert-info py-2 small">No supporting documents were uploaded</div>
+        {% endif %}
+        {% endwith %}
+    </div>
+</div>
+
 {% endif %}
 
                 </div>

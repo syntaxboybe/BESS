@@ -4,7 +4,7 @@ from apps.UserPortal.models import *
 
 class indigencyForm(forms.ModelForm):
     class Meta:
-        model = clearance
+        model = CertificateOfIndigency
         fields = ("age", "purpose", "date_released")
 
         widgets = {

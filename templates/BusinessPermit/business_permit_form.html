@@ -137,6 +137,48 @@
             {% endif %}
             <br>
             <hr>
+
+            <!-- Supporting Documents Section -->
+            <div class="col-12 py-2">
+                <h6 class="fw-bold">Supporting Documents</h6>
+                <div class="row mt-2" id="documentsContainer">
+                    {% if disabledform.documents.all %}
+                        {% for doc in disabledform.documents.all %}
+                            <div class="col-md-4 mb-3">
+                                <div class="card h-100">
+                                    <div class="card-body p-2">
+                                        <div class="d-flex align-items-center">
+                                            {% if doc.document.url|slice:"-4:" == ".pdf" %}
+                                                <i class="fas fa-file-pdf text-danger fa-2x me-2"></i>
+                                            {% else %}
+                                                <i class="fas fa-file-image text-primary fa-2x me-2"></i>
+                                            {% endif %}
+                                            <div class="flex-grow-1">
+                                                <p class="mb-0 small text-truncate">{{ doc.document.name|slice:"20:" }}</p>
+                                                <small class="text-muted">{{ doc.uploaded_at|date:"M d, Y" }}</small>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="card-footer p-1 d-flex">
+                                        <a href="{{ doc.document.url }}" class="btn btn-sm btn-outline-primary w-50 me-1" target="_blank">
+                                            <i class="fas fa-eye"></i> View
+                                        </a>
+                                        <a href="{{ doc.document.url }}" class="btn btn-sm btn-outline-success w-50" download>
+                                            <i class="fas fa-download"></i> Download
+                                        </a>
+                                    </div>
+                                </div>
+                            </div>
+                        {% endfor %}
+                    {% else %}
+                        <div class="col-12">
+                            <div class="alert alert-info mb-0">
+                                <i class="fas fa-info-circle"></i> No supporting documents uploaded.
+                            </div>
+                        </div>
+                    {% endif %}
+                </div>
+            </div>
         </div>
     </div>
     <div class="modal-footer">
