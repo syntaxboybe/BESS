@@ -1,5 +1,5 @@
 {% extends "../base.html" %}
-{% load crispy_forms_tags %} 
+{% load crispy_forms_tags %}
 {% load static %}
 {% block content %}
 
@@ -8,14 +8,14 @@
     <div class="row d-flex justify-content-center vertical-center">
         <div class="col-lg-6 col-md-10 col-12">
             <div id="msg" class="col-12 px-5 fade-page">
-            {% for message in messages %}  
+            {% for message in messages %}
             <div class="alert {{ message.tags }} alert-dismissible fade show" role="alert">
             {{ message }}
             <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
             </div>
             {% endfor %}
             </div>
-            <div class="card border-0 shadow p-3 mb-5 bg-body rounded">
+            <div class="card border-0 shadow p-3 mb-5 theme-card">
                 <div class="card-body">
                     <div class="row">
                         <form method="POST">
@@ -40,5 +40,60 @@
     }, 2000)
 </script>
 
+<style>
+    /* Theme-compatible card styling */
+    .theme-card {
+        background-color: var(--bs-body-bg, #ffffff);
+        color: var(--bs-body-color, #212529);
+        border-color: var(--bs-border-color, #dee2e6);
+        transition: all 0.3s ease;
+    }
+
+    /* Form control theming */
+    .theme-card .form-control,
+    .theme-card .form-select {
+        background-color: var(--bs-form-control-bg, #ffffff);
+        color: var(--bs-body-color, #212529);
+        border-color: var(--bs-border-color, #ced4da);
+    }
+
+    .theme-card .form-control:focus,
+    .theme-card .form-select:focus {
+        border-color: #355389;
+        box-shadow: 0 0 0 0.25rem rgba(53, 83, 137, 0.25);
+    }
+
+    /* Label and text theming */
+    .theme-card label,
+    .theme-card .form-text {
+        color: var(--bs-body-color, #212529);
+    }
+
+    /* Helper text theming */
+    .theme-card .form-text,
+    .theme-card small {
+        color: var(--bs-secondary-color, #6c757d);
+    }
+
+    /* Required asterisk styling */
+    .theme-card .asteriskField {
+        color: #dc3545;
+    }
+
+    /* Button theming - ensure good contrast in both modes */
+    .btn-theme.-btn2 {
+        background-color: #355389;
+        border-color: #355389;
+        color: white;
+        transition: all 0.2s ease;
+    }
+
+    .btn-theme.-btn2:hover,
+    .btn-theme.-btn2:focus {
+        background-color: #2a4270;
+        border-color: #2a4270;
+        box-shadow: 0 0 0 0.25rem rgba(53, 83, 137, 0.25);
+    }
+</style>
 
 {% endblock content %}

@@ -1,5 +1,5 @@
 {% extends "../base.html" %}
-{% load crispy_forms_tags %} 
+{% load crispy_forms_tags %}
 {% load static %}
 {% block content %}
 
@@ -7,16 +7,16 @@
 <div class="container">
     <div class="row d-flex justify-content-center vertical-center">
         <div class="col-lg-6 col-md-10 col-12">
-            <div class="card border-0 shadow p-3 mb-5 bg-body rounded">
+            <div class="card border-0 shadow p-3 mb-5 theme-card">
                 <div class="card-body">
                     <div class="row">
-                        <form method="POST">
+                        <form method="POST" id="updateOfficialForm">
                             {% csrf_token %}
                             <div class="col-12">
                             {{form|crispy}}
-                            <button type="submit" class="btn-theme -btn2 col-12 col-md-5">Update</button>
+                            <button type="button" id="updateBtn" class="btn-theme -btn2 col-12 col-md-5">Update</button>
                             &nbsp;&nbsp;
-                            <a href="{% url 'officialList'%}" type="button" class="btn-theme -btn1 col-6 col-md-3 text-center">Cancel</a>
+                            <button type="button" id="cancelBtn" class="btn-theme -btn1 col-6 col-md-3 text-center">Cancel</button>
                             </div>
                         </form>
                     </div>
@@ -26,5 +26,141 @@
     </div>
 </div>
 
+<script>
+    // Update button click handler
+    document.getElementById('updateBtn').addEventListener('click', function() {
+        Swal.fire({
+            title: 'Update Official Details',
+            text: 'Are you sure you want to update this official\'s information?',
+            icon: 'question',
+            showCancelButton: true,
+            confirmButtonText: 'Yes, update it',
+            cancelButtonText: 'No, cancel',
+            confirmButtonColor: '#355389',
+            cancelButtonColor: '#6c757d',
+            reverseButtons: true
+        }).then((result) => {
+            if (result.isConfirmed) {
+                // Show loading state
+                Swal.fire({
+                    title: 'Updating...',
+                    text: 'Please wait',
+                    allowOutsideClick: false,
+                    showConfirmButton: false,
+                    willOpen: () => {
+                        Swal.showLoading();
+                    }
+                });
+
+                // Submit the form
+                document.getElementById('updateOfficialForm').submit();
+            }
+        });
+    });
+
+    // Cancel button click handler
+    document.getElementById('cancelBtn').addEventListener('click', function() {
+        Swal.fire({
+            title: 'Cancel Changes',
+            text: 'Are you sure you want to discard your changes?',
+            icon: 'warning',
+            showCancelButton: true,
+            confirmButtonText: 'Yes, discard',
+            cancelButtonText: 'No, keep editing',
+            confirmButtonColor: '#dc3545',
+            cancelButtonColor: '#6c757d',
+            reverseButtons: true
+        }).then((result) => {
+            if (result.isConfirmed) {
+                window.location.href = "{% url 'officialList' %}";
+            }
+        });
+    });
+
+    // Check for success message in URL parameter (can be added in the view)
+    document.addEventListener('DOMContentLoaded', function() {
+        const urlParams = new URLSearchParams(window.location.search);
+        const status = urlParams.get('status');
+
+        if (status === 'success') {
+            Swal.fire({
+                title: 'Success!',
+                text: 'Official information has been updated successfully.',
+                icon: 'success',
+                confirmButtonColor: '#355389'
+            });
+        }
+    });
+</script>
+
+<style>
+    /* Theme-compatible card styling */
+    .theme-card {
+        background-color: var(--bs-body-bg, #ffffff);
+        color: var(--bs-body-color, #212529);
+        border-color: var(--bs-border-color, #dee2e6);
+        transition: all 0.3s ease;
+    }
+
+    /* Form control theming */
+    .theme-card .form-control,
+    .theme-card .form-select {
+        background-color: var(--bs-form-control-bg, #ffffff);
+        color: var(--bs-body-color, #212529);
+        border-color: var(--bs-border-color, #ced4da);
+    }
+
+    .theme-card .form-control:focus,
+    .theme-card .form-select:focus {
+        border-color: #355389;
+        box-shadow: 0 0 0 0.25rem rgba(53, 83, 137, 0.25);
+    }
+
+    /* Label and text theming */
+    .theme-card label,
+    .theme-card .form-text {
+        color: var(--bs-body-color, #212529);
+    }
+
+    /* Helper text theming */
+    .theme-card .form-text,
+    .theme-card small {
+        color: var(--bs-secondary-color, #6c757d);
+    }
+
+    /* Required asterisk styling */
+    .theme-card .asteriskField {
+        color: #dc3545;
+    }
+
+    /* Button theming - ensure good contrast in both modes */
+    .btn-theme.-btn2 {
+        background-color: #355389;
+        border-color: #355389;
+        color: white;
+        transition: all 0.2s ease;
+    }
+
+    .btn-theme.-btn2:hover,
+    .btn-theme.-btn2:focus {
+        background-color: #2a4270;
+        border-color: #2a4270;
+        box-shadow: 0 0 0 0.25rem rgba(53, 83, 137, 0.25);
+    }
+
+    .btn-theme.-btn1 {
+        background-color: #0a9b4b;
+        border-color: #0a9b4b;
+        color: white;
+        transition: all 0.2s ease;
+    }
+
+    .btn-theme.-btn1:hover,
+    .btn-theme.-btn1:focus {
+        background-color: #09833f;
+        border-color: #09833f;
+        box-shadow: 0 0 0 0.25rem rgba(10, 155, 75, 0.25);
+    }
+</style>
 
 {% endblock content %}

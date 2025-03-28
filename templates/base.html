@@ -197,6 +197,169 @@
     .la, .las, .lar, .lab, [class*="la-"] {
         font-family: 'Line Awesome Free', 'LineAwesome', 'Line Awesome Brands' !important;
     }
+
+    /* Command Palette Styles */
+    .command-palette {
+        position: relative;
+        width: 100%;
+        max-width: 600px;
+    }
+
+    .command-input {
+        width: 100%;
+        padding: 8px 16px;
+        padding-left: 40px;
+        border: 2px solid rgba(53, 83, 137, 0.2);
+        border-radius: 8px;
+        background-color: rgba(255, 255, 255, 0.9);
+        font-size: 14px;
+        transition: all 0.2s ease;
+    }
+
+    .command-input:focus {
+        outline: none;
+        border-color: #355389;
+        box-shadow: 0 0 0 3px rgba(53, 83, 137, 0.1);
+    }
+
+    .command-icon {
+        position: absolute;
+        left: 12px;
+        top: 50%;
+        transform: translateY(-50%);
+        color: #666;
+        pointer-events: none;
+    }
+
+    .command-shortcut {
+        position: absolute;
+        right: 12px;
+        top: 50%;
+        transform: translateY(-50%);
+        color: #666;
+        font-size: 12px;
+        background-color: #f0f0f0;
+        padding: 2px 6px;
+        border-radius: 4px;
+        pointer-events: none;
+    }
+
+    .command-menu {
+        position: absolute;
+        top: 100%;
+        left: 0;
+        right: 0;
+        background-color: white;
+        border-radius: 8px;
+        box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+        margin-top: 4px;
+        max-height: 400px;
+        overflow-y: auto;
+        z-index: 1000;
+        display: none;
+    }
+
+    .command-menu.active {
+        display: block;
+        animation: slideDown 0.2s ease;
+    }
+
+    .command-group {
+        padding: 8px 0;
+    }
+
+    .command-group-title {
+        padding: 4px 16px;
+        font-size: 12px;
+        font-weight: 600;
+        color: #666;
+        text-transform: uppercase;
+        background-color: #f8f9fa;
+    }
+
+    .command-item {
+        padding: 8px 16px;
+        display: flex;
+        align-items: center;
+        cursor: pointer;
+        transition: background-color 0.2s ease;
+    }
+
+    .command-item:hover,
+    .command-item.selected {
+        background-color: #f0f4f8;
+    }
+
+    .command-item i {
+        width: 24px;
+        margin-right: 12px;
+        color: #355389;
+    }
+
+    .command-item-title {
+        flex: 1;
+        font-size: 14px;
+        color: #2c3e50;
+    }
+
+    .command-item-shortcut {
+        font-size: 12px;
+        color: #666;
+        background-color: #f0f0f0;
+        padding: 2px 6px;
+        border-radius: 4px;
+    }
+
+    /* Dark mode styles for command palette */
+    body.dark-mode .command-input {
+        background-color: #2c3e50;
+        border-color: rgba(255, 255, 255, 0.1);
+        color: white;
+    }
+
+    body.dark-mode .command-icon,
+    body.dark-mode .command-shortcut {
+        color: #aaa;
+    }
+
+    body.dark-mode .command-menu {
+        background-color: #2c3e50;
+        border: 1px solid rgba(255, 255, 255, 0.1);
+    }
+
+    body.dark-mode .command-group-title {
+        background-color: #243342;
+        color: #aaa;
+    }
+
+    body.dark-mode .command-item {
+        color: white;
+    }
+
+    body.dark-mode .command-item:hover,
+    body.dark-mode .command-item.selected {
+        background-color: #355389;
+    }
+
+    body.dark-mode .command-item-title {
+        color: white;
+    }
+
+    body.dark-mode .command-item-shortcut {
+        background-color: #243342;
+        color: #aaa;
+    }
+
+    @keyframes slideDown {
+        from {
+            opacity: 0;
+            transform: translateY(-8px);
+        }
+        to {
+            opacity: 1;
+            transform: translateY(0);
+        }
+    }
 </style>
 
   <title>Barangay E-Service System</title>
@@ -379,7 +542,147 @@
                         <a class="navbar-brand fd-4" href="#"><img src="{%static 'img/poblacionlogo.png' %}" height="40"><span class="px-2 py-0 h4">B.E.S.S</span></a>
                     </div>
                     <div class="d-none d-md-block">
-                        <!-- Empty div to balance the navbar on desktop -->
+                        <!-- Add Command Palette here -->
+                        <div class="command-palette">
+                            <i class="fas fa-search command-icon"></i>
+                            <input type="text" class="command-input" placeholder="Search Keywords" autocomplete="off">
+                            <span class="command-shortcut">/</span>
+
+                            <div class="command-menu">
+                                <div class="command-group">
+                                    <div class="command-group-title">Navigation</div>
+                                    <div class="command-item" data-url="{% url 'dashboard' %}">
+                                        <i class="fa fa-line-chart"></i>
+                                        <span class="command-item-title">Dashboard</span>
+                                        <span class="command-item-shortcut">D</span>
+                                    </div>
+                                </div>
+
+                                {% if not request.user.groups.all.0.name == 'superadmin' %}
+                                <div class="command-group">
+                                    <div class="command-group-title">Profiling</div>
+                                    <div class="command-item" data-url="{% url 'resident_list' %}">
+                                        <i class="fas fa-users"></i>
+                                        <span class="command-item-title">Residents</span>
+                                        <span class="command-item-shortcut">R</span>
+                                    </div>
+                                    <div class="command-item" data-url="{% url 'pwd' %}">
+                                        <i class="fas fa-wheelchair"></i>
+                                        <span class="command-item-title">PWD</span>
+                                        <span class="command-item-shortcut">W</span>
+                                    </div>
+                                    <div class="command-item" data-url="{% url 'senior' %}">
+                                        <i class="fas fa-user-clock"></i>
+                                        <span class="command-item-title">Senior Citizen</span>
+                                        <span class="command-item-shortcut">S</span>
+                                    </div>
+                                    <div class="command-item" data-url="{% url 'single' %}">
+                                        <i class="fas fa-user"></i>
+                                        <span class="command-item-title">Single Parent</span>
+                                        <span class="command-item-shortcut">P</span>
+                                    </div>
+                                </div>
+
+                                <div class="command-group">
+                                    <div class="command-group-title">Issuances</div>
+                                    <div class="command-item" data-url="{% url 'clearance' %}">
+                                        <i class="fas fa-file-alt"></i>
+                                        <span class="command-item-title">Barangay Clearance</span>
+                                        <span class="command-item-shortcut">C</span>
+                                    </div>
+                                    <div class="command-item" data-url="{% url 'indigency_request' %}">
+                                        <i class="fas fa-feather-alt"></i>
+                                        <span class="command-item-title">Certificate of Indigency</span>
+                                        <span class="command-item-shortcut">I</span>
+                                    </div>
+                                    <div class="command-item" data-url="{% url 'business_permit_module' %}">
+                                        <i class="fas fa-file-contract"></i>
+                                        <span class="command-item-title">Business Permit</span>
+                                        <span class="command-item-shortcut">B</span>
+                                    </div>
+                                    <div class="command-item" data-url="{% url 'building_permit_module' %}">
+                                        <i class="far fa-building"></i>
+                                        <span class="command-item-title">Building Permit</span>
+                                        <span class="command-item-shortcut">U</span>
+                                    </div>
+                                    <div class="command-item" data-url="{% url 'residency_certificate_module' %}">
+                                        <i class="fas fa-certificate"></i>
+                                        <span class="command-item-title">Certificate of Residency</span>
+                                        <span class="command-item-shortcut">Y</span>
+                                    </div>
+                                </div>
+
+                                <div class="command-group">
+                                    <div class="command-group-title">Reports</div>
+                                    <div class="command-item" data-url="{% url 'reports' %}">
+                                        <i class="fas fa-file-archive"></i>
+                                        <span class="command-item-title">Issued Documents</span>
+                                        <span class="command-item-shortcut">E</span>
+                                    </div>
+                                    <div class="command-item" data-url="{% url 'clearance_reports' %}">
+                                        <i class="fas fa-file-signature"></i>
+                                        <span class="command-item-title">Issued Clearance</span>
+                                        <span class="command-item-shortcut">L</span>
+                                    </div>
+                                    <div class="command-item" data-url="{% url 'indigency_reports' %}">
+                                        <i class="fas fa-file-invoice"></i>
+                                        <span class="command-item-title">Issued Indigency</span>
+                                        <span class="command-item-shortcut">N</span>
+                                    </div>
+                                    <div class="command-item" data-url="{% url 'business_reports' %}">
+                                        <i class="fas fa-file-invoice-dollar"></i>
+                                        <span class="command-item-title">Issued Business Permit</span>
+                                        <span class="command-item-shortcut">M</span>
+                                    </div>
+                                    <div class="command-item" data-url="{% url 'building_reports' %}">
+                                        <i class="far fa-building"></i>
+                                        <span class="command-item-title">Issued Building Permit</span>
+                                        <span class="command-item-shortcut">G</span>
+                                    </div>
+                                    <div class="command-item" data-url="{% url 'residency_reports' %}">
+                                        <i class="far fa-id-badge"></i>
+                                        <span class="command-item-title">Issued Residency</span>
+                                        <span class="command-item-shortcut">H</span>
+                                    </div>
+                                    <div class="command-item" data-url="{% url 'requestLogs' %}">
+                                        <i class="fas fa-history"></i>
+                                        <span class="command-item-title">Request Logs</span>
+                                        <span class="command-item-shortcut">Q</span>
+                                    </div>
+                                </div>
+                                {% endif %}
+
+                                {% if request.user.groups.all.0.name == 'superadmin' %}
+                                <div class="command-group">
+                                    <div class="command-group-title">Admin</div>
+                                    <div class="command-item" data-url="{% url 'announcementPage' %}">
+                                        <i class="fas fa-bullhorn"></i>
+                                        <span class="command-item-title">Announcements</span>
+                                        <span class="command-item-shortcut">A</span>
+                                    </div>
+                                    <div class="command-item" data-url="{% url 'add_official_account' %}">
+                                        <i class="fas fa-user-plus"></i>
+                                        <span class="command-item-title">Add Account</span>
+                                        <span class="command-item-shortcut">N</span>
+                                    </div>
+                                    <div class="command-item" data-url="{% url 'officialList' %}">
+                                        <i class="fas fa-user-circle"></i>
+                                        <span class="command-item-title">Account Records</span>
+                                        <span class="command-item-shortcut">O</span>
+                                    </div>
+                                </div>
+                                {% endif %}
+
+                                <div class="command-group">
+                                    <div class="command-group-title">Theme</div>
+                                    <div class="command-item" data-action="toggleDarkMode">
+                                        <i class="fas fa-moon"></i>
+                                        <span class="command-item-title">Toggle Dark Mode</span>
+                                        <span class="command-item-shortcut">T</span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
                     </div>
                     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
                     <span class="navbar-toggler-icon"></span>
@@ -841,6 +1144,169 @@ document.addEventListener('DOMContentLoaded', function() {
                 });
             });
         }
+    });
+</script>
+
+<!-- Command Palette Script -->
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+    const commandPalette = {
+        input: document.querySelector('.command-input'),
+        menu: document.querySelector('.command-menu'),
+        items: document.querySelectorAll('.command-item'),
+        selectedIndex: -1,
+        isOpen: false,
+
+        init() {
+            // Global keyboard shortcut
+            document.addEventListener('keydown', (e) => {
+                if (e.key === '/' && !this.isOpen && document.activeElement !== this.input) {
+                    e.preventDefault();
+                    this.open();
+                } else if (e.key === 'Escape' && this.isOpen) {
+                    this.close();
+                }
+            });
+
+            // Input focus events
+            this.input.addEventListener('focus', () => this.open());
+            this.input.addEventListener('blur', (e) => {
+                // Only close if not clicking inside the menu
+                if (!this.menu.contains(e.relatedTarget)) {
+                    this.close();
+                }
+            });
+
+            // Input filtering
+            this.input.addEventListener('input', () => this.filterItems());
+
+            // Keyboard navigation
+            this.input.addEventListener('keydown', (e) => {
+                switch(e.key) {
+                    case 'ArrowDown':
+                        e.preventDefault();
+                        this.selectNext();
+                        break;
+                    case 'ArrowUp':
+                        e.preventDefault();
+                        this.selectPrevious();
+                        break;
+                    case 'Enter':
+                        e.preventDefault();
+                        this.activateSelected();
+                        break;
+                }
+            });
+
+            // Click handlers for items
+            this.items.forEach(item => {
+                item.addEventListener('click', () => this.handleItemClick(item));
+                item.addEventListener('mouseenter', () => {
+                    this.clearSelection();
+                    item.classList.add('selected');
+                    this.selectedIndex = Array.from(this.items).indexOf(item);
+                });
+            });
+        },
+
+        open() {
+            this.menu.classList.add('active');
+            this.input.focus();
+            this.isOpen = true;
+            this.selectedIndex = -1;
+            this.showAllItems();
+        },
+
+        close() {
+            this.menu.classList.remove('active');
+            this.input.value = '';
+            this.isOpen = false;
+            this.showAllItems();
+        },
+
+        filterItems() {
+            const query = this.input.value.toLowerCase();
+            let hasVisibleItems = false;
+
+            this.items.forEach(item => {
+                const title = item.querySelector('.command-item-title').textContent.toLowerCase();
+                const matches = title.includes(query);
+                item.style.display = matches ? 'flex' : 'none';
+                if (matches) hasVisibleItems = true;
+            });
+
+            // Show/hide groups based on whether they have visible items
+            document.querySelectorAll('.command-group').forEach(group => {
+                const hasVisibleChild = Array.from(group.querySelectorAll('.command-item'))
+                    .some(item => item.style.display !== 'none');
+                group.style.display = hasVisibleChild ? 'block' : 'none';
+            });
+
+            // Reset selection
+            this.selectedIndex = -1;
+            this.clearSelection();
+        },
+
+        showAllItems() {
+            this.items.forEach(item => item.style.display = 'flex');
+            document.querySelectorAll('.command-group').forEach(group => {
+                group.style.display = 'block';
+            });
+        },
+
+        selectNext() {
+            let visibleItems = Array.from(this.items).filter(item => item.style.display !== 'none');
+            if (visibleItems.length === 0) return;
+
+            this.selectedIndex = (this.selectedIndex + 1) % visibleItems.length;
+            this.updateSelection(visibleItems);
+        },
+
+        selectPrevious() {
+            let visibleItems = Array.from(this.items).filter(item => item.style.display !== 'none');
+            if (visibleItems.length === 0) return;
+
+            this.selectedIndex = this.selectedIndex <= 0 ? visibleItems.length - 1 : this.selectedIndex - 1;
+            this.updateSelection(visibleItems);
+        },
+
+        updateSelection(visibleItems) {
+            this.clearSelection();
+            const selectedItem = visibleItems[this.selectedIndex];
+            if (selectedItem) {
+                selectedItem.classList.add('selected');
+                selectedItem.scrollIntoView({ block: 'nearest' });
+            }
+        },
+
+        clearSelection() {
+            this.items.forEach(item => item.classList.remove('selected'));
+        },
+
+        activateSelected() {
+            const visibleItems = Array.from(this.items).filter(item => item.style.display !== 'none');
+            const selectedItem = visibleItems[this.selectedIndex];
+            if (selectedItem) {
+                this.handleItemClick(selectedItem);
+            }
+        },
+
+        handleItemClick(item) {
+            const url = item.dataset.url;
+            const action = item.dataset.action;
+
+            if (action === 'toggleDarkMode') {
+                document.getElementById('darkModeToggle').click();
+            } else if (url) {
+                window.location.href = url;
+            }
+
+            this.close();
+        }
+    };
+
+    // Initialize the command palette
+    commandPalette.init();
     });
 </script>
 </body>

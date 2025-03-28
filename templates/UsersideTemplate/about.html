@@ -2,59 +2,800 @@
 {% load static %}
 {% block content %}
 
-<div class="video-wrapper" style="height: 300px;">
-
-    <img class="imageheader" src="{% static 'img/poblacionbg.png'%}" alt="">
-  
-    <div class="header">
-      <h1 class="display-1"><b>ABOUT BARANGAY POBLACION</b></h1>
+<!-- Hero Section with Parallax Effect -->
+<div class="hero-section">
+    <div class="hero-parallax">
+        <img class="hero-image" src="{% static 'img/poblacionbg.png'%}" alt="Poblacion Naawan">
+    </div>
+    <div class="hero-overlay"></div>
+    <div class="hero-content">
+        <div class="animate-fade-in">
+            <h1 class="hero-title">About Barangay Poblacion</h1>
+            <div class="hero-divider"></div>
+            <p class="hero-subtitle">Discover our vibrant community and rich heritage</p>
+        </div>
     </div>
 </div>
 
-<div class="container pt-5">
-    <div class="row">
-        
-        <div class="col-lg-6 pt-2">
-            <img class="float-end" src="{% static 'img/brgyhall.jpg'%}" width="600">
+<!-- History Section -->
+<section class="section-history">
+    <div class="container">
+        <div class="row align-items-center">
+            <div class="col-lg-6 col-md-12 order-lg-2 mb-4 mb-lg-0">
+                <div class="image-container animate-on-scroll">
+                    <img src="{% static 'img/brgyhall.jpg'%}" alt="Barangay Hall" class="img-fluid rounded shadow-lg">
+                    <div class="image-accent"></div>
+                </div>
+            </div>
+            <div class="col-lg-6 col-md-12 order-lg-1">
+                <div class="content-block animate-on-scroll">
+                    <h6 class="section-subtitle">Our History</h6>
+                    <h2 class="section-title">Roots of Community: A Historical Journey</h2>
+                    <div class="section-divider"></div>
+                    <p class="lead mb-4">The Municipality of Naawan is a fourth-class municipality in Misamis Oriental with an estimated population of 20,000 as of 2020.</p>
+                    <p>Naawan was recognized as the cleanest town in the Philippines in 2008 and is home to one of the Mindanao State Universities. Located near the ocean, it has a total area of 88.50 km².</p>
+                    <p>Poblacion, situated at coordinates 8.4327, 124.2919 at an elevation of 10 meters above sea level, is one of the prominent barangays in Naawan. It comprises 12 puroks with a population that grew from 2,724 in 1990 to 5,714 in 2020.</p>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Timeline Section -->
+<section class="section-timeline">
+    <div class="container">
+        <div class="row justify-content-center mb-5">
+            <div class="col-lg-8 text-center">
+                <h6 class="section-subtitle">Our Journey</h6>
+                <h2 class="section-title">Timeline of Development</h2>
+                <div class="section-divider mx-auto"></div>
+            </div>
         </div>
 
-        <div class="col-lg-6">
-            <h2><b>Roots of Community: A Historical Journey through the Barangay Poblacion, Naawan, Misamis Oriental</b></h2>
-            <p>The Municipality of Naawan is known as a fourth-class municipality located in the province of Misamis Oriental that is composed of 20,000 estimated population in the year 2020. Naawan was once called as the cleanest town in the Philippines in the year 2008 and one of the Mindanao State Universities is located in this area. It is located near the ocean and has a total area of 88.50 km2.<br>
-
-                <br>Poblacion is one of the barangays found in Naawan. It is located on the island of Mindanao at roughly 8.4327, 124.2919. At these coordinates, the elevation is calculated to be 10.0 meters or 32.8 feet above mean sea level. It is composed of 12 purok and the age group with the largest population in Poblacion, according to the 2015 Census, is 15 to 19, with 707 people. The age category with the lowest population is 80 and older, with 38 people. Poblacion's population increased by 2,990 persons over the course of 30 years, from 2,724 in 1990 to 5,714 in 2020. The most recent census data for 2020 show a 3.39% rise, or an increase of 838 individuals, over the previous population of 4,876 in 2015.
-                <br>
-                <br>It has 3 educational institutions:
-                <br>-Mindanao State University - Naawan Campus
-                <br>-MSUN-Integrated Developmental School
-                <br>-Naawan Central School
-                <br>
-         </div>
-    </div>
-</div>
-
-
-<div class="container" style="padding-top: 1%;">
-    <div class="row">
-
-        <div class="col-lg-6 p-5 pt-5">
-            <div class=""><h2><b>Map of Poblacion Naawan</b></h2></div>
-            <div class="h-auto d-inline-block"><p><b>Address</b> : Poblacion, Naawan, Misamis Oriental</p></div>
-            <div class="h-auto d-inline-block"><p><b>Coordinate</b> : <a href="https://www.google.com/maps/place/8%C2%B025'52.0%22N+124%C2%B017'28.2%22E/@8.4311103,124.2911532,811m/data=!3m2!1e3!4b1!4m4!3m3!8m2!3d8.4311103!4d124.2911532?entry=ttu&g_ep=EgoyMDI0MDkxNi4wIKXMDSoASAFQAw%3D%3D">8.436163644257281, 124.28952929292097</a></p></div>
-            <br>
-            <!--<div class="h-auto d-inline-block"><p><b>Land Area</b> : 32.1 hectares</p></div>-->
-            <!--<div class="h-auto d-inline-block"><p><b>Boundaries</b> : West - Sucol, East - Los Baños, South - Sucol and South - Sucol</p></div>-->
-            <div class="h-auto d-inline-block"><p><b>Number of Sitios/Purok</b> : 12</p></div>
-            <div class="h-auto d-inline-block"><p><b>List of Sitios/Purok</b> : Purok I, Purok II, Purok III, Purok IV, Purok IV-A/B, Purok V, Purok VI, Purok VII, Purok VII-A/B, Purok VIII,</p></div>
+        <div class="timeline">
+            <div class="timeline-item">
+                <div class="timeline-dot"></div>
+                <div class="timeline-content animate-on-scroll">
+                    <h3>1990</h3>
+                    <p>Initial population recorded at 2,724 residents</p>
+                </div>
+            </div>
+            <div class="timeline-item">
+                <div class="timeline-dot"></div>
+                <div class="timeline-content animate-on-scroll">
+                    <h3>2008</h3>
+                    <p>Naawan recognized as the cleanest town in the Philippines</p>
+                </div>
+            </div>
+            <div class="timeline-item">
+                <div class="timeline-dot"></div>
+                <div class="timeline-content animate-on-scroll">
+                    <h3>2015</h3>
+                    <p>Population growth to 4,876 residents</p>
+                </div>
+            </div>
+            <div class="timeline-item">
+                <div class="timeline-dot"></div>
+                <div class="timeline-content animate-on-scroll">
+                    <h3>2020</h3>
+                    <p>Current population recorded at 5,714 residents</p>
+                </div>
+            </div>
         </div>
-
-        <div class="col-lg-6 p-5 pt-5">
-            <!--Google map-->
-               <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d1041.9617279974166!2d124.28920041516452!3d8.433772339290316!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x32556974a5891a17%3A0x5cb205ab13882d52!2sPOB!5e1!3m2!1sen!2sph!4v1726767105694!5m2!1sen!2sph" width="600" height="450" style="border:0;" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
-        </div>  
-            <!--Google Maps-->            
-        </div> 
     </div>
-</div>
+</section>
+
+<!-- Education Section -->
+<section class="section-education">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-6 col-md-12">
+                <div class="content-block animate-on-scroll">
+                    <h6 class="section-subtitle">Education</h6>
+                    <h2 class="section-title">Educational Institutions</h2>
+                    <div class="section-divider"></div>
+                    <p class="lead mb-4">Poblacion is home to three prominent educational institutions that serve the community.</p>
+
+                    <div class="education-cards">
+                        <div class="education-card animate-on-scroll" data-delay="0">
+                            <div class="card-icon">
+                                <i class="fas fa-university"></i>
+                            </div>
+                            <div class="card-content">
+                                <h5>Mindanao State University - Naawan Campus</h5>
+                                <p>Higher education institution offering various undergraduate and graduate programs.</p>
+                            </div>
+                        </div>
+
+                        <div class="education-card animate-on-scroll" data-delay="200">
+                            <div class="card-icon">
+                                <i class="fas fa-school"></i>
+                            </div>
+                            <div class="card-content">
+                                <h5>MSUN-Integrated Developmental School</h5>
+                                <p>Laboratory school providing quality basic education to the community.</p>
+                            </div>
+                        </div>
+
+                        <div class="education-card animate-on-scroll" data-delay="400">
+                            <div class="card-icon">
+                                <i class="fas fa-graduation-cap"></i>
+                            </div>
+                            <div class="card-content">
+                                <h5>Naawan Central School</h5>
+                                <p>Primary public school serving the educational needs of younger residents.</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-lg-6 col-md-12">
+                <div class="stats-container">
+                    <div class="stats-item animate-on-scroll" data-delay="0">
+                        <div class="stats-number"><span class="counter" data-target="12">0</span></div>
+                        <div class="stats-label">Puroks</div>
+                    </div>
+                    <div class="stats-item animate-on-scroll" data-delay="200">
+                        <div class="stats-number"><span class="counter" data-target="5714">0</span></div>
+                        <div class="stats-label">Population (2020)</div>
+                    </div>
+                    <div class="stats-item animate-on-scroll" data-delay="400">
+                        <div class="stats-number"><span class="counter" data-target="3">0</span></div>
+                        <div class="stats-label">Educational Institutions</div>
+                    </div>
+                    <div class="stats-item animate-on-scroll" data-delay="600">
+                        <div class="stats-number"><span class="counter" data-target="1990">0</span></div>
+                        <div class="stats-label">Year Established</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Location Section -->
+<section class="section-location">
+    <div class="container">
+        <div class="row align-items-center">
+            <div class="col-lg-6 col-md-12 mb-4 mb-lg-0">
+                <div class="content-block animate-on-scroll">
+                    <h6 class="section-subtitle">Our Location</h6>
+                    <h2 class="section-title">Map of Poblacion Naawan</h2>
+                    <div class="section-divider"></div>
+
+                    <div class="location-details">
+                        <div class="location-item animate-on-scroll" data-delay="0">
+                            <div class="location-icon"><i class="fas fa-map-marker-alt"></i></div>
+                            <div class="location-text">
+                                <strong>Address:</strong> Poblacion, Naawan, Misamis Oriental
+                            </div>
+                        </div>
+
+                        <div class="location-item animate-on-scroll" data-delay="200">
+                            <div class="location-icon"><i class="fas fa-compass"></i></div>
+                            <div class="location-text">
+                                <strong>Coordinates:</strong>
+                                <a href="https://www.google.com/maps/place/8%C2%B025'52.0%22N+124%C2%B017'28.2%22E/@8.4311103,124.2911532,811m/data=!3m2!1e3!4b1!4m4!3m3!8m2!3d8.4311103!4d124.2911532?entry=ttu&g_ep=EgoyMDI0MDkxNi4wIKXMDSoASAFQAw%3D%3D" class="coordinate-link">
+                                    8.436163644257281, 124.28952929292097
+                                </a>
+                            </div>
+                        </div>
+
+                        <div class="location-item animate-on-scroll" data-delay="400">
+                            <div class="location-icon"><i class="fas fa-layer-group"></i></div>
+                            <div class="location-text">
+                                <strong>Number of Puroks:</strong> 12
+                            </div>
+                        </div>
+
+                        <div class="location-item animate-on-scroll" data-delay="600">
+                            <div class="location-icon"><i class="fas fa-list"></i></div>
+                            <div class="location-text">
+                                <strong>List of Puroks:</strong> Purok I, Purok II, Purok III, Purok IV, Purok IV-A/B, Purok V, Purok VI, Purok VII, Purok VII-A/B, Purok VIII
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-lg-6 col-md-12">
+                <div class="map-container animate-on-scroll">
+                    <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d1041.9617279974166!2d124.28920041516452!3d8.433772339290316!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x32556974a5891a17%3A0x5cb205ab13882d52!2sPOB!5e1!3m2!1sen!2sph!4v1726767105694!5m2!1sen!2sph" width="100%" height="450" style="border:0;" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade" class="map-frame"></iframe>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<style>
+    /* Hero Section Styling with Parallax Effect */
+    .hero-section {
+        position: relative;
+        height: 70vh;
+        min-height: 500px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        text-align: center;
+        color: white;
+        margin-bottom: 80px;
+        overflow: hidden;
+    }
+
+    .hero-parallax {
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        will-change: transform;
+    }
+
+    .hero-image {
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+        z-index: -2;
+        filter: brightness(0.7);
+        transform: scale(1.1);
+    }
+
+    .hero-overlay {
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background: linear-gradient(rgba(0, 0, 0, 0.3), rgba(53, 83, 137, 0.85));
+        z-index: -1;
+    }
+
+    .hero-content {
+        max-width: 800px;
+        padding: 20px;
+        z-index: 1;
+    }
+
+    .hero-title {
+        font-size: 4rem;
+        font-weight: 800;
+        margin-bottom: 15px;
+        letter-spacing: 2px;
+        text-transform: uppercase;
+        text-shadow: 0 4px 10px rgba(0, 0, 0, 0.3);
+    }
+
+    .hero-subtitle {
+        font-size: 1.5rem;
+        font-weight: 300;
+        margin-top: 10px;
+        text-shadow: 0 2px 5px rgba(0, 0, 0, 0.3);
+    }
+
+    .hero-divider {
+        width: 100px;
+        height: 4px;
+        background-color: #355389;
+        margin: 15px auto 20px;
+        border-radius: 2px;
+        box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+    }
+
+    /* Section Styling */
+    section {
+        padding: 100px 0;
+        position: relative;
+    }
+
+    .section-history {
+        background-color: var(--bs-body-bg);
+        position: relative;
+    }
+
+    .section-timeline {
+        background-color: var(--bs-tertiary-bg, #f8f9fa);
+        position: relative;
+    }
+
+    .section-education {
+        background-color: var(--bs-body-bg);
+        position: relative;
+    }
+
+    .section-location {
+        background-color: var(--bs-tertiary-bg, #f8f9fa);
+        position: relative;
+    }
+
+    .section-subtitle {
+        color: #355389;
+        font-weight: 600;
+        text-transform: uppercase;
+        letter-spacing: 2px;
+        margin-bottom: 10px;
+    }
+
+    .section-title {
+        font-size: 2.5rem;
+        font-weight: 700;
+        margin-bottom: 20px;
+        color: var(--bs-heading-color, #212529);
+    }
+
+    .section-divider {
+        width: 70px;
+        height: 3px;
+        background-color: #355389;
+        margin-bottom: 25px;
+        border-radius: 2px;
+    }
+
+    /* Image Container */
+    .image-container {
+        position: relative;
+        padding: 20px;
+        transition: all 0.5s ease;
+    }
+
+    .image-accent {
+        position: absolute;
+        width: 100%;
+        height: 100%;
+        border: 5px solid #355389;
+        top: 40px;
+        left: 40px;
+        z-index: -1;
+        opacity: 0.5;
+        border-radius: 5px;
+        transition: all 0.5s ease;
+    }
+
+    .image-container:hover .image-accent {
+        top: 30px;
+        left: 30px;
+        opacity: 0.7;
+    }
+
+    /* Timeline Styling */
+    .timeline {
+        position: relative;
+        max-width: 800px;
+        margin: 0 auto;
+        padding: 40px 0;
+    }
+
+    .timeline::before {
+        content: '';
+        position: absolute;
+        top: 0;
+        bottom: 0;
+        left: 50%;
+        width: 3px;
+        background-color: #355389;
+        margin-left: -1.5px;
+    }
+
+    .timeline-item {
+        position: relative;
+        margin-bottom: 60px;
+        display: flex;
+        justify-content: center;
+    }
+
+    .timeline-dot {
+        position: absolute;
+        width: 20px;
+        height: 20px;
+        background-color: #355389;
+        border-radius: 50%;
+        top: 15px;
+        left: 50%;
+        transform: translateX(-50%);
+        z-index: 2;
+    }
+
+    .timeline-content {
+        width: 45%;
+        padding: 20px;
+        background-color: var(--bs-body-bg);
+        border-radius: 10px;
+        box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+        position: relative;
+    }
+
+    .timeline-item:nth-child(odd) .timeline-content {
+        margin-right: 55%;
+    }
+
+    .timeline-item:nth-child(even) .timeline-content {
+        margin-left: 55%;
+    }
+
+    .timeline-content::after {
+        content: '';
+        position: absolute;
+        top: 15px;
+        width: 20px;
+        height: 20px;
+        background-color: var(--bs-body-bg);
+        transform: rotate(45deg);
+    }
+
+    .timeline-item:nth-child(odd) .timeline-content::after {
+        right: -10px;
+    }
+
+    .timeline-item:nth-child(even) .timeline-content::after {
+        left: -10px;
+    }
+
+    .timeline-content h3 {
+        color: #355389;
+        margin-bottom: 10px;
+        font-weight: 700;
+    }
+
+    /* Education Cards */
+    .education-cards {
+        margin-top: 30px;
+    }
+
+    .education-card {
+        display: flex;
+        align-items: flex-start;
+        margin-bottom: 25px;
+        padding: 20px;
+        background-color: var(--bs-body-bg);
+        border-radius: 8px;
+        box-shadow: 0 3px 10px rgba(0,0,0,0.08);
+        transition: transform 0.3s ease, box-shadow 0.3s ease;
+    }
+
+    .education-card:hover {
+        transform: translateY(-5px);
+        box-shadow: 0 8px 20px rgba(0,0,0,0.1);
+    }
+
+    .card-icon {
+        width: 50px;
+        height: 50px;
+        min-width: 50px;
+        border-radius: 50%;
+        background-color: #355389;
+        color: white;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        margin-right: 15px;
+        transition: transform 0.3s ease;
+    }
+
+    .education-card:hover .card-icon {
+        transform: scale(1.1);
+    }
+
+    .card-icon i {
+        font-size: 22px;
+    }
+
+    .card-content h5 {
+        margin-bottom: 8px;
+        color: var(--bs-heading-color, #212529);
+    }
+
+    .card-content p {
+        margin-bottom: 0;
+        color: var(--bs-body-color, #6c757d);
+    }
+
+    /* Stats Container */
+    .stats-container {
+        display: grid;
+        grid-template-columns: repeat(2, 1fr);
+        gap: 20px;
+        padding: 30px;
+    }
+
+    .stats-item {
+        text-align: center;
+        padding: 30px 20px;
+        background-color: var(--bs-body-bg);
+        border-radius: 8px;
+        box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+        transition: transform 0.3s ease;
+        overflow: hidden;
+        position: relative;
+    }
+
+    .stats-item::before {
+        content: '';
+        position: absolute;
+        top: -100%;
+        left: -100%;
+        width: 300%;
+        height: 300%;
+        background: linear-gradient(
+            135deg,
+            rgba(53, 83, 137, 0) 0%,
+            rgba(53, 83, 137, 0.05) 50%,
+            rgba(53, 83, 137, 0) 100%
+        );
+        transition: all 0.6s ease-in-out;
+    }
+
+    .stats-item:hover {
+        transform: translateY(-8px);
+    }
+
+    .stats-item:hover::before {
+        top: -50%;
+        left: -50%;
+    }
+
+    .stats-number {
+        font-size: 2.5rem;
+        font-weight: 700;
+        color: #355389;
+        margin-bottom: 5px;
+    }
+
+    .stats-label {
+        font-size: 1rem;
+        font-weight: 500;
+        color: var(--bs-body-color, #6c757d);
+    }
+
+    /* Location Details */
+    .location-details {
+        margin-top: 30px;
+    }
+
+    .location-item {
+        display: flex;
+        margin-bottom: 20px;
+        transition: transform 0.3s ease;
+    }
+
+    .location-item:hover {
+        transform: translateX(5px);
+    }
+
+    .location-icon {
+        width: 40px;
+        height: 40px;
+        min-width: 40px;
+        background-color: rgba(53, 83, 137, 0.1);
+        color: #355389;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        border-radius: 50%;
+        margin-right: 15px;
+        transition: all 0.3s ease;
+    }
+
+    .location-item:hover .location-icon {
+        background-color: #355389;
+        color: white;
+    }
+
+    .location-text {
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+    }
+
+    .coordinate-link {
+        color: #355389;
+        text-decoration: none;
+        transition: color 0.2s ease;
+    }
+
+    .coordinate-link:hover {
+        color: #2a4270;
+        text-decoration: underline;
+    }
+
+    /* Map Container */
+    .map-container {
+        border-radius: 10px;
+        overflow: hidden;
+        box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+        border: 4px solid white;
+        transition: all 0.3s ease;
+    }
+
+    .map-container:hover {
+        box-shadow: 0 10px 30px rgba(0,0,0,0.15);
+        transform: scale(1.02);
+    }
+
+    .map-frame {
+        display: block;
+    }
+
+    /* Animation Classes */
+    .animate-fade-in {
+        animation: fadeIn 1.5s ease forwards;
+    }
+
+    .animate-on-scroll {
+        opacity: 0;
+        transform: translateY(30px);
+        transition: opacity 0.8s ease, transform 0.8s ease;
+    }
+
+    .animate-on-scroll.active {
+        opacity: 1;
+        transform: translateY(0);
+    }
+
+    @keyframes fadeIn {
+        from {
+            opacity: 0;
+            transform: translateY(20px);
+        }
+        to {
+            opacity: 1;
+            transform: translateY(0);
+        }
+    }
+
+    /* Responsive Adjustments */
+    @media (max-width: 992px) {
+        .hero-title {
+            font-size: 3rem;
+        }
+
+        .hero-subtitle {
+            font-size: 1.2rem;
+        }
+
+        .section-title {
+            font-size: 2rem;
+        }
+
+        .education-card {
+            padding: 15px;
+        }
+
+        .stats-container {
+            grid-template-columns: repeat(2, 1fr);
+        }
+
+        .timeline::before {
+            left: 40px;
+        }
+
+        .timeline-content {
+            width: 80%;
+        }
+
+        .timeline-item:nth-child(odd) .timeline-content,
+        .timeline-item:nth-child(even) .timeline-content {
+            margin-left: 80px;
+            margin-right: 0;
+        }
+
+        .timeline-dot {
+            left: 40px;
+        }
+
+        .timeline-item:nth-child(odd) .timeline-content::after,
+        .timeline-item:nth-child(even) .timeline-content::after {
+            left: -10px;
+            right: auto;
+        }
+    }
+
+    @media (max-width: 768px) {
+        .hero-section {
+            height: 60vh;
+            min-height: 400px;
+        }
+
+        .hero-title {
+            font-size: 2.5rem;
+        }
+
+        .hero-divider {
+            width: 70px;
+            margin: 10px auto 15px;
+        }
+
+        .stats-container {
+            padding: 15px;
+        }
+
+        .stats-number {
+            font-size: 2rem;
+        }
+
+        .image-accent {
+            top: 25px;
+            left: 25px;
+        }
+
+        section {
+            padding: 60px 0;
+        }
+    }
+</style>
+
+<script>
+    // Parallax scroll effect for hero image
+    window.addEventListener('scroll', function() {
+        const parallax = document.querySelector('.hero-parallax');
+        let scrollPosition = window.pageYOffset;
+        parallax.style.transform = 'translateY(' + scrollPosition * 0.4 + 'px)';
+    });
+
+    // Scroll animations
+    document.addEventListener('DOMContentLoaded', function() {
+        // Intersection Observer for scroll animations
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    const delay = entry.target.getAttribute('data-delay') || 0;
+                    setTimeout(() => {
+                        entry.target.classList.add('active');
+                    }, delay);
+                }
+            });
+        }, {
+            threshold: 0.1
+        });
+
+        // Observe all elements with animation class
+        document.querySelectorAll('.animate-on-scroll').forEach(element => {
+            observer.observe(element);
+        });
+
+        // Counter animation
+        function animateCounter() {
+            document.querySelectorAll('.counter').forEach(counter => {
+                const target = +counter.getAttribute('data-target');
+                const duration = 2000; // 2 seconds
+
+                let startTime = null;
+
+                function step(timestamp) {
+                    if (!startTime) startTime = timestamp;
+
+                    const progress = Math.min((timestamp - startTime) / duration, 1);
+                    const value = Math.floor(progress * target);
+
+                    counter.innerText = value;
+
+                    if (progress < 1) {
+                        window.requestAnimationFrame(step);
+                    } else {
+                        counter.innerText = target; // Ensure we end at the exact target
+                    }
+                }
+
+                // Create a separate observer for counters
+                const counterObserver = new IntersectionObserver((entries) => {
+                    entries.forEach(entry => {
+                        if (entry.isIntersecting) {
+                            window.requestAnimationFrame(step);
+                            counterObserver.unobserve(entry.target); // Only animate once
+                        }
+                    });
+                }, {
+                    threshold: 0.5
+                });
+
+                counterObserver.observe(counter);
+            });
+        }
+
+        animateCounter();
+    });
+</script>
 
 {% endblock content %}

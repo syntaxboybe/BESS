@@ -23,7 +23,7 @@ def announcementPage(request):
 @admin_only
 def announcement_list(request):
     if request.user.is_authenticated:
-        context = {'announcementList' :  Announcement.objects.all()}
+        context = {'announcementList': Announcement.objects.all().order_by('-post_date')}
         return render(request, 'AnnouncementPage/announcement_list.html', context)
     else:
         return redirect('loginPage')
@@ -49,15 +49,30 @@ def edit_announcement(request, id):
         edit = Announcement.objects.get(id=id)
 
         if request.method == "POST":
-            if len(request.FILES) != 0:
-                if len(edit.image.path) > 0:
+            # Handle image upload
+            if 'image' in request.FILES:
+                if edit.image and os.path.exists(edit.image.path):
                     os.remove(edit.image.path)
                 edit.image = request.FILES['image']
+
+            # Handle document upload
+            if 'document' in request.FILES:
+                if edit.document and os.path.exists(edit.document.path):
+                    os.remove(edit.document.path)
+                edit.document = request.FILES['document']
+
+            # Handle document removal
+            if 'document_removed' in request.POST and edit.document:
+                if os.path.exists(edit.document.path):
+                    os.remove(edit.document.path)
+                edit.document = None
+
+            # Update text fields
             edit.title = request.POST.get('title')
             edit.body = request.POST.get('body')
             edit.save()
             return redirect('announcementPage')
-                
+
         context = {'edit': edit}
         return render(request, 'AnnouncementPage/edit_announcement.html',context)
     else:
@@ -71,10 +86,18 @@ def delete_announcement(request, id):
 
         context = {'ann': ann}
         if request.method == 'POST':
-            if len(ann.image) > 0:
+            # Check if announcement has an image and if the file exists
+            if ann.image and ann.image.name and os.path.exists(ann.image.path):
                 os.remove(ann.image.path)
-                ann.delete()
-                return redirect('announcementPage')
+
+            # Check if announcement has a document and if the file exists
+            if ann.document and ann.document.name and os.path.exists(ann.document.path):
+                os.remove(ann.document.path)
+
+            # Delete the announcement object
+            ann.delete()
+            return redirect('announcementPage')
+
         return render(request, 'AnnouncementPage/delete_announcement.html', context)
     else:
         return redirect('loginPage')

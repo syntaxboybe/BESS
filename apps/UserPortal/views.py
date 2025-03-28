@@ -8,6 +8,8 @@ from django.views.decorators.cache import cache_control
 from django.contrib.auth.decorators import login_required
 from django.http import JsonResponse
 from django.views.decorators.http import require_POST
+from django.utils import timezone
+from datetime import timedelta
 
 from apps.AnnouncementManagement.models import Announcement
 from .forms import *
@@ -305,8 +307,17 @@ def changeUsername(request):
 
 
 def announce(request):
-    announce_list = Announcement.objects.all()
-    context = {'announcementList' :  announce_list}
+    # Get current time
+    now = timezone.now()
+    # Get all announcements ordered by post date
+    announce_list = Announcement.objects.all().order_by('-post_date')
+
+    # Add is_new flag for announcements less than 24 hours old
+    for announcement in announce_list:
+        time_diff = now - announcement.post_date
+        announcement.is_new = time_diff.total_seconds() < 24 * 3600  # 24 hours in seconds
+
+    context = {'announcementList': announce_list}
     return render(request, 'UsersideTemplate/announcement.html', context)
 
 

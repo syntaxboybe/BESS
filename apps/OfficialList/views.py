@@ -5,6 +5,7 @@ from apps.OfficialList.forms import EditAdminProfileForm
 from .decorators import superadmin_only
 from django.views.decorators.cache import cache_control
 from django.contrib.auth.decorators import login_required
+from django.urls import reverse
 # Create your views here.
 
 
@@ -46,12 +47,12 @@ def edit_official(request, id):
 
             if form.is_valid():
                 form.save()
-                return redirect('officialList')
+                # Correctly redirect with parameters
+                base_url = reverse('officialList')
+                return redirect(f"{base_url}?status=success&updated={profile.username}")
         else:
             form = EditAdminProfileForm(instance=profile)
         context = {'form': form}
         return render(request, 'OfficialList/edit_official.html', context)
     else:
         return redirect('loginPage')
-    
-   

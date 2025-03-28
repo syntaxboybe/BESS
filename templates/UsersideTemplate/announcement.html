@@ -4,65 +4,248 @@
 {% load humanize %}
 
 <style>
-  .bg { 
-  background: url("/static/img/service-bg.png") no-repeat center center fixed; 
-  -webkit-background-size: cover;
-  -moz-background-size: cover;
-  -o-background-size: cover;
-  background-size: cover;
-
+  .bg {
+    background: url("/static/img/service-bg.png") no-repeat center center fixed;
+    -webkit-background-size: cover;
+    -moz-background-size: cover;
+    -o-background-size: cover;
+    background-size: cover;
   }
 
-.custom-color {
-  color: #50C878;
-}
+  .custom-color {
+    color: #50C878;
+  }
+
+  /* Fixed header styles */
+  .announcement-header {
+    position: sticky;
+    top: 0;
+    z-index: 100;
+    background-color: #355389;
+    padding: 20px;
+    border-radius: 5px;
+    margin-bottom: 20px;
+  }
+
+  /* Scrollable content area */
+  .announcement-content {
+    max-height: calc(100vh - 200px);
+    overflow-y: auto;
+    padding-right: 5px;
+  }
+
+  /* Custom scrollbar styles */
+  .announcement-content::-webkit-scrollbar {
+    width: 6px;
+  }
+
+  .announcement-content::-webkit-scrollbar-track {
+    background: rgba(53, 83, 137, 0.1);
+    border-radius: 4px;
+  }
+
+  .announcement-content::-webkit-scrollbar-thumb {
+    background-color: rgba(53, 83, 137, 0.4);
+    border-radius: 4px;
+    transition: background-color 0.3s ease;
+  }
+
+  .announcement-content::-webkit-scrollbar-thumb:hover {
+    background-color: rgba(53, 83, 137, 0.6);
+  }
+
+  /* Hide scrollbar for Firefox */
+  .announcement-content {
+    scrollbar-width: thin;
+    scrollbar-color: rgba(53, 83, 137, 0.4) rgba(53, 83, 137, 0.1);
+  }
+
+  /* Ensure smooth scrolling */
+  .announcement-content {
+    scroll-behavior: smooth;
+  }
+
+  /* Announcement card styles */
+  .announcement-card {
+    border: 1px solid rgba(53, 83, 137, 0.3) !important;
+    border-radius: 8px;
+    transition: all 0.3s ease;
+    background-color: white;
+    position: relative;
+  }
+
+  .announcement-card:hover {
+    border-color: rgba(53, 83, 137, 0.5) !important;
+    box-shadow: 0 0.5rem 1rem rgba(53, 83, 137, 0.15) !important;
+    transform: translateY(-2px);
+  }
+
+  /* New badge styles */
+  .new-badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 4px;
+    background: linear-gradient(45deg, #50C878, #3CB371);
+    color: white;
+    padding: 2px 8px;
+    border-radius: 12px;
+    font-size: 0.65rem;
+    font-weight: 500;
+    letter-spacing: 0.3px;
+    text-transform: uppercase;
+    box-shadow: 0 2px 8px rgba(80, 200, 120, 0.15);
+    margin-right: 8px;
+    border: 1px solid rgba(255, 255, 255, 0.3);
+    vertical-align: middle;
+  }
+
+  .new-badge i {
+    font-size: 0.6rem;
+    animation: pinWiggle 2s infinite;
+    transform-origin: center;
+  }
+
+  .time-container {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+  }
+
+  @keyframes pinWiggle {
+    0%, 100% {
+      transform: rotate(-10deg);
+    }
+    50% {
+      transform: rotate(10deg);
+    }
+  }
+
+  /* Add hover effect */
+  .announcement-card:hover .new-badge {
+    animation: badgeHover 0.3s forwards;
+  }
+
+  @keyframes badgeHover {
+    to {
+      transform: scale(1.1);
+      box-shadow: 0 8px 25px rgba(80, 200, 120, 0.3);
+    }
+  }
+
+  /* Document attachment styles */
+  .document-attachment {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    margin-top: 15px;
+    padding-top: 10px;
+    border-top: 1px solid rgba(0,0,0,0.1);
+  }
+
+  .document-attachment .btn-outline-primary {
+    border-color: #355389;
+    color: #355389;
+    padding: 0.25rem 0.75rem;
+    font-size: 0.875rem;
+  }
+
+  .document-attachment .btn-outline-primary:hover {
+    background-color: #355389;
+    color: white;
+  }
+
+  .document-attachment .btn-link {
+    color: #355389;
+    text-decoration: none;
+  }
+
+  .document-attachment .btn-link:hover {
+    text-decoration: underline;
+  }
 </style>
 
 <div class="container-fluid pt-5 bg-light bg">
-<div class="row">
-  <div class="col-lg-12 col-md-12">
-    <div class="row d-flex justify-content-center">
-      <div class="col-lg-6 col-md-7 col-12">
-        <div class="card mb-3 border-0 shadow text-center" style="background-color: #355389;">
-          <div class="card-body">
-            <h1 class="display-6 text-white" style="font-weight: 550;"><i class="fas fa-bullhorn"></i> BARANGAY ANNOUNCEMENTS</h1>
-            <p class="custom-color" id="currentDateTime" style="font-size: 1.25rem; font-weight: 550;"></p>
+  <div class="row">
+    <div class="col-lg-12 col-md-12">
+      <div class="row d-flex justify-content-center">
+        <div class="col-lg-6 col-md-7 col-12">
+          <!-- Fixed header -->
+          <div class="announcement-header">
+            <h1 class="display-6 text-white text-center mb-0" style="font-weight: 550;">
+              <i class="fas fa-bullhorn"></i> BARANGAY ANNOUNCEMENTS
+            </h1>
+            <p class="custom-color text-center mb-0" id="currentDateTime" style="font-size: 1.25rem; font-weight: 550;"></p>
+          </div>
+
+          <!-- Scrollable content -->
+          <div class="announcement-content">
+            {% for announce in announcementList %}
+            <div class="card mb-3 announcement-card">
+              <div>
+                <div class="row g-0">
+                  <div class="col-lg-5 col-md-12 col-12 my-auto d-flex justify-content-center">
+                    <img src='{{announce.image.url}}' class="img-fluid rounded-start">
+                  </div>
+                  <div class="col-lg-7 col-md-12 col-12">
+                    <div class="card-body">
+                      <h5 class="card-title">{{ announce.title }}</h5>
+                      <p class="card-text">{{ announce.body }}</p>
+
+                      {% if announce.document %}
+                      <div class="document-attachment mt-2">
+                        <a href="{{ announce.document.url }}" class="btn btn-sm btn-outline-primary" download>
+                          {% with ext=announce.document.name|lower %}
+                            {% if '.pdf' in ext %}
+                              <i class="fas fa-file-pdf text-danger me-1"></i>
+                            {% elif '.doc' in ext or '.docx' in ext %}
+                              <i class="fas fa-file-word text-primary me-1"></i>
+                            {% elif '.xls' in ext or '.xlsx' in ext %}
+                              <i class="fas fa-file-excel text-success me-1"></i>
+                            {% elif '.ppt' in ext or '.pptx' in ext %}
+                              <i class="fas fa-file-powerpoint text-warning me-1"></i>
+                            {% elif '.zip' in ext or '.rar' in ext or '.7z' in ext %}
+                              <i class="fas fa-file-archive text-secondary me-1"></i>
+                            {% else %}
+                              <i class="fas fa-file text-info me-1"></i>
+                            {% endif %}
+                          {% endwith %}
+                          Download Attachment
+                        </a>
+                        <a href="{{ announce.document.url }}" class="btn btn-sm btn-link" target="_blank">
+                          <i class="fas fa-eye me-1"></i> View
+                        </a>
+                      </div>
+                      {% endif %}
+                    </div>
+                    <br>
+                    <div class="position-absolute bottom-0 end-0 px-3">
+                      <div class="time-container">
+                        {% if announce.is_new %}
+                          <div class="new-badge">
+                            <i class="fas fa-thumbtack"></i> NEW
+                          </div>
+                        {% endif %}
+                        <p class="card-text mb-0"><small class="text-muted">Posted {{ announce.post_date|naturaltime }}</small></p>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+            {% endfor %}
           </div>
         </div>
       </div>
     </div>
   </div>
+</div>
 
-  <div class="col-12">
-    <div class="row d-flex justify-content-center">
-        <div class="col-lg-6 col-md-7">
-            {% for announce in announcementList %}
-            <div class="card mb-3 border-0 shadow">
-                <div>
-                    <div class="row g-0">
-                        <div class="col-lg-5 col-md-12 col-12 my-auto d-flex justify-content-cente">
-                          <img src='{{announce.image.url}}' class="img-fluid rounded-start">
-                        </div>
-                        <div class="col-lg-7 col-md-12 col-12">
-                          <div class="card-body">
-                            <h5 class="card-title">{{ announce.title }}</h5>
-                            <p class="card-text">{{ announce.body }}</p>
-                          </div>
-                
-                          <br>
-                          <div class="position-absolute bottom-0 end-0 px-3">
-                            <p class="card-text"><small class="text-muted">Posted {{ announce.post_date|naturaltime }}</small></p>
-                          </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-          <script>
+<script>
   // Function to format date and time
   function formatDateTime() {
-    const options = { 
-      weekday: 'long', year: 'numeric', month: 'long', day: 'numeric', 
-      hour: '2-digit', minute: '2-digit', second: '2-digit' 
+    const options = {
+      weekday: 'long', year: 'numeric', month: 'long', day: 'numeric',
+      hour: '2-digit', minute: '2-digit', second: '2-digit'
     };
     return new Date().toLocaleDateString('en-US', options);
   }
@@ -75,16 +258,5 @@
     document.getElementById('currentDateTime').innerText = "As of : " + formatDateTime();
   }, 1000);
 </script>
-            {% endfor %}
-        </div>
-    </div>
-</div>
-</div>
-
-<br>
-<br>
-<br>
-</div>
-
 
 {% endblock content %}

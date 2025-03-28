@@ -1,10 +1,10 @@
 {% load static %}
-<form hx-post="{{ request.path }}" class="modal-content" enctype="multipart/form-data">
-    
+<form hx-post="{{ request.path }}" class="modal-content" enctype="multipart/form-data" id="announcementForm">
+
     <div class="modal-header">
       <h5 class="modal-title"><b>Announcement Form</b></h5>
     </div>
-    
+
     <div class="modal-body">
       {% csrf_token %}
         <div class="row">
@@ -13,14 +13,14 @@
               <p class="h6">Title</p>
               {{form.title}}
           </div>
-        
+
           <div class="col-12 py-2">
             <p class="h6">Information</p>
             {{form.body}}
           </div>
 
           <div class="col-12 py-2 d-flex justify-content-center">
-            
+
             <div class="form-element-upload-2">
               <p class="h6">Upload Image for Poster</p>
               {{ form.image }}
@@ -32,62 +32,299 @@
                 </label>
             </div>
           </div>
-          
+
+          <!-- Document Upload Section -->
+          <div class="col-12 py-3">
+            <div class="document-upload-container">
+              <p class="h6 text-white">Attach Document (Optional)</p>
+              <p class="small text-white-50 mb-2">Supported formats: PDF, Word, Excel, etc. (Max size: 10MB)</p>
+              <input type="file" name="document" id="id_document" accept=".pdf,.doc,.docx,.xls,.xlsx,.ppt,.pptx,.zip,.rar" style="opacity:0; position:absolute; z-index:-1; width:1px; height:1px; pointer-events:auto;">
+              <div class="input-group theme-compatible-input">
+                <input type="text" class="form-control" id="document-name" readonly placeholder="No file selected">
+                <label class="input-group-text btn btn-primary" for="id_document">
+                  <i class="fas fa-folder-open me-1"></i> Browse
+                </label>
+              </div>
+              <div id="document-preview" class="mt-2 d-none">
+                <div class="d-flex align-items-center p-2 border rounded">
+                  <i id="doc-icon" class="fas fa-file-pdf me-2 text-danger"></i>
+                  <span id="selected-filename" class="text-truncate"></span>
+                  <button type="button" class="btn btn-sm btn-outline-light ms-auto" id="remove-document">
+                    <i class="fas fa-times"></i>
+                  </button>
+                </div>
+              </div>
+            </div>
+          </div>
+
       </div>
     </div>
 
   <div class="modal-footer">
-    <button class="btn btn-success" type="submit">Add</button>
-    <button class="btn btn-secondary" type="button" data-bs-dismiss="modal">Cancel</button>
+    <button class="btn btn-success" type="button" id="addBtn">Add</button>
+    <button class="btn btn-secondary" type="button" id="cancelBtn">Cancel</button>
   </div>
 
 </form>
 
 <script>
-
   function previewBeforeUpload(id){
       document.querySelector("#"+id).addEventListener("change",function(e){
-          
           if(e.target.files.length == 0){
               return;
           }
-  
           let file = e.target.files[0];
-          let url = URL.createObjectURL(file);   
+          let url = URL.createObjectURL(file);
           document.querySelector("#"+id+"-preview img").src = url;
       });
   }
   previewBeforeUpload("file-2");
-  
-  </script>
-  
-  <style>
-    .form-element-upload-2 span {
-        font-size:40px;
-    }
-  
-    .form-element-upload-2 input {
-        display:none;
-    }  
-  
-    .form-element-upload-2 img{
-        height: 465px;
-        width: 465px;
-        object-fit:cover;
-    }
-  
-    .form-element-upload-2 div{
-        position:relative;
-        height:40px;
-        margin-top:-40px;
-        min-width:40px;
-        background:rgba(0,0,0,0.5);
-        text-align:center;
-        line-height:30px;
-        font-size:13px;
-        color:#f5f5f5;
-        font-weight:600;
-    }
-  </style>
 
+  // Document preview handler
+  document.addEventListener('DOMContentLoaded', function() {
+    const documentInput = document.getElementById('id_document');
+    const documentName = document.getElementById('document-name');
+    const documentPreview = document.getElementById('document-preview');
+    const selectedFilename = document.getElementById('selected-filename');
+    const docIcon = document.getElementById('doc-icon');
+    const removeDocument = document.getElementById('remove-document');
 
+    if (documentInput) {
+      // Set initial styling
+      documentInput.style.opacity = "0";
+      documentInput.style.position = "absolute";
+      documentInput.style.zIndex = "-1";
+      documentInput.style.width = "1px";
+      documentInput.style.height = "1px";
+
+      documentInput.addEventListener('change', function(e) {
+        console.log('File selection changed');
+        if (this.files && this.files.length > 0) {
+          const file = this.files[0];
+          console.log('Selected file:', file.name);
+
+          // Update UI with file info
+          documentName.value = file.name;
+          selectedFilename.textContent = file.name;
+          documentPreview.classList.remove('d-none');
+
+          // Update icon based on file type
+          updateFileIcon(file.name.split('.').pop().toLowerCase());
+        } else {
+          resetDocumentInput();
+        }
+      });
+    }
+
+    if (removeDocument) {
+      removeDocument.addEventListener('click', function() {
+        documentInput.value = '';
+        resetDocumentInput();
+      });
+    }
+
+    function resetDocumentInput() {
+      documentName.value = 'No file selected';
+      documentPreview.classList.add('d-none');
+      selectedFilename.textContent = '';
+    }
+
+    function updateFileIcon(fileExt) {
+      docIcon.className = 'fas me-2 ';
+
+      if (fileExt === 'pdf') {
+        docIcon.className += 'fa-file-pdf text-danger';
+      } else if (['doc', 'docx'].includes(fileExt)) {
+        docIcon.className += 'fa-file-word text-primary';
+      } else if (['xls', 'xlsx'].includes(fileExt)) {
+        docIcon.className += 'fa-file-excel text-success';
+      } else if (['ppt', 'pptx'].includes(fileExt)) {
+        docIcon.className += 'fa-file-powerpoint text-warning';
+      } else if (['zip', 'rar', '7z'].includes(fileExt)) {
+        docIcon.className += 'fa-file-archive text-secondary';
+      } else {
+        docIcon.className += 'fa-file text-info';
+      }
+    }
+  });
+
+  // Add button click handler
+  document.getElementById('addBtn').addEventListener('click', function() {
+      Swal.fire({
+          title: 'Add Announcement',
+          text: 'Are you sure you want to add this announcement?',
+          icon: 'question',
+          showCancelButton: true,
+          confirmButtonText: 'Yes, add it',
+          cancelButtonText: 'No, cancel',
+          confirmButtonColor: '#198754',
+          cancelButtonColor: '#6c757d',
+          reverseButtons: true
+      }).then((result) => {
+          if (result.isConfirmed) {
+              // Get the form
+              const form = document.getElementById('announcementForm');
+
+              // Show loading state
+              Swal.fire({
+                  title: 'Adding announcement...',
+                  text: 'Please wait',
+                  allowOutsideClick: false,
+                  showConfirmButton: false,
+                  willOpen: () => {
+                      Swal.showLoading();
+                  }
+              });
+
+              // Submit the form
+              htmx.trigger(form, 'submit');
+
+              // Listen for HTMX after request event
+              form.addEventListener('htmx:afterRequest', function(evt) {
+                  if (evt.detail.successful) {
+                      Swal.fire({
+                          title: 'Success!',
+                          text: 'Announcement has been added successfully',
+                          icon: 'success',
+                          confirmButtonColor: '#198754'
+                      }).then(() => {
+                          // Close the modal
+                          const modal = bootstrap.Modal.getInstance(document.querySelector('.modal'));
+                          if (modal) {
+                              modal.hide();
+                          }
+                          // Refresh the announcements list
+                          htmx.trigger('body', 'announcementAdd');
+                      });
+                  } else {
+                      Swal.fire({
+                          title: 'Error!',
+                          text: 'Failed to add announcement. Please try again.',
+                          icon: 'error',
+                          confirmButtonColor: '#dc3545'
+                      });
+                  }
+              });
+          }
+      });
+  });
+
+  // Cancel button click handler
+  document.getElementById('cancelBtn').addEventListener('click', function() {
+      Swal.fire({
+          title: 'Cancel Announcement',
+          text: 'Are you sure you want to cancel creating this announcement?',
+          icon: 'warning',
+          showCancelButton: true,
+          confirmButtonText: 'Yes, cancel it',
+          cancelButtonText: 'No, keep editing',
+          confirmButtonColor: '#dc3545',
+          cancelButtonColor: '#6c757d',
+          reverseButtons: true
+      }).then((result) => {
+          if (result.isConfirmed) {
+              const modal = bootstrap.Modal.getInstance(document.querySelector('.modal'));
+              if (modal) {
+                  modal.hide();
+              }
+          }
+      });
+  });
+</script>
+
+<style>
+  .form-element-upload-2 span {
+      font-size:40px;
+  }
+
+  .form-element-upload-2 input {
+      display:none;
+  }
+
+  .form-element-upload-2 img{
+      height: 465px;
+      width: 465px;
+      object-fit:cover;
+  }
+
+  .form-element-upload-2 div{
+      position:relative;
+      height:40px;
+      margin-top:-40px;
+      min-width:40px;
+      background:rgba(0,0,0,0.5);
+      text-align:center;
+      line-height:30px;
+      font-size:13px;
+      color:#f5f5f5;
+      font-weight:600;
+  }
+
+  /* Document upload styles */
+  .document-upload-container {
+    border-radius: 8px;
+    padding: 15px;
+    background-color: #1e3f76;
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    margin-bottom: 10px;
+  }
+
+  #id_document {
+    opacity: 0;
+    position: absolute;
+    z-index: -1;
+    width: 1px;
+    height: 1px;
+  }
+
+  #document-preview {
+    transition: all 0.3s ease;
+  }
+
+  #document-preview .border {
+    border-color: rgba(255, 255, 255, 0.2) !important;
+    background-color: rgba(0, 0, 0, 0.2);
+  }
+
+  #document-name {
+    background-color: rgba(255, 255, 255, 0.9);
+    color: #333;
+    border-color: rgba(255, 255, 255, 0.2);
+    cursor: default;
+  }
+
+  #selected-filename {
+    max-width: 200px;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    color: rgba(255, 255, 255, 0.9);
+  }
+
+  #remove-document {
+    color: #dc3545;
+    padding: 0 8px;
+  }
+
+  #remove-document:hover {
+    color: #a71d2a;
+  }
+
+  /* Theme-compatible input styling */
+  .theme-compatible-input {
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+    border-radius: 6px;
+    overflow: hidden;
+  }
+
+  .theme-compatible-input .form-control {
+    border-right: 0;
+  }
+
+  .theme-compatible-input .input-group-text {
+    border-left: 0;
+    background-color: #355389;
+    border-color: #355389;
+    color: white;
+  }
+</style>

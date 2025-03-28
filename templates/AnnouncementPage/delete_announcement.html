@@ -5,7 +5,7 @@
 <center>
     <div class="card mb-3 border-0 shadow">
         <div>
-            <form method="POST">
+            <form method="POST" id="deleteForm">
             {% csrf_token %}
             <div class="row g-0">
                 <div class="col-lg-5 col-md-12 col-12 my-auto d-flex justify-content-cente">
@@ -20,7 +20,7 @@
                         </div>
                     </div>
                   </div>
-        
+
                   <br>
                   <div class="position-absolute bottom-0 end-0 px-3">
                     <p class="card-text"><small class="text-muted">Posted at {{ ann.post_date }}</small></p>
@@ -31,10 +31,25 @@
     </div>
 <br>
 <h3>Are you sure you want to discard this announcement?</h3>
-<input class="btn btn-success" type="submit" value="Yes" />
+<button type="button" class="btn btn-success" id="confirmDelete">Yes</button>
 &nbsp;
 <a href="{% url 'announcementPage' %}"><div class="btn btn-secondary">Cancel</div></a>
 </form>
-
 </center>
+
+<script>
+document.getElementById('confirmDelete').addEventListener('click', function() {
+    Swal.fire({
+        title: 'Success!',
+        text: 'Announcement has been deleted successfully',
+        icon: 'success',
+        confirmButtonColor: '#198754',
+        confirmButtonText: 'OK'
+    }).then((result) => {
+        if (result.isConfirmed) {
+            document.getElementById('deleteForm').submit();
+        }
+    });
+});
+</script>
 {% endblock content %}
